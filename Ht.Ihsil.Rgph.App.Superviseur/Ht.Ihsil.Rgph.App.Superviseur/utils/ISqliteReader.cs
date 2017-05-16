@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ht.Ihsil.Rgph.App.Superviseur.Json;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 {
@@ -27,7 +28,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<BatimentModel> GetABatimentWithLogC();
         List<BatimentModel> GetAllBatimentVide();
         List<BatimentModel> GetBatLogMenWithDeces();
-
+        List<BatimentJson> GetAllBatimentsInJson();
         //Retourne les batiments inobservables(modalite =5)
         List<BatimentModel> GetAllBatimentsInobservables();
 
@@ -48,6 +49,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #region LOGEMENTS
         List<LogementModel> GetAllLogements();
+        List<LogementModel> GetAllLogementsByBatiment(long batimentId);
         List<LogementModel> GetLogementCByBatiment(long batimentId);
         List<LogementModel> GetLogementIByBatiment(long batimentId);
         List<LogementModel> GetLogementIFiniByBatiment(long batimentId);

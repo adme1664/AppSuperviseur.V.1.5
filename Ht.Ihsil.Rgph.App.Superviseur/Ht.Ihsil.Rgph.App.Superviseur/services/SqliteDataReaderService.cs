@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Ht.Ihsi.Rgph.Utility.Utils;
 using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities;
+using Ht.Ihsil.Rgph.App.Superviseur.Json;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.services
 {
@@ -41,7 +42,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
 
         }
 
-     
+        public List<BatimentJson> GetAllBatimentsInJson()
+        {
+            try
+            {
+                return Sr.GetAllBatimentsInJson();
+            }
+            catch (Exception ex)
+            {
+                log.Info("Erreur:" + ex.Message);
+            }
+            return new List<BatimentJson>();
+        }
         /// Envoyer un batiment vers le web service
         /// </summary>
         /// <param Name="batiment"></param>

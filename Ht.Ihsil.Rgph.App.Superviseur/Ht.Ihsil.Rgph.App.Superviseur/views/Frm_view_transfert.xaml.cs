@@ -29,6 +29,9 @@ using System.Xml;
 using System.Xml.Serialization;
 using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using System.Diagnostics;
+using Ht.Ihsil.Rgph.App.Superviseur.Json;
+using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.views
 {
@@ -452,6 +455,29 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 this.sdeId = sdeCollecteData.SdeId;
                 log.Info("SDE:" + sdeId);
                 service = new SqliteDataReaderService(Utilities.getConnectionString(Users.users.DatabasePath, sdeId));
+
+                //
+                List<BatimentJson> batimentsJsons = service.GetAllBatimentsInJson();
+                log.Info("JSON Executed:" + batimentsJsons.Count);
+                //MemoryStream stream1 = new MemoryStream();
+                DataJson dataJson = new DataJson();
+                dataJson.Username = "Adme Jean Jeff";
+                dataJson.DeptId = "01";
+                //DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BatimentJson));
+                using (StreamWriter write = new StreamWriter(MAIN_DATABASE_PATH + "DataJson.json"))
+                {
+                    foreach (BatimentJson bat in batimentsJsons)
+                    {
+                        dataJson.Data = JsonConvert.SerializeObject(bat);
+                        string dJson = JsonConvert.SerializeObject(dataJson);
+                        byte[] datas = Encoding.UTF8.GetBytes(dJson);
+                        write.Write(Encoding.UTF8.GetString(datas, 0, datas.Length));     
+                    }
+                                      
+                }
+              
+
+                //
                 sqliteWrite = new SqliteDataWriter(sdeId);
                 List<BatimentType> listOfBatiment = new List<BatimentType>();
                 listOfBatiment = service.GetAllBatimentType();

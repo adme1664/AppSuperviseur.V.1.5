@@ -11,6 +11,7 @@ using System.Data.SqlServerCe;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ht.Ihsil.Rgph.App.Superviseur.Json;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
 {
@@ -297,6 +298,374 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         }
         #endregion
 
+        #region JSON MAPPER
+        public static BatimentJson MapToJson(BatimentModel batiment)
+        {
+            if (batiment != null)
+            {
+                return new BatimentJson
+                {
+                    BatimentId = Convert.ToInt32(batiment.BatimentId),
+                    DeptId = batiment.DeptId,
+                    ComId = batiment.ComId,
+                    VqseId = batiment.VqseId,
+                    SdeId = batiment.SdeId,
+                    Zone = Convert.ToByte(batiment.Zone),
+                    DisctrictId = batiment.DisctrictId,
+                    Qhabitation = batiment.Qhabitation,
+                    Qlocalite = batiment.Qlocalite,
+                    Qadresse = batiment.Qadresse,
+                    Qrec = batiment.Qrec,
+                    Qrgph = batiment.Qrgph,
+                    Qb1Etat = Convert.ToByte(batiment.Qb1Etat),
+                    Qb2Type = Convert.ToByte(batiment.Qb2Type),
+                    Qb3NombreEtage = Convert.ToByte(batiment.Qb3NombreEtage),
+                    Qb4MateriauMur = Convert.ToByte(batiment.Qb4MateriauMur),
+                    Qb5MateriauToit = Convert.ToByte(batiment.Qb5MateriauToit),
+                    Qb6StatutOccupation = Convert.ToByte(batiment.Qb6StatutOccupation),
+                    Qb7Utilisation1 = Convert.ToByte(batiment.Qb7Utilisation1),
+                    Qb7Utilisation2 = Convert.ToByte(batiment.Qb7Utilisation2),
+                    Qb8NbreLogeCollectif = Convert.ToByte(batiment.Qb8NbreLogeCollectif),
+                    Qb8NbreLogeIndividuel = Convert.ToByte(batiment.Qb8NbreLogeIndividuel),
+                    Statut = Convert.ToByte(batiment.Statut),
+                    DateEnvoi = batiment.DateEnvoi,
+                    IsValidated = Convert.ToBoolean(batiment.IsValidated),
+                    IsSynchroToAppSup = Convert.ToBoolean(batiment.IsSynchroToAppSup),
+                    IsSynchroToCentrale = Convert.ToBoolean(batiment.IsSynchroToCentrale),
+                    DateDebutCollecte = batiment.DateDebutCollecte,
+                    DateFinCollecte = batiment.DateFinCollecte,
+                    DureeSaisie = Convert.ToInt32(batiment.DureeSaisie),
+                    IsFieldAllFilled = Convert.ToBoolean(batiment.IsFieldAllFilled),
+                    IsContreEnqueteMade = Convert.ToBoolean(batiment.IsContreEnqueteMade),
+                    Latitude = batiment.Latitude,
+                    Longitude = batiment.Longitude,
+                    CodeAgentRecenceur = batiment.CodeAgentRecenceur
+                };
+            }
+            return new BatimentJson();
+        }
+        public static LogementJson MapToJson(LogementModel logement)
+        {
+            if (logement != null)
+            {
+                return new LogementJson
+                {
+                    LogeId = Convert.ToInt32(logement.LogeId),
+                    BatimentId = Convert.ToInt32(logement.BatimentId),
+                    SdeId = logement.SdeId,
+                    QlCategLogement = Convert.ToByte(logement.QlCategLogement),
+                    Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre),
+                    Qlc1TypeLogement = Convert.ToByte(logement.Qlc1TypeLogement),
+                    Qlc2bTotalGarcon = Convert.ToByte(logement.Qlc2bTotalGarcon),
+                    Qlc2bTotalFille = Convert.ToByte(logement.Qlc2bTotalFille),
+                    QlcTotalIndividus = Convert.ToByte(logement.QlcTotalIndividus),
+                    Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation),
+                    Qlin3ExistenceLogement = Convert.ToByte(logement.Qlin3ExistenceLogement),
+                    Qlin4TypeLogement = Convert.ToByte(logement.Qlin4TypeLogement),
+                    Qlin5MateriauSol = Convert.ToByte(logement.Qlin5MateriauSol),
+                    Qlin6NombrePiece = Convert.ToByte(logement.Qlin6NombrePiece),
+                    Qlin7NbreChambreACoucher = Convert.ToByte(logement.Qlin7NbreChambreACoucher),
+                    Qlin8NbreIndividuDepense = Convert.ToByte(logement.Qlin8NbreIndividuDepense),
+                    Qlin9NbreTotalMenage = Convert.ToByte(logement.Qlin9NbreTotalMenage),
+                    Statut = Convert.ToByte(logement.Statut),
+                    IsValidated = Convert.ToBoolean(logement.IsValidated),
+                    DateDebutCollecte = logement.DateDebutCollecte,
+                    DateFinCollecte = logement.DateFinCollecte,
+                    DureeSaisie = Convert.ToInt32(logement.DureeSaisie),
+                    IsFieldAllFilled = Convert.ToBoolean(logement.IsFieldAllFilled),
+                    IsContreEnqueteMade = Convert.ToBoolean(logement.IsContreEnqueteMade),
+                    NbrTentative = Convert.ToByte(logement.NbrTentative),
+                    CodeAgentRecenceur = logement.CodeAgentRecenceur
+                };
+            }
+            return new LogementJson();
+        }
+        public static MenageJson MapToJson(MenageModel menage)
+        {
+            if (menage != null)
+            {
+                return new MenageJson
+                {
+                    MenageId = Convert.ToInt32(menage.MenageId),
+                    LogeId = Convert.ToInt32(menage.LogeId),
+                    BatimentId = Convert.ToInt32(menage.BatimentId),
+                    SdeId = menage.SdeId,
+                    Qm1NoOrdre = Convert.ToByte(menage.Qm1NoOrdre),
+                    Qm2ModeJouissance = Convert.ToByte(menage.Qm2ModeJouissance),
+                    Qm3ModeObtentionLoge = Convert.ToByte(menage.Qm3ModeObtentionLoge),
+                    Qm4_1ModeAprovEauABoire = Convert.ToByte(menage.Qm4_1ModeAprovEauABoire),
+                    Qm4_2ModeAprovEauAUsageCourant = Convert.ToByte(menage.Qm4_2ModeAprovEauAUsageCourant),
+                    Qm5SrcEnergieCuisson1 = Convert.ToByte(menage.Qm5SrcEnergieCuisson1),
+                    Qm5SrcEnergieCuisson2 = Convert.ToByte(menage.Qm5SrcEnergieCuisson2),
+                    Qm6TypeEclairage = Convert.ToByte(menage.Qm6TypeEclairage),
+                    Qm7ModeEvacDechet = Convert.ToByte(menage.Qm7ModeEvacDechet),
+                    Qm8EndroitBesoinPhysiologique = Convert.ToByte(menage.Qm8EndroitBesoinPhysiologique),
+                    Qm9NbreRadio1 = Convert.ToInt32(menage.Qm9NbreRadio1),
+                    Qm9NbreTelevision2 = Convert.ToInt32(menage.Qm9NbreTelevision2),
+                    Qm9NbreRefrigerateur3 = Convert.ToInt32(menage.Qm9NbreRefrigerateur3),
+                    Qm9NbreFouElectrique4 = Convert.ToInt32(menage.Qm9NbreFouElectrique4),
+                    Qm9NbreOrdinateur5 = Convert.ToInt32(menage.Qm9NbreOrdinateur5),
+                    Qm9NbreMotoBicyclette6 = Convert.ToInt32(menage.Qm9NbreMotoBicyclette6),
+                    Qm9NbreVoitureMachine7 = Convert.ToInt32(menage.Qm9NbreVoitureMachine7),
+                    Qm9NbreBateau8 = Convert.ToInt32(menage.Qm9NbreBateau8),
+                    Qm9NbrePanneauGeneratrice9 = Convert.ToInt32(menage.Qm9NbrePanneauGeneratrice9),
+                    Qm9NbreMilletChevalBourique10 = Convert.ToInt32(menage.Qm9NbreMilletChevalBourique10),
+                    Qm9NbreBoeufVache11 = Convert.ToInt32(menage.Qm9NbreBoeufVache11),
+                    Qm9NbreCochonCabrit12 = Convert.ToInt32(menage.Qm9NbreCochonCabrit12),
+                    Qm9NbreBeteVolaille13 = Convert.ToInt32(menage.Qm9NbreBeteVolaille13),
+                    Qm10AvoirPersDomestique = Convert.ToByte(menage.Qm10AvoirPersDomestique),
+                    Qm10TotalDomestiqueFille = Convert.ToByte(menage.Qm10TotalDomestiqueFille),
+                    Qm10TotalDomestiqueGarcon = Convert.ToByte(menage.Qm10TotalDomestiqueGarcon),
+                    Qm11TotalIndividuVivant = Convert.ToInt32(menage.Qm11TotalIndividuVivant),
+                    Qn1Emigration = Convert.ToByte(menage.Qn1Emigration),
+                    Qn1NbreEmigre = Convert.ToByte(menage.Qn1NbreEmigre),
+                    Qd1Deces = Convert.ToByte(menage.Qd1Deces),
+                    Qd1NbreDecede = Convert.ToByte(menage.Qd1NbreDecede),
+                    Statut = Convert.ToByte(menage.Statut),
+                    IsValidated = Convert.ToBoolean(menage.IsValidated),
+                    DateDebutCollecte = menage.DateDebutCollecte,
+                    DateFinCollecte = menage.DateFinCollecte,
+                    DureeSaisie = Convert.ToInt32(menage.DureeSaisie),
+                    IsFieldAllFilled = Convert.ToBoolean(menage.IsFieldAllFilled),
+                    IsContreEnqueteMade = Convert.ToBoolean(menage.IsContreEnqueteMade),
+                    CodeAgentRecenceur = menage.CodeAgentRecenceur,
+                };
+            }
+            return new MenageJson();
+        }
+        public static EmigreJson MapToJson(EmigreModel emigre)
+        {
+            if (emigre != null)
+            {
+                return new EmigreJson
+                {
+                    EmigreId = Convert.ToInt32(emigre.EmigreId),
+                    MenageId = Convert.ToInt32(emigre.MenageId),
+                    LogeId = Convert.ToInt32(emigre.LogeId),
+                    BatimentId = Convert.ToInt32(emigre.BatimentId),
+                    SdeId = emigre.SdeId,
+                    Qn1numeroOrdre = Convert.ToByte(emigre.Qn1numeroOrdre),
+                    Qn2aNomComplet = emigre.Qn2aNomComplet,
+                    Qn2bSexe = Convert.ToByte(emigre.Qn2bSexe),
+                    Qn2cAgeAuMomentDepart = emigre.Qn2cAgeAuMomentDepart,
+                    Qn2dVivantToujours = Convert.ToByte(emigre.Qn2dVivantToujours),
+                    Qn2eDernierPaysResidence = Convert.ToByte(emigre.Qn2eDernierPaysResidence),
+                    Statut = Convert.ToByte(emigre.Statut),
+                    IsFieldAllFilled = Convert.ToBoolean(emigre.IsFieldAllFilled),
+                    DateDebutCollecte = emigre.DateDebutCollecte,
+                    DateFinCollecte = emigre.DateFinCollecte,
+                    DureeSaisie = Convert.ToInt32(emigre.DureeSaisie),
+                    CodeAgentRecenceur = emigre.CodeAgentRecenceur,
+                };
+            }
+            return new EmigreJson();
+        }
+        public static DecesJson MapToJson(DecesModel deces)
+        {
+            if (deces != null)
+            {
+                return new DecesJson
+                {
+                    DecesId = Convert.ToInt32(deces.DecesId),
+                    MenageId = Convert.ToInt32(deces.MenageId),
+                    LogeId = Convert.ToInt32(deces.LogeId),
+                    BatimentId = Convert.ToInt32(deces.BatimentId),
+                    SdeId = deces.SdeId,
+                    Qd2NoOrdre = Convert.ToByte(deces.Qd2NoOrdre),
+                    Qd2aSexe = Convert.ToByte(deces.Qd2aSexe),
+                    Qd2bAgeDecede = deces.Qd2bAgeDecede,
+                    Qd2c1CirconstanceDeces = Convert.ToByte(deces.Qd2c1CirconstanceDeces),
+                    Qd2c2CauseDeces = Convert.ToByte(deces.Qd2c2CauseDeces),
+                    Statut = Convert.ToByte(deces.Statut),
+                    IsFieldAllFilled = Convert.ToBoolean(deces.IsFieldAllFilled),
+                    DateDebutCollecte = deces.DateDebutCollecte,
+                    DateFinCollecte = deces.DateFinCollecte,
+                    DureeSaisie = Convert.ToInt32(deces.DureeSaisie),
+                    IsContreEnqueteMade = Convert.ToBoolean(deces.IsContreEnqueteMade),
+                    CodeAgentRecenceur = deces.CodeAgentRecenceur,
+                };
+            }
+            return new DecesJson();
+        }
+        public static IndividuJson MapToJson(IndividuModel individu)
+        {
+            if (individu != null)
+            {
+                return new IndividuJson
+                {
+
+                    IndividuId = Convert.ToInt32(individu.IndividuId),
+                    MenageId = Convert.ToInt32(individu.MenageId),
+                    LogeId = Convert.ToInt32(individu.LogeId),
+                    BatimentId = Convert.ToInt32(individu.BatimentId),
+                    SdeId = individu.SdeId,
+                    Q1NoOrdre = Convert.ToByte(individu.Q1NoOrdre),
+                    Qp2APrenom = individu.Qp2APrenom,
+                    Qp2BNom = individu.Qp2BNom,
+                    Qp3LienDeParente = Convert.ToByte(individu.Qp3LienDeParente),
+                    Qp3HabiteDansMenage = Convert.ToByte(individu.Qp3HabiteDansMenage),
+                    Qp4Sexe = Convert.ToByte(individu.Qp4Sexe),
+                    Qp5DateNaissanceJour = Convert.ToByte(individu.Qp5DateNaissanceJour),
+                    Qp5DateNaissanceMois = Convert.ToByte(individu.Qp5DateNaissanceMois),
+                    Qp5DateNaissanceAnnee = Convert.ToInt32(individu.Qp5DateNaissanceAnnee),
+                    Qp5bAge = Convert.ToByte(individu.Qp5bAge),
+                    Qp6religion = Convert.ToByte(individu.Qp6religion),
+                    Qp6AutreReligion = individu.Qp6AutreReligion,
+                    Qp7Nationalite = Convert.ToByte(individu.Qp7Nationalite),
+                    Qp7PaysNationalite = individu.Qp7PaysNationalite,
+                    Qp8MereEncoreVivante = Convert.ToByte(individu.Qp8MereEncoreVivante),
+                    Qp9EstPlusAge = Convert.ToByte(individu.Qp9EstPlusAge),
+                    Qp10LieuNaissance = Convert.ToByte(individu.Qp10LieuNaissance),
+                    Qp10CommuneNaissance = individu.Qp10CommuneNaissance,
+                    Qp10VqseNaissance = individu.Qp10VqseNaissance,
+                    Qp10PaysNaissance = individu.Qp10PaysNaissance,
+                    Qp11PeriodeResidence = Convert.ToByte(individu.Qp11PeriodeResidence),
+                    Qp12DomicileAvantRecensement = Convert.ToByte(individu.Qp12DomicileAvantRecensement),
+                    Qp12CommuneDomicileAvantRecensement = individu.Qp12CommuneDomicileAvantRecensement,
+                    Qp12VqseDomicileAvantRecensement = individu.Qp12VqseDomicileAvantRecensement,
+                    Qp12PaysDomicileAvantRecensement = individu.Qp12PaysDomicileAvantRecensement,
+                    Qe1EstAlphabetise = Convert.ToByte(individu.Qe1EstAlphabetise),
+                    Qe2FreqentationScolaireOuUniv = Convert.ToByte(individu.Qe2FreqentationScolaireOuUniv),
+                    Qe3typeEcoleOuUniv = Convert.ToByte(individu.Qe3typeEcoleOuUniv),
+                    Qe4aNiveauEtude = Convert.ToByte(individu.Qe4aNiveauEtude),
+                    Qe4bDerniereClasseOUAneEtude = individu.Qe4bDerniereClasseOUAneEtude,
+                    Qe5DiplomeUniversitaire = Convert.ToByte(individu.Qe5DiplomeUniversitaire),
+                    Qe6DomaineEtudeUniversitaire = individu.Qe6DomaineEtudeUniversitaire,
+                    Qaf1HandicapVoir = Convert.ToByte(individu.Qaf1HandicapVoir),
+                    Qaf2HandicapEntendre = Convert.ToByte(individu.Qaf2HandicapEntendre),
+                    Qaf3HandicapMarcher = Convert.ToByte(individu.Qaf3HandicapMarcher),
+                    Qaf4HandicapSouvenir = Convert.ToByte(individu.Qaf4HandicapSouvenir),
+                    Qaf5HandicapPourSeSoigner = Convert.ToByte(individu.Qaf5HandicapPourSeSoigner),
+                    Qaf6HandicapCommuniquer = Convert.ToByte(individu.Qaf6HandicapCommuniquer),
+                    Qt1PossessionTelCellulaire = Convert.ToByte(individu.Qt1PossessionTelCellulaire),
+                    Qt2UtilisationInternet = Convert.ToByte(individu.Qt2UtilisationInternet),
+                    Qem1DejaVivreAutrePays = Convert.ToByte(individu.Qem1DejaVivreAutrePays),
+                    Qem1AutrePays = individu.Qem1AutrePays,
+                    Qem2MoisRetour = Convert.ToByte(individu.Qem2MoisRetour),
+                    Qem2AnneeRetour = Convert.ToInt32(individu.Qem2AnneeRetour),
+                    Qsm1StatutMatrimonial = Convert.ToByte(individu.Qsm1StatutMatrimonial),
+                    Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(individu.Qa1ActEconomiqueDerniereSemaine),
+                    Qa2ActAvoirDemele1 = Convert.ToByte(individu.Qa2ActAvoirDemele1),
+                    Qa2ActDomestique2 = Convert.ToByte(individu.Qa2ActDomestique2),
+                    Qa2ActCultivateur3 = Convert.ToByte(individu.Qa2ActCultivateur3),
+                    Qa2ActAiderParent4 = Convert.ToByte(individu.Qa2ActAiderParent4),
+                    Qa2ActAutre5 = Convert.ToByte(individu.Qa2ActAutre5),
+                    Qa3StatutEmploie = Convert.ToByte(individu.Qa3StatutEmploie),
+                    Qa4SecteurInstitutionnel = Convert.ToByte(individu.Qa4SecteurInstitutionnel),
+                    Qa5TypeBienProduitParEntreprise = individu.Qa5TypeBienProduitParEntreprise,
+                    Qa5PreciserTypeBienProduitParEntreprise = individu.Qa5PreciserTypeBienProduitParEntreprise,
+                    Qa6LieuActDerniereSemaine = Convert.ToByte(individu.Qa6LieuActDerniereSemaine),
+                    Qa7FoncTravail = Convert.ToByte(individu.Qa7FoncTravail),
+                    Qa8EntreprendreDemarcheTravail = Convert.ToByte(individu.Qa8EntreprendreDemarcheTravail),
+                    Qa9VouloirTravailler = Convert.ToByte(individu.Qa9VouloirTravailler),
+                    Qa10DisponibilitePourTravail = Convert.ToByte(individu.Qa10DisponibilitePourTravail),
+                    Qa11RecevoirTransfertArgent = Convert.ToByte(individu.Qa11RecevoirTransfertArgent),
+                    Qf1aNbreEnfantNeVivantM = Convert.ToInt32(individu.Qf1aNbreEnfantNeVivantM),
+                    Qf1bNbreEnfantNeVivantF = Convert.ToInt32(individu.Qf1bNbreEnfantNeVivantF),
+                    Qf2aNbreEnfantVivantM = Convert.ToInt32(individu.Qf2aNbreEnfantVivantM),
+                    Qf2bNbreEnfantVivantF = Convert.ToInt32(individu.Qf2bNbreEnfantVivantF),
+                    Qf3DernierEnfantJour = Convert.ToByte(individu.Qf3DernierEnfantJour),
+                    Qf3DernierEnfantMois = Convert.ToByte(individu.Qf3DernierEnfantMois),
+                    Qf3DernierEnfantAnnee = Convert.ToInt32(individu.Qf3DernierEnfantAnnee),
+                    Qf4DENeVivantVit = Convert.ToByte(individu.Qf4DENeVivantVit),
+                    Statut = Convert.ToByte(individu.Statut),
+                    IsFieldAllFilled = Convert.ToBoolean(individu.IsFieldAllFilled),
+                    DateDebutCollecte = individu.DateDebutCollecte,
+                    DateFinCollecte = individu.DateFinCollecte,
+                    DureeSaisie = Convert.ToInt32(individu.DureeSaisie),
+                    IsContreEnqueteMade = Convert.ToBoolean(individu.IsContreEnqueteMade),
+                    CodeAgentRecenceur = individu.CodeAgentRecenceur
+                };
+            }
+            return new IndividuJson();
+        }
+
+        public static List<BatimentJson> MapToListJson(List<BatimentModel> batiments)
+        {
+            if (batiments != null)
+            {
+                List<BatimentJson> lists = new List<BatimentJson>();
+                foreach (BatimentModel batiment in batiments)
+                {
+                    BatimentJson batimentJson = ModelMapper.MapToJson(batiment);
+                    lists.Add(batimentJson);
+                }
+                return lists;
+            }
+            return new List<BatimentJson>();
+        }
+        public static List<LogementJson> MapToListJson(List<LogementModel> logements)
+        {
+            if (logements != null)
+            {
+                List<LogementJson> lists = new List<LogementJson>();
+                foreach (LogementModel logement in logements)
+                {
+                    LogementJson logementJson = ModelMapper.MapToJson(logement);
+                    lists.Add(logementJson);
+                }
+                return lists;
+            }
+            return new List<LogementJson>();
+        }
+        public static List<MenageJson> MapToListJson(List<MenageModel> menages)
+        {
+            if (menages != null)
+            {
+                List<MenageJson> lists = new List<MenageJson>();
+                foreach (MenageModel menage in menages)
+                {
+                    MenageJson menageJson = ModelMapper.MapToJson(menage);
+                    lists.Add(menageJson);
+                }
+                return lists;
+            }
+            return new List<MenageJson>();
+        }
+        public static List<EmigreJson> MapToListJson(List<EmigreModel> emigres)
+        {
+            if (emigres != null)
+            {
+                List<EmigreJson> lists = new List<EmigreJson>();
+                foreach (EmigreModel emigre in emigres)
+                {
+                    EmigreJson emigreJson = ModelMapper.MapToJson(emigre);
+                    lists.Add(emigreJson);
+                }
+                return lists;
+            }
+            return new List<EmigreJson>();
+        }
+        public static List<DecesJson> MapToListJson(List<DecesModel> decess)
+        {
+            if (decess != null)
+            {
+                List<DecesJson> lists = new List<DecesJson>();
+                foreach (DecesModel deces in decess)
+                {
+                    DecesJson decesJson = ModelMapper.MapToJson(deces);
+                    lists.Add(decesJson);
+                }
+                return lists;
+            }
+            return new List<DecesJson>();
+        }
+        public static List<IndividuJson> MapToListJson(List<IndividuModel> individus)
+        {
+            if (individus != null)
+            {
+                List<IndividuJson> lists = new List<IndividuJson>();
+                foreach (IndividuModel individu in individus)
+                {
+                    IndividuJson individuJson = ModelMapper.MapToJson(individu);
+                    lists.Add(individuJson);
+                }
+                return lists;
+            }
+            return new List<IndividuJson>();
+        }
+        #endregion
+
         #region FOR SQLITE SCHEMA
 
         public static QuestionModule MapToQuestioModule(tbl_question_module module)
@@ -314,7 +683,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
 
         public static QuestionsModel MapToQuestionModel(tbl_question q)
         {
-            QuestionsModel question=new QuestionsModel();
+            QuestionsModel question = new QuestionsModel();
             if (q != null)
             {
                 question.CodeQuestion = q.codeQuestion;
@@ -334,9 +703,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     question.Libelle = q.libelle;
                     questions.Add(question);
                 }
-             }
+            }
             return questions;
-        } 
+        }
 
 
         public static List<QuestionModule> MapToListQuestionModule(List<tbl_question_module> modules)
@@ -344,16 +713,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             List<QuestionModule> list = new List<QuestionModule>();
             if (modules != null)
             {
-                foreach(tbl_question_module md in modules)
+                foreach (tbl_question_module md in modules)
                 {
                     QuestionModule mod = MapToQuestioModule(md);
                     list.Add(mod);
                 }
-                
+
             }
             return list;
         }
-        
+
         public LogementCollectifModel MapLogementCModel(LogementModel _logement)
         {
             return new LogementCollectifModel
@@ -433,9 +802,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     QlCategLogement = Convert.ToByte(logement.qlCategLogement),
                     Qlin1NumeroOrdre = Convert.ToByte(logement.qlin1NumeroOrdre),
                     Qlc1TypeLogement = Convert.ToByte(logement.qlc1TypeLogement),
+                    QlcTotalIndividus=Convert.ToByte(logement.qlcTotalIndividus),
                     Qlc2bTotalGarcon = Convert.ToByte(logement.qlc2bTotalGarcon),
                     Qlc2bTotalFille = Convert.ToByte(logement.qlc2bTotalFille),
-                    QlcTotalIndividus = Convert.ToByte(logement.qlcTotalIndividus),
                     Qlin2StatutOccupation = Convert.ToByte(logement.qlin2StatutOccupation),
                     Qlin3ExistenceLogement = Convert.ToByte(logement.qlin3ExistenceLogement),
                     Qlin4TypeLogement = Convert.ToByte(logement.qlin4TypeLogement),
@@ -576,87 +945,87 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             {
                 return new IndividuModel
                 {
-                    IndividuId=Convert.ToInt32(individu.individuId),
-                    MenageId=Convert.ToInt32(individu.menageId),
-                    LogeId=Convert.ToInt32(individu.logeId),
-                    BatimentId=Convert.ToInt32(individu.batimentId),
-                    SdeId=individu.sdeId,
-                    Q1NoOrdre=Convert.ToByte(individu.q1NoOrdre),
-                    Qp2APrenom=individu.qp2APrenom,
-                    Qp2BNom=individu.qp2BNom,
-                    Qp3LienDeParente=Convert.ToByte(individu.qp3LienDeParente),
-                    Qp3HabiteDansMenage=Convert.ToByte(individu.qp3HabiteDansMenage),
-                    Qp4Sexe=Convert.ToByte(individu.qp4Sexe),
-                    Qp5DateNaissanceJour=Convert.ToByte(individu.qp5DateNaissanceJour),
-                    Qp5DateNaissanceMois=Convert.ToByte(individu.qp5DateNaissanceMois),
-                    Qp5DateNaissanceAnnee=Convert.ToInt32(individu.Qp5DateNaissanceAnnee),
-                    Qp5bAge=Convert.ToByte(individu.qp5bAge),
-                    Qp6religion=Convert.ToByte(individu.qp6religion),
-                    Qp6AutreReligion=individu.qp6AutreReligion,
-                    Qp7Nationalite=Convert.ToByte(individu.qp7Nationalite),
-                    Qp7PaysNationalite=individu.qp7PaysNationalite,
-                    Qp8MereEncoreVivante=Convert.ToByte(individu.qp8MereEncoreVivante),
-                    Qp9EstPlusAge=Convert.ToByte(individu.qp9EstPlusAge),
-                    Qp10LieuNaissance=Convert.ToByte(individu.qp10LieuNaissance),
-                    Qp10CommuneNaissance=individu.qp10CommuneNaissance,
-                    Qp10VqseNaissance=individu.qp10VqseNaissance,
-                    Qp10PaysNaissance=individu.qp10PaysNaissance,
-                    Qp11PeriodeResidence=Convert.ToByte(individu.qp11PeriodeResidence),
-                    Qp12DomicileAvantRecensement=Convert.ToByte(individu.qp12DomicileAvantRecensement),
-                    Qp12CommuneDomicileAvantRecensement=individu.qp12CommuneDomicileAvantRecensement,
-                    Qp12VqseDomicileAvantRecensement=individu.qp12VqseDomicileAvantRecensement,
-                    Qp12PaysDomicileAvantRecensement=individu.qp12PaysDomicileAvantRecensement,
-                    Qe1EstAlphabetise=Convert.ToByte(individu.qe1EstAlphabetise),
-                    Qe2FreqentationScolaireOuUniv=Convert.ToByte(individu.qe2FreqentationScolaireOuUniv),
-                    Qe3typeEcoleOuUniv=Convert.ToByte(individu.qe3typeEcoleOuUniv),
-                    Qe4aNiveauEtude=Convert.ToByte(individu.qe4aNiveauEtude),
-                    Qe4bDerniereClasseOUAneEtude=individu.qe4bDerniereClasseOUAneEtude,
-                    Qe5DiplomeUniversitaire=Convert.ToByte(individu.qe5DiplomeUniversitaire),
-                    Qe6DomaineEtudeUniversitaire=individu.qe6DomaineEtudeUniversitaire,
-                    Qaf1HandicapVoir=Convert.ToByte(individu.qaf1HandicapVoir),
-                    Qaf2HandicapEntendre=Convert.ToByte(individu.qaf2HandicapEntendre),
-                    Qaf3HandicapMarcher=Convert.ToByte(individu.qaf3HandicapMarcher),
-                    Qaf4HandicapSouvenir=Convert.ToByte(individu.qaf4HandicapSouvenir),
-                    Qaf5HandicapPourSeSoigner=Convert.ToByte(individu.qaf5HandicapPourSeSoigner),
-                    Qaf6HandicapCommuniquer=Convert.ToByte(individu.qaf6HandicapCommuniquer),
-                    Qt1PossessionTelCellulaire=Convert.ToByte(individu.qt1PossessionTelCellulaire),
-                    Qt2UtilisationInternet=Convert.ToByte(individu.qt2UtilisationInternet),
-                    Qem1DejaVivreAutrePays=Convert.ToByte(individu.qem1DejaVivreAutrePays),
-                    Qem1AutrePays=individu.qem1AutrePays,
-                    Qem2MoisRetour=Convert.ToByte(individu.qem2MoisRetour),
-                    Qem2AnneeRetour=Convert.ToInt32(individu.qem2AnneeRetour),
-                    Qsm1StatutMatrimonial=Convert.ToByte(individu.qsm1StatutMatrimonial),
-                    Qa1ActEconomiqueDerniereSemaine=Convert.ToByte(individu.qa1ActEconomiqueDerniereSemaine),
-                    Qa2ActAvoirDemele1=Convert.ToByte(individu.qa2ActAvoirDemele1),
-                    Qa2ActDomestique2=Convert.ToByte(individu.qa2ActDomestique2),
-                    Qa2ActCultivateur3=Convert.ToByte(individu.qa2ActCultivateur3),
-                    Qa2ActAiderParent4=Convert.ToByte(individu.qa2ActAiderParent4),
-                    Qa2ActAutre5=Convert.ToByte(individu.qa2ActAutre5),
-                    Qa3StatutEmploie=Convert.ToByte(individu.qa3StatutEmploie),
-                    Qa4SecteurInstitutionnel=Convert.ToByte(individu.qa4SecteurInstitutionnel),
-                    Qa5TypeBienProduitParEntreprise=individu.qa5TypeBienProduitParEntreprise,
-                    Qa5PreciserTypeBienProduitParEntreprise=individu.qa5PreciserTypeBienProduitParEntreprise,
-                    Qa6LieuActDerniereSemaine=Convert.ToByte(individu.qa6LieuActDerniereSemaine),
-                    Qa7FoncTravail=Convert.ToByte(individu.qa7FoncTravail),
-                    Qa8EntreprendreDemarcheTravail=Convert.ToByte(individu.qa8EntreprendreDemarcheTravail),
-                    Qa9VouloirTravailler=Convert.ToByte(individu.qa9VouloirTravailler),
-                    Qa10DisponibilitePourTravail=Convert.ToByte(individu.qa10DisponibilitePourTravail),
-                    Qa11RecevoirTransfertArgent=Convert.ToByte(individu.qa11RecevoirTransfertArgent),
-                    Qf1aNbreEnfantNeVivantM=Convert.ToInt32(individu.qf1aNbreEnfantNeVivantM),
+                    IndividuId = Convert.ToInt32(individu.individuId),
+                    MenageId = Convert.ToInt32(individu.menageId),
+                    LogeId = Convert.ToInt32(individu.logeId),
+                    BatimentId = Convert.ToInt32(individu.batimentId),
+                    SdeId = individu.sdeId,
+                    Q1NoOrdre = Convert.ToByte(individu.q1NoOrdre),
+                    Qp2APrenom = individu.qp2APrenom,
+                    Qp2BNom = individu.qp2BNom,
+                    Qp3LienDeParente = Convert.ToByte(individu.qp3LienDeParente),
+                    Qp3HabiteDansMenage = Convert.ToByte(individu.qp3HabiteDansMenage),
+                    Qp4Sexe = Convert.ToByte(individu.qp4Sexe),
+                    Qp5DateNaissanceJour = Convert.ToByte(individu.qp5DateNaissanceJour),
+                    Qp5DateNaissanceMois = Convert.ToByte(individu.qp5DateNaissanceMois),
+                    Qp5DateNaissanceAnnee = Convert.ToInt32(individu.Qp5DateNaissanceAnnee),
+                    Qp5bAge = Convert.ToByte(individu.qp5bAge),
+                    Qp6religion = Convert.ToByte(individu.qp6religion),
+                    Qp6AutreReligion = individu.qp6AutreReligion,
+                    Qp7Nationalite = Convert.ToByte(individu.qp7Nationalite),
+                    Qp7PaysNationalite = individu.qp7PaysNationalite,
+                    Qp8MereEncoreVivante = Convert.ToByte(individu.qp8MereEncoreVivante),
+                    Qp9EstPlusAge = Convert.ToByte(individu.qp9EstPlusAge),
+                    Qp10LieuNaissance = Convert.ToByte(individu.qp10LieuNaissance),
+                    Qp10CommuneNaissance = individu.qp10CommuneNaissance,
+                    Qp10VqseNaissance = individu.qp10VqseNaissance,
+                    Qp10PaysNaissance = individu.qp10PaysNaissance,
+                    Qp11PeriodeResidence = Convert.ToByte(individu.qp11PeriodeResidence),
+                    Qp12DomicileAvantRecensement = Convert.ToByte(individu.qp12DomicileAvantRecensement),
+                    Qp12CommuneDomicileAvantRecensement = individu.qp12CommuneDomicileAvantRecensement,
+                    Qp12VqseDomicileAvantRecensement = individu.qp12VqseDomicileAvantRecensement,
+                    Qp12PaysDomicileAvantRecensement = individu.qp12PaysDomicileAvantRecensement,
+                    Qe1EstAlphabetise = Convert.ToByte(individu.qe1EstAlphabetise),
+                    Qe2FreqentationScolaireOuUniv = Convert.ToByte(individu.qe2FreqentationScolaireOuUniv),
+                    Qe3typeEcoleOuUniv = Convert.ToByte(individu.qe3typeEcoleOuUniv),
+                    Qe4aNiveauEtude = Convert.ToByte(individu.qe4aNiveauEtude),
+                    Qe4bDerniereClasseOUAneEtude = individu.qe4bDerniereClasseOUAneEtude,
+                    Qe5DiplomeUniversitaire = Convert.ToByte(individu.qe5DiplomeUniversitaire),
+                    Qe6DomaineEtudeUniversitaire = individu.qe6DomaineEtudeUniversitaire,
+                    Qaf1HandicapVoir = Convert.ToByte(individu.qaf1HandicapVoir),
+                    Qaf2HandicapEntendre = Convert.ToByte(individu.qaf2HandicapEntendre),
+                    Qaf3HandicapMarcher = Convert.ToByte(individu.qaf3HandicapMarcher),
+                    Qaf4HandicapSouvenir = Convert.ToByte(individu.qaf4HandicapSouvenir),
+                    Qaf5HandicapPourSeSoigner = Convert.ToByte(individu.qaf5HandicapPourSeSoigner),
+                    Qaf6HandicapCommuniquer = Convert.ToByte(individu.qaf6HandicapCommuniquer),
+                    Qt1PossessionTelCellulaire = Convert.ToByte(individu.qt1PossessionTelCellulaire),
+                    Qt2UtilisationInternet = Convert.ToByte(individu.qt2UtilisationInternet),
+                    Qem1DejaVivreAutrePays = Convert.ToByte(individu.qem1DejaVivreAutrePays),
+                    Qem1AutrePays = individu.qem1AutrePays,
+                    Qem2MoisRetour = Convert.ToByte(individu.qem2MoisRetour),
+                    Qem2AnneeRetour = Convert.ToInt32(individu.qem2AnneeRetour),
+                    Qsm1StatutMatrimonial = Convert.ToByte(individu.qsm1StatutMatrimonial),
+                    Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(individu.qa1ActEconomiqueDerniereSemaine),
+                    Qa2ActAvoirDemele1 = Convert.ToByte(individu.qa2ActAvoirDemele1),
+                    Qa2ActDomestique2 = Convert.ToByte(individu.qa2ActDomestique2),
+                    Qa2ActCultivateur3 = Convert.ToByte(individu.qa2ActCultivateur3),
+                    Qa2ActAiderParent4 = Convert.ToByte(individu.qa2ActAiderParent4),
+                    Qa2ActAutre5 = Convert.ToByte(individu.qa2ActAutre5),
+                    Qa3StatutEmploie = Convert.ToByte(individu.qa3StatutEmploie),
+                    Qa4SecteurInstitutionnel = Convert.ToByte(individu.qa4SecteurInstitutionnel),
+                    Qa5TypeBienProduitParEntreprise = individu.qa5TypeBienProduitParEntreprise,
+                    Qa5PreciserTypeBienProduitParEntreprise = individu.qa5PreciserTypeBienProduitParEntreprise,
+                    Qa6LieuActDerniereSemaine = Convert.ToByte(individu.qa6LieuActDerniereSemaine),
+                    Qa7FoncTravail = Convert.ToByte(individu.qa7FoncTravail),
+                    Qa8EntreprendreDemarcheTravail = Convert.ToByte(individu.qa8EntreprendreDemarcheTravail),
+                    Qa9VouloirTravailler = Convert.ToByte(individu.qa9VouloirTravailler),
+                    Qa10DisponibilitePourTravail = Convert.ToByte(individu.qa10DisponibilitePourTravail),
+                    Qa11RecevoirTransfertArgent = Convert.ToByte(individu.qa11RecevoirTransfertArgent),
+                    Qf1aNbreEnfantNeVivantM = Convert.ToInt32(individu.qf1aNbreEnfantNeVivantM),
                     Qf1bNbreEnfantNeVivantF = Convert.ToInt32(individu.qf1bNbreEnfantNeVivantF),
-                    Qf2aNbreEnfantVivantM=Convert.ToInt32(individu.qf2aNbreEnfantVivantM),
-                    Qf2bNbreEnfantVivantF=Convert.ToInt32(individu.qf2bNbreEnfantVivantF),
-                    Qf3DernierEnfantJour=Convert.ToByte(individu.qf3DernierEnfantJour),
-                    Qf3DernierEnfantMois=Convert.ToByte(individu.qf3DernierEnfantMois),
-                    Qf3DernierEnfantAnnee=Convert.ToInt32(individu.qf3DernierEnfantAnnee),
-                    Qf4DENeVivantVit=Convert.ToByte(individu.qf4DENeVivantVit),
-                    Statut=Convert.ToByte(individu.statut),
-                    IsFieldAllFilled=Convert.ToBoolean(individu.isFieldAllFilled),
-                    DateDebutCollecte=individu.dateDebutCollecte,
-                    DateFinCollecte=individu.dateFinCollecte,
-                    DureeSaisie=Convert.ToInt32(individu.dureeSaisie),
-                    IsContreEnqueteMade=Convert.ToBoolean(individu.isContreEnqueteMade),
-                    CodeAgentRecenceur=individu.codeAgentRecenceur
+                    Qf2aNbreEnfantVivantM = Convert.ToInt32(individu.qf2aNbreEnfantVivantM),
+                    Qf2bNbreEnfantVivantF = Convert.ToInt32(individu.qf2bNbreEnfantVivantF),
+                    Qf3DernierEnfantJour = Convert.ToByte(individu.qf3DernierEnfantJour),
+                    Qf3DernierEnfantMois = Convert.ToByte(individu.qf3DernierEnfantMois),
+                    Qf3DernierEnfantAnnee = Convert.ToInt32(individu.qf3DernierEnfantAnnee),
+                    Qf4DENeVivantVit = Convert.ToByte(individu.qf4DENeVivantVit),
+                    Statut = Convert.ToByte(individu.statut),
+                    IsFieldAllFilled = Convert.ToBoolean(individu.isFieldAllFilled),
+                    DateDebutCollecte = individu.dateDebutCollecte,
+                    DateFinCollecte = individu.dateFinCollecte,
+                    DureeSaisie = Convert.ToInt32(individu.dureeSaisie),
+                    IsContreEnqueteMade = Convert.ToBoolean(individu.isContreEnqueteMade),
+                    CodeAgentRecenceur = individu.codeAgentRecenceur
                 };
             }
             return new IndividuModel();
@@ -1264,7 +1633,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 QSuivant = question.QSuivant
             };
         }
-        
+
 
         public static Tbl_Questions MapModelToTbl_Questions(QuestionsModel question)
         {
@@ -1730,14 +2099,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
 
         public static List<RapportArModel> MapToListRapportARModel(List<tbl_rapportrar> listOf)
         {
-            List<RapportArModel> rapports=new List<RapportArModel>();
+            List<RapportArModel> rapports = new List<RapportArModel>();
             if (listOf != null)
             {
                 foreach (tbl_rapportrar rapt in listOf)
                 {
                     rapports.Add(MapToRapportARModel(rapt));
                 }
-                
+
             }
             return rapports;
         }

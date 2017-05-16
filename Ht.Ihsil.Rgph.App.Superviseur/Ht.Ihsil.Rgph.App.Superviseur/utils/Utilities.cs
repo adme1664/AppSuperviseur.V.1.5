@@ -391,13 +391,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ParentID = lastParentId;
                     report.Niveau = "3";
                     rapports.Add(report);
-                    lastId = report.ID + 1;
+                    lastId = report.ID;
                 }
                 //Branche pour les batiments inobservables
                 lastParentId = lastId;
                 report = new TableVerificationModel();
                 report.Type = "2- BÂTIMENTS INOBSERVABLES / TAUX DE NON-RÉPONSE TOTALE NRT 1 (%)";
-                report.ID = lastId;
+                report.ID = lastId+1;
                 report.ParentID = firstParentId;
                 report.Niveau = "2";
                 report.Indicateur = "BÂTIMENTS INOBSERVABLES (B1=5)";
@@ -422,7 +422,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 lastParentId = lastId;
                 report = new TableVerificationModel();
                 report.Type = "3-TAUX DE NON-RÉPONSE TOTALE (%)";
-                report.ID = lastId;
+                report.ID = lastId+1;
                 report.Niveau = "2";
                 report.ParentID = firstParentId;
                 report.Indicateur = "Objet Logement pas rempli du tout";
@@ -448,7 +448,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 lastParentId = lastId;
                 report = new TableVerificationModel();
                 report.Type = "4-DISTRIBUTION DES QUESTIONNAIRES EN NRT2 SELON LA RAISON (%)";
-                report.ID = lastId;
+                report.ID = lastId+1;
                 report.ParentID = firstParentId;
                 report.Niveau = "2";
                 report.Indicateur = "";
@@ -538,7 +538,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ParentID = lastParentId;
                 report.Total = "" + nonbreRefusTotal;
                 rapports.Add(report);
-                lastId = report.ID + 1;
+                lastId = report.ID ;
                //On ajoute les batiments dans la branche
                 foreach (BatimentModel batiment in batimentsEnRefus)
                 {
@@ -560,7 +560,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ParentID = lastParentId;
                 report.Total = "" + NbreIndAvecRendezVous;
                 rapports.Add(report);
-                lastId = report.ID + 1;
+                lastId = report.ID;
                 //On ajoute les batiments dans la branche
                 foreach (BatimentModel batiment in batimentsEnIndAvecRendezVous)
                 {
@@ -570,7 +570,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ParentID = indAvecRDParent;
                     report.Niveau = "3";
                     rapports.Add(report);
-                    lastId = report.ID + 1;
+                    lastId = report.ID;
                 }
 
                 //On ajoute la branche Indisponibilité
@@ -582,7 +582,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ParentID = lastParentId;
                 report.Total = "" + nbreIndisponible;
                 rapports.Add(report);
-                lastId = report.ID + 1;
+                lastId = report.ID;
                 //On ajoute les batiments dans la branche
                 foreach (BatimentModel batiment in batimentsIndisponible)
                 {
@@ -592,7 +592,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ParentID = indParent;
                     report.Niveau = "3";
                     rapports.Add(report);
-                    lastId = report.ID + 1;
+                    lastId = report.ID;
                 }
                 //On ajoute la branche Autre
                 report = new TableVerificationModel();
@@ -603,7 +603,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ParentID = lastParentId;
                 report.Total = "" + nbreAutre;
                 rapports.Add(report);
-                lastId = report.ID + 1;
+                lastId = report.ID;
                 //On ajoute les batiments dans la branche
                 foreach (BatimentModel batiment in batimentsEnAutre)
                 {
@@ -613,7 +613,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ParentID = autreParent;
                     report.Niveau = "3";
                     rapports.Add(report);
-                    lastId = report.ID + 1;
+                    lastId = report.ID;
                 }          
            }
             return rapports;

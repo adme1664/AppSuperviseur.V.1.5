@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
+using Ht.Ihsil.Rgph.App.Superviseur.Json;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 {
@@ -40,6 +41,72 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #region Retrieving data for BATIMENTS
         /// <summary>
+        /// Retourne les batiments pour les transformer en Json
+        /// </summary>
+        /// <returns></returns>
+        public List<BatimentJson> GetAllBatimentsInJson()
+        {
+            List<BatimentJson> listOfJsons = new List<BatimentJson>();
+
+            List<BatimentModel> listsOfBatimentModels = GetAllBatimentModel();
+            foreach (BatimentModel bat in listsOfBatimentModels)
+            {
+                BatimentJson batJson = ModelMapper.MapToJson(bat);
+                //Recherche de logement pour un batiment
+                List<LogementJson> logements = new List<LogementJson>();
+                List<LogementModel> logModels = GetAllLogementsByBatiment(bat.BatimentId);
+                if (logModels != null)
+                {
+                    foreach (LogementModel logm in logModels)
+                    {
+                        LogementJson logJson = ModelMapper.MapToJson(logm);
+                        //Recherche de menage(s) dans le logement
+                        List<MenageModel> menModels = GetMenageByLogement(logm.LogeId);
+                        if (menModels != null)
+                        {
+                            List<MenageJson> menages = new List<MenageJson>();
+                            foreach (MenageModel men in menModels)
+                            {
+                                MenageJson menageJson = ModelMapper.MapToJson(men);
+                                //Recherche des emigres
+                                List<EmigreModel> emModels = ModelMapper.MapToListEmigre(repository.MEmigreRepository.Find(em => em.menageId == men.MenageId).ToList());
+                                if (emModels != null)
+                                {
+                                    menageJson.Emigres = new List<EmigreJson>();
+                                    foreach (EmigreModel em in emModels)
+                                    {
+                                        EmigreJson emigreJson = ModelMapper.MapToJson(em);
+                                        menageJson.Emigres.Add(emigreJson);
+                                    }
+                                }
+                                //Recherche de Deces
+                                List<DecesModel> decModels = GetDecesByMenage(men.MenageId).ToList();
+                                if (decModels != null)
+                                {
+                                    menageJson.Deces = new List<DecesJson>();
+                                    menageJson.Deces = ModelMapper.MapToListJson(decModels);
+                                }
+                                //Recherche des individus
+                                List<IndividuModel> indModels = GetIndividuByMenage(men.MenageId);
+                                if (indModels != null)
+                                {
+                                    menageJson.Individus = new List<IndividuJson>();
+                                    menageJson.Individus = ModelMapper.MapToListJson(indModels);
+                                }
+                                menages.Add(menageJson);
+                            }
+                            logJson.Menages = new List<MenageJson>();
+                            logJson.Menages = menages;
+                            batJson.Logements = new List<LogementJson>();
+                            batJson.Logements.Add(logJson);
+                        }
+                    }
+                }
+                listOfJsons.Add(batJson);
+            }
+            return listOfJsons;
+        }
+        /// <summary>
         /// Retourne tous les batiments ayant au moins un objet vide
         /// </summary>
         /// <returns></returns>
@@ -65,7 +132,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         }
                     }
                 }
-                return finalBatimentsList;                    
+                return finalBatimentsList;
             }
             catch (Exception ex)
             {
@@ -81,7 +148,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b=>b.qb1Etat==(int)Constant.EtatBatiment.Inobservable).ToList());
+                return ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.qb1Etat == (int)Constant.EtatBatiment.Inobservable).ToList());
             }
             catch (Exception ex)
             {
@@ -161,8 +228,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 foreach (tbl_menage men in menages)
                 {
                     BatimentModel bat = GetBatimentbyId(men.batimentId.GetValueOrDefault());
-                    if(bat.Statut==Constant.STATUT_MODULE_KI_FINI_1)
-                    batiments.Add(bat);
+                    if (bat.Statut == Constant.STATUT_MODULE_KI_FINI_1)
+                        batiments.Add(bat);
                 }
                 return batiments;
             }
@@ -186,10 +253,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 foreach (tbl_menage men in menages)
                 {
                     BatimentModel bat = GetBatimentbyId(men.batimentId.GetValueOrDefault());
-                   batiments.Add(bat);
-               }
+                    batiments.Add(bat);
+                }
                 return batiments;
-             }
+            }
             catch (Exception ex)
             {
                 log.Info("SqliteReader:/GetAllBatimentWithLogInd" + ex.Message);
@@ -320,7 +387,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         /// </summary>
         /// <returns></returns>
         /// 
-       public List<BatimentModel> GetAllBatimentNotFinished()
+        public List<BatimentModel> GetAllBatimentNotFinished()
         {
             List<BatimentModel> result = new List<BatimentModel>();
             try
@@ -333,7 +400,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return result;
         }
-      
+
         /// <summary>
         /// Gets a List of Batiments Finish
         /// </summary>
@@ -376,7 +443,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     batType.batimentId = Convert.ToInt32(bat.BatimentId);
                     batType.sdeId = bat.SdeId;
                     //if (!isBatimentAlreadySent(batType.SdeId, batType.BatimentId))
-                        result.Add(batType);
+                    result.Add(batType);
                 }
             }
             catch (Exception ex)
@@ -396,146 +463,146 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             BatimentType resultat = null;
             try
             {
-                    tbl_batiment batiment=repository.MBatimentRepository.Find(b=>b.batimentId==batimentId).FirstOrDefault();
-                    if (batiment != null)
+                tbl_batiment batiment = repository.MBatimentRepository.Find(b => b.batimentId == batimentId).FirstOrDefault();
+                if (batiment != null)
+                {
+                    int i = 0;
+                    resultat = WsModelMapper.MapReaderToBatimentType(batiment);
+
+                    /**
+                     * Lecture les logements collectifs
+                     */
+                    List<tbl_logement> logementsC = repository.MLogementRepository.Find(l => l.batimentId == batiment.batimentId && l.qlCategLogement == Constant.TYPE_LOJMAN_KOLEKTIF).ToList();
+                    int lcount = logementsC.Count;
+                    if (lcount > 0)
                     {
-                        int i = 0;
-                        resultat = WsModelMapper.MapReaderToBatimentType(batiment);
-                       
-                        /**
-                         * Lecture les logements collectifs
-                         */
-                       List<tbl_logement> logementsC=  repository.MLogementRepository.Find(l=>l.batimentId==batiment.batimentId && l.qlCategLogement==Constant.TYPE_LOJMAN_KOLEKTIF).ToList();
-                        int lcount = logementsC.Count;
-                        if (lcount > 0)
+                        int iLogC = 0;
+                        resultat.logementCs = new LogementCType[lcount];
+                        foreach (tbl_logement logement in logementsC)
                         {
-                            int iLogC=0;
-                            resultat.logementCs = new LogementCType[lcount];
-                           foreach(tbl_logement logement in logementsC)
+                            LogementCType log = new LogementCType();
+                            log = WsModelMapper.MapReaderToLogementCollectifType(logement);
+                            //resultat.statisticCheck.nombreLogeColletif++;
+
+                            /*
+                             * Lecture des individus des logements collectifs
+                             */
+                            List<tbl_individu> individusC = repository.MIndividuRepository.Find(ind => ind.logeId == logement.logeId).ToList();
+                            lcount = individusC.Count;
+                            if (lcount > 0)
                             {
-                                LogementCType log = new LogementCType();
-                                log = WsModelMapper.MapReaderToLogementCollectifType(logement);
-                                //resultat.statisticCheck.nombreLogeColletif++;
-
-                                /*
-                                 * Lecture des individus des logements collectifs
-                                 */
-                               List<tbl_individu> individusC=repository.MIndividuRepository.Find(ind=>ind.logeId==logement.logeId).ToList();
-                                lcount = individusC.Count;
-                                if (lcount > 0)
+                                log.individus = new IndividuType[lcount];
+                                i = 0;
+                                foreach (tbl_individu individus in individusC)
                                 {
-                                    log.individus = new IndividuType[lcount];
-                                    i = 0;
-                                   foreach(tbl_individu individus in individusC)
-                                    {
-                                        log.individus[i] = WsModelMapper.MapReaderToIndividuType(individus);
-                                        //resultat.statisticCheck.nombreInvididuLC++;
-                                        i++;
-                                    }
+                                    log.individus[i] = WsModelMapper.MapReaderToIndividuType(individus);
+                                    //resultat.statisticCheck.nombreInvididuLC++;
+                                    i++;
                                 }
-                                resultat.logementCs[iLogC] = log;
-                                iLogC++;
                             }
+                            resultat.logementCs[iLogC] = log;
+                            iLogC++;
                         }
-
-                        /**
-                         * Lecture les logements Individuels
-                         */
-                        List<tbl_logement> logementsI = repository.MLogementRepository.Find(l => l.batimentId == batiment.batimentId && l.qlCategLogement == Constant.TYPE_LOJMAN_ENDIVIDYEL).ToList();
-                        lcount = logementsI.Count;
-                        if (lcount > 0)
-                        {
-                            resultat.logementIs = new LogementIType[lcount];
-                            int iLogI = 0;
-                           foreach(tbl_logement logI in logementsI)
-                            {
-                                LogementIType logInd = WsModelMapper.MapReaderToLogementIndType(logI);
-                                //resultat.statisticCheck.nombreLogeIndividuel++;
-                                /*
-                                 * Lecture des menages
-                                 */
-                               List<tbl_menage> menages=repository.MMenageRepository.Find(m=>m.logeId==logI.logeId).ToList();
-                                lcount = menages.Count;
-                                if (lcount > 0)
-                                {
-                                    logInd.menages = new MenageType[lcount];
-                                    int iMenage = 0;
-                                    foreach(tbl_menage men in menages)
-                                    {
-                                        MenageType mt = WsModelMapper.MapReaderToMenageType(men);
-                                        //resultat.statisticCheck.nombreMenage++;
-
-                                        /*
-                                         * Lecture des personnes decedees 
-                                         */
-                                        List<tbl_deces> deces=repository.MDecesRepository.Find(d=>d.menageId==men.menageId).ToList();
-                                        lcount = deces.Count;
-                                        if (lcount > 0)
-                                        {
-                                            mt.deces = new DecesType[lcount];
-                                            i = 0;
-                                            foreach (tbl_deces dec in deces)
-                                            {
-                                                mt.deces[i] = WsModelMapper.MapReaderToDecesType(dec);
-                                                //resultat.statisticCheck.nombreDeces++;
-                                                i++;
-                                            }
-                                        }
-
-                                        /*
-                                         * Lecture des emigres
-                                         */
-                                        List<tbl_emigre> emigres=repository.MEmigreRepository.Find(m=>m.menageId==men.menageId).ToList();
-                                        lcount = emigres.Count;
-                                        if (lcount > 0)
-                                        {
-                                            mt.emigres = new EmigreType[lcount];
-                                            i = 0;
-                                            foreach(tbl_emigre em in emigres)
-                                            {
-                                                mt.emigres[i] = WsModelMapper.MapReaderToEmigreType(em);
-                                                //resultat.statisticCheck.nombreEmigre++;
-                                                i++;
-                                            }
-                                        }
-
-                                        /*
-                                         * Lecture des individus
-                                         */
-                                        List<tbl_individu> individus=repository.MIndividuRepository.Find(ind=>ind.menageId==men.menageId).ToList();
-                                        lcount = individus.Count;
-                                        if (lcount > 0)
-                                        {
-                                            mt.individus = new IndividuType[lcount];
-                                            i = 0;
-                                            foreach(tbl_individu individu in individus)
-                                            {
-                                                mt.individus[i] = WsModelMapper.MapReaderToIndividuType(individu);
-                                                //resultat.statisticCheck.nombreInvididuLI++;
-                                                i++;
-                                            }
-                                        }
-
-                                        //ajouter Menage dans Logement
-                                        logInd.menages[iMenage] = mt;
-                                        iMenage++;
-                                    }
-                                }
-
-                                resultat.logementIs[iLogI] = logInd;
-                                iLogI++;
-                            }
-                        }
-
                     }
 
-                
+                    /**
+                     * Lecture les logements Individuels
+                     */
+                    List<tbl_logement> logementsI = repository.MLogementRepository.Find(l => l.batimentId == batiment.batimentId && l.qlCategLogement == Constant.TYPE_LOJMAN_ENDIVIDYEL).ToList();
+                    lcount = logementsI.Count;
+                    if (lcount > 0)
+                    {
+                        resultat.logementIs = new LogementIType[lcount];
+                        int iLogI = 0;
+                        foreach (tbl_logement logI in logementsI)
+                        {
+                            LogementIType logInd = WsModelMapper.MapReaderToLogementIndType(logI);
+                            //resultat.statisticCheck.nombreLogeIndividuel++;
+                            /*
+                             * Lecture des menages
+                             */
+                            List<tbl_menage> menages = repository.MMenageRepository.Find(m => m.logeId == logI.logeId).ToList();
+                            lcount = menages.Count;
+                            if (lcount > 0)
+                            {
+                                logInd.menages = new MenageType[lcount];
+                                int iMenage = 0;
+                                foreach (tbl_menage men in menages)
+                                {
+                                    MenageType mt = WsModelMapper.MapReaderToMenageType(men);
+                                    //resultat.statisticCheck.nombreMenage++;
+
+                                    /*
+                                     * Lecture des personnes decedees 
+                                     */
+                                    List<tbl_deces> deces = repository.MDecesRepository.Find(d => d.menageId == men.menageId).ToList();
+                                    lcount = deces.Count;
+                                    if (lcount > 0)
+                                    {
+                                        mt.deces = new DecesType[lcount];
+                                        i = 0;
+                                        foreach (tbl_deces dec in deces)
+                                        {
+                                            mt.deces[i] = WsModelMapper.MapReaderToDecesType(dec);
+                                            //resultat.statisticCheck.nombreDeces++;
+                                            i++;
+                                        }
+                                    }
+
+                                    /*
+                                     * Lecture des emigres
+                                     */
+                                    List<tbl_emigre> emigres = repository.MEmigreRepository.Find(m => m.menageId == men.menageId).ToList();
+                                    lcount = emigres.Count;
+                                    if (lcount > 0)
+                                    {
+                                        mt.emigres = new EmigreType[lcount];
+                                        i = 0;
+                                        foreach (tbl_emigre em in emigres)
+                                        {
+                                            mt.emigres[i] = WsModelMapper.MapReaderToEmigreType(em);
+                                            //resultat.statisticCheck.nombreEmigre++;
+                                            i++;
+                                        }
+                                    }
+
+                                    /*
+                                     * Lecture des individus
+                                     */
+                                    List<tbl_individu> individus = repository.MIndividuRepository.Find(ind => ind.menageId == men.menageId).ToList();
+                                    lcount = individus.Count;
+                                    if (lcount > 0)
+                                    {
+                                        mt.individus = new IndividuType[lcount];
+                                        i = 0;
+                                        foreach (tbl_individu individu in individus)
+                                        {
+                                            mt.individus[i] = WsModelMapper.MapReaderToIndividuType(individu);
+                                            //resultat.statisticCheck.nombreInvididuLI++;
+                                            i++;
+                                        }
+                                    }
+
+                                    //ajouter Menage dans Logement
+                                    logInd.menages[iMenage] = mt;
+                                    iMenage++;
+                                }
+                            }
+
+                            resultat.logementIs[iLogI] = logInd;
+                            iLogI++;
+                        }
+                    }
+
+                }
+
+
             }
             catch (Exception ex)
             {
                 log.Info("<>============Error : " + ex.Message);
             }
-           
+
             return resultat;
         }
 
@@ -548,8 +615,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public bool isBatimentAlreadySent(string sdeId, long batId)
         {
             MainRepository rep = new MainRepository(sdeId);
-            tbl_batiment result = rep.MBatimentRepository.Find(d =>d.batimentId == batId).FirstOrDefault();
-            if(result.isSynchroToCentrale.GetValueOrDefault()==1)
+            tbl_batiment result = rep.MBatimentRepository.Find(d => d.batimentId == batId).FirstOrDefault();
+            if (result.isSynchroToCentrale.GetValueOrDefault() == 1)
             {
                 return true;
             }
@@ -621,7 +688,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.logeId == logId ).ToList());
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.logeId == logId).ToList());
             }
             catch (Exception ex)
             {
@@ -922,6 +989,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #region Retrieving data for LOGEMENT
         /// <summary>
+        /// Retourne tous les logements dans un batiment
+        /// </summary>
+        /// <param name="batimentId"></param>
+        /// <returns></returns>
+        public List<LogementModel> GetAllLogementsByBatiment(long batimentId)
+        {
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.batimentId == batimentId).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("GetAllLogementsByBatiment:/GetAllLogementOccupantAbsent" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+        /// <summary>
         /// Retourne les logements dont les occupants sont absents
         /// </summary>
         /// <returns>List GetAllLogementOccupantAbsent</returns>
@@ -996,7 +1080,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.batimentId == batimentId && l.qlCategLogement == Constant.TYPE_LOJMAN_ENDIVIDYEL && l.statut== Constant.STATUT_MODULE_KI_FINI_1).ToList());
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.batimentId == batimentId && l.qlCategLogement == Constant.TYPE_LOJMAN_ENDIVIDYEL && l.statut == Constant.STATUT_MODULE_KI_FINI_1).ToList());
             }
             catch (Exception ex)
             {
@@ -1040,7 +1124,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return null;
         }
         #endregion
-        
+
         #region OPERATIONS SUR CHAQUE SDES
 
         public int getTotalBatimentCartographies(string sdeId)
@@ -1106,7 +1190,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         }
         public int getTotalBatiment()
         {
-           try
+            try
             {
                 return repository.MBatimentRepository.Find().Count();
             }
@@ -1152,7 +1236,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             {
 
                 return repository.MEmigreRepository.Find().Count();
-            
+
             }
             catch (Exception)
             {
@@ -1176,7 +1260,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public int getTotalEmigresHommes()
         {
-            
+
             try
             {
                 return repository.MEmigreRepository.Find(em => em.qn2bSexe == Constant.MASCULIN).ToList().Count();
@@ -1205,7 +1289,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-               List<tbl_deces> list = repository.MDecesRepository.Find(dc => dc.qd2aSexe == Constant.FEMININ).ToList();
+                List<tbl_deces> list = repository.MDecesRepository.Find(dc => dc.qd2aSexe == Constant.FEMININ).ToList();
                 return list.Count();
 
             }
@@ -1214,12 +1298,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
             }
             return 0;
-            
+
         }
 
         public int getTotalDecesHommes()
         {
-           try
+            try
             {
                 return repository.MDecesRepository.Find(dc => dc.qd2aSexe == Constant.MASCULIN).Count();
             }
@@ -1242,7 +1326,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
             }
             return 0;
-           
+
         }
 
         public int getTotalIndividusFemmes()
@@ -1271,7 +1355,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 log.Info("SqliteReader/getTotalIndividusHommes:Error=> " + ex.Message);
             }
             return 0;
-            
+
         }
         public int getTotalLogementCs()
         {
@@ -1292,7 +1376,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             try
             {
                 return repository.MLogementRepository.Find(lg => lg.qlCategLogement == Constant.TYPE_LOJMAN_ENDIVIDYEL).Count();
-        
+
             }
             catch (Exception)
             {
@@ -1343,7 +1427,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MLogementRepository.Find(l => l.isValidated == Constant.STATUS_NOT_VALIDATED_0 && l.qlCategLogement==Constant.TYPE_LOJMAN_KOLEKTIF).Count();
+                return repository.MLogementRepository.Find(l => l.isValidated == Constant.STATUS_NOT_VALIDATED_0 && l.qlCategLogement == Constant.TYPE_LOJMAN_KOLEKTIF).Count();
             }
             catch (Exception)
             {
@@ -1382,7 +1466,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MMenageRepository.Find(m => m.isValidated == Constant.STATUS_VALIDATED_1 ).Count();
+                return repository.MMenageRepository.Find(m => m.isValidated == Constant.STATUS_VALIDATED_1).Count();
             }
             catch (Exception)
             {
@@ -1436,19 +1520,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             double nbreParJour = 0;
             try
             {
-                List<BatimentModel> listOfBatiments =ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.statut == (int)Constant.StatutModule.Fini).ToList());
+                List<BatimentModel> listOfBatiments = ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.statut == (int)Constant.StatutModule.Fini).ToList());
                 BatimentModel firstBatiment = listOfBatiments.First();
                 BatimentModel lastBatiment = listOfBatiments.Last();
                 DateTime dateSaisieFirst = DateTime.ParseExact(firstBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
                 DateTime dateSaisieLast = DateTime.ParseExact(lastBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
-                if (totalOfDays==0)
-                nbreParJour = listOfBatiments.Count();
+                if (totalOfDays == 0)
+                    nbreParJour = listOfBatiments.Count();
                 else
                 {
-                    if(totalOfDays>=2)
-                        nbreParJour = listOfBatiments.Count() / (totalOfDays-1);
+                    if (totalOfDays >= 2)
+                        nbreParJour = listOfBatiments.Count() / (totalOfDays - 1);
                     else
                     {
                         nbreParJour = listOfBatiments.Count();
@@ -1467,7 +1551,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             throw new NotImplementedException();
         }
-        public  double getTotalLogeRecenseParJourV()
+        public double getTotalLogeRecenseParJourV()
         {
             string methodName = "getTotalLogeCRecenseParJourV";
             double nbreParJour = 0;
@@ -1505,7 +1589,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             double nbreParJour = 0;
             try
             {
-                List<LogementModel> listOfLogements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l=>l.statut==(int)Constant.StatutModule.Fini).ToList());
+                List<LogementModel> listOfLogements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.statut == (int)Constant.StatutModule.Fini).ToList());
                 LogementModel firstLogement = listOfLogements.First();
                 LogementModel lastLogement = listOfLogements.Last();
                 DateTime dateSaisieFirst = DateTime.ParseExact(firstLogement.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
@@ -1623,7 +1707,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 float nbreG = (float)getTotalIndividusHommes();
                 float nbreF = (float)getTotalIndividusFemmes();
                 indice = nbreG / nbreF;
-                indice=indice*100;
+                indice = indice * 100;
                 return indice;
             }
             catch (Exception)
@@ -1640,7 +1724,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qp5bAge<1).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge < 1).Count();
             }
             catch (Exception ex)
             {
@@ -1740,9 +1824,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                int nbLogementCollectif=0;
+                int nbLogementCollectif = 0;
                 //On recherche les logements collectifs avant et apres on fait le total
-                List<LogementModel> listOfLogementsCollectifs = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == 1).ToList());
+                List<LogementModel> listOfLogementsCollectifs = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == 0).ToList());
                 if (listOfLogementsCollectifs != null)
                 {
                     foreach (LogementModel lgc in listOfLogementsCollectifs)
@@ -1802,7 +1886,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MLogementRepository.Find(l => l.qlCategLogement == Constant.TYPE_LOJMAN_ENDIVIDYEL && l.qlin2StatutOccupation == Constant.LOJMAN_OKIPE_TOUTAN && l.isValidated==Constant.STATUS_NOT_VALIDATED_0).Count();
+                return repository.MLogementRepository.Find(l => l.qlCategLogement == Constant.TYPE_LOJMAN_ENDIVIDYEL && l.qlin2StatutOccupation == Constant.LOJMAN_OKIPE_TOUTAN && l.isValidated == Constant.STATUS_NOT_VALIDATED_0).Count();
             }
             catch (Exception)
             {
@@ -1949,7 +2033,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                List<tbl_question_reponse> ListOfreponse= repository.MQuestionReponseRepository.Find(rep => rep.codeQuestion==codeQuestion).ToList();
+                List<tbl_question_reponse> ListOfreponse = repository.MQuestionReponseRepository.Find(rep => rep.codeQuestion == codeQuestion).ToList();
                 foreach (tbl_question_reponse qr in ListOfreponse)
                 {
                     if (qr.codeReponse == codeReponse)
@@ -2023,8 +2107,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #region INDICATEURS SOCIO-DEMOGRAPHIQUES PAR MENAGES
         public int getTotalPersonnesByMenage(long menageId)
         {
-            List<IndividuModel> listOf=GetIndividuByMenage(menageId);
-            if(listOf!=null){
+            List<IndividuModel> listOf = GetIndividuByMenage(menageId);
+            if (listOf != null)
+            {
                 return listOf.Count();
             }
             return 0;
@@ -2032,11 +2117,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public int getTotalFemmesByMenage(long menageId)
         {
-            List<IndividuModel> listOf=GetIndividuByMenage(menageId);
-            if (listOf != null) 
+            List<IndividuModel> listOf = GetIndividuByMenage(menageId);
+            if (listOf != null)
             {
-                int nbre=0;
-                foreach(IndividuModel ind in listOf){
+                int nbre = 0;
+                foreach (IndividuModel ind in listOf)
+                {
                     if (ind.Qp4Sexe == 2)
                     {
                         nbre = nbre + 1;
@@ -2049,7 +2135,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public int getTotalEnfantMoins5AnsByMenage(long menageId)
         {
-            List<IndividuModel> listOf=GetIndividuByMenage(menageId);
+            List<IndividuModel> listOf = GetIndividuByMenage(menageId);
             if (listOf != null)
             {
                 int nbre = 0;
@@ -2085,7 +2171,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public int getTotalDecesByMenage(long logeId)
         {
-           // MenageModel Menage = GetMenageByLogement(logeId);
+            // MenageModel Menage = GetMenageByLogement(logeId);
             return 0;
         }
 
@@ -2103,7 +2189,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         {
                             nbre = nbre + 1;
                         }
-                    }                    
+                    }
                 }
                 return nbre;
             }
@@ -2124,7 +2210,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         {
                             nbre = nbre + 1;
                         }
-                    }    
+                    }
                 }
                 return nbre;
             }
@@ -2141,11 +2227,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     if (ind.Qp5bAge >= 5)
                     {
-                        if (ind.Qaf3HandicapMarcher>=2)
+                        if (ind.Qaf3HandicapMarcher >= 2)
                         {
                             nbre = nbre + 1;
                         }
-                    }    
+                    }
                 }
                 return nbre;
             }
@@ -2162,11 +2248,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     if (ind.Qp5bAge >= 5)
                     {
-                        if (ind.Qaf4HandicapSouvenir>=2)
+                        if (ind.Qaf4HandicapSouvenir >= 2)
                         {
                             nbre = nbre + 1;
                         }
-                    }    
+                    }
                 }
                 return nbre;
             }
@@ -2183,11 +2269,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     if (ind.Qp5bAge >= 5)
                     {
-                        if (ind.Qaf5HandicapPourSeSoigner>=2)
+                        if (ind.Qaf5HandicapPourSeSoigner >= 2)
                         {
                             nbre = nbre + 1;
                         }
-                    }    
+                    }
                 }
                 return nbre;
             }
@@ -2204,11 +2290,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     if (ind.Qp5bAge >= 5)
                     {
-                        if (ind.Qaf6HandicapCommuniquer>=2)
+                        if (ind.Qaf6HandicapCommuniquer >= 2)
                         {
                             nbre = nbre + 1;
                         }
-                    }    
+                    }
                 }
                 return nbre;
             }
@@ -2229,7 +2315,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         {
                             nbre = nbre + 1;
                         }
-                       
+
                     }
                 }
                 return nbre;
@@ -2245,7 +2331,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qe2FreqentationScolaireOuUniv <=6)
+                    if (ind.Qe2FreqentationScolaireOuUniv <= 6)
                     {
                         if (ind.Qp5bAge >= 6 && ind.Qp5bAge <= 24)
                         {
@@ -2273,7 +2359,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                             nbre = nbre + 1;
                         }
                     }
-                    
+
                 }
                 return nbre;
             }
@@ -2295,7 +2381,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             //                nbre = nbre + 1;
             //            }
             //        }
-                    
+
             //    }
             //    return nbre;
             //}
@@ -2311,7 +2397,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public tbl_departement getDepartement(string deptId)
         {
-           return repository.MDepartementRepository.Find(p => p.DeptId == deptId).FirstOrDefault();
+            return repository.MDepartementRepository.Find(p => p.DeptId == deptId).FirstOrDefault();
         }
 
         public tbl_commune getCommune(string comId)
@@ -2361,7 +2447,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return ModelMapper.MapToListRapportARModel(repository.MRapportARRepository.Find(b=>b.batimentId==batimentId).ToList());
+                return ModelMapper.MapToListRapportARModel(repository.MRapportARRepository.Find(b => b.batimentId == batimentId).ToList());
             }
             catch (Exception ex)
             {
@@ -2404,15 +2490,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return null;
         }
-     /// <summary>
-     /// Retourne tous les rapports pour lesquels au moins un objet n'est pas termine
-     /// </summary>
-     /// <returns></returns>
+        /// <summary>
+        /// Retourne tous les rapports pour lesquels au moins un objet n'est pas termine
+        /// </summary>
+        /// <returns></returns>
         public List<RapportArModel> GetAllRptAgentRecenseurForNotFinishedObject()
         {
             try
             {
-                return ModelMapper.MapToListRapportARModel(repository.MRapportARRepository.Find(r=>r.raisonActionId > 15).ToList());
+                return ModelMapper.MapToListRapportARModel(repository.MRapportARRepository.Find(r => r.raisonActionId > 15).ToList());
             }
             catch (Exception ex)
             {
@@ -2425,6 +2511,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
 
 
-       
+
+
+
+
+
+
     }
 }
