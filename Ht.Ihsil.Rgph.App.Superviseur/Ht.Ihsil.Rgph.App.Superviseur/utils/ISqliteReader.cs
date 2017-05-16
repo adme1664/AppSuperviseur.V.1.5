@@ -147,13 +147,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region PERFORMANCE
-        int getTotalBatRecenseParJourV();
+        double getTotalBatRecenseParJourV();
         int getTotalBatRecenseParJourNV();
-        int getTotalLogeCRecenseParJourV();
+        double getTotalLogeCRecenseParJourV();
+        double getTotalLogeRecenseParJourV();
         int getTotalLogeCRecenseParJourNV();
         int getTotalLogeIRecenseParJourV();
         int getTotalLogeIRecenseParJourNV();
-        int getTotalMenageRecenseParJourV();
+        double getTotalMenageRecenseParJourV();
         int getTotalMenageRecenseParJourNV();
         int getTotalIndRecenseParJourV();
         int getTotalIndRecenseParJourNV();
@@ -161,7 +162,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #region DEMOGRAPHIQUE
         float getIndiceMasculinite();
-        int getTotalEnfantDeMoinsDe5Ans();
+        int getTotalEnfantDeMoinsDe1Ans();
         int getTotalIndividu18AnsEtPlus();
         int getTotalIndividu10AnsEtPlus();
         int getTotalIndividu65AnsEtPlus();

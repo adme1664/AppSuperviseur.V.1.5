@@ -18,8 +18,8 @@
             </dxr:RibbonControl.ToolbarItems>
             <dxr:RibbonDefaultPageCategory Name="rpc_sdes" Color="White" Loaded="rpc_sdes_Loaded">
                 <dxr:RibbonPage Caption="SDES">
-                    <dxr:RibbonPageGroup>
-                        <dxb:BarButtonItem x:Name="bbi_verification" Content="Verification" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/vi1.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_verification_ItemClick" />
+                    <dxr:RibbonPageGroup >
+                        <dxb:BarButtonItem x:Name="bbi_verification"   Content="Verification" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/vi1.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_verification_ItemClick" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup>
                         <dxb:BarButtonItem x:Name="bbi_visualisation" Content="Affichage" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tb.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_visualisation_ItemClick" />

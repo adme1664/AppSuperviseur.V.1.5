@@ -46,11 +46,9 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public Nullable<long> qm10TotalDomestiqueGarcon { get; set; }
         public Nullable<long> qm11TotalIndividuVivant { get; set; }
         public Nullable<long> qn1Emigration { get; set; }
-        public Nullable<long> qn1NbreEmigreFille { get; set; }
-        public Nullable<long> qn1NbreEmigreGarcon { get; set; }
+        public Nullable<long> qn1NbreEmigre { get; set; }
         public Nullable<long> qd1Deces { get; set; }
-        public Nullable<long> qd1NbreDecedeFille { get; set; }
-        public Nullable<long> qd1NbreDecedeGarcon { get; set; }
+        public Nullable<long> qd1NbreDecede { get; set; }
         public Nullable<long> statut { get; set; }
         public Nullable<long> isValidated { get; set; }
         public string dateDebutCollecte { get; set; }

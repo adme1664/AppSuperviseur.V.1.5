@@ -352,7 +352,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         model.LogeId = logViewModel.Logement.LogeId;
                         model.BatimentId = Convert.ToInt32(logViewModel.Logement.BatimentId);
                         model.SdeId = logViewModel.Logement.SdeId;
-                        model.Qlin1NumeroOrdre = Convert.ToInt32(logViewModel.Logement.Qlin1NumeroOrdre.GetValueOrDefault());
+                        model.Qlin1NumeroOrdre = Convert.ToByte(logViewModel.Logement.Qlin1NumeroOrdre.GetValueOrDefault());
                         BatimentCEModel batiment = ModelMapper.MapToBatimentCEModel(contreEnqueteService.daoCE.getBatiment(model.BatimentId, model.SdeId));
                         if (batiment.IsContreEnqueteMade.GetValueOrDefault() == false)
                         {
@@ -568,7 +568,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         model.LogeId = menageCEViewModel.LogementId;
                         model.BatimentId = menageCEViewModel.BatimentId;
                         model.SdeId = menageCEViewModel.NumSde;
-                        model.Qm1NoOrdre = Convert.ToInt32(menageCEViewModel.Menage.Qm1NoOrdre.GetValueOrDefault());
+                        model.Qm1NoOrdre = Convert.ToByte(menageCEViewModel.Menage.Qm1NoOrdre.GetValueOrDefault());
                         LogementCEModel logement = ModelMapper.MapToLogementCEModel(contreEnqueteService.daoCE.getLogementCE(Convert.ToInt32(model.BatimentId), model.SdeId, Convert.ToInt32(model.LogeId)));
                         if (logement.IsContreEnqueteMade.GetValueOrDefault() == 0)
                         {
@@ -854,8 +854,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 ind.MenageId = model.MenageId;
                                 ind.IndividuId = model.IndividuId;
                                 ind.SdeId = model.SdeId;
-                                ind.Q3Prenom = model.Q3Prenom;
-                                ind.Qp3LienDeParente = Convert.ToInt32(model.Q6LienDeParente.GetValueOrDefault());
+                                ind.Qp2APrenom = model.Q3Prenom;
+                                ind.Qp3LienDeParente = Convert.ToByte(model.Q6LienDeParente.GetValueOrDefault());
                                 MenageCEModel menage = ModelMapper.MapToMenageCEModel(contreEnqueteService.daoCE.getMenageCE(model.BatimentId, model.LogeId, model.SdeId, model.MenageId));
                                 if (menage.IsContreEnqueteMade.GetValueOrDefault() == false)
                                 {
@@ -881,7 +881,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 _deces.LogeId = model.LogeId;
                                 _deces.MenageId = model.MenageId;
                                 _deces.SdeId = model.SdeId;
-                                _deces.Qd2NoOrdre = Convert.ToInt32(model.Qd2NoOrdre.GetValueOrDefault());
+                                _deces.Qd2NoOrdre = Convert.ToByte(model.Qd2NoOrdre.GetValueOrDefault());
                                 MenageCEModel menage = ModelMapper.MapToMenageCEModel(contreEnqueteService.daoCE.getMenageCE(model.BatimentId, model.LogeId, model.SdeId, model.MenageId));
                                 if (menage.IsContreEnqueteMade.GetValueOrDefault() == false)
                                 {

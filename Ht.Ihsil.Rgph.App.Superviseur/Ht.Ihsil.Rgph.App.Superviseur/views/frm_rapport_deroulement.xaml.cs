@@ -116,7 +116,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (btnSauvegarder.Content.ToString() =="Sauvegarder")
+            if (btnSauvegarder.Content.ToString() == "Sauvegarder")
             {
                 rapport.DateRapport = DateTime.Now.ToString();
                 long rapportId = service.saveRptDeroulement(rapport);
@@ -146,7 +146,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             DetailsRapportModel modelForUpdating = new DetailsRapportModel();
                             modelForUpdating = ModelMapper.MapToDetailsRapportModel(row);
                             modelForUpdating.RapportId = rapport.RapportId;
-                            if (modelForUpdating.DetailsRapportId == dt.DetailsRapportId && modelForUpdating.RapportId == dt.RapportId)
+                            if (modelForUpdating.DetailsRapportId!=0)
                             {
                                 dt.Commentaire = modelForUpdating.Commentaire;
                                 dt.Domaine = modelForUpdating.Domaine;
@@ -158,6 +158,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 dt.Probleme = modelForUpdating.Probleme;
                                 bool result = service.updateDetailsDeroulement(dt);
                                 log.Info("Result updating============================<>" + result);
+                            }
+                            else
+                            {
+                                bool result1 = service.saveDetailsDeroulement(modelForUpdating);
+                                log.Info("Result updating============================<>" + result1);
                             }
                         }
                     }
@@ -299,14 +304,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 int i = Rapports.Count;
                 DetailsRapportDeroulement rprt = new DetailsRapportDeroulement(i + 1, domaine, sousDomaine, probleme, solution, txtPrecision.Text, txtSuggestion.Text, suivi, "Aucun");
-                if (dtModel != null)
+                if (btnAjouter.Content == "Modifier")
                 {
-                    rprt.RapportId = dtModel.RapportId;
-                    rprt.DetailsRapportId = dtModel.DetailsRapportId;
                     foreach (DetailsRapportDeroulement dt in Rapports)
                     {
-                        if (dt.DetailsRapportId == rprt.DetailsRapportId && dt.RapportId == rprt.RapportId)
+                        if (dtModel.DetailsRapportId==dt.DetailsRapportId)
                         {
+                            rprt.Num = dt.Num;
+                            rprt.DetailsRapportId = dt.DetailsRapportId;
                             Rapports.Remove(dt);
                             Rapports.Add(rprt);
                             grid_rapport.ItemsSource = Rapports;
@@ -322,6 +327,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         }
                     }
                 }
+
                 else
                 {
                     Rapports.Add(rprt);
@@ -334,10 +340,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     ListOfSuivi = new ObservableCollection<KeyValue>();
                     txtPrecision.Text = "";
                     txtSuggestion.Text = "";
+
                 }
-                
             }
+
         }
+
 
         private void TableView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
@@ -358,7 +366,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     }
                     i++;
                 }
-           }
+            }
         }
 
         private void grid_rapport_AutoGeneratingColumn(object sender, AutoGeneratingColumnEventArgs e)
@@ -367,6 +375,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 e.Column.Visible = false;
             if (e.Column.FieldName == "RapportId")
                 e.Column.Visible = false;
+        }
+
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
+        {
+            btnAjouter.Content = "Modifier";
+            MessageBox.Show("" + dtModel.Domaine.Value);
         }
 
     }

@@ -21,9 +21,9 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public string sdeId { get; set; }
         public Nullable<long> qn1numeroOrdre { get; set; }
         public string qn2aNomComplet { get; set; }
-        public Nullable<long> qn2bResidenceActuelle { get; set; }
-        public Nullable<long> qn2cSexe { get; set; }
-        public Nullable<long> qn2dAgeAuMomentDepart { get; set; }
+        public Nullable<long> qn2bSexe { get; set; }
+        public string qn2cAgeAuMomentDepart { get; set; }
+        public Nullable<long> qn2dVivantToujours { get; set; }
         public Nullable<long> qn2eDernierPaysResidence { get; set; }
         public Nullable<long> statut { get; set; }
         public Nullable<long> isFieldAllFilled { get; set; }

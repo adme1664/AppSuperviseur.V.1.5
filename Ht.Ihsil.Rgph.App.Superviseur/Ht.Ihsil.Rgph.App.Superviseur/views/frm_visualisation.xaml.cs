@@ -666,11 +666,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                                                 ind.MenageId = _ind.MenageId;
                                                                 ind.Qp1NoOrdre = Convert.ToByte(_ind.Q1NoOrdre);
                                                                 ind.IndividuId = _ind.IndividuId;
-                                                                ind.Q2Nom = _ind.Q2Nom;
-                                                                ind.Q3Prenom = _ind.Q3Prenom;
-                                                                ind.Q5bAge = Convert.ToByte(_ind.Q5bAge);
-                                                                ind.Q2Nom = _ind.Q2Nom;
-                                                                ind.Q3Prenom = _ind.Q3Prenom;
+                                                                ind.Q2Nom = _ind.Qp2BNom;
+                                                                ind.Q3Prenom = _ind.Qp2APrenom;
+                                                                ind.Q5bAge = Convert.ToByte(_ind.Qp5bAge);
+                                                                ind.Q2Nom = _ind.Qp2BNom;
+                                                                ind.Q3Prenom = _ind.Qp2APrenom;
                                                                 ind.Q6LienDeParente = Convert.ToByte(_ind.Qp3LienDeParente);
                                                                 service_ce.saveIndividuCE(ind);
                                                             }

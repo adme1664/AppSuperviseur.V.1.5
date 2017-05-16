@@ -55,7 +55,70 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region Utilities
+        public static SdeInformation getSdeInformation(string sdeId)
+        {
+            try
+            {
+                SdeInformation sde = new SdeInformation();
+                sde.DeptId = sdeId.Substring(0, 1);
+                sde.ComId = sdeId.Substring(0, 3);
+                sde.VqseId = sdeId.Substring(0, 6);
 
+                //if (dep.Substring(0, 2) == "00")
+                //{
+                //    sde.DeptId = dep.Substring(1, 2);
+                //}
+                //else
+                //{
+                //    sde.DeptId = dep.Substring(0, 2);
+                //}
+                return sde;
+            }
+            catch (Exception)
+            {
+
+            }
+            return null;
+        }
+        public static string getGeoInformation(string sdeId)
+        {
+            try
+            {
+                SdeInformation sde = getSdeInformation(sdeId);
+                ContreEnqueteService service = new ContreEnqueteService();
+                string deptNom = service.getDepartement("0" + sde.DeptId).DeptNom;
+                if (sde.ComId.Length == 3)
+                {
+                    sde.ComId = "0" + sde.ComId;
+                }
+                if (sde.VqseId.Length == 6)
+                {
+                    sde.VqseId = "0" + sde.VqseId;
+                }
+                string comNom = service.getCommune(sde.ComId).ComNom;
+                string vqseNom = service.getVqse(sde.VqseId).VqseNom;
+                return "Depatman: " + deptNom + "/Komin: " + comNom + "/Seksyon Kominal: " + vqseNom;
+            }
+            catch (Exception)
+            {
+
+            }
+            return null;
+
+        }
+        public static void killProcess(Process[] procs)
+        {
+            if (procs.Length != 0)
+            {
+                foreach (var proc in procs)
+                {
+                    if (!proc.HasExited)
+                    {
+                        proc.Kill();
+                    }
+                }
+            }
+        }
         /// <summary>
         /// Retourne les noms des objets
         /// </summary>
@@ -102,10 +165,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         /// <param Name="grid"></param>
         public static void showControl(Control control, Grid grid)
         {
-            control.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
-            control.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
-            grid.Children.Clear();
-            grid.Children.Add(control);
+            //control.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            //control.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            //grid.Children.Clear();
+            //grid.Children.Add(control);
+
+            control.Dispatcher.BeginInvoke((Action)(() => control.VerticalAlignment = System.Windows.VerticalAlignment.Stretch));
+            control.Dispatcher.BeginInvoke((Action)(() => control.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch));
+            grid.Dispatcher.BeginInvoke((Action)(() => grid.Children.Clear()));
+            grid.Dispatcher.BeginInvoke((Action)(() => grid.Children.Add(control)));
+            
+
+            //control.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
+            //control.HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch;
+            //grid.Children.Clear();
+            //grid.Children.Add(control);
         }
 
         public static Thickness getThickness(Thickness t)
@@ -272,11 +346,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion    
 
         #region VERIFICATION
-
-
-        //Effectue la verification de la sde en fonction de certains criteres (pour une SDE)
-
-        #region VERIFICATION POUR UNDE SDE
+        //Effectue la verification de la sde en fonction de certains criteres
         public static List<TableVerificationModel> getVerificatoinNonReponseTotal(string path,string sdeId)
         {
             List<TableVerificationModel> rapports = new List<TableVerificationModel>();
@@ -293,6 +363,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ID = 1;
                 report.ParentID = 0;
                 report.Indicateur = "Uniquement les questionnaires en premier passage.";
+                report.Niveau = "1";
                 rapports.Add(report);
                 lastId=report.ID;
                 firstParentId = report.ID;
@@ -303,6 +374,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.Total = ""+nbreBatimentPasRempli;
                 report.ID = lastId + 1;
                 report.ParentID = lastId;
+                report.Niveau = "2";
                 rapports.Add(report);
                 lastId = report.ID;
                 lastParentId = report.ID;
@@ -317,6 +389,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Type = "Batiman-" + batiment.BatimentId+" /REC-"+batiment.Qrec;
                     report.ID = lastId + 1;
                     report.ParentID = lastParentId;
+                    report.Niveau = "3";
                     rapports.Add(report);
                     lastId = report.ID + 1;
                 }
@@ -326,6 +399,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.Type = "2- BÂTIMENTS INOBSERVABLES / TAUX DE NON-RÉPONSE TOTALE NRT 1 (%)";
                 report.ID = lastId;
                 report.ParentID = firstParentId;
+                report.Niveau = "2";
                 report.Indicateur = "BÂTIMENTS INOBSERVABLES (B1=5)";
                 batiments = new List<BatimentModel>();
                 batiments = service.Sr.GetAllBatimentsInobservables().ToList();
@@ -340,6 +414,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                     report.ID = lastId + 1;
                     report.ParentID = lastParentId;
+                    report.Niveau = "3";
                     rapports.Add(report);
                     lastId = report.ID + 1;
                 }
@@ -348,6 +423,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report = new TableVerificationModel();
                 report.Type = "3-TAUX DE NON-RÉPONSE TOTALE (%)";
                 report.ID = lastId;
+                report.Niveau = "2";
                 report.ParentID = firstParentId;
                 report.Indicateur = "Objet Logement pas rempli du tout";
                 batiments = new List<BatimentModel>();
@@ -363,6 +439,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                     report.ID = lastId + 1;
                     report.ParentID = lastParentId;
+                    report.Niveau = "3";
                     rapports.Add(report);
                     lastId = report.ID + 1;
                 }
@@ -373,6 +450,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.Type = "4-DISTRIBUTION DES QUESTIONNAIRES EN NRT2 SELON LA RAISON (%)";
                 report.ID = lastId;
                 report.ParentID = firstParentId;
+                report.Niveau = "2";
                 report.Indicateur = "";
                 rapportsAgentsRecenseurs = service.Sr.GetAllRptAgentRecenseurForNotFinishedObject().ToList();
                 report.Total = "" + rapportsAgentsRecenseurs.Count;
@@ -468,6 +546,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                     report.ID = lastId + 1;
                     report.ParentID = refusParent;
+                    report.Niveau = "3";
                     rapports.Add(report);
                     lastId = report.ID + 1;
                 }
@@ -489,6 +568,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                     report.ID = lastId + 1;
                     report.ParentID = indAvecRDParent;
+                    report.Niveau = "3";
                     rapports.Add(report);
                     lastId = report.ID + 1;
                 }
@@ -510,6 +590,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                     report.ID = lastId + 1;
                     report.ParentID = indParent;
+                    report.Niveau = "3";
                     rapports.Add(report);
                     lastId = report.ID + 1;
                 }
@@ -530,17 +611,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                     report.ID = lastId + 1;
                     report.ParentID = autreParent;
+                    report.Niveau = "3";
                     rapports.Add(report);
                     lastId = report.ID + 1;
                 }          
            }
             return rapports;
         }
-
-#endregion
-
-        #region TOUT LE DISTRCIT
-        //Verification pour tout le district
         public static List<TableVerificationModel> getVerificatoinNonReponseTotalForAllSdes(string path)
         {
             List<TableVerificationModel> rapports = new List<TableVerificationModel>();
@@ -572,6 +649,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ID = 1;
                 report.ParentID = 0;
                 report.Indicateur = "Uniquement les questionnaires en premier passage.";
+                report.Niveau = "1";
                 rapports.Add(report);
                 lastId = report.ID;
                 firstParentId = report.ID;
@@ -583,6 +661,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.Total = "" + nbreBatimentPasRempli;
                 report.ID = lastId + 1;
                 report.ParentID = lastId;
+                report.Niveau = "2";
                 rapports.Add(report);
                 lastId = report.ID;
                 batimentPasRempliId= report.ID;
@@ -603,6 +682,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Type = "" + sde.SdeId;
                     //report.Image = "/images/database.png";
                     report.ID = lastId + 1;
+                    report.Niveau = "3";
                     report.ParentID = batimentPasRempliId;
                     report.Total = "" + batiments.Count();
                     lastId = report.ID;
@@ -616,6 +696,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                         report.ID = lastId + 1;
                         report.ParentID = lastParentId;
+                        report.Niveau = "4";
                         rapports.Add(report);
                         lastId = report.ID + 1;
                     }
@@ -641,6 +722,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.Indicateur = "BÂTIMENTS INOBSERVABLES (B1=5)";
                 report.Total = "" + nbreBatimentInobservables;
                 report.Taux = "" + getPourcentage(nbreBatimentInobservables, nbreTotalBatimentDistrict) + "%";
+                report.Niveau = "2";
                 rapports.Add(report);
                 lastId = report.ID;
                 batimentInobservableId = report.ID;
@@ -659,6 +741,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Total = ""+batiments.Count();
                     lastId = report.ID;
                     lastParentId = report.ID;
+                    report.Niveau = "3";
                     rapports.Add(report);
                     //
                     foreach (BatimentModel batiment in batiments)
@@ -667,6 +750,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.Type =  "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                         report.ID = lastId + 1;
                         report.ParentID = lastParentId;
+                        report.Niveau = "4";
                         rapports.Add(report);
                         lastId = report.ID + 1;
                     }
@@ -693,6 +777,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.Indicateur = "Objet Logement pas rempli du tout";
                 report.Total = "" + nbreBatimentObjetVide;
                 report.Taux = "" + getPourcentage(nbreBatimentObjetVide, nbreTotalBatimentDistrict) + "%";
+                report.Niveau = "2";
                 rapports.Add(report);
                 lastId = report.ID;
                 lastParentId = report.ID;
@@ -711,6 +796,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Total = "" + batiments.Count();
                     lastId = report.ID;
                     lastParentId = report.ID;
+                    report.Niveau = "3";
                     rapports.Add(report);
                     //
 
@@ -720,6 +806,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                         report.ID = lastId + 1;
                         report.ParentID = lastParentId;
+                        report.Niveau = "4";
                         rapports.Add(report);
                         lastId = report.ID + 1;
                     }
@@ -754,6 +841,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ParentID = firstParentId;
                 report.Indicateur = "";
                 report.Total = "" + nbreBatimentInobservableEtVide;
+                report.Niveau = "2";
                 rapports.Add(report);
                 lastId = report.ID;
                 lastParentId = report.ID;
@@ -773,6 +861,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Total = "" + BatimentInobservableEtVideParSde;
                     lastId = report.ID;
                     lastParentId = report.ID;
+                    report.Niveau = "3";
                     rapports.Add(report);
 
                     //////////////////////
@@ -865,6 +954,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                         report.ID = lastId + 1;
                         report.ParentID = refusParent;
+                        report.Niveau = "4";
                         rapports.Add(report);
                         lastId = report.ID + 1;
                     }
@@ -886,6 +976,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                         report.ID = lastId + 1;
                         report.ParentID = indAvecRDParent;
+                        report.Niveau = "4";
                         rapports.Add(report);
                         lastId = report.ID + 1;
                     }
@@ -907,6 +998,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                         report.ID = lastId + 1;
                         report.ParentID = indParent;
+                        report.Niveau = "4";
                         rapports.Add(report);
                         lastId = report.ID + 1;
                     }
@@ -927,6 +1019,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.Type = "Batiman-" + batiment.BatimentId + " /REC-" + batiment.Qrec;
                         report.ID = lastId + 1;
                         report.ParentID = autreParent;
+                        report.Niveau = "4";
                         rapports.Add(report);
                         lastId = report.ID + 1;
                     }
@@ -939,8 +1032,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             #endregion
             return rapports;
         }
-
-        #endregion
         public static List<TableVerificationModel> getVerificationNonReponsePartielle(string path, string sdeId)
         {
             List<TableVerificationModel> rapports = new List<TableVerificationModel>();
@@ -1101,7 +1192,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
             return rapports;
         }
-
         public static List<VerificationFlag> getVerificationNonReponseParVariable(string path, string sdeId)
         {
             List<VerificationFlag> rapports = new List<VerificationFlag>();
@@ -1126,7 +1216,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
             return rapports;
         }
-
         public static List<CouvertureModel> getTotalCouverture(string path, SdeModel sde)
         {
             List<CouvertureModel> couvertures = new List<CouvertureModel>();
@@ -1166,6 +1255,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return couvertures;
         }
+
         #endregion
 
         #region GESTION DES RAPPORTS
@@ -1480,12 +1570,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     rapports.Add(rpt);
                     parentReport = rpt;
                     //AGE CHEF MENAGE
-                    rpt = getChildNodeForMainReportForChefMenage(parentReport, "Age", question.libelle, individu.Q5bAge.ToString(), indCe.Q5bAge.GetValueOrDefault().ToString());
+                    rpt = getChildNodeForMainReportForChefMenage(parentReport, "Age", question.libelle, individu.Qp5bAge.ToString(), indCe.Q5bAge.GetValueOrDefault().ToString());
                     parentReport = rpt;
                     rapports.Add(rpt);
                     //Sexe Chef Menage
                     question = reader.getQuestionByNomChamps(Constant.Q4Sexe);
-                    reponseAgent = reader.getReponse(question.codeQuestion, individu.Q4Sexe.ToString());
+                    reponseAgent = reader.getReponse(question.codeQuestion, individu.Qp4Sexe.ToString());
                     reponseSup = reader.getReponse(question.codeQuestion, indCe.Q4Sexe.ToString());
                     rpt = getChildNodeForMainReportForChefMenage(parentReport, "Sexe", question.libelle, reponseAgent, reponseSup);
                     rapports.Add(rpt);
@@ -1886,69 +1976,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         }
 
         #endregion
-        public static SdeInformation getSdeInformation(string sdeId)
-        {
-            try
-            {
-                SdeInformation sde = new SdeInformation();
-                sde.DeptId = sdeId.Substring(0, 1);
-                sde.ComId = sdeId.Substring(0, 3);
-                sde.VqseId = sdeId.Substring(0, 6);
-                
-                //if (dep.Substring(0, 2) == "00")
-                //{
-                //    sde.DeptId = dep.Substring(1, 2);
-                //}
-                //else
-                //{
-                //    sde.DeptId = dep.Substring(0, 2);
-                //}
-                return sde;
-            }
-            catch (Exception)
-            {
-
-            }
-            return null;
-        }
-        public static string getGeoInformation(string sdeId)
-        {
-            try
-            {
-                SdeInformation sde = getSdeInformation(sdeId);
-                ContreEnqueteService service = new ContreEnqueteService();
-                string deptNom = service.getDepartement("0"+sde.DeptId).DeptNom;
-                if (sde.ComId.Length == 3)
-                {
-                    sde.ComId = "0" + sde.ComId;
-                }
-                if (sde.VqseId.Length == 6)
-                {
-                    sde.VqseId = "0" + sde.VqseId;
-                }
-                string comNom = service.getCommune(sde.ComId).ComNom;
-                string vqseNom = service.getVqse(sde.VqseId).VqseNom;
-                return "Depatman: " + deptNom + "/Komin: " + comNom + "/Seksyon Kominal: " + vqseNom;
-            }
-            catch (Exception)
-            {
-
-            }
-            return null;
-            
-        }
-        public static void killProcess(Process[] procs)
-        {
-            if (procs.Length != 0)
-            {
-                foreach (var proc in procs)
-                {
-                    if (!proc.HasExited)
-                    {
-                        proc.Kill();
-                    }
-                }
-            }
-        }
+      
     }
 }

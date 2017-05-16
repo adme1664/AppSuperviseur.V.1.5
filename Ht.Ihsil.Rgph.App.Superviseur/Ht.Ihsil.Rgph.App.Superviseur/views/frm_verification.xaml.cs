@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Charts;
+using DevExpress.Xpf.Grid;
 using Ht.Ihsil.Rgph.App.Superviseur.entites;
 using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,77 +29,105 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
     public partial class frm_verification : UserControl
     {
 
-        #region DECLARATION
+        #region  DECLARATIONS
         private static string MAIN_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Data\Databases\";
         ISqliteReader reader;
         bool tabNotesAlreadyOpen = false;
         private SdeModel sdeSelected = null;
         List<BatimentModel> listOfBatiments;
         NameValue TypeDifficulte;
+        ThreadStart ths = null;
+        Thread t = null;
+        bool IsAllDistrict=false;
+        bool isTabCouvertureLoad = false;
+        //bool isTabSocioLoad = false;
+        //bool isTabPerformanceLoad = false;
         #endregion
 
-        #region CONSTRUCTORS
+        #region CONSTRCUTORS
         public frm_verification(SdeModel sde)
         {
             InitializeComponent();
             sdeSelected = sde;
             listOfBatiments = new List<BatimentModel>();
+
             //Style of the tabcontrol
-
-
-
             reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
             List<TableVerificationModel> verificationsNonReponseTotal = Utilities.getVerificatoinNonReponseTotal(MAIN_DATABASE_PATH, sde.SdeId);
             dtg_non_reponse_totale.ItemsSource = verificationsNonReponseTotal;
+
+            //Expand the node in level 1
+            foreach (TreeListNode node in treeListView1.Nodes)
+            {
+                node.IsExpanded = true;
+                node.Image = new BitmapImage(new Uri(@"/images/report3.png", UriKind.Relative));
+                foreach (TreeListNode childNode in node.Nodes)
+                {
+                    TableVerificationModel model = childNode.Content as TableVerificationModel;
+                    if (model.Niveau == "2")
+                    {
+                        childNode.Image = new BitmapImage(new Uri(@"/images/malrempli.png", UriKind.Relative));                        
+                    }
+                    //Node Batiman adding image Icon
+                    foreach (TreeListNode batimanNode in childNode.Nodes)
+                    {
+                        batimanNode.Image = new BitmapImage(new Uri(@"/images/home.png", UriKind.Relative));       
+                    }
+                }
+            }
+            //
+
             List<TableVerificationModel> verificationsNonReponsePartielle = Utilities.getVerificationNonReponsePartielle(MAIN_DATABASE_PATH, sde.SdeId);
             dtg_non_reponse_partielle.ItemsSource = verificationsNonReponsePartielle;
             List<VerificationFlag> verficationFlags = Utilities.getVerificationNonReponseParVariable(MAIN_DATABASE_PATH, sde.SdeId);
             dtg_non_reponse_totale_variable.ItemsSource = verficationFlags;
-
-            //reader.getTotalIndividusFemmes()
-            //Utilities.getPourcentage(reader.getTotalIndividusFemmes(),reader.getTotalIndividus())
-            //reader.getTotalIndividu10AnsEtPlus()
-            //reader.getTotalIndividu18AnsEtPlus()
-
-
-            pieSeriesNbreFemmes.Points.Add(new SeriesPoint("Nombre de personnes recensées", 50));
-            pieSeriesNbreFemmes.Points.Add(new SeriesPoint("% de femmes dans la population recensée", 40));
-
-            barSeriesProportionsDetails.Points.Add(new SeriesPoint("Proportion (%) d´enfants de moins d´un (1) an", 50));
-            barSeriesProportionsDetails.Points.Add(new SeriesPoint("Proportion (%)  de personnes de 10 ans et plus", 25));
-            barSeriesProportionsDetails.Points.Add(new SeriesPoint("Proportion (%)  de personnes de 18 ans et plus", 45));
-            barSeriesProportionsDetails.Points.Add(new SeriesPoint("Proportion (%)  de personnes de 65 ans plus", reader.getTotalIndividu65AnsEtPlus()));
-
-            barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Batiments", 45));
-            barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Logements Individuels", 90));
-            barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Menages", 150));
-            barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Personnes", 280));
-
-            //reader.getTotalPersonnesByLogementCollections()
-            //reader.getTotalPersonnesByLimitation()
-
-            barSeriesIndividus.Points.Add(new SeriesPoint("Nombre de personnes recensées dans les logements collectifs", 50));
-            barSeriesIndividus.Points.Add(new SeriesPoint("Nombre de personnes présentant au moins une limitation dans leurs activités. ", 50));
-
-            barSeriesTailleMenage.Points.Add(new SeriesPoint("Taille moyenne des ménages", 85));
-            barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages unipersonnels (1 personne au plus)", reader.getTotalMenageUnipersonnel()));
-            barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages de grande taille (6  et plus)", reader.getTotalMenageDe6IndsEtPlus()));
-
-            //reader.getTotalMenages()
-            //reader.getTotalFemmeChefMenage()
-
-            pieSeriesNbreMenage.Points.Add(new SeriesPoint("Nombre de ménages recensés", 50));
-            pieSeriesNbreMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages dont le chef est une femme. ", 45));
-
-            //
-            dataGridCouverture.ItemsSource = Utilities.getTotalCouverture(MAIN_DATABASE_PATH, sde);
+            tabIndCouverture.Focus();
 
         }
-        public frm_verification()
+        public frm_verification(bool isAllDistrict)
         {
             InitializeComponent();
+            tabGestionNotes.Visibility = Visibility.Hidden;
+            this.IsAllDistrict=isAllDistrict;
+            tabIndCouverture.Focus();
+            
             List<TableVerificationModel> verificationsNonReponseTotal = Utilities.getVerificatoinNonReponseTotalForAllSdes(MAIN_DATABASE_PATH);
             dtg_non_reponse_totale.ItemsSource = verificationsNonReponseTotal;
+            //Expand the node in level 2
+            foreach (TreeListNode node in treeListView1.Nodes)
+            {
+                node.IsExpanded = true;
+                node.Image = new BitmapImage(new Uri(@"/images/report3.png",UriKind.Relative));
+                foreach (TreeListNode childNode in node.Nodes)
+                {
+                    TableVerificationModel model = childNode.Content as TableVerificationModel;
+                    if (model.Niveau == "2")
+                    {
+                        childNode.IsExpanded = true;
+                        childNode.Image = new BitmapImage(new Uri(@"/images/malrempli.png", UriKind.Relative));
+                    }
+                    //Node Sde
+                    foreach (TreeListNode sdeChild in childNode.Nodes)
+                    {
+                        TableVerificationModel niveau3 = sdeChild.Content as TableVerificationModel;
+                        if (niveau3.Niveau == "3")
+                        {
+                            sdeChild.Image = new BitmapImage(new Uri(@"/images/database.png", UriKind.Relative));
+                        }
+                        //Node batiment
+                        foreach (TreeListNode batimanChild in sdeChild.Nodes)
+                        {
+                            TableVerificationModel niveau4 = batimanChild.Content as TableVerificationModel;
+                            if (niveau4.Niveau == "4")
+                            {
+                                batimanChild.Image = new BitmapImage(new Uri(@"/images/home.png", UriKind.Relative));
+                            }
+                        }
+                    }
+                   
+                }
+            }
+            //
 
         }
         #endregion
@@ -152,7 +182,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
 
                 txtLibelle.Text = selectedQuestion.Libelle;
-                cmbBatiment.ItemsSource = reader.GetAllBatimentModel();
+                //cmbBatiment.ItemsSource = reader.GetAllBatimentModel();
             }
         }
         public void blankAndDisabedComponents()
@@ -304,6 +334,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     txtNature.IsEnabled = true;
                     cmbBatiment.IsEnabled = true;
                     listBCodeBatiment.IsEnabled = true;
+                    cmbBatiment.ItemsSource = reader.GetAllBatimentModel();
                 }
                 else
                 {
@@ -315,6 +346,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     cmbBatiment.IsEnabled = true;
                     //btn_save.IsEnabled = true;
                     listBCodeBatiment.IsEnabled = true;
+                    cmbBatiment.ItemsSource = reader.GetAllBatimentModel();
                 }
             }
         }
@@ -335,14 +367,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         }
         #endregion
 
-        #region CONTROL EVENTS METHODS
-
+        #region CONTROLS EVENTS 
         private void DXTabItem_GotFocus(object sender, RoutedEventArgs e)
         {
             try
             {
                 IConfigurationService configuration = new ConfigurationService();
-                grdDifficulties.ItemsSource = configuration.searchAllProblemes();
+                if(sdeSelected!=null)
+                grdDifficulties.ItemsSource = configuration.searchAllProblemesBySdeId(sdeSelected.SdeId);
+                else
+                {
+                    grdDifficulties.ItemsSource = configuration.searchAllProblemes();
+                }
             }
             catch (Exception)
             {
@@ -471,16 +507,30 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         {
             if (e.Column.FieldName == "Color")
                 e.Column.Visible = false;
+            if (e.Column.FieldName == "Niveau")
+                e.Column.Visible = false;
 
         }
         #endregion
 
-        #region CHARTS 
-        public void createGraphicControls()
+        #region CHARTS CONTROLS
+
+        public void initializeChartControls()
         {
+            pieSeriesNbreFemmes.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreFemmes.Points.Clear()));
+            barSeriesProportionsDetails.Dispatcher.BeginInvoke((Action)(() => barSeriesProportionsDetails.Points.Clear()));
+            barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() => barSeriesTailleMenage.Points.Clear()));
+            barSeriesIndividus.Dispatcher.BeginInvoke((Action)(() => barSeriesIndividus.Points.Clear()));
+            pieSeriesNbreMenage.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreMenage.Points.Clear()));
+      }
+        public void createGraphicSocioControls()
+        {
+            //Initialiser les controls
+            initializeChartControls();
+            //
             int nbrePersonnes = 0;
             int nbreFemmesRecenses = 0;
-            int nbreEnfant5Ans = 0;
+            int nbreEnfantMoins1Ans = 0;
             int nbreEnfant10Ans = 0;
             int nbrePersonnes18Ans = 0;
             int nbrePersonnes65Ans = 0;
@@ -494,21 +544,245 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             int nbreMenage6Personnes = 0;
 
 
-            if (sdeSelected == null)
-            {
+            //if (sdeSelected == null)
+            //{
                 IConfigurationService configuration = new ConfigurationService();
-                foreach(SdeModel sde in configuration.searchAllSdes())
-                {
-                    reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
-                    nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
-                    nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
-                    nbreFemmesRecenses = nbreFemmesRecenses + reader.getTotalIndividusFemmes();
-                    
 
+                //Test pour voir si le calcul doit se faire pour tout le district ou pr un SDE
+                if(IsAllDistrict==true)
+                {
+                    foreach (SdeModel sde in configuration.searchAllSdes())
+                    {
+                        reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
+                        //Indicateurs socio-demographiques
+                        nbreEnfantMoins1Ans = nbreEnfantMoins1Ans + reader.getTotalEnfantDeMoinsDe1Ans();
+                        nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
+                        nbreFemmesRecenses = nbreFemmesRecenses + reader.getTotalIndividusFemmes();
+                        nbreEnfant10Ans = nbreEnfant10Ans + reader.getTotalIndividu10AnsEtPlus();
+                        nbrePersonnes18Ans = nbrePersonnes18Ans + reader.getTotalIndividu18AnsEtPlus();
+                        nbrePersonnes65Ans += reader.getTotalIndividu65AnsEtPlus();
+                        //
+
+                        //
+                        nbreLogementC += reader.getTotalPersonnesByLogementCollections();
+                        nbreLimitation += reader.getTotalPersonnesByLimitation();
+                        nbreFemmeChefMenage += reader.getTotalFemmeChefMenage();
+                        nbreMenageUniPersonnel += reader.getTotalMenageUnipersonnel();
+                        nbreMenage6Personnes += nbreMenage6Personnes + reader.getTotalMenageDe6IndsEtPlus();
+
+                    }
                 }
+                else
+                {
+                    reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
+                        //Indicateurs de couverture
+                        nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
+                        nbreLogementInd = nbreLogementInd + reader.getTotalLogementInds();
+                        nbreMenage = nbreMenage + reader.getTotalMenages();
+                        //
+
+                        //Indicateurs socio-demographiques
+                        nbreEnfantMoins1Ans = nbreEnfantMoins1Ans + reader.getTotalEnfantDeMoinsDe1Ans();
+                        nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
+                        nbreFemmesRecenses = nbreFemmesRecenses + reader.getTotalIndividusFemmes();
+                        nbreEnfant10Ans = nbreEnfant10Ans + reader.getTotalIndividu10AnsEtPlus();
+                        nbrePersonnes18Ans = nbrePersonnes18Ans + reader.getTotalIndividu18AnsEtPlus();
+                        nbrePersonnes65Ans += reader.getTotalIndividu65AnsEtPlus();
+                        //
+
+                        //
+                        nbreLogementC += reader.getTotalPersonnesByLogementCollections();
+                        nbreLimitation += reader.getTotalPersonnesByLimitation();
+                        nbreFemmeChefMenage += reader.getTotalFemmeChefMenage();
+                        nbreMenageUniPersonnel += reader.getTotalMenageUnipersonnel();
+                }
+                pieSeriesNbreFemmes.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreFemmes.Points.Add(new SeriesPoint("Nombre de personnes recensées", nbrePersonnes))));
+                pieSeriesNbreFemmes.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreFemmes.Points.Add(new SeriesPoint("% de femmes dans la population recensée", nbreFemmesRecenses))));
+
+                barSeriesProportionsDetails.Dispatcher.BeginInvoke((Action)(() => 
+                    barSeriesProportionsDetails.Points.Add(new SeriesPoint("Proportion (%) d´enfants de moins d´un (1) an", nbreEnfantMoins1Ans))));
+                barSeriesProportionsDetails.Dispatcher.BeginInvoke((Action)(() =>
+                    barSeriesProportionsDetails.Points.Add(new SeriesPoint("Proportion (%)  de personnes de 10 ans et plus", nbreEnfant10Ans))));
+                barSeriesProportionsDetails.Dispatcher.BeginInvoke((Action)(() =>
+                    barSeriesProportionsDetails.Points.Add(new SeriesPoint("Proportion (%)  de personnes de 18 ans et plus", nbrePersonnes18Ans))));
+                barSeriesProportionsDetails.Dispatcher.BeginInvoke((Action)(() =>
+                    barSeriesProportionsDetails.Points.Add(new SeriesPoint("Proportion (%)  de personnes de 65 ans plus", nbrePersonnes65Ans))));
+
+                barSeriesIndividus.Dispatcher.BeginInvoke((Action)(() =>
+                        barSeriesIndividus.Points.Add(new SeriesPoint("Nombre de personnes recensées dans les logements collectifs", nbreLogementC))));
+                barSeriesIndividus.Dispatcher.BeginInvoke((Action)(() =>
+                        barSeriesIndividus.Points.Add(new SeriesPoint("Nombre de personnes présentant au moins une limitation dans leurs activités. ", nbreLimitation))));
+                
+                barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() =>
+                        barSeriesTailleMenage.Points.Add(new SeriesPoint("Taille moyenne des ménages", 85))));
+                barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() =>
+                            barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages unipersonnels (1 personne au plus)", nbreBatiment))));
+                barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() =>
+                            barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages de grande taille (6  et plus)", nbreBatiment))));
+
+                pieSeriesNbreMenage.Dispatcher.BeginInvoke((Action)(() =>
+                       pieSeriesNbreMenage.Points.Add(new SeriesPoint("Nombre de ménages recensés", nbreMenage))));
+                pieSeriesNbreMenage.Dispatcher.BeginInvoke((Action)(() =>
+                           pieSeriesNbreMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages dont le chef est une femme. ", nbreFemmeChefMenage))));
+            
+                waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+
+            //}
+        }
+
+        public void createGraphicTabCouverture()
+        {
+            int nbrePersonnes = 0;
+            int nbreBatiment = 0;
+            int nbreLogementInd = 0;
+            int nbreMenage = 0;
+            int nbreActualisation = 0;
+            IConfigurationService configuration = new ConfigurationService();
+            List<CouvertureModel> couvertures = new List<CouvertureModel>();
+
+            #region CONSTRUCTION DE LA GRAPHE
+            //Test pour verifier si la table st deja telechargee
+            if (isTabCouvertureLoad == false)
+            {
+                //Test pour voir si le calcul doit se faire pour tout le district ou pr une SDE
+                if (IsAllDistrict == true)
+                {
+                    foreach (SdeModel sde in configuration.searchAllSdes())
+                    {
+                        reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
+
+                        //Indicateurs de couverture
+                        nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
+                        nbreLogementInd = nbreLogementInd + reader.getTotalLogementInds();
+                        nbreMenage = nbreMenage + reader.getTotalMenages();
+                        nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
+                        nbreActualisation = nbreActualisation + sde.TotalBatCartographie.GetValueOrDefault();
+                        //
+                    }
+                }
+                else
+                {
+                    reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
+
+                    //Indicateurs de couverture
+                    nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
+                    nbreLogementInd = nbreLogementInd + reader.getTotalLogementInds();
+                    nbreMenage = nbreMenage + reader.getTotalMenages();
+                    nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
+                    nbreActualisation += nbreActualisation + sdeSelected.TotalBatCartographie.GetValueOrDefault();
+                    //
+                }
+                //On cree les graphes
+                barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
+                        barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Batiments", nbreBatiment))));
+                barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
+                   barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Logements Individuels", nbreLogementInd))));
+                barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
+                   barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Menages", nbreMenage))));
+                barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
+                   barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Personnes", nbrePersonnes))));
+            #endregion
+
+            #region CONSTRUCTION DU TABLEAU
+                CouvertureModel model1 = new CouvertureModel();
+                model1.Couverture = "Nombre de bâtiments";
+                model1.Actualisation = nbreActualisation;
+                model1.Total = nbreBatiment;
+                couvertures.Add(model1);
+                // Nombre de meanges
+                model1 = new CouvertureModel();
+                model1.Couverture = "Nombre de menages  recensés";
+                model1.Actualisation = 0;
+                model1.Total = nbreMenage;
+                couvertures.Add(model1);
+
+                //Nombre de logements Individuels
+                model1 = new CouvertureModel();
+                model1.Couverture = "Nombre de logements  individuels";
+                model1.Actualisation = 0;
+                model1.Total = nbreLogementInd;
+                couvertures.Add(model1);
+                //Nombre de personnes
+                model1 = new CouvertureModel();
+                model1.Couverture = "Nombre de personnes  recensées";
+                model1.Actualisation = 0;
+                model1.Total = nbrePersonnes;
+                couvertures.Add(model1);
+                dataGridCouverture.Dispatcher.BeginInvoke((Action)(() => dataGridCouverture.ItemsSource = couvertures));
+                #endregion
+
+            isTabCouvertureLoad = true;
+            }           
+        }
+
+        public void createGraphicTabPerformance()
+        {
+
+        }
+    
+        private void tabSocioDemographiques_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (t != null)
+            {
+                if (t.IsAlive)
+                {
+                    t.Abort();
+                }
+            }
+            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = true));
+            try
+            {
+                ths = new ThreadStart(() => createGraphicSocioControls());
+                t = new Thread(ths);
+                t.Start();
+            }
+            catch (Exception)
+            {
+                //log.Info("ERREUR:<>===================<>" + ex.Message);
+            }
+        }
+
+        private void tabIndCouverture_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (t != null)
+            {
+                if (t.IsAlive)
+                {
+                    t.Abort();
+                }
+            }
+            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = true));
+            try
+            {
+                ths = new ThreadStart(() => createGraphicTabCouverture());
+                t = new Thread(ths);
+                t.Start();
+            }
+            catch (Exception)
+            {
+                //log.Info("ERREUR:<>===================<>" + ex.Message);
             }
         }
         #endregion
 
+        public void createIndicateursPerformances(bool isForSde)
+        {
+            if (isForSde == true)
+            {
+                reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
+                double nbreParJour = reader.getTotalBatRecenseParJourV();
+                List<KeyValue> list = new List<KeyValue>();
+                //list.Add(new KeyValue(nbreParJour, "Nombre de questionnaires par jour de recensement"));
+                dataGridIndPerformance.ItemsSource = list;
+            }
+        }
+
+        private void tabPagePerformance_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(sdeSelected!=null)
+            {
+                createIndicateursPerformances(true);
+            }
+        }
     }
 }

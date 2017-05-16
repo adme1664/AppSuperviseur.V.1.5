@@ -14,13 +14,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public long LogeId { get; set; }
         public long BatimentId { get; set; }
         public string SdeId { get; set; }
-        public int Qn1numeroOrdre { get; set; }
+        public short Qn1numeroOrdre { get; set; }
         public string Qn2aNomComplet { get; set; }
-        public int Qn2bResidenceActuelle { get; set; }
-        public int Qn2cSexe { get; set; }
-        public int Qn2dAgeAuMomentDepart { get; set; }
-        public int Qn2eDernierPaysResidence { get; set; }
-        public int Statut { get; set; }
+        public short Qn2bSexe { get; set; }
+        public string Qn2cAgeAuMomentDepart { get; set; }
+        public short Qn2dVivantToujours { get; set; }
+        public short Qn2eDernierPaysResidence { get; set; }
+        public short Statut { get; set; }
         public bool IsFieldAllFilled { get; set; }
         public string DateDebutCollecte { get; set; }
         public string DateFinCollecte { get; set; }
@@ -37,7 +37,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public EmigreModel(int emigreId, int noOrdre)
         {
             this.EmigreId = emigreId;
-            Qn1numeroOrdre = noOrdre;
+            Qn1numeroOrdre = Convert.ToByte(noOrdre);
         }
         public EmigreModel()
         {

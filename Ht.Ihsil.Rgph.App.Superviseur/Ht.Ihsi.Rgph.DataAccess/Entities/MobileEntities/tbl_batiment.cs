@@ -19,7 +19,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public string comId { get; set; }
         public string vqseId { get; set; }
         public string sdeId { get; set; }
-        public string sectionEnumerationId { get; set; }
         public Nullable<long> zone { get; set; }
         public string disctrictId { get; set; }
         public string qhabitation { get; set; }
@@ -30,8 +29,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public Nullable<long> qb1Etat { get; set; }
         public Nullable<long> qb2Type { get; set; }
         public Nullable<long> qb3NombreEtage { get; set; }
-        public Nullable<long> qb5MateriauToit { get; set; }
         public Nullable<long> qb4MateriauMur { get; set; }
+        public Nullable<long> qb5MateriauToit { get; set; }
         public Nullable<long> qb6StatutOccupation { get; set; }
         public Nullable<long> qb7Utilisation1 { get; set; }
         public Nullable<long> qb7Utilisation2 { get; set; }

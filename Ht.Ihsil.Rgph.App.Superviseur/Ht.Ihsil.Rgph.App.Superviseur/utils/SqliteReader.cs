@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 {
@@ -1075,7 +1076,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 sde.TotalIndRecense = getTotalIndividus();
                 //sde.TotalBatRecenseNV = getTotalBatRecenseNV();
                 sde.TotalBatRecenseV = getTotalBatRecenseV();
-                sde.TotalEnfantDeMoinsDe5Ans = getTotalEnfantDeMoinsDe5Ans();
+                sde.TotalEnfantDeMoinsDe5Ans = getTotalEnfantDeMoinsDe1Ans();
                 sde.TotalIndividu10AnsEtPlus = getTotalIndividu10AnsEtPlus();
                 sde.TotalIndividu18AnsEtPlus = getTotalIndividu18AnsEtPlus();
                 sde.TotalIndividu65AnsEtPlus = getTotalIndividu65AnsEtPlus();
@@ -1164,7 +1165,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MEmigreRepository.Find(em => em.qn2cSexe == Constant.FEMININ).ToList().Count();
+                return repository.MEmigreRepository.Find(em => em.qn2bSexe == Constant.FEMININ).ToList().Count();
             }
             catch (Exception)
             {
@@ -1178,7 +1179,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             
             try
             {
-                return repository.MEmigreRepository.Find(em => em.qn2cSexe == Constant.MASCULIN).ToList().Count();
+                return repository.MEmigreRepository.Find(em => em.qn2bSexe == Constant.MASCULIN).ToList().Count();
             }
             catch (Exception)
             {
@@ -1248,7 +1249,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(ind => ind.q4Sexe == Constant.FEMININ).Count();
+                return repository.MIndividuRepository.Find(ind => ind.qp4Sexe == Constant.FEMININ).Count();
 
             }
             catch (Exception ex)
@@ -1262,7 +1263,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(ind => ind.q4Sexe == Constant.MASCULIN).Count();
+                return repository.MIndividuRepository.Find(ind => ind.qp4Sexe == Constant.MASCULIN).Count();
 
             }
             catch (Exception ex)
@@ -1429,19 +1430,106 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return 0;
         }
         #region INDICATEURS DE PERFOMANCES
-        public int getTotalBatRecenseParJourV()
+        public double getTotalBatRecenseParJourV()
         {
-            throw new NotImplementedException();
+            string methodName = "getTotalBatRecenseParJourV";
+            double nbreParJour = 0;
+            try
+            {
+                List<BatimentModel> listOfBatiments =ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.statut == (int)Constant.StatutModule.Fini).ToList());
+                BatimentModel firstBatiment = listOfBatiments.First();
+                BatimentModel lastBatiment = listOfBatiments.Last();
+                DateTime dateSaisieFirst = DateTime.ParseExact(firstBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                DateTime dateSaisieLast = DateTime.ParseExact(lastBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
+                totalOfDays = Math.Truncate(totalOfDays);
+                if (totalOfDays==0)
+                nbreParJour = listOfBatiments.Count();
+                else
+                {
+                    if(totalOfDays>=2)
+                        nbreParJour = listOfBatiments.Count() / (totalOfDays-1);
+                    else
+                    {
+                        nbreParJour = listOfBatiments.Count();
+                    }
+                }
+                log.Info("Nombre de batiments/jar:" + nbreParJour);
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + " : " + ex.Message);
+            }
+            return nbreParJour;
         }
 
         public int getTotalBatRecenseParJourNV()
         {
             throw new NotImplementedException();
         }
-
-        public int getTotalLogeCRecenseParJourV()
+        public  double getTotalLogeRecenseParJourV()
         {
-            throw new NotImplementedException();
+            string methodName = "getTotalLogeCRecenseParJourV";
+            double nbreParJour = 0;
+            try
+            {
+                List<LogementModel> listOfLogements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.statut == (int)Constant.StatutModule.Fini).ToList());
+                LogementModel firstBatiment = listOfLogements.First();
+                LogementModel lastBatiment = listOfLogements.Last();
+                DateTime dateSaisieFirst = DateTime.ParseExact(firstBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                DateTime dateSaisieLast = DateTime.ParseExact(lastBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
+                totalOfDays = Math.Truncate(totalOfDays);
+                if (totalOfDays == 0)
+                    nbreParJour = listOfLogements.Count();
+                else
+                {
+                    if (totalOfDays >= 2)
+                        nbreParJour = listOfLogements.Count() / (totalOfDays - 1);
+                    else
+                    {
+                        nbreParJour = listOfLogements.Count();
+                    }
+                }
+                log.Info("Nombre de batiments/jar:" + nbreParJour);
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + " : " + ex.Message);
+            }
+            return nbreParJour;
+        }
+        public double getTotalLogeCRecenseParJourV()
+        {
+            string methodName = "getTotalLogeCRecenseParJourV";
+            double nbreParJour = 0;
+            try
+            {
+                List<LogementModel> listOfLogements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l=>l.statut==(int)Constant.StatutModule.Fini).ToList());
+                LogementModel firstLogement = listOfLogements.First();
+                LogementModel lastLogement = listOfLogements.Last();
+                DateTime dateSaisieFirst = DateTime.ParseExact(firstLogement.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                DateTime dateSaisieLast = DateTime.ParseExact(lastLogement.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
+                totalOfDays = Math.Truncate(totalOfDays);
+                if (totalOfDays == 0)
+                    nbreParJour = listOfLogements.Count();
+                else
+                {
+                    if (totalOfDays >= 2)
+                        nbreParJour = listOfLogements.Count() / (totalOfDays - 1);
+                    else
+                    {
+                        nbreParJour = listOfLogements.Count();
+                    }
+                }
+                log.Info("Nombre de batiments/jar:" + nbreParJour);
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + " : " + ex.Message);
+            }
+            return nbreParJour;
         }
 
         public int getTotalLogeCRecenseParJourNV()
@@ -1451,7 +1539,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public int getTotalLogeIRecenseParJourV()
         {
-            throw new NotImplementedException();
+            string methodName = "";
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + " : " + ex.Message);
+            }
+            return 0;
         }
 
         public int getTotalLogeIRecenseParJourNV()
@@ -1459,9 +1556,37 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             throw new NotImplementedException();
         }
 
-        public int getTotalMenageRecenseParJourV()
+        public double getTotalMenageRecenseParJourV()
         {
-            throw new NotImplementedException();
+            string methodName = "getTotalLogeCRecenseParJourV";
+            double nbreParJour = 0;
+            try
+            {
+                List<MenageModel> listOfMenages = ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(l => l.statut == (int)Constant.StatutModule.Fini).ToList());
+                MenageModel firstMenage = listOfMenages.First();
+                MenageModel lastMenage = listOfMenages.Last();
+                DateTime dateSaisieFirst = DateTime.ParseExact(firstMenage.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                DateTime dateSaisieLast = DateTime.ParseExact(lastMenage.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
+                totalOfDays = Math.Truncate(totalOfDays);
+                if (totalOfDays == 0)
+                    nbreParJour = listOfMenages.Count();
+                else
+                {
+                    if (totalOfDays >= 2)
+                        nbreParJour = listOfMenages.Count() / (totalOfDays - 1);
+                    else
+                    {
+                        nbreParJour = listOfMenages.Count();
+                    }
+                }
+                log.Info("Nombre de batiments/jar:" + nbreParJour);
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + " : " + ex.Message);
+            }
+            return nbreParJour;
         }
 
         public int getTotalMenageRecenseParJourNV()
@@ -1471,7 +1596,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public int getTotalIndRecenseParJourV()
         {
-            throw new NotImplementedException();
+            string methodName = "";
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + " : " + ex.Message);
+            }
+            return 0;
         }
 
         public int getTotalIndRecenseParJourNV()
@@ -1502,15 +1636,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         /// Retourne les enfants de moins de 5 ans
         /// </summary>
         /// <returns></returns>
-        public int getTotalEnfantDeMoinsDe5Ans()
+        public int getTotalEnfantDeMoinsDe1Ans()
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.q5bAge<5).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge<1).Count();
             }
             catch (Exception ex)
             {
-                log.Info("SqliteReader/getTotalEnfantDeMoinsDe5Ans:Error=> " + ex.Message);
+                log.Info("SqliteReader/getTotalEnfantDeMoinsDe1Ans:Error=> " + ex.Message);
             }
             return 0;
         }
@@ -1523,7 +1657,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.q5bAge >= 18).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 18).Count();
             }
             catch (Exception)
             {
@@ -1539,7 +1673,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.q5bAge >= 10).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 10).Count();
             }
             catch (Exception)
             {
@@ -1556,7 +1690,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.q5bAge >= 65).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 65).Count();
             }
             catch (Exception ex)
             {
@@ -1653,7 +1787,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qp3LienDeParente == 1 && i.q4Sexe == 2).Count();
+                return repository.MIndividuRepository.Find(i => i.qp3LienDeParente == 1 && i.qp4Sexe == 2).Count();
             }
             catch (Exception ex)
             {
@@ -1903,7 +2037,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             {
                 int nbre=0;
                 foreach(IndividuModel ind in listOf){
-                    if (ind.Q4Sexe == 2)
+                    if (ind.Qp4Sexe == 2)
                     {
                         nbre = nbre + 1;
                     }
@@ -1921,7 +2055,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge < 5)
+                    if (ind.Qp5bAge < 5)
                     {
                         nbre = nbre + 1;
                     }
@@ -1939,7 +2073,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge < 15)
+                    if (ind.Qp5bAge < 15)
                     {
                         nbre = nbre + 1;
                     }
@@ -1963,7 +2097,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge >= 5)
+                    if (ind.Qp5bAge >= 5)
                     {
                         if (ind.Qaf1HandicapVoir >= 2)
                         {
@@ -1984,7 +2118,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge >= 5)
+                    if (ind.Qp5bAge >= 5)
                     {
                         if (ind.Qaf2HandicapEntendre >= 2)
                         {
@@ -2005,7 +2139,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge >= 5)
+                    if (ind.Qp5bAge >= 5)
                     {
                         if (ind.Qaf3HandicapMarcher>=2)
                         {
@@ -2026,7 +2160,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge >= 5)
+                    if (ind.Qp5bAge >= 5)
                     {
                         if (ind.Qaf4HandicapSouvenir>=2)
                         {
@@ -2047,7 +2181,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge >= 5)
+                    if (ind.Qp5bAge >= 5)
                     {
                         if (ind.Qaf5HandicapPourSeSoigner>=2)
                         {
@@ -2068,7 +2202,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge >= 5)
+                    if (ind.Qp5bAge >= 5)
                     {
                         if (ind.Qaf6HandicapCommuniquer>=2)
                         {
@@ -2089,7 +2223,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge >= 15)
+                    if (ind.Qp5bAge >= 15)
                     {
                         if (ind.Qe2FreqentationScolaireOuUniv == 5)
                         {
@@ -2113,7 +2247,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     if (ind.Qe2FreqentationScolaireOuUniv <=6)
                     {
-                        if (ind.Q5bAge >= 6 && ind.Q5bAge <= 24)
+                        if (ind.Qp5bAge >= 6 && ind.Qp5bAge <= 24)
                         {
                             nbre = nbre + 1;
                         }
@@ -2132,7 +2266,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Q5bAge >= 6 && ind.Q5bAge <= 24)
+                    if (ind.Qp5bAge >= 6 && ind.Qp5bAge <= 24)
                     {
                         if (ind.Qe4aNiveauEtude >= 4 && ind.Qe4aNiveauEtude == 6)
                         {
@@ -2154,7 +2288,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             //    int nbre = 0;
             //    foreach (IndividuModel ind in listOf)
             //    {
-            //        if (ind.Q5bAge >= 6 && ind.Q5bAge <= 24)
+            //        if (ind.qp5bAge >= 6 && ind.qp5bAge <= 24)
             //        {
             //            if (ind. <= 4)
             //            {

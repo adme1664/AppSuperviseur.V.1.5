@@ -14,16 +14,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public long LogeId { get; set; }
         public long BatimentId { get; set; }
         public string SdeId { get; set; }
-        public int Qm1NoOrdre { get; set; }
-        public int Qm2ModeJouissance { get; set; }
-        public int Qm3ModeObtentionLoge { get; set; }
-        public int Qm4_1ModeAprovEauABoire { get; set; }
-        public int Qm4_2ModeAprovEauAUsageCourant { get; set; }
-        public int Qm5SrcEnergieCuisson1 { get; set; }
-        public int Qm5SrcEnergieCuisson2 { get; set; }
-        public int Qm6TypeEclairage { get; set; }
-        public int Qm7ModeEvacDechet { get; set; }
-        public int Qm8EndroitBesoinPhysiologique { get; set; }
+        public short Qm1NoOrdre { get; set; }
+        public short Qm2ModeJouissance { get; set; }
+        public short Qm3ModeObtentionLoge { get; set; }
+        public short Qm4_1ModeAprovEauABoire { get; set; }
+        public short Qm4_2ModeAprovEauAUsageCourant { get; set; }
+        public short Qm5SrcEnergieCuisson1 { get; set; }
+        public short Qm5SrcEnergieCuisson2 { get; set; }
+        public short Qm6TypeEclairage { get; set; }
+        public short Qm7ModeEvacDechet { get; set; }
+        public short Qm8EndroitBesoinPhysiologique { get; set; }
         public int Qm9NbreRadio1 { get; set; }
         public int Qm9NbreTelevision2 { get; set; }
         public int Qm9NbreRefrigerateur3 { get; set; }
@@ -37,17 +37,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public int Qm9NbreBoeufVache11 { get; set; }
         public int Qm9NbreCochonCabrit12 { get; set; }
         public int Qm9NbreBeteVolaille13 { get; set; }
-        public int Qm10AvoirPersDomestique { get; set; }
-        public int Qm10TotalDomestiqueFille { get; set; }
-        public int Qm10TotalDomestiqueGarcon { get; set; }
+        public short Qm10AvoirPersDomestique { get; set; }
+        public short Qm10TotalDomestiqueFille { get; set; }
+        public short Qm10TotalDomestiqueGarcon { get; set; }
         public int Qm11TotalIndividuVivant { get; set; }
-        public int Qn1Emigration { get; set; }
-        public int Qn1NbreEmigreFille { get; set; }
-        public int Qn1NbreEmigreGarcon { get; set; }
-        public int Qd1Deces { get; set; }
-        public int Qd1NbreDecedeFille { get; set; }
-        public int Qd1NbreDecedeGarcon { get; set; }
-        public int Statut { get; set; }
+        public short Qn1Emigration { get; set; }
+        public short Qn1NbreEmigre { get; set; }
+        public short Qd1Deces { get; set; }
+        public short Qd1NbreDecede { get; set; }
+        public short Statut { get; set; }
         public bool IsValidated { get; set; }
         public string DateDebutCollecte { get; set; }
         public string DateFinCollecte { get; set; }
@@ -55,6 +53,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public bool IsFieldAllFilled { get; set; }
         public bool IsContreEnqueteMade { get; set; }
         public string CodeAgentRecenceur { get; set; }
+        //
         public Nullable<byte> UpdateDeces { get; set; }
         public Nullable<byte> UpdateEmigre { get; set; }
         public List<IndividuModel> Individus { get; set; }
@@ -71,7 +70,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public MenageModel(long menageId, int noOrdre)
         {
             MenageId = menageId;
-            Qm1NoOrdre = noOrdre;
+            Qm1NoOrdre = Convert.ToByte(noOrdre);
         }
         public MenageModel()
         {

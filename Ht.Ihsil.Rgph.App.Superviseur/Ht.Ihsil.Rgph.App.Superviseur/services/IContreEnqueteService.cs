@@ -100,6 +100,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         List<RapportDeroulementModel> searchRptDeroulment();
         bool saveDetailsDeroulement(DetailsRapportModel details);
         bool updateDetailsDeroulement(DetailsRapportModel details);
+        DetailsRapportModel getDetailsRapportDeroulement(long id);
         List<DetailsRapportModel> searchDetailsReport(RapportDeroulementModel rptDeroulment);
         #endregion
 

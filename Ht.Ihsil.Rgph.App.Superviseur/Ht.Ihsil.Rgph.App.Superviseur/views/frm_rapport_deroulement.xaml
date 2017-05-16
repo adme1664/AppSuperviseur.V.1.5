@@ -61,7 +61,7 @@
                             </dxg:GridColumn>
                         </dxg:GridControl.Columns>
                         <dxg:GridControl.View>
-                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="False" NewItemRowPosition="Top" ShowGroupPanel="False" AutoWidth="True" FocusedRowChanged="TableView_FocusedRowChanged"/>
+                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="False" NewItemRowPosition="Top" ShowGroupPanel="False" AutoWidth="True" FocusedRowChanged="TableView_FocusedRowChanged" RowDoubleClick="TableView_RowDoubleClick"/>
                         </dxg:GridControl.View>
                     </dxg:GridControl>
                 </Grid>

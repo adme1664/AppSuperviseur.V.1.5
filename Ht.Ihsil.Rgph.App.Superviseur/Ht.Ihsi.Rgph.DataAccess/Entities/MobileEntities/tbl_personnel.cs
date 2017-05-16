@@ -25,6 +25,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public string deptId { get; set; }
         public string comId { get; set; }
         public string vqseId { get; set; }
+        public string zone { get; set; }
+        public string codeDistrict { get; set; }
         public Nullable<long> estActif { get; set; }
         public Nullable<long> ProfileId { get; set; }
         public string dateDebutCollecte { get; set; }

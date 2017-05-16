@@ -20,15 +20,15 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public Nullable<long> batimentId { get; set; }
         public string sdeId { get; set; }
         public Nullable<long> q1NoOrdre { get; set; }
-        public string q3Prenom { get; set; }
-        public string q2Nom { get; set; }
+        public string qp2APrenom { get; set; }
+        public string qp2BNom { get; set; }
         public Nullable<long> qp3LienDeParente { get; set; }
-        public Nullable<long> q3HabiteDansMenage { get; set; }
-        public Nullable<long> q4Sexe { get; set; }
-        public Nullable<long> q5DateNaissanceJour { get; set; }
-        public Nullable<long> q5DateNaissanceMois { get; set; }
-        public Nullable<long> q5DateNaissanceAnnee { get; set; }
-        public Nullable<long> q5bAge { get; set; }
+        public Nullable<long> qp3HabiteDansMenage { get; set; }
+        public Nullable<long> qp4Sexe { get; set; }
+        public Nullable<long> qp5DateNaissanceJour { get; set; }
+        public Nullable<long> qp5DateNaissanceMois { get; set; }
+        public Nullable<long> Qp5DateNaissanceAnnee { get; set; }
+        public Nullable<long> qp5bAge { get; set; }
         public Nullable<long> qp6religion { get; set; }
         public string qp6AutreReligion { get; set; }
         public Nullable<long> qp7Nationalite { get; set; }
@@ -48,7 +48,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public Nullable<long> qe2FreqentationScolaireOuUniv { get; set; }
         public Nullable<long> qe3typeEcoleOuUniv { get; set; }
         public Nullable<long> qe4aNiveauEtude { get; set; }
-        public Nullable<long> qe4bDerniereClasseOUAneEtude { get; set; }
+        public string qe4bDerniereClasseOUAneEtude { get; set; }
         public Nullable<long> qe5DiplomeUniversitaire { get; set; }
         public string qe6DomaineEtudeUniversitaire { get; set; }
         public Nullable<long> qaf1HandicapVoir { get; set; }
@@ -73,6 +73,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public Nullable<long> qa3StatutEmploie { get; set; }
         public Nullable<long> qa4SecteurInstitutionnel { get; set; }
         public string qa5TypeBienProduitParEntreprise { get; set; }
+        public string qa5PreciserTypeBienProduitParEntreprise { get; set; }
         public Nullable<long> qa6LieuActDerniereSemaine { get; set; }
         public Nullable<long> qa7FoncTravail { get; set; }
         public Nullable<long> qa8EntreprendreDemarcheTravail { get; set; }

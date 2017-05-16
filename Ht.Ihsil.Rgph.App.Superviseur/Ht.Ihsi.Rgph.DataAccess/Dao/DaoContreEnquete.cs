@@ -25,6 +25,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         #region CONSTRUCTOR
         public DaoContreEnquete()
         {
+            
             repository = new MainRepository();
             log = new Logger();
         }
@@ -38,11 +39,10 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
 
         public MainRepository getRepository()
         {
-            if(repository==null)
+            if (repository == null)
             {
                 repository = new MainRepository(connectionString, true);
             }
-
             return repository;
         }
 

@@ -20,7 +20,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public Nullable<long> qlCategLogement { get; set; }
         public Nullable<long> qlin1NumeroOrdre { get; set; }
         public Nullable<long> qlc1TypeLogement { get; set; }
-        public Nullable<long> qllc2bTotalGarcon { get; set; }
+        public Nullable<long> qlc2bTotalGarcon { get; set; }
         public Nullable<long> qlc2bTotalFille { get; set; }
         public Nullable<long> qlcTotalIndividus { get; set; }
         public Nullable<long> qlin2StatutOccupation { get; set; }

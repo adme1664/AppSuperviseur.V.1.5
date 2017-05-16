@@ -16,6 +16,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
        private string _indicateur;
        private string _taux;
        private string _color;
+       private string _niveau;
+
+       public string Niveau
+       {
+           get { return _niveau; }
+           set { _niveau = value; }
+       }
 
        public string Color
        {

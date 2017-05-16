@@ -246,7 +246,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                             if(obj.ToString()==Constant.OBJET_MODEL_INDIVIDU)
                                             {
                                                 IndividuModel ind=obj as IndividuModel;
-                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}",ind.Q3Prenom) + "__________________:" + question.detailsQuestion), reponse, tcq.detailsCategorie));
+                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}",ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), reponse, tcq.detailsCategorie));
                                             }
                                             else
                                             reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + "__________________:" + question.detailsQuestion), reponse, tcq.detailsCategorie));
@@ -256,7 +256,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                             if (obj.ToString() == Constant.OBJET_MODEL_INDIVIDU)
                                             {
                                                 IndividuModel ind = obj as IndividuModel;
-                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Q3Prenom) + "__________________:" + question.detailsQuestion), reponse, tcq.categorieQuestion));
+                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), reponse, tcq.categorieQuestion));
                                             }
                                             else
                                             reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + "__________________:" + question.detailsQuestion), reponse, tcq.categorieQuestion));
@@ -269,7 +269,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                             if (obj.ToString() == Constant.OBJET_MODEL_INDIVIDU)
                                             {
                                                 IndividuModel ind = obj as IndividuModel;
-                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Q3Prenom)), reponse, tcq.detailsCategorie));
+                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom)), reponse, tcq.detailsCategorie));
                                             }
                                             else
                                             reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), reponse, tcq.detailsCategorie));
@@ -279,7 +279,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                             if (obj.ToString() == Constant.OBJET_MODEL_INDIVIDU)
                                             {
                                                 IndividuModel ind = obj as IndividuModel;
-                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Q3Prenom)), reponse, tcq.categorieQuestion));
+                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom)), reponse, tcq.categorieQuestion));
                                             }
                                             else
                                             reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), reponse, tcq.categorieQuestion));
@@ -303,7 +303,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                                 if (obj.ToString() == Constant.OBJET_MODEL_INDIVIDU)
                                                 {
                                                     IndividuModel ind = obj as IndividuModel;
-                                                    DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Q3Prenom) + "__________________:" + question.detailsQuestion), pays, tcq.detailsCategorie);
+                                                    DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), pays, tcq.detailsCategorie);
                                                     reponses.Add(detail);
                                                 }
                                                 else
@@ -315,7 +315,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                                 if (obj.ToString() == Constant.OBJET_MODEL_INDIVIDU)
                                                 {
                                                     IndividuModel ind = obj as IndividuModel;
-                                                    DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Q3Prenom) + "__________________:" + question.detailsQuestion), pays, tcq.categorieQuestion);
+                                                    DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), pays, tcq.categorieQuestion);
                                                     reponses.Add(detail);
                                                 }
                                              }
@@ -342,13 +342,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                             if (tcq.categorieQuestion != "" && tcq.detailsCategorie != "")
                                             {
                                                 string commune = reader.Sr.getCommune(obj.GetType().GetProperty(property.Name).GetValue(obj).ToString()).ComNom;
-                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}",ind.Q3Prenom) + "__________________:" + question.detailsQuestion), commune, tcq.detailsCategorie);
+                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}",ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), commune, tcq.detailsCategorie);
                                                 reponses.Add(detail);
                                             }
                                             else
                                             {
                                                 string commune = reader.Sr.getCommune(obj.GetType().GetProperty(property.Name).GetValue(obj).ToString()).ComNom;
-                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + question.libelle.ToLower().Replace("{0}", ind.Q3Prenom) + "__________________:" + question.detailsQuestion), commune, tcq.categorieQuestion);
+                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), commune, tcq.categorieQuestion);
                                                 reponses.Add(detail);
                                             }
                                         }
@@ -357,13 +357,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                             if (tcq.categorieQuestion != "" && tcq.detailsCategorie != "")
                                             {
                                                 string commune = reader.Sr.getCommune(obj.GetType().GetProperty(property.Name).GetValue(obj).ToString()).ComNom;
-                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Q3Prenom)), commune, tcq.detailsCategorie);
+                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom)), commune, tcq.detailsCategorie);
                                                 reponses.Add(detail);
                                             }
                                             else
                                             {
                                                 string commune = reader.Sr.getCommune(obj.GetType().GetProperty(property.Name).GetValue(obj).ToString()).ComNom;
-                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Q3Prenom)), commune, tcq.categorieQuestion);
+                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom)), commune, tcq.categorieQuestion);
                                                 reponses.Add(detail);
                                             }
                                         }

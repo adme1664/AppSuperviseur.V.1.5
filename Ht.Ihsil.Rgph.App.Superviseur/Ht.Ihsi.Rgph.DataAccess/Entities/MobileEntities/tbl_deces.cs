@@ -21,7 +21,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public string sdeId { get; set; }
         public Nullable<long> qd2NoOrdre { get; set; }
         public Nullable<long> qd2aSexe { get; set; }
-        public Nullable<long> qd2bAgeDecede { get; set; }
+        public string qd2bAgeDecede { get; set; }
         public Nullable<long> qd2c1CirconstanceDeces { get; set; }
         public Nullable<long> qd2c2CauseDeces { get; set; }
         public Nullable<long> statut { get; set; }

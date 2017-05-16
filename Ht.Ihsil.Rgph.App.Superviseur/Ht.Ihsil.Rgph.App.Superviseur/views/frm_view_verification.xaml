@@ -11,9 +11,9 @@
         </Grid.Background>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="15*"/>
-            <RowDefinition Height="124*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="54*"/>
+            <RowDefinition Height="16*"/>
             <RowDefinition Height="148*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
 
         <!--<ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="White" Name="scrl_view_tree" Margin="0,23,0,0">-->
-        <GroupBox Header="SDEs" Margin="0,3,0,6"  Grid.Row="1" BorderThickness="1" BorderBrush="#FF92C0DA" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <GroupBox Header="SDEs" Margin="0,3,0,6"  Grid.Row="1" BorderThickness="1" BorderBrush="#FF92C0DA">
             <ListBox  Name="listBox_sde" ItemsSource="{Binding Path=Sdes}" SelectionChanged="listBox_sde_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -43,9 +43,12 @@
             </StackPanel>
         </Border>
         <Grid Grid.Column="1" HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Grid.RowSpan="4">
+            <dx:LoadingDecorator Name="loadingDecorator">
+
+            </dx:LoadingDecorator>
             <Grid Name="grd_details" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <UserControl Background="LightGray"/>
-                <dx:WaitIndicator DeferedVisibility="False" Content="Loading..." Name="wInd">
+                <!--<dx:WaitIndicator DeferedVisibility="False" Content="Loading..." Name="wInd">
                     <dx:WaitIndicator.ContentTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical">
@@ -54,7 +57,8 @@
                             </StackPanel>
                         </DataTemplate>
                     </dx:WaitIndicator.ContentTemplate>
-                </dx:WaitIndicator>
+                </dx:WaitIndicator>-->
+                
             </Grid>
         </Grid>
         <CheckBox Content="Verifier tout le district" HorizontalAlignment="Left" Margin="15,6,0,0" Grid.Row="2" VerticalAlignment="Top" Height="22" Width="131" Name="chkDistrict" Checked="chkDistrict_Checked"/>

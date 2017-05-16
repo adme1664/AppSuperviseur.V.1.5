@@ -181,7 +181,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                                             }
                                             
                                             //Changement de statut sur les deces
-                                            if (men.qd1NbreDecedeFille.GetValueOrDefault() != 0 || men.qd1NbreDecedeGarcon.GetValueOrDefault() != 0)
+                                            if (men.qd1NbreDecede.GetValueOrDefault() != 0)
                                             {
                                                 List<tbl_deces> deces = repository.MDecesRepository.Find(em => em.menageId == men.menageId).ToList();
                                                 foreach (tbl_deces dec in deces)
@@ -237,7 +237,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                                         men.statut = Constant.STATUT_MODULE_KI_MAL_RANPLI_2;
                                     repository.MMenageRepository.UpdateGB(men);
                                     //Changement de statut sur les eemigres
-                                    if (men.qn1NbreEmigreFille.GetValueOrDefault() != 0 || men.qn1NbreEmigreGarcon.GetValueOrDefault() != 0)
+                                    if (men.qn1NbreEmigre.GetValueOrDefault() != 0)
                                     {
                                         List<tbl_emigre> emigres = repository.MEmigreRepository.Find(em => em.menageId == men.menageId).ToList();
                                         foreach (tbl_emigre emigre in emigres)

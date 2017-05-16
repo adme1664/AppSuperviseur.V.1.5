@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MobileModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=D:\WORKSPACE\CSHARP\DESKSTOP_APPLICATION\AppSuperviseur.V.1.4\Ht.Ihsil.Rgph.App.Superviseur\Ht.Ihsi.Rgph.DataAccess\Data\rgph_data-db.SQLITE" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="MobileEntities.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=D:\WORKSPACE\CSHARP\DESKSTOP_APPLICATION\AppSuperviseur.V.1.4\Ht.Ihsil.Rgph.App.Superviseur\Ht.Ihsi.Rgph.DataAccess\Data\rgph_data-db.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_batiment">
           <Key>
             <PropertyRef Name="batimentId" />
@@ -14,7 +14,6 @@
           <Property Name="comId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="vqseId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="sectionEnumerationId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="zone" Type="integer" />
           <Property Name="disctrictId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qhabitation" Type="nvarchar" MaxLength="2147483647" />
@@ -25,8 +24,8 @@
           <Property Name="qb1Etat" Type="integer" />
           <Property Name="qb2Type" Type="integer" />
           <Property Name="qb3NombreEtage" Type="integer" />
-          <Property Name="qb5MateriauToit" Type="integer" />
           <Property Name="qb4MateriauMur" Type="integer" />
+          <Property Name="qb5MateriauToit" Type="integer" />
           <Property Name="qb6StatutOccupation" Type="integer" />
           <Property Name="qb7Utilisation1" Type="integer" />
           <Property Name="qb7Utilisation2" Type="integer" />
@@ -80,7 +79,7 @@ avertissement 6002: La table/vue 'main.tbl_commune' n'a pas de clé primaire dé
           <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qd2NoOrdre" Type="integer" />
           <Property Name="qd2aSexe" Type="integer" />
-          <Property Name="qd2bAgeDecede" Type="integer" />
+          <Property Name="qd2bAgeDecede" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qd2c1CirconstanceDeces" Type="integer" />
           <Property Name="qd2c2CauseDeces" Type="integer" />
           <Property Name="statut" Type="integer" />
@@ -120,9 +119,9 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qn1numeroOrdre" Type="integer" />
           <Property Name="qn2aNomComplet" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="qn2bResidenceActuelle" Type="integer" />
-          <Property Name="qn2cSexe" Type="integer" />
-          <Property Name="qn2dAgeAuMomentDepart" Type="integer" />
+          <Property Name="qn2bSexe" Type="integer" />
+          <Property Name="qn2cAgeAuMomentDepart" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qn2dVivantToujours" Type="integer" />
           <Property Name="qn2eDernierPaysResidence" Type="integer" />
           <Property Name="statut" Type="integer" />
           <Property Name="isFieldAllFilled" Type="integer" />
@@ -141,15 +140,15 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="batimentId" Type="integer" />
           <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="q1NoOrdre" Type="integer" />
-          <Property Name="q3Prenom" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="q2Nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp2APrenom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp2BNom" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qp3LienDeParente" Type="integer" />
-          <Property Name="q3HabiteDansMenage" Type="integer" />
-          <Property Name="q4Sexe" Type="integer" />
-          <Property Name="q5DateNaissanceJour" Type="integer" />
-          <Property Name="q5DateNaissanceMois" Type="integer" />
-          <Property Name="q5DateNaissanceAnnee" Type="integer" />
-          <Property Name="q5bAge" Type="integer" />
+          <Property Name="qp3HabiteDansMenage" Type="integer" />
+          <Property Name="qp4Sexe" Type="integer" />
+          <Property Name="qp5DateNaissanceJour" Type="integer" />
+          <Property Name="qp5DateNaissanceMois" Type="integer" />
+          <Property Name="Qp5DateNaissanceAnnee" Type="integer" />
+          <Property Name="qp5bAge" Type="integer" />
           <Property Name="qp6religion" Type="integer" />
           <Property Name="qp6AutreReligion" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qp7Nationalite" Type="integer" />
@@ -169,7 +168,7 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="qe2FreqentationScolaireOuUniv" Type="integer" />
           <Property Name="qe3typeEcoleOuUniv" Type="integer" />
           <Property Name="qe4aNiveauEtude" Type="integer" />
-          <Property Name="qe4bDerniereClasseOUAneEtude" Type="integer" />
+          <Property Name="qe4bDerniereClasseOUAneEtude" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qe5DiplomeUniversitaire" Type="integer" />
           <Property Name="qe6DomaineEtudeUniversitaire" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qaf1HandicapVoir" Type="integer" />
@@ -194,6 +193,7 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="qa3StatutEmploie" Type="integer" />
           <Property Name="qa4SecteurInstitutionnel" Type="integer" />
           <Property Name="qa5TypeBienProduitParEntreprise" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qa5PreciserTypeBienProduitParEntreprise" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qa6LieuActDerniereSemaine" Type="integer" />
           <Property Name="qa7FoncTravail" Type="integer" />
           <Property Name="qa8EntreprendreDemarcheTravail" Type="integer" />
@@ -226,7 +226,7 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="qlCategLogement" Type="integer" />
           <Property Name="qlin1NumeroOrdre" Type="integer" />
           <Property Name="qlc1TypeLogement" Type="integer" />
-          <Property Name="qllc2bTotalGarcon" Type="integer" />
+          <Property Name="qlc2bTotalGarcon" Type="integer" />
           <Property Name="qlc2bTotalFille" Type="integer" />
           <Property Name="qlcTotalIndividus" Type="integer" />
           <Property Name="qlin2StatutOccupation" Type="integer" />
@@ -283,11 +283,9 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="qm10TotalDomestiqueGarcon" Type="integer" />
           <Property Name="qm11TotalIndividuVivant" Type="integer" />
           <Property Name="qn1Emigration" Type="integer" />
-          <Property Name="qn1NbreEmigreFille" Type="integer" />
-          <Property Name="qn1NbreEmigreGarcon" Type="integer" />
+          <Property Name="qn1NbreEmigre" Type="integer" />
           <Property Name="qd1Deces" Type="integer" />
-          <Property Name="qd1NbreDecedeFille" Type="integer" />
-          <Property Name="qd1NbreDecedeGarcon" Type="integer" />
+          <Property Name="qd1NbreDecede" Type="integer" />
           <Property Name="statut" Type="integer" />
           <Property Name="isValidated" Type="integer" />
           <Property Name="dateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
@@ -333,6 +331,8 @@ avertissement 6002: La table/vue 'main.tbl_pays' n'a pas de clé primaire défin
           <Property Name="deptId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="comId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="vqseId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="zone" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="codeDistrict" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="estActif" Type="integer" />
           <Property Name="ProfileId" Type="integer" />
           <Property Name="dateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
@@ -413,16 +413,6 @@ avertissement 6002: La table/vue 'main.tbl_question_reponse' n'a pas de clé pri
           <Property Name="codeAgentRecenceur" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
         <!--Erreurs détectées durant la génération :
-avertissement 6002: La table/vue 'main.tbl_reponse' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
-        <EntityType Name="tbl_reponse">
-          <Key>
-            <PropertyRef Name="codeUniqueReponse" />
-          </Key>
-          <Property Name="codeUniqueReponse" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
-          <Property Name="codeReponse" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="libelleReponse" Type="nvarchar" MaxLength="2147483647" />
-        </EntityType>
-        <!--Erreurs détectées durant la génération :
 avertissement 6002: La table/vue 'main.tbl_vqse' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
         <EntityType Name="tbl_vqse">
           <Key>
@@ -433,7 +423,7 @@ avertissement 6002: La table/vue 'main.tbl_vqse' n'a pas de clé primaire défin
           <Property Name="VqseNom" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="ComId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="MobileModelStoreContainer">
+        <EntityContainer Name="MobileEntitiesStoreContainer">
           <EntitySet Name="tbl_batiment" EntityType="Self.tbl_batiment" store:Type="Tables" />
           <EntitySet Name="tbl_deces" EntityType="Self.tbl_deces" store:Type="Tables" />
           <EntitySet Name="tbl_emigre" EntityType="Self.tbl_emigre" store:Type="Tables" />
@@ -523,13 +513,6 @@ FROM [tbl_question_module] AS [tbl_question_module]</DefiningQuery>
 [tbl_question_reponse].[qSuivant] AS [qSuivant]
 FROM [tbl_question_reponse] AS [tbl_question_reponse]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="tbl_reponse" EntityType="Self.tbl_reponse" store:Type="Tables">
-            <DefiningQuery>SELECT 
-[tbl_reponse].[codeUniqueReponse] AS [codeUniqueReponse], 
-[tbl_reponse].[codeReponse] AS [codeReponse], 
-[tbl_reponse].[libelleReponse] AS [libelleReponse]
-FROM [tbl_reponse] AS [tbl_reponse]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="tbl_vqse" EntityType="Self.tbl_vqse" store:Type="Tables">
             <DefiningQuery>SELECT 
 [tbl_vqse].[VqseId] AS [VqseId], 
@@ -542,7 +525,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MobileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="MobileEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="tbl_batiment">
           <Key>
             <PropertyRef Name="batimentId" />
@@ -552,7 +535,6 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="comId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="vqseId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="sectionEnumerationId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="zone" Type="Int64" />
           <Property Name="disctrictId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qhabitation" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
@@ -563,8 +545,8 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="qb1Etat" Type="Int64" />
           <Property Name="qb2Type" Type="Int64" />
           <Property Name="qb3NombreEtage" Type="Int64" />
-          <Property Name="qb5MateriauToit" Type="Int64" />
           <Property Name="qb4MateriauMur" Type="Int64" />
+          <Property Name="qb5MateriauToit" Type="Int64" />
           <Property Name="qb6StatutOccupation" Type="Int64" />
           <Property Name="qb7Utilisation1" Type="Int64" />
           <Property Name="qb7Utilisation2" Type="Int64" />
@@ -595,7 +577,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qd2NoOrdre" Type="Int64" />
           <Property Name="qd2aSexe" Type="Int64" />
-          <Property Name="qd2bAgeDecede" Type="Int64" />
+          <Property Name="qd2bAgeDecede" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qd2c1CirconstanceDeces" Type="Int64" />
           <Property Name="qd2c2CauseDeces" Type="Int64" />
           <Property Name="statut" Type="Int64" />
@@ -617,9 +599,9 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qn1numeroOrdre" Type="Int64" />
           <Property Name="qn2aNomComplet" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="qn2bResidenceActuelle" Type="Int64" />
-          <Property Name="qn2cSexe" Type="Int64" />
-          <Property Name="qn2dAgeAuMomentDepart" Type="Int64" />
+          <Property Name="qn2bSexe" Type="Int64" />
+          <Property Name="qn2cAgeAuMomentDepart" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qn2dVivantToujours" Type="Int64" />
           <Property Name="qn2eDernierPaysResidence" Type="Int64" />
           <Property Name="statut" Type="Int64" />
           <Property Name="isFieldAllFilled" Type="Int64" />
@@ -638,15 +620,15 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="batimentId" Type="Int64" />
           <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="q1NoOrdre" Type="Int64" />
-          <Property Name="q3Prenom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="q2Nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp2APrenom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp2BNom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qp3LienDeParente" Type="Int64" />
-          <Property Name="q3HabiteDansMenage" Type="Int64" />
-          <Property Name="q4Sexe" Type="Int64" />
-          <Property Name="q5DateNaissanceJour" Type="Int64" />
-          <Property Name="q5DateNaissanceMois" Type="Int64" />
-          <Property Name="q5DateNaissanceAnnee" Type="Int64" />
-          <Property Name="q5bAge" Type="Int64" />
+          <Property Name="qp3HabiteDansMenage" Type="Int64" />
+          <Property Name="qp4Sexe" Type="Int64" />
+          <Property Name="qp5DateNaissanceJour" Type="Int64" />
+          <Property Name="qp5DateNaissanceMois" Type="Int64" />
+          <Property Name="Qp5DateNaissanceAnnee" Type="Int64" />
+          <Property Name="qp5bAge" Type="Int64" />
           <Property Name="qp6religion" Type="Int64" />
           <Property Name="qp6AutreReligion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qp7Nationalite" Type="Int64" />
@@ -666,7 +648,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="qe2FreqentationScolaireOuUniv" Type="Int64" />
           <Property Name="qe3typeEcoleOuUniv" Type="Int64" />
           <Property Name="qe4aNiveauEtude" Type="Int64" />
-          <Property Name="qe4bDerniereClasseOUAneEtude" Type="Int64" />
+          <Property Name="qe4bDerniereClasseOUAneEtude" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qe5DiplomeUniversitaire" Type="Int64" />
           <Property Name="qe6DomaineEtudeUniversitaire" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qaf1HandicapVoir" Type="Int64" />
@@ -691,6 +673,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="qa3StatutEmploie" Type="Int64" />
           <Property Name="qa4SecteurInstitutionnel" Type="Int64" />
           <Property Name="qa5TypeBienProduitParEntreprise" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qa5PreciserTypeBienProduitParEntreprise" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qa6LieuActDerniereSemaine" Type="Int64" />
           <Property Name="qa7FoncTravail" Type="Int64" />
           <Property Name="qa8EntreprendreDemarcheTravail" Type="Int64" />
@@ -723,7 +706,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="qlCategLogement" Type="Int64" />
           <Property Name="qlin1NumeroOrdre" Type="Int64" />
           <Property Name="qlc1TypeLogement" Type="Int64" />
-          <Property Name="qllc2bTotalGarcon" Type="Int64" />
+          <Property Name="qlc2bTotalGarcon" Type="Int64" />
           <Property Name="qlc2bTotalFille" Type="Int64" />
           <Property Name="qlcTotalIndividus" Type="Int64" />
           <Property Name="qlin2StatutOccupation" Type="Int64" />
@@ -780,11 +763,9 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="qm10TotalDomestiqueGarcon" Type="Int64" />
           <Property Name="qm11TotalIndividuVivant" Type="Int64" />
           <Property Name="qn1Emigration" Type="Int64" />
-          <Property Name="qn1NbreEmigreFille" Type="Int64" />
-          <Property Name="qn1NbreEmigreGarcon" Type="Int64" />
+          <Property Name="qn1NbreEmigre" Type="Int64" />
           <Property Name="qd1Deces" Type="Int64" />
-          <Property Name="qd1NbreDecedeFille" Type="Int64" />
-          <Property Name="qd1NbreDecedeGarcon" Type="Int64" />
+          <Property Name="qd1NbreDecede" Type="Int64" />
           <Property Name="statut" Type="Int64" />
           <Property Name="isValidated" Type="Int64" />
           <Property Name="dateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
@@ -809,6 +790,8 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="deptId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="comId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="vqseId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="zone" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="codeDistrict" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="estActif" Type="Int64" />
           <Property Name="ProfileId" Type="Int64" />
           <Property Name="dateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
@@ -932,14 +915,6 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="qPrecedent" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="qSuivant" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="tbl_reponse">
-          <Key>
-            <PropertyRef Name="codeUniqueReponse" />
-          </Key>
-          <Property Name="codeUniqueReponse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="codeReponse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="libelleReponse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="tbl_vqse">
           <Key>
             <PropertyRef Name="VqseId" />
@@ -967,7 +942,6 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <EntitySet Name="tbl_question" EntityType="Self.tbl_question" />
           <EntitySet Name="tbl_question_module" EntityType="Self.tbl_question_module" />
           <EntitySet Name="tbl_question_reponse" EntityType="Self.tbl_question_reponse" />
-          <EntitySet Name="tbl_reponse" EntityType="Self.tbl_reponse" />
           <EntitySet Name="tbl_vqse" EntityType="Self.tbl_vqse" />
         </EntityContainer>
       </Schema>
@@ -975,16 +949,15 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MobileModelStoreContainer" CdmEntityContainer="MobileDataEntities">
+        <EntityContainerMapping StorageEntityContainer="MobileEntitiesStoreContainer" CdmEntityContainer="MobileDataEntities">
           <EntitySetMapping Name="tbl_batiment">
-            <EntityTypeMapping TypeName="MobileModel.tbl_batiment">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_batiment">
               <MappingFragment StoreEntitySet="tbl_batiment">
                 <ScalarProperty Name="batimentId" ColumnName="batimentId" />
                 <ScalarProperty Name="deptId" ColumnName="deptId" />
                 <ScalarProperty Name="comId" ColumnName="comId" />
                 <ScalarProperty Name="vqseId" ColumnName="vqseId" />
                 <ScalarProperty Name="sdeId" ColumnName="sdeId" />
-                <ScalarProperty Name="sectionEnumerationId" ColumnName="sectionEnumerationId" />
                 <ScalarProperty Name="zone" ColumnName="zone" />
                 <ScalarProperty Name="disctrictId" ColumnName="disctrictId" />
                 <ScalarProperty Name="qhabitation" ColumnName="qhabitation" />
@@ -995,8 +968,8 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
                 <ScalarProperty Name="qb1Etat" ColumnName="qb1Etat" />
                 <ScalarProperty Name="qb2Type" ColumnName="qb2Type" />
                 <ScalarProperty Name="qb3NombreEtage" ColumnName="qb3NombreEtage" />
-                <ScalarProperty Name="qb5MateriauToit" ColumnName="qb5MateriauToit" />
                 <ScalarProperty Name="qb4MateriauMur" ColumnName="qb4MateriauMur" />
+                <ScalarProperty Name="qb5MateriauToit" ColumnName="qb5MateriauToit" />
                 <ScalarProperty Name="qb6StatutOccupation" ColumnName="qb6StatutOccupation" />
                 <ScalarProperty Name="qb7Utilisation1" ColumnName="qb7Utilisation1" />
                 <ScalarProperty Name="qb7Utilisation2" ColumnName="qb7Utilisation2" />
@@ -1019,7 +992,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_deces">
-            <EntityTypeMapping TypeName="MobileModel.tbl_deces">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_deces">
               <MappingFragment StoreEntitySet="tbl_deces">
                 <ScalarProperty Name="decesId" ColumnName="decesId" />
                 <ScalarProperty Name="menageId" ColumnName="menageId" />
@@ -1042,7 +1015,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_emigre">
-            <EntityTypeMapping TypeName="MobileModel.tbl_emigre">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_emigre">
               <MappingFragment StoreEntitySet="tbl_emigre">
                 <ScalarProperty Name="emigreId" ColumnName="emigreId" />
                 <ScalarProperty Name="menageId" ColumnName="menageId" />
@@ -1051,9 +1024,9 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
                 <ScalarProperty Name="sdeId" ColumnName="sdeId" />
                 <ScalarProperty Name="qn1numeroOrdre" ColumnName="qn1numeroOrdre" />
                 <ScalarProperty Name="qn2aNomComplet" ColumnName="qn2aNomComplet" />
-                <ScalarProperty Name="qn2bResidenceActuelle" ColumnName="qn2bResidenceActuelle" />
-                <ScalarProperty Name="qn2cSexe" ColumnName="qn2cSexe" />
-                <ScalarProperty Name="qn2dAgeAuMomentDepart" ColumnName="qn2dAgeAuMomentDepart" />
+                <ScalarProperty Name="qn2bSexe" ColumnName="qn2bSexe" />
+                <ScalarProperty Name="qn2cAgeAuMomentDepart" ColumnName="qn2cAgeAuMomentDepart" />
+                <ScalarProperty Name="qn2dVivantToujours" ColumnName="qn2dVivantToujours" />
                 <ScalarProperty Name="qn2eDernierPaysResidence" ColumnName="qn2eDernierPaysResidence" />
                 <ScalarProperty Name="statut" ColumnName="statut" />
                 <ScalarProperty Name="isFieldAllFilled" ColumnName="isFieldAllFilled" />
@@ -1065,7 +1038,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_individu">
-            <EntityTypeMapping TypeName="MobileModel.tbl_individu">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_individu">
               <MappingFragment StoreEntitySet="tbl_individu">
                 <ScalarProperty Name="individuId" ColumnName="individuId" />
                 <ScalarProperty Name="menageId" ColumnName="menageId" />
@@ -1073,15 +1046,15 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
                 <ScalarProperty Name="batimentId" ColumnName="batimentId" />
                 <ScalarProperty Name="sdeId" ColumnName="sdeId" />
                 <ScalarProperty Name="q1NoOrdre" ColumnName="q1NoOrdre" />
-                <ScalarProperty Name="q3Prenom" ColumnName="q3Prenom" />
-                <ScalarProperty Name="q2Nom" ColumnName="q2Nom" />
+                <ScalarProperty Name="qp2APrenom" ColumnName="qp2APrenom" />
+                <ScalarProperty Name="qp2BNom" ColumnName="qp2BNom" />
                 <ScalarProperty Name="qp3LienDeParente" ColumnName="qp3LienDeParente" />
-                <ScalarProperty Name="q3HabiteDansMenage" ColumnName="q3HabiteDansMenage" />
-                <ScalarProperty Name="q4Sexe" ColumnName="q4Sexe" />
-                <ScalarProperty Name="q5DateNaissanceJour" ColumnName="q5DateNaissanceJour" />
-                <ScalarProperty Name="q5DateNaissanceMois" ColumnName="q5DateNaissanceMois" />
-                <ScalarProperty Name="q5DateNaissanceAnnee" ColumnName="q5DateNaissanceAnnee" />
-                <ScalarProperty Name="q5bAge" ColumnName="q5bAge" />
+                <ScalarProperty Name="qp3HabiteDansMenage" ColumnName="qp3HabiteDansMenage" />
+                <ScalarProperty Name="qp4Sexe" ColumnName="qp4Sexe" />
+                <ScalarProperty Name="qp5DateNaissanceJour" ColumnName="qp5DateNaissanceJour" />
+                <ScalarProperty Name="qp5DateNaissanceMois" ColumnName="qp5DateNaissanceMois" />
+                <ScalarProperty Name="Qp5DateNaissanceAnnee" ColumnName="Qp5DateNaissanceAnnee" />
+                <ScalarProperty Name="qp5bAge" ColumnName="qp5bAge" />
                 <ScalarProperty Name="qp6religion" ColumnName="qp6religion" />
                 <ScalarProperty Name="qp6AutreReligion" ColumnName="qp6AutreReligion" />
                 <ScalarProperty Name="qp7Nationalite" ColumnName="qp7Nationalite" />
@@ -1126,6 +1099,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
                 <ScalarProperty Name="qa3StatutEmploie" ColumnName="qa3StatutEmploie" />
                 <ScalarProperty Name="qa4SecteurInstitutionnel" ColumnName="qa4SecteurInstitutionnel" />
                 <ScalarProperty Name="qa5TypeBienProduitParEntreprise" ColumnName="qa5TypeBienProduitParEntreprise" />
+                <ScalarProperty Name="qa5PreciserTypeBienProduitParEntreprise" ColumnName="qa5PreciserTypeBienProduitParEntreprise" />
                 <ScalarProperty Name="qa6LieuActDerniereSemaine" ColumnName="qa6LieuActDerniereSemaine" />
                 <ScalarProperty Name="qa7FoncTravail" ColumnName="qa7FoncTravail" />
                 <ScalarProperty Name="qa8EntreprendreDemarcheTravail" ColumnName="qa8EntreprendreDemarcheTravail" />
@@ -1151,7 +1125,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_logement">
-            <EntityTypeMapping TypeName="MobileModel.tbl_logement">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_logement">
               <MappingFragment StoreEntitySet="tbl_logement">
                 <ScalarProperty Name="logeId" ColumnName="logeId" />
                 <ScalarProperty Name="batimentId" ColumnName="batimentId" />
@@ -1159,7 +1133,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
                 <ScalarProperty Name="qlCategLogement" ColumnName="qlCategLogement" />
                 <ScalarProperty Name="qlin1NumeroOrdre" ColumnName="qlin1NumeroOrdre" />
                 <ScalarProperty Name="qlc1TypeLogement" ColumnName="qlc1TypeLogement" />
-                <ScalarProperty Name="qllc2bTotalGarcon" ColumnName="qllc2bTotalGarcon" />
+                <ScalarProperty Name="qlc2bTotalGarcon" ColumnName="qlc2bTotalGarcon" />
                 <ScalarProperty Name="qlc2bTotalFille" ColumnName="qlc2bTotalFille" />
                 <ScalarProperty Name="qlcTotalIndividus" ColumnName="qlcTotalIndividus" />
                 <ScalarProperty Name="qlin2StatutOccupation" ColumnName="qlin2StatutOccupation" />
@@ -1183,7 +1157,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_menage">
-            <EntityTypeMapping TypeName="MobileModel.tbl_menage">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_menage">
               <MappingFragment StoreEntitySet="tbl_menage">
                 <ScalarProperty Name="menageId" ColumnName="menageId" />
                 <ScalarProperty Name="logeId" ColumnName="logeId" />
@@ -1217,11 +1191,9 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
                 <ScalarProperty Name="qm10TotalDomestiqueGarcon" ColumnName="qm10TotalDomestiqueGarcon" />
                 <ScalarProperty Name="qm11TotalIndividuVivant" ColumnName="qm11TotalIndividuVivant" />
                 <ScalarProperty Name="qn1Emigration" ColumnName="qn1Emigration" />
-                <ScalarProperty Name="qn1NbreEmigreFille" ColumnName="qn1NbreEmigreFille" />
-                <ScalarProperty Name="qn1NbreEmigreGarcon" ColumnName="qn1NbreEmigreGarcon" />
+                <ScalarProperty Name="qn1NbreEmigre" ColumnName="qn1NbreEmigre" />
                 <ScalarProperty Name="qd1Deces" ColumnName="qd1Deces" />
-                <ScalarProperty Name="qd1NbreDecedeFille" ColumnName="qd1NbreDecedeFille" />
-                <ScalarProperty Name="qd1NbreDecedeGarcon" ColumnName="qd1NbreDecedeGarcon" />
+                <ScalarProperty Name="qd1NbreDecede" ColumnName="qd1NbreDecede" />
                 <ScalarProperty Name="statut" ColumnName="statut" />
                 <ScalarProperty Name="isValidated" ColumnName="isValidated" />
                 <ScalarProperty Name="dateDebutCollecte" ColumnName="dateDebutCollecte" />
@@ -1234,7 +1206,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_personnel">
-            <EntityTypeMapping TypeName="MobileModel.tbl_personnel">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_personnel">
               <MappingFragment StoreEntitySet="tbl_personnel">
                 <ScalarProperty Name="persId" ColumnName="persId" />
                 <ScalarProperty Name="sdeId" ColumnName="sdeId" />
@@ -1247,6 +1219,8 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
                 <ScalarProperty Name="deptId" ColumnName="deptId" />
                 <ScalarProperty Name="comId" ColumnName="comId" />
                 <ScalarProperty Name="vqseId" ColumnName="vqseId" />
+                <ScalarProperty Name="zone" ColumnName="zone" />
+                <ScalarProperty Name="codeDistrict" ColumnName="codeDistrict" />
                 <ScalarProperty Name="estActif" ColumnName="estActif" />
                 <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
                 <ScalarProperty Name="dateDebutCollecte" ColumnName="dateDebutCollecte" />
@@ -1255,7 +1229,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_rapportrar">
-            <EntityTypeMapping TypeName="MobileModel.tbl_rapportrar">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_rapportrar">
               <MappingFragment StoreEntitySet="tbl_rapportrar">
                 <ScalarProperty Name="rapportId" ColumnName="rapportId" />
                 <ScalarProperty Name="batimentId" ColumnName="batimentId" />
@@ -1279,7 +1253,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_categorie_question">
-            <EntityTypeMapping TypeName="MobileModel.tbl_categorie_question">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_categorie_question">
               <MappingFragment StoreEntitySet="tbl_categorie_question">
                 <ScalarProperty Name="codeCategorie" ColumnName="codeCategorie" />
                 <ScalarProperty Name="categorieQuestion" ColumnName="categorieQuestion" />
@@ -1289,7 +1263,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_commune">
-            <EntityTypeMapping TypeName="MobileModel.tbl_commune">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_commune">
               <MappingFragment StoreEntitySet="tbl_commune">
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
                 <ScalarProperty Name="ComNom" ColumnName="ComNom" />
@@ -1298,7 +1272,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_departement">
-            <EntityTypeMapping TypeName="MobileModel.tbl_departement">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_departement">
               <MappingFragment StoreEntitySet="tbl_departement">
                 <ScalarProperty Name="DeptId" ColumnName="DeptId" />
                 <ScalarProperty Name="DeptNom" ColumnName="DeptNom" />
@@ -1306,7 +1280,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_domaine_etude">
-            <EntityTypeMapping TypeName="MobileModel.tbl_domaine_etude">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_domaine_etude">
               <MappingFragment StoreEntitySet="tbl_domaine_etude">
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="NomDomaine" ColumnName="NomDomaine" />
@@ -1314,7 +1288,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_module">
-            <EntityTypeMapping TypeName="MobileModel.tbl_module">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_module">
               <MappingFragment StoreEntitySet="tbl_module">
                 <ScalarProperty Name="codeModule" ColumnName="codeModule" />
                 <ScalarProperty Name="nomModule" ColumnName="nomModule" />
@@ -1325,7 +1299,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_pays">
-            <EntityTypeMapping TypeName="MobileModel.tbl_pays">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_pays">
               <MappingFragment StoreEntitySet="tbl_pays">
                 <ScalarProperty Name="CodePays" ColumnName="CodePays" />
                 <ScalarProperty Name="NomPays" ColumnName="NomPays" />
@@ -1333,7 +1307,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_question">
-            <EntityTypeMapping TypeName="MobileModel.tbl_question">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_question">
               <MappingFragment StoreEntitySet="tbl_question">
                 <ScalarProperty Name="codeQuestion" ColumnName="codeQuestion" />
                 <ScalarProperty Name="libelle" ColumnName="libelle" />
@@ -1353,7 +1327,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_question_module">
-            <EntityTypeMapping TypeName="MobileModel.tbl_question_module">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_question_module">
               <MappingFragment StoreEntitySet="tbl_question_module">
                 <ScalarProperty Name="ordre" ColumnName="ordre" />
                 <ScalarProperty Name="codeModule" ColumnName="codeModule" />
@@ -1363,7 +1337,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_question_reponse">
-            <EntityTypeMapping TypeName="MobileModel.tbl_question_reponse">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_question_reponse">
               <MappingFragment StoreEntitySet="tbl_question_reponse">
                 <ScalarProperty Name="codeQuestion" ColumnName="codeQuestion" />
                 <ScalarProperty Name="codeUniqueReponse" ColumnName="codeUniqueReponse" />
@@ -1377,17 +1351,8 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tbl_reponse">
-            <EntityTypeMapping TypeName="MobileModel.tbl_reponse">
-              <MappingFragment StoreEntitySet="tbl_reponse">
-                <ScalarProperty Name="codeUniqueReponse" ColumnName="codeUniqueReponse" />
-                <ScalarProperty Name="codeReponse" ColumnName="codeReponse" />
-                <ScalarProperty Name="libelleReponse" ColumnName="libelleReponse" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tbl_vqse">
-            <EntityTypeMapping TypeName="MobileModel.tbl_vqse">
+            <EntityTypeMapping TypeName="MobileEntities.tbl_vqse">
               <MappingFragment StoreEntitySet="tbl_vqse">
                 <ScalarProperty Name="VqseId" ColumnName="VqseId" />
                 <ScalarProperty Name="VqseNom" ColumnName="VqseNom" />

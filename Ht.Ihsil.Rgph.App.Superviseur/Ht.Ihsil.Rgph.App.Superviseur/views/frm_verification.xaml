@@ -9,7 +9,7 @@
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
              x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_verification" 
-             mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+             mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="901">
 
     <UserControl.Resources>
         <Style TargetType="dxg:GridColumn">
@@ -23,7 +23,7 @@
                 <dx:DXTabControl>
                     <dx:DXTabItem Header="TRONC COMMUN">
                         <dx:DXTabControl>
-                            <dx:DXTabItem Header="Indicateurs de couverture" Name="tabIndCouverture">
+                            <dx:DXTabItem Header="Indicateurs de couverture" Name="tabIndCouverture" GotFocus="tabIndCouverture_GotFocus" Focusable="True">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="58*"/>
@@ -51,8 +51,18 @@
 
                                 </Grid>
                             </dx:DXTabItem>
-                            <dx:DXTabItem Header="Indicateurs socio-demographiques">
+                            <dx:DXTabItem Header="Indicateurs socio-demographiques" Name="tabSocioDemographiques" GotFocus="tabSocioDemographiques_GotFocus">
                                 <Grid>
+                                    <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false" Margin="231,106,-211,-156" RenderTransformOrigin="0.496,0.429">
+                                        <dx:WaitIndicator.ContentTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Vertical">
+                                                    <TextBlock Text="Fè yon ti tann..." FontSize="20"/>
+                                                    <TextBlock Text="{Binding}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </dx:WaitIndicator.ContentTemplate>
+                                    </dx:WaitIndicator>
                                     <dx:DXTabControl Name="tabControDemographiques">
                                         <dx:DXTabItem Header="Page 1" Margin="0,3,0,-3" Name="tabPageDemo1">
                                             <Grid>
@@ -175,7 +185,16 @@
                                     </dx:DXTabControl>
                                 </Grid>
                             </dx:DXTabItem>
-                            <dx:DXTabItem Header="Indicateurs de performance" Name="tabPagePerformance"></dx:DXTabItem>
+                            <dx:DXTabItem Header="Indicateurs de performance" Name="tabPagePerformance" GotFocus="tabPagePerformance_GotFocus">
+                                <Grid>
+                                    <dxg:GridControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Name="dataGridIndPerformance">
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                                        </dxg:GridControl.View>
+                                    </dxg:GridControl>
+
+                                </Grid>
+                            </dx:DXTabItem>
                         </dx:DXTabControl>
                     </dx:DXTabItem>
                 </dx:DXTabControl>
@@ -185,32 +204,32 @@
                     <dx:DXTabItem Header="Ajout" Name="tabAjout">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="13*"/>
-                                <RowDefinition Height="79*"/>
-                                <RowDefinition Height="0*"/>
+                                <RowDefinition Height="53*"/>
+                                <RowDefinition Height="441*"/>
+                                <RowDefinition Height="307*"/>
                             </Grid.RowDefinitions>
                             <GroupBox Header="Difficultés rencontrées" Grid.Row="1">
                                 <Grid>
-                                    <TextBlock HorizontalAlignment="Left" Margin="3,-7,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="372" Name="txtIndicateur" Foreground="#FF0F79E4"/>
                                     <Label Content="Code Question" HorizontalAlignment="Left" Margin="3,111,0,0" VerticalAlignment="Top"/>
                                     <ComboBox HorizontalAlignment="Left" Margin="140,109,0,0" VerticalAlignment="Top" Width="166" Name="cmbCodeQuestion" DisplayMemberPath="CodeQuestion" SelectionChanged="cmbCodeQuestion_SelectionChanged" IsEnabled="False" />
-                                    <TextBlock HorizontalAlignment="Left" Margin="363,51,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="54" Width="259" Name="txtLibelle" Foreground="#FFFF5454" FontStyle="Italic"/>
-                                    <Label Content="Libelle:" HorizontalAlignment="Left" Margin="311,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.353,-1.273" Foreground="#FFFD0B0B" FontWeight="Bold" FontStyle="Italic"/>
+                                    <TextBlock HorizontalAlignment="Left" Margin="141,140,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="67" Width="165" Name="txtLibelle" Foreground="#FFFF5454" FontStyle="Italic"/>
+                                    <Label Content="Libelle:" HorizontalAlignment="Left" Margin="3,144,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.353,-1.273" Foreground="#FFFD0B0B" FontWeight="Bold" FontStyle="Italic"/>
                                     <Label Content="Module" HorizontalAlignment="Left" Margin="3,47,0,0" VerticalAlignment="Top"/>
                                     <ComboBox HorizontalAlignment="Left" Margin="140,45,0,0" VerticalAlignment="Top" Width="166" Name="cmbObjet" SelectionChanged="cmbObjet_SelectionChanged" DisplayMemberPath="Name" IsEnabled="False"/>
-                                    <Label Content="Description du probleme" HorizontalAlignment="Left" Margin="3,144,0,0" VerticalAlignment="Top"/>
-                                    <TextBox HorizontalAlignment="Left" Margin="141,146,0,0" TextWrapping="Wrap" Text="" Name="txtNature" AcceptsReturn="True" Width="166" Height="147" VerticalAlignment="Top" IsEnabled="False" />
-                                    <Label Content="Choisir le(s) code(s) questionnaire(s)" HorizontalAlignment="Left" Margin="313,113,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.357,-0.045"/>
-                                    <ComboBox HorizontalAlignment="Left" Margin="508,114,0,0" VerticalAlignment="Top" Width="68" Name="cmbBatiment" DisplayMemberPath="BatimentId" SelectionChanged="cmbBatiment_SelectionChanged" IsEnabled="False"/>
-                                    <Label Content="Liste des codes" HorizontalAlignment="Left" Margin="612,113,0,0" VerticalAlignment="Top"/>
-                                    <ListBox HorizontalAlignment="Left" Height="178" Margin="701,116,0,0" VerticalAlignment="Top" Width="118" Name="listBCodeBatiment" DisplayMemberPath="BatimentName" IsEnabled="False" />
-                                    <Button Content="Sauvegarder" HorizontalAlignment="Left" Margin="508,143,0,0" VerticalAlignment="Top" Width="116" Name="btn_save" Height="26" Click="btn_save_Click" IsEnabled="False" />
+                                    <Label Content="Description du probleme" HorizontalAlignment="Left" Margin="3,214,0,0" VerticalAlignment="Top"/>
+                                    <TextBox HorizontalAlignment="Left" Margin="140,216,0,0" TextWrapping="Wrap" Text="" Name="txtNature" AcceptsReturn="True" Width="166" Height="147" VerticalAlignment="Top" IsEnabled="False" />
+                                    <Label Content="Choisir le(s) code(s) questionnaire(s)" HorizontalAlignment="Left" Margin="3,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.357,-0.045"/>
+                                    <ComboBox HorizontalAlignment="Left" Margin="237,10,0,0" VerticalAlignment="Top" Width="68" Name="cmbBatiment" DisplayMemberPath="BatimentId" SelectionChanged="cmbBatiment_SelectionChanged" IsEnabled="False"/>
+                                    <Label Content="Liste des codes à problème" Margin="312,8,314,0" VerticalAlignment="Top" Height="32"/>
+                                    <ListBox Margin="466,15,186,157" Name="listBCodeBatiment" HorizontalAlignment="Left" VerticalAlignment="Top" DisplayMemberPath="BatimentName" IsEnabled="False" Height="233" Width="150"/>
+                                    <Button Content="Sauvegarder" HorizontalAlignment="Left" Margin="317,220,0,0" VerticalAlignment="Top" Width="116" Name="btn_save" Height="26" Click="btn_save_Click" IsEnabled="False" />
                                     <Label Content="Domaine" HorizontalAlignment="Left"  Margin="3,81,0,0" VerticalAlignment="Top"/>
                                     <ComboBox HorizontalAlignment="Left"  Margin="140,76,0,0" VerticalAlignment="Top" Width="166" DisplayMemberPath="Value" Name="cmbDomaine" IsEnabled="False" SelectionChanged="cmbDomaine_SelectionChanged"  />
                                 </Grid>
                             </GroupBox>
                             <Label Content="Type de difficultés" HorizontalAlignment="Left" Margin="4,16,0,0" VerticalAlignment="Top" Height="22" Width="96"/>
                             <ComboBox HorizontalAlignment="Left" Margin="152,16,0,0" VerticalAlignment="Top" Width="166" Name="cmbTypeProbleme" DisplayMemberPath="Value" SelectionChanged="cmbTypeProbleme_SelectionChanged" Height="22"/>
+                            <TextBlock HorizontalAlignment="Left" Margin="333,15,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="372" x:Name="txtIndicateur" Foreground="#FF0F79E4"/>
 
 
                         </Grid>
@@ -236,9 +255,9 @@
                 <dx:DXTabControl Margin="-2,0,1,-2">
                     <dx:DXTabItem Header="NON-REPONSE TOTALE">
                         <GroupBox Header="Verification Totale">
-                            <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_totale" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGeneratingColumn="dtg_non_reponse_totale_AutoGeneratingColumn">
+                            <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_totale" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGeneratingColumn="dtg_non_reponse_totale_AutoGeneratingColumn" SelectionMode="Row">
                                 <dxg:TreeListControl.View >
-                                    <dxg:TreeListView AutoExpandAllNodes="True" ShowNodeImages="True" ImageFieldName="Image"  NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListView1" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"   AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD">
+                                    <dxg:TreeListView  ShowNodeImages="True" ImageFieldName="Image"  NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListView1" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"   AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD">
                                         <!--<dxg:TreeListView.RowStyle>
                                             <Style TargetType="{x:Type dxg:RowControl}">
                                                 <Style.Triggers>
@@ -249,9 +268,9 @@
                                                 </Style.Triggers>
                                             </Style>
                                         </dxg:TreeListView.RowStyle>-->
-                                        <dxg:TreeListView.Nodes>
+                                        <!--<dxg:TreeListView.Nodes>
                                             <dxg:TreeListNode Image="/Ht.Ihsil.Rgph.App.Superviseur;component/images/database.png"></dxg:TreeListNode>
-                                        </dxg:TreeListView.Nodes>
+                                        </dxg:TreeListView.Nodes>-->
                                     </dxg:TreeListView>
                                 </dxg:TreeListControl.View>
                                 <dxg:TreeListControl.Columns>

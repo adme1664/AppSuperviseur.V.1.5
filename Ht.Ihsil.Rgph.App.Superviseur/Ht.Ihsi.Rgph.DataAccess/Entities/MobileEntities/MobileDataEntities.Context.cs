@@ -42,7 +42,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public virtual DbSet<tbl_question> tbl_question { get; set; }
         public virtual DbSet<tbl_question_module> tbl_question_module { get; set; }
         public virtual DbSet<tbl_question_reponse> tbl_question_reponse { get; set; }
-        public virtual DbSet<tbl_reponse> tbl_reponse { get; set; }
         public virtual DbSet<tbl_vqse> tbl_vqse { get; set; }
     }
 }

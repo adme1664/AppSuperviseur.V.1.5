@@ -15,25 +15,24 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public string ComId { get; set; }
         public string VqseId { get; set; }
         public string SdeId { get; set; }
-        public string SectionEnumerationId { get; set; }
-        public int Zone { get; set; }
+        public short Zone { get; set; }
         public string DisctrictId { get; set; }
         public string Qhabitation { get; set; }
         public string Qlocalite { get; set; }
         public string Qadresse { get; set; }
         public string Qrec { get; set; }
         public string Qrgph { get; set; }
-        public int Qb1Etat { get; set; }
-        public int Qb2Type { get; set; }
-        public int Qb3NombreEtage { get; set; }
-        public int Qb5MateriauToit { get; set; }
-        public int Qb4MateriauMur { get; set; }
-        public int Qb6StatutOccupation { get; set; }
-        public int Qb7Utilisation1 { get; set; }
-        public int Qb7Utilisation2 { get; set; }
-        public int Qb8NbreLogeCollectif { get; set; }
-        public int Qb8NbreLogeIndividuel { get; set; }
-        public int Statut { get; set; }
+        public short Qb1Etat { get; set; }
+        public short Qb2Type { get; set; }
+        public short Qb3NombreEtage { get; set; }
+        public short Qb4MateriauMur { get; set; }
+        public short Qb5MateriauToit { get; set; }
+        public short Qb6StatutOccupation { get; set; }
+        public short Qb7Utilisation1 { get; set; }
+        public short Qb7Utilisation2 { get; set; }
+        public short Qb8NbreLogeCollectif { get; set; }
+        public short Qb8NbreLogeIndividuel { get; set; }
+        public short Statut { get; set; }
         public string DateEnvoi { get; set; }
         public bool IsValidated { get; set; }
         public bool IsSynchroToAppSup { get; set; }

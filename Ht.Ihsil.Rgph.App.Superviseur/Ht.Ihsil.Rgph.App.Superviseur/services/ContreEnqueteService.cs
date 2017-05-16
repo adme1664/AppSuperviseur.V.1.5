@@ -1259,7 +1259,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             return new List<DetailsRapportModel>();
         }
         #endregion
-
-        
+        public DetailsRapportModel getDetailsRapportDeroulement(long id)
+        {
+            string methodName = "getDetailsRapportDeroulement";
+            try
+            {
+                return ModelMapper.MapToDetailsRapportModel(daoCE.getRepository().RapportDetailsDeroulementRepository.Find(rpt => rpt.DetailsRapportId == id).FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                log.Info("ERREUR:ContreEnqueteService/" + methodName + " : " + ex.Message);
+            }
+            return new DetailsRapportModel();
+        }
     }
 }
