@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Toolkit.Data</id>
+    <version>1.0.5730.29660</version>
+    <title>Toolkit.Data</title>
+    <authors>Cybermap</authors>
+    <owners>Cybermap</owners>
+    <iconUrl>http://nuget.cybermap.pt/m.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Data access layer for Toolkit library.</description>
+    <releaseNotes />
+    <copyright>Copyright Cybermap 2014</copyright>
+    <tags>Cybermap Toolkit Data</tags>
+    <dependencies>
+      <dependency id="Toolkit.CodeBase" version="1.0.5730.29660" />
+      <dependency id="Toolkit.Resources" version="1.0.5730.29659" />
+    </dependencies>
+  </metadata>
+</package>

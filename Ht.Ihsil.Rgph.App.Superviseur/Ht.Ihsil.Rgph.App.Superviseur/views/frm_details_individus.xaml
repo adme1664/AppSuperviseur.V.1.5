@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_details_individus"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}">
+       
+        <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" BorderBrush="Gray" BorderThickness="1" >
+            <TabItem Margin="-2,0,-21,-2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+                <TabItem.Header>
+                    <StackPanel Height="35" Orientation="Horizontal" Margin="4,0,39,0">
+                        <Image Source="/images/tb.png"/>
+                        <TextBlock Text="Paj 1" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,8,0,9" Width="auto" FontFamily="Candara" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-6,0">
+                    <Grid HorizontalAlignment="Stretch"  Margin="10,10,0,0" VerticalAlignment="Stretch" />
+
+                    <DataGrid Margin="10,49,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternatingRowBackground="#FFCEE3FD" IsReadOnly="True" Name="dtg_page1" FontFamily="Candara" FontSize="14" RowHeight="20"/>
+                    <Label Content="#SDE:001201201/Batiman:1" Name="lbl_detail_1" FontWeight="Bold" FontStyle="Italic" Foreground="#FF0F7AF9" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="ENFOMASYON PESONEL" HorizontalAlignment="Left" Margin="219,23,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic"/>
+                </Grid>
+            </TabItem>
+            <TabItem  Name="tb_page1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="21,-1,-18,-1" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+                <TabItem.Header>
+                    <StackPanel Height="23" Orientation="Horizontal" Margin="2,0,55,0">
+                        <Image Source="/images/tb.png"/>
+                        <TextBlock Text="Paj 2" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,3,0,2" Width="50" FontFamily="Candara" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-6,0">
+                    <Grid HorizontalAlignment="Stretch" Margin="10,10,0,0" VerticalAlignment="Stretch" />
+
+                    <DataGrid Margin="10,49,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternatingRowBackground="#FFCEE3FD" IsReadOnly="True" Name="dtg_page2" FontFamily="Candara" FontSize="14" RowHeight="20"/>
+                    <Label Content="#SDE:001201201/Batiman:1" Name="lbl_detail_2" FontWeight="Bold" FontStyle="Italic" Foreground="#FF0F7AF9" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="P12.- AKTIVITE AK FONKSYÒNMAN MOUN NAN" HorizontalAlignment="Left" Margin="219,23,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic"/>
+                </Grid>
+            </TabItem>
+            <TabItem  Name="tb_page2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="17,-2,-2,0" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+                <TabItem.Header>
+                    <StackPanel Height="27" Orientation="Horizontal" Margin="2,0,65,0">
+                        <Image Source="/images/tb.png"/>
+                        <TextBlock Text="Paj 3" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="50" FontFamily="Candara" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-6,0">
+                    <Grid HorizontalAlignment="Stretch"  Margin="10,10,0,0" VerticalAlignment="Stretch" />
+
+                    <DataGrid Margin="10,49,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternatingRowBackground="#FFCEE3FD" IsReadOnly="True" Name="dtg_page3" FontFamily="Candara" FontSize="14" RowHeight="20"/>
+                    <Label Content="#SDE:001201201/Batiman:1" Name="lbl_detail_3" FontWeight="Bold" FontStyle="Italic" Foreground="#FF0F7AF9" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="P13. - ITILIZASYON ENSTRIMAN SIPÒ YO" HorizontalAlignment="Left" Margin="237,23,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic"/>
+                </Grid>
+            </TabItem>
+            <TabItem  Name="tb_page3" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="-2,-2,0,0" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+                <TabItem.Header>
+                    <StackPanel Height="27" Orientation="Horizontal" Margin="2,0,65,0">
+                        <Image Source="/images/tb.png"/>
+                        <TextBlock Text="Paj 4" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="50" FontFamily="Candara" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-6,0">
+                    <Grid HorizontalAlignment="Stretch" Margin="10,10,0,0" VerticalAlignment="Stretch" />
+
+                    <DataGrid Margin="10,49,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternatingRowBackground="#FFCEE3FD" IsReadOnly="True" Name="dtg_page4" FontFamily="Candara" FontSize="14" RowHeight="20"/>
+                    <Label Content="#SDE:001201201/Batiman:1" Name="lbl_detail_4" FontWeight="Bold" FontStyle="Italic" Foreground="#FF0F7AF9" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="MOBIDITE" HorizontalAlignment="Left" Margin="334,23,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic"/>
+                </Grid>
+            </TabItem>
+            <TabItem  Name="tb_page4" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+                <TabItem.Header>
+                    <StackPanel Height="27" Orientation="Horizontal" Margin="2,0,65,0">
+                        <Image Source="/images/tb.png"/>
+                        <TextBlock Text="Paj 5" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="50" FontFamily="Candara" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-6,0">
+                    <Grid HorizontalAlignment="Stretch" Margin="10,10,0,0" VerticalAlignment="Stretch" />
+
+                    <DataGrid Margin="10,49,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternatingRowBackground="#FFCEE3FD" IsReadOnly="True" Name="dtg_page5" FontFamily="Candara" FontSize="14" RowHeight="20"/>
+                    <Label Content="#SDE:001201201/Batiman:1" Name="lbl_detail_5" FontWeight="Bold" FontStyle="Italic" Foreground="#FF0F7AF9" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="MIGRATION" HorizontalAlignment="Left" Margin="334,23,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic"/>
+                </Grid>
+            </TabItem>
+            <TabItem  Name="tb_page5" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+                <TabItem.Header>
+                    <StackPanel Height="27" Orientation="Horizontal" Margin="2,0,65,0">
+                        <Image Source="/images/tb.png"/>
+                        <TextBlock Text="Paj 6" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="50" FontFamily="Candara" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-6,0">
+                    <Grid HorizontalAlignment="Stretch" Margin="10,10,0,0" VerticalAlignment="Stretch" />
+
+                    <DataGrid Margin="10,49,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternatingRowBackground="#FFCEE3FD" IsReadOnly="True" Name="dtg_page6" FontFamily="Candara" FontSize="14" RowHeight="20"/>
+                    <Label Content="#SDE:001201201/Batiman:1" Name="lbl_detail_6" FontWeight="Bold" FontStyle="Italic" Foreground="#FF0F7AF9" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="MIGRASYON: RETOUNEN VIN VIV AN AYITI" HorizontalAlignment="Left" Margin="254,23,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic"/>
+                </Grid>
+            </TabItem>
+            <TabItem  Name="tb_page6" Margin="-2,-2,0,-1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+                <TabItem.Header>
+                    <StackPanel Height="27" Orientation="Horizontal" Margin="2,0,65,0">
+                        <Image Source="/images/tb.png"/>
+                        <TextBlock Text="Paj 7" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="50" FontFamily="Candara" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-6,0">
+                    <Grid HorizontalAlignment="Stretch"  Margin="10,10,0,0" VerticalAlignment="Stretch" />
+
+                    <DataGrid Margin="10,49,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternatingRowBackground="#FFCEE3FD" IsReadOnly="True" Name="dtg_page7" FontFamily="Candara" FontSize="14" RowHeight="20"/>
+                    <Label Content="#SDE:001201201/Batiman:1" Name="lbl_detail_7" FontWeight="Bold" FontStyle="Italic" Foreground="#FF0F7AF9" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="POU MOUN KI GEN 3 LANE OSWA PLIS/EDIKASYON" HorizontalAlignment="Left" Margin="202,23,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic"/>
+                </Grid>
+            </TabItem>
+            <TabItem  Name="tb_page7" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+                <TabItem.Header>
+                    <StackPanel Height="27" Orientation="Horizontal" Margin="2,0,65,0">
+                        <Image Source="/images/tb.png"/>
+                        <TextBlock Text="Paj 8" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="50" FontFamily="Candara" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-6,0">
+                    <Grid HorizontalAlignment="Stretch"  Margin="10,10,0,0" VerticalAlignment="Stretch" />
+
+                    <DataGrid Margin="10,49,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternatingRowBackground="#FFCEE3FD" IsReadOnly="True" Name="dtg_page8" FontFamily="Candara" FontSize="14" RowHeight="20"/>
+                    <Label Content="#SDE:001201201/Batiman:1" Name="lbl_detail_8" FontWeight="Bold" FontStyle="Italic" Foreground="#FF0F7AF9" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="POU MOUN KI GEN 3 LANE OSWA PLIS/EDIKASYON" HorizontalAlignment="Left" Margin="202,23,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic"/>
+                </Grid>
+            </TabItem>
+            <TabItem  Name="tb_page8" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+                <TabItem.Header>
+                    <StackPanel Height="27" Orientation="Horizontal" Margin="2,0,65,0">
+                        <Image Source="/images/tb.png"/>
+                        <TextBlock Text="Paj 9" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" Width="50" FontFamily="Candara" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-6,0">
+                    <Grid HorizontalAlignment="Stretch" Margin="10,10,0,0" VerticalAlignment="Stretch" />
+
+                    <DataGrid Margin="10,49,10,10" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" AlternatingRowBackground="#FFCEE3FD" IsReadOnly="True" Name="dtg_page9" FontFamily="Candara" FontSize="14" RowHeight="20"/>
+                    <Label Content="#SDE:001201201/Batiman:1" Name="lbl_detail_9" FontWeight="Bold" FontStyle="Italic" Foreground="#FF0F7AF9" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+                    <Label Content="POU MOUN KI GEN 3 LANE OSWA PLIS/EDIKASYON" HorizontalAlignment="Left" Margin="202,23,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

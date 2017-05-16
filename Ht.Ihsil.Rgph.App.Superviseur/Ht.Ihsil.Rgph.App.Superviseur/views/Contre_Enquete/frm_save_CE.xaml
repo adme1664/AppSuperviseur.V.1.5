@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete.frm_save_CE"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
+    <!--<i:Interaction.Triggers>
+        <i:EventTrigger EventName="Raised" SourceObject="{Binding NotificationInteractionRequest}">
+            <i:EventTrigger.Actions>
+                <actions:NotificationMessageBoxAction />
+            </i:EventTrigger.Actions>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>-->
+    <Grid>
+        <Grid>
+            <GroupBox Header="" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  FontFamily="Candara">
+                <Grid>
+                    <GroupBox Header="Informations sur le batiment" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Margin="28,40,409,0" MaxWidth="351" Width="346" Height="128">
+                        <Grid>
+                            <Label Content="Numero du batiment" HorizontalAlignment="Left" Height="24" Margin="10,10,0,0" VerticalAlignment="Top" Width="159"/>
+                            <TextBox HorizontalAlignment="Left" Name="txt_batimentId" Text="{Binding BatimentId}"  Height="24" Margin="160,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="148"/>
+                            <Label Content="Numero de la SDE" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="159"/>
+                            <TextBox HorizontalAlignment="Left" Name="txt_sdeId" Height="23" Margin="160,39,0,0" TextWrapping="Wrap" Text="{Binding SdeId}" VerticalAlignment="Top" Width="148"/>
+                            <Label Content="Code du district" HorizontalAlignment="Left" Margin="10,69,0,0" VerticalAlignment="Top"/>
+                            <TextBox HorizontalAlignment="Left" Name="txt_codeDistrict" Height="23" Margin="160,69,0,0" TextWrapping="Wrap" Text="{Binding CodeDistrict}" VerticalAlignment="Top" Width="148"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Informations sur le superviseur" HorizontalAlignment="Stretch" Margin="413,42,6,0" VerticalAlignment="Top" MaxWidth="351" Height="126">
+                        <Grid>
+                            <Label Content="Nom  du Superviseur" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top"/>
+                            <TextBox HorizontalAlignment="Left" Name="txt_nom" Height="23" Margin="135,9,0,0" TextWrapping="Wrap" Text="{Binding NomSuperviseur}" VerticalAlignment="Top" Width="179" />
+                            <Label Content="Prenom  du Superviseur" HorizontalAlignment="Left" Margin="0,40,0,0" VerticalAlignment="Top" Height="25"/>
+                            <TextBox HorizontalAlignment="Left" Name="txt_prenom" Height="23" Margin="134,42,0,0" TextWrapping="Wrap" Text="{Binding PrenomSuperviseur}" VerticalAlignment="Top" Width="179"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Autres" HorizontalAlignment="Stretch" Margin="140,170,103,0" VerticalAlignment="Top" Height="196" MaxWidth="950" Width="580">
+                        <Grid>
+                            <Label x:Name="lbl_raison" Content="Raison" HorizontalAlignment="left" Margin="17,84,0,57" RenderTransformOrigin="0.941,0.565" Width="34"/>
+                            <Label x:Name="lbl_date_debut" Content="Date de debut" HorizontalAlignment="Left" Margin="299,14,0,0"  VerticalAlignment="Top" Height="30" Width="72"/>
+                            <xctk:DateTimePicker Format="ShortDate"  FormatString="M/d/yyyy"  x:Name="date_dateDebut" HorizontalAlignment="Left" Margin="375,8,0,0" VerticalAlignment="Top" Text="{Binding DateDebut}"  Width="173" Height="30"/>
+                            <Label x:Name="lbl_datefin" Content="Date de fin" HorizontalAlignment="Left" Margin="303,50,0,0" VerticalAlignment="Top" Height="25" Width="56"/>
+                            <xctk:DateTimePicker Format="ShortDate" FormatString="M/d/yyy"   x:Name="date_dateFin" HorizontalAlignment="Left" Margin="375,48,0,0" VerticalAlignment="Top" Text="{Binding DateFin}" Width="173" Height="27"/>
+                            <Label Content="Model Tirage" HorizontalAlignment="Left" Margin="15,13,0,0" VerticalAlignment="Top" Height="21" Width="72"/>
+                            <ComboBox  DisplayMemberPath="LibelleReponse" Name="cmb_modelTirage" HorizontalAlignment="Left" Margin="90,14,0,0" VerticalAlignment="Top" Width="180" Height="22" SelectionChanged="cmb_modelTirage_SelectionChanged"/>
+                            <Button Content="Enregistrer" Name="btn_save"  HorizontalAlignment="Left" Margin="291,109,0,0" VerticalAlignment="Top" Height="34" Click="btn_save_Click"/>
+                            <ComboBox  DisplayMemberPath="LibelleReponse" HorizontalAlignment="Left" Name="cmb_raison" Margin="90,78,0,0" VerticalAlignment="Top" Width="180" SelectionChanged="cmb_raison_SelectionChanged"/>
+                            <Label Content="Statut" HorizontalAlignment="Left" Margin="16,47,0,0" VerticalAlignment="Top"/>
+                            <ComboBox  DisplayMemberPath="LibelleReponse" HorizontalAlignment="Left" Name="cmb_statut" Margin="90,45,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="cmb_statut_SelectionChanged"/>
+                        </Grid>
+                    </GroupBox>
+                    <TextBlock HorizontalAlignment="Left"  Margin="26,2,0,0" TextWrapping="Wrap" Text="{Binding Header}" VerticalAlignment="Top" Width="735" FontWeight="ExtraBold" FontFamily="candara" FontSize="16" FontStyle="Italic" Foreground="#FFF90606" Height="31" Background="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                </Grid>
+            </GroupBox>
+        </Grid>
+    </Grid>
+</UserControl>

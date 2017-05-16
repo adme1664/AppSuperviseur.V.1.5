@@ -1,0 +1,44 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_retours" 
+             mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+    <Grid>
+        <GroupBox Header="Sdes" HorizontalAlignment="Left" Margin="11,13,0,0" VerticalAlignment="Top" Height="267" Width="225">
+            <ListBox Name="lb_sdes" SelectionChanged="lb_sdes_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="16" Height="16" Source="/images/database.png" />
+                            <TextBlock Text="{Binding SdeId}" FontWeight="Bold"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+        <GroupBox Header="Retours" HorizontalAlignment="Left" Margin="256,14,0,-1" VerticalAlignment="Stretch">
+            <Grid>
+                <dxg:GridControl AutoGenerateColumns="AddNew" Name="grid" EnableSmartColumnsGeneration="True" ItemsSource="{Binding ListOfRetours}" AutoGeneratingColumn="grid_AutoGeneratingColumn" >
+                    <dxg:GridControl.Columns>
+                        <dxg:GridColumn FieldName="BatimentId" Header="Batiment" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="MenageId" Header="Menage" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="LogementId" Header="Logement" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="DecesId" Header="Deces" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="EmigreId" Header="Emigre" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="IndividuId" Header="Individu" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="DateRetour" Header="Date Retour" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="Raison" Header="Raison" AllowEditing="False"/>
+                        <dxg:GridColumn FieldName="Statut" Header="Statut" AllowEditing="False"/>
+                    </dxg:GridControl.Columns>
+                    <dxg:GridControl.View>
+                        <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                    </dxg:GridControl.View>
+                </dxg:GridControl>
+
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</UserControl>

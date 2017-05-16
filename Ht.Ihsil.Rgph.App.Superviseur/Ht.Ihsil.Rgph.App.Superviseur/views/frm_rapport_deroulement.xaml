@@ -1,0 +1,73 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
+             xmlns:local="clr-namespace:Ht.Ihsil.Rgph.App.Superviseur.views"
+            xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_rapport_deroulement" 
+             mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+    <Grid>
+        <Grid>
+            <GroupBox Header="Rapport de deroulement de la collecte" HorizontalAlignment="Stretch" Margin="2,17,0,0" VerticalAlignment="Top" >
+                <Grid Margin="0,0,0,6">
+                    <Label Content="Domaine" HorizontalAlignment="Left" Margin="11,28,0,0" VerticalAlignment="Top" Width="51"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="72,28,0,0" VerticalAlignment="Top" Width="150" Name="cmbDomaine" ItemsSource="{Binding ListOfDomaine}" DisplayMemberPath="Value" SelectionChanged="cmbDomaine_SelectionChanged"/>
+                    <Label Content="Sous Domaine" HorizontalAlignment="Left" Margin="235,28,0,0" VerticalAlignment="Top" Width="78"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="317,28,0,0" VerticalAlignment="Top" Width="150" Name="cmbSousDomaine" ItemsSource="{Binding ListOfSousDmaine}" DisplayMemberPath="Value" SelectionChanged="cmbSousDomaine_SelectionChanged" />
+                    <Label Content="Intervention" HorizontalAlignment="Left" Margin="478,29,0,0" VerticalAlignment="Top"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="551,29,0,0" VerticalAlignment="Top" Width="150" Name="cmbIntervention" DisplayMemberPath="Value"/>
+                    <Label Content="Solution" HorizontalAlignment="Left" Margin="712,30,0,0" VerticalAlignment="Top" />
+                    <ComboBox HorizontalAlignment="Left" Margin="762,30,0,0" VerticalAlignment="Top" Width="150" Name="cmbSolution" ItemsSource="{Binding ListOfSolutions}" DisplayMemberPath="Value"/>
+                    <Label Content="Précisions" HorizontalAlignment="Left" Margin="11,73,0,0" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Height="93" Name="txtPrecision" Margin="72,79,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="150" AcceptsReturn="True"/>
+                    <Label Content="Suggestions" HorizontalAlignment="Left" Margin="235,72,0,0" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Height="94" Name="txtSuggestion" Margin="317,77,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="387" AcceptsReturn="True"/>
+                    <Label Content="Suivi" HorizontalAlignment="Left" Margin="711,72,0,0" VerticalAlignment="Top"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="761,75,0,0" VerticalAlignment="Top" Width="150" Name="cmbSuivi" DisplayMemberPath="Value"/>
+                    <Button Content="Ajouter" Name="btnAjouter" HorizontalAlignment="Left" Margin="763,114,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.813,-0.545" Height="33" Click="btnAjouter_Click"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Details" HorizontalAlignment="Stretch" Margin="6,237,-1,0"  VerticalAlignment="Stretch">
+                <Grid >
+                    <dxg:GridControl  Name="grid_rapport" ItemsSource="{Binding Rapports}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row" AutoGeneratingColumn="grid_rapport_AutoGeneratingColumn" Margin="0,0,0,28">
+                        <dxg:GridControl.Columns>
+                            <dxg:GridColumn FieldName="Num" Header="#" AllowEditing="False">
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="Domaine" Header="Domaines" Binding="{Binding Path=Domaine.Value}">
+
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="SousDomaine" Header="Sous Domaines" Binding="{Binding Path=SousDomaine.Value}">
+
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="Probleme" Header="Identification des problèmes" AllowEditing="True" IsSmart="True" Binding="{Binding Path=Probleme.Value}">
+
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="Solution" Header="Solution apportée" Binding="{Binding Path=Solution.Value}">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings>
+
+                                    </dxe:TextEditSettings>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="Precisions" Header="Précisions">
+
+                            </dxg:GridColumn>
+                            <dxg:GridColumn FieldName="Suggestions" Header="Suggestions" />
+                            <dxg:GridColumn FieldName="Suivi" Header="Suivi à effectuer" AllowUnboundExpressionEditor="True" Binding="{Binding Path=Suivi.Value}">
+
+                            </dxg:GridColumn>
+                        </dxg:GridControl.Columns>
+                        <dxg:GridControl.View>
+                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="False" NewItemRowPosition="Top" ShowGroupPanel="False" AutoWidth="True" FocusedRowChanged="TableView_FocusedRowChanged"/>
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                </Grid>
+            </GroupBox>
+            <Button x:Name="btnSauvegarder" Content="Sauvegarder"  HorizontalAlignment="Right" Margin="0,532,797,0" Width="123" Click="Button_Click" Height="33" VerticalAlignment="Top"/>
+        </Grid>
+
+    </Grid>
+</UserControl>

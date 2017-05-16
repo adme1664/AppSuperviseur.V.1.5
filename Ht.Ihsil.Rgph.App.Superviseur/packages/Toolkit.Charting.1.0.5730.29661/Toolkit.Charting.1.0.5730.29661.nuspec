@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Toolkit.Charting</id>
+    <version>1.0.5730.29661</version>
+    <title>Toolkit.Charting</title>
+    <authors>Cybermap</authors>
+    <owners>Cybermap</owners>
+    <iconUrl>http://nuget.cybermap.pt/m.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Charting capability for the Toolkit suite</description>
+    <releaseNotes />
+    <copyright>Copyright Cybermap 2014</copyright>
+    <tags>Cybermap Toolkit Charting</tags>
+    <dependencies>
+      <dependency id="Toolkit.CodeBase" version="1.0.5730.29660" />
+      <dependency id="Toolkit.Data" version="1.0.5730.29660" />
+      <dependency id="Toolkit.Drawing" version="1.0.5730.29660" />
+      <dependency id="Toolkit.Resources" version="1.0.5730.29659" />
+      <dependency id="Toolkit.Runtime" version="1.0.5730.29660" />
+      <dependency id="Toolkit.Scripting" version="1.0.5730.29661" />
+    </dependencies>
+  </metadata>
+</package>

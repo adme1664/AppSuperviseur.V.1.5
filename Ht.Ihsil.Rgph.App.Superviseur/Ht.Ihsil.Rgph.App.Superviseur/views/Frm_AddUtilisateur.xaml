@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.addUtilisateur"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="286.793" Width="401.99">
+    <Grid x:Name="AddUtilisateur" Margin="0,0,10,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="181*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="13*"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="lbl_CodeUtilisateur" Content="Code Utilisateur" HorizontalAlignment="Left" Margin="23,124,0,0" VerticalAlignment="Top" Width="153" Height="26" />
+        <Label x:Name="lbl_Nom" Content="Nom" HorizontalAlignment="Left" Margin="25,23,0,0" VerticalAlignment="Top" Width="89" Height="26"/>
+        <Label x:Name="lbl_Prenom" Content="Prenom" HorizontalAlignment="Left" Margin="23,64,0,0" VerticalAlignment="Top" Height="26" Width="51"/>
+        <Label x:Name="lbl_password" Content="Mot de passe" HorizontalAlignment="Left" Margin="23,186,0,0" VerticalAlignment="Top" Height="26" Width="81"/>
+        <Label x:Name="lbl_statut" Content="Statut" HorizontalAlignment="Left" Margin="26,90,0,0" VerticalAlignment="Top" Height="26" Width="41"/>
+        <Label x:Name="lbl_profil" Content="Profile" HorizontalAlignment="Left" Margin="25,155,0,0" VerticalAlignment="Top" Height="26" Width="44"/>
+        <TextBox x:Name="txt_CodeUtilisateur" Text="{Binding CodeUtilisateur}"  HorizontalAlignment="Left" Height="26" Margin="150,85,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
+        <TextBox x:Name="txt_nom"  Text="{Binding Nom}" HorizontalAlignment="Left" Height="26" Margin="150,23,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
+        <TextBox x:Name="txt_prenom" Text="{Binding Prenom}"   HorizontalAlignment="Left" Height="26" Margin="150,54,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
+        <TextBox x:Name="txt_statut" Text="{Binding Statut}"  HorizontalAlignment="Left" Height="26" Margin="150,116,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
+        <TextBox x:Name="txt_profile" Text="{Binding Profile}"  HorizontalAlignment="Left" Height="26" Margin="150,147,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
+        <TextBox x:Name="txt_motDePasse"   HorizontalAlignment="Left" Height="26" Margin="150,178,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="204"/>
+        <Button Content="Enregistrer" Command="{Binding SaveUserCommand}" HorizontalAlignment="Left" Margin="192,222,0,0" VerticalAlignment="Top" Width="84" Height="26"/>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,969 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CA8C4556-AB02-4050-AD8C-BCEFEF8D5CB1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ht.Ihsil.Rgph.App.Superviseur</RootNamespace>
+    <AssemblyName>Ht.Ihsil.Rgph.App.Superviseur</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publier\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Ht.Ihsil.Rgph.App.Superviseur.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AndroidLib, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\DLL\AndroidLib\bin\Debug\AndroidLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Com.Controls.MessageBox">
+      <HintPath>..\..\..\Com.Controls.MessageBox\bin\Debug\Com.Controls.MessageBox.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v15.1.Core, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Images.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v15.1.Core, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Charts.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Controls.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Core.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Docking.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Gauges.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v15.1.Core, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Layout.v15.1.Core, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.LayoutControl.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Printing.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.PropertyGrid.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Ribbon.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v15.1, Version=15.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\System.Data.SQLite\2013\bin\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Ht.Ihsi.Rgph.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\WEB_APPLICATION\rgphv.1.1\Ht.Ihsi.Rgph\Ht.Ihsi.Rgph.Logging\bin\Debug\Ht.Ihsi.Rgph.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Ht.Ihsi.Rgph.Ressources">
+      <HintPath>..\..\..\..\WEB_APPLICATION\rgphv.1.1\Ht.Ihsi.Rgph\Ht.Ihsi.Rgph.Ressources\bin\Debug\Ht.Ihsi.Rgph.Ressources.dll</HintPath>
+    </Reference>
+    <Reference Include="Ht.Ihsi.Rgph.Utility">
+      <HintPath>..\..\..\..\WEB_APPLICATION\rgphv.1.1\Ht.Ihsi.Rgph\Ht.Ihsi.Rgph.Utility\bin\Debug\Ht.Ihsi.Rgph.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="M2Mqtt.Net">
+      <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Toolkit.Scripting.1.0.5730.29661\lib\net35\Microsoft.SharePoint.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Runtime, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Toolkit.Scripting.1.0.5730.29661\lib\net35\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="presentationframework.aero2">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="presentationframework.aerolite">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Classic">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Luna">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework.Royale">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism">
+      <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf">
+      <HintPath>..\packages\Prism.Wpf.6.1.0\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Sparrow">
+      <HintPath>..\packages\Sparrow.0.1.5\lib\net45\Sparrow.dll</HintPath>
+    </Reference>
+    <Reference Include="Sparrow.BulletGraph.Wpf.40">
+      <HintPath>..\packages\Sparrow.BulletGraph.Wpf.13.1.0.118\lib\net40\Sparrow.BulletGraph.Wpf.40.dll</HintPath>
+    </Reference>
+    <Reference Include="Sparrow.Chart.Wpf.40">
+      <HintPath>..\packages\Sparrow.Chart.Wpf.13.1.0.118\lib\net40\Sparrow.Chart.Wpf.40.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.Designer, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>C:\Program Files (x86)\System.Data.SQLite\2013\bin\SQLite.Designer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.103\lib\net451\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.103\lib\net451\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.103\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server Compact Edition\v4.0\Desktop\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Printing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit">
+      <HintPath>..\packages\WPFToolkit.DataVisualization.3.5.50211.1\lib\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\prism_library\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Toolkit.Charting">
+      <HintPath>..\packages\Toolkit.Charting.1.0.5730.29661\lib\net40\Toolkit.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.CodeBase">
+      <HintPath>..\packages\Toolkit.CodeBase.1.0.5730.29660\lib\net35\Toolkit.CodeBase.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.Data">
+      <HintPath>..\packages\Toolkit.Data.1.0.5730.29660\lib\net35\Toolkit.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.Drawing">
+      <HintPath>..\packages\Toolkit.Drawing.1.0.5730.29660\lib\net35\Toolkit.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.Runtime">
+      <HintPath>..\packages\Toolkit.Runtime.1.0.5730.29660\lib\net35\Toolkit.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.Scripting">
+      <HintPath>..\packages\Toolkit.Scripting.1.0.5730.29661\lib\net35\Toolkit.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="UIAutomationProvider">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UIAutomationTypes">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WpfAnimatedGif">
+      <HintPath>..\packages\WpfAnimatedGif.1.4.13\lib\net\WpfAnimatedGif.dll</HintPath>
+    </Reference>
+    <Reference Include="WPFToolkit">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.5\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Constants\BatimentConst.cs" />
+    <Compile Include="Constants\DecesConst.cs" />
+    <Compile Include="Constants\EmigreConst.cs" />
+    <Compile Include="Constants\FormulaireConst.cs" />
+    <Compile Include="Constants\IndividuConst.cs" />
+    <Compile Include="Constants\LogementConst.cs" />
+    <Compile Include="Constants\MenageConst.cs" />
+    <Compile Include="entites\RgphMobile.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RgphMobile.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\RgphMobile.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\RgphMobile.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RgphMobile.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="entites\Sde.cs" />
+    <Compile Include="entites\tbl_batiment.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_categorie_question.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_commune.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_deces.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_departement.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_domaine_etude.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_emigre.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_individu.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_logement.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_menage.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_module.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_pays.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_personnel.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_question.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_question_module.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_question_reponse.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="entites\tbl_vqse.cs">
+      <DependentUpon>RgphMobile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Exceptions\ChefMenageException.cs" />
+    <Compile Include="Exceptions\DataNotFoundException.cs" />
+    <Compile Include="Exceptions\DeviceNotConnectedException.cs" />
+    <Compile Include="Exceptions\IPAdressException.cs" />
+    <Compile Include="Exceptions\Message12Exception.cs" />
+    <Compile Include="Exceptions\MessageException.cs" />
+    <Compile Include="Exceptions\SautException.cs" />
+    <Compile Include="Exceptions\SautUtilisationException.cs" />
+    <Compile Include="Exceptions\SdfFileNotFoundException.cs" />
+    <Compile Include="MainWindow1.xaml.cs">
+      <DependentUpon>MainWindow1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mapper\DataDetailsMapper.cs" />
+    <Compile Include="Mapper\EntityMapper.cs" />
+    <Compile Include="Mapper\IMapper.cs" />
+    <Compile Include="Mapper\WsModelMapper.cs" />
+    <Compile Include="Mapper\ModelMapper.cs" />
+    <Compile Include="Models\AgentModel.cs" />
+    <Compile Include="Models\BatimentCEModel.cs" />
+    <Compile Include="Models\BatimentInCeModel.cs" />
+    <Compile Include="Models\CategorieQuestionModel.cs" />
+    <Compile Include="Models\CheckListItemModel.cs" />
+    <Compile Include="Models\CommuneModel.cs" />
+    <Compile Include="Models\ContreEnqueteModel.cs" />
+    <Compile Include="Models\CouvertureModel.cs" />
+    <Compile Include="Models\DataDetails.cs" />
+    <Compile Include="Models\DataDetailsInd.cs" />
+    <Compile Include="Models\DecesCEModel.cs" />
+    <Compile Include="Models\DepartementModel.cs" />
+    <Compile Include="Models\DetailsRapportDeroulement.cs" />
+    <Compile Include="Models\DetailsRapportModel.cs" />
+    <Compile Include="Models\ProblemeModel.cs" />
+    <Compile Include="Models\QuestionModule.cs" />
+    <Compile Include="Models\VerificationFlag.cs" />
+    <Compile Include="Models\RapportArModel.cs" />
+    <Compile Include="Models\RetourModel.cs" />
+    <Compile Include="Models\SousDomaineProbleme.cs" />
+    <Compile Include="Models\EvaluationModel.cs" />
+    <Compile Include="Models\IndividuCEModel.cs" />
+    <Compile Include="Models\IndModel.cs" />
+    <Compile Include="Models\InformationMenage.cs" />
+    <Compile Include="Models\KeyValue.cs" />
+    <Compile Include="Models\ListItemModel.cs" />
+    <Compile Include="Models\LogementCEModel.cs" />
+    <Compile Include="Models\MenageCEModel.cs" />
+    <Compile Include="Models\PaysModel.cs" />
+    <Compile Include="Models\QuestionReponseModel.cs" />
+    <Compile Include="Models\RapportComparaisonModel.cs" />
+    <Compile Include="Models\RapportDeroulementModel.cs" />
+    <Compile Include="Models\RapportModel.cs" />
+    <Compile Include="Models\RapportPersonnelModel.cs" />
+    <Compile Include="Models\ReponseModel.cs" />
+    <Compile Include="Models\ReponseSaisie.cs" />
+    <Compile Include="Models\SdeInformation.cs" />
+    <Compile Include="Models\TableVerificationModel.cs" />
+    <Compile Include="Models\tree\BatimentModel.cs" />
+    <Compile Include="Models\DecesModel.cs" />
+    <Compile Include="Models\EmigreModel.cs" />
+    <Compile Include="Models\IndividuModel.cs" />
+    <Compile Include="Models\tree\LogementCollectifModel.cs" />
+    <Compile Include="Models\tree\LogementIndividuelModel.cs" />
+    <Compile Include="Models\tree\LogementModel.cs" />
+    <Compile Include="Models\tree\LogementTypeModel.cs" />
+    <Compile Include="Models\tree\MenageDetailsModel.cs" />
+    <Compile Include="Models\tree\MenageModel.cs" />
+    <Compile Include="Models\tree\MenageTypeModel.cs" />
+    <Compile Include="Models\QuestionsModel.cs" />
+    <Compile Include="Models\tree\SdeModel.cs" />
+    <Compile Include="Models\TypeModel.cs" />
+    <Compile Include="Models\UtilisateurModel.cs" />
+    <Compile Include="Models\UtilisationModel.cs" />
+    <Compile Include="Models\VqseModel.cs" />
+    <Compile Include="MVVM\IMessageBoxViewModel.cs" />
+    <Compile Include="MVVM\MessageBoxViewModel.cs" />
+    <Compile Include="MVVM\RelayCommand.cs" />
+    <Compile Include="MVVM\TreeViewItemViewModel.cs" />
+    <Compile Include="MVVM\ViewModelBase.cs" />
+    <Compile Include="Query\Query.cs" />
+    <Compile Include="schemaXSD\rgph_service.cs" />
+    <Compile Include="services\ConfigurationService.cs" />
+    <Compile Include="services\ContreEnqueteService.cs" />
+    <Compile Include="services\IConfigurationService.cs" />
+    <Compile Include="services\IContreEnqueteService.cs" />
+    <Compile Include="services\IQuestionReponseService.cs" />
+    <Compile Include="services\TransfertService.cs" />
+    <Compile Include="utils\ISqliteDataWriter.cs" />
+    <Compile Include="services\IUtilisateurService.cs" />
+    <Compile Include="services\QuestionReponseService.cs" />
+    <Compile Include="services\SqliteDataReaderService.cs" />
+    <Compile Include="utils\NameValue.cs" />
+    <Compile Include="utils\SqliteDataWriter.cs" />
+    <Compile Include="services\UtilisateurService.cs" />
+    <Compile Include="utils\Constant.cs" />
+    <Compile Include="utils\ConstantDeces.cs" />
+    <Compile Include="utils\DeviceInformation.cs" />
+    <Compile Include="utils\DeviceManager.cs" />
+    <Compile Include="utils\IMdfService.cs" />
+    <Compile Include="utils\IMobileReader.cs" />
+    <Compile Include="utils\ISqliteReader.cs" />
+    <Compile Include="utils\MdfService.cs" />
+    <Compile Include="utils\SqliteReader.cs" />
+    <Compile Include="utils\StringValueAttribute.cs" />
+    <Compile Include="utils\TypeQuestion.cs" />
+    <Compile Include="utils\Users.cs" />
+    <Compile Include="utils\Utilities.cs" />
+    <Compile Include="utils\XmlReader.cs" />
+    <Compile Include="utils\XmlUtils.cs" />
+    <Compile Include="viewModels\AgentSdeViewModel.cs" />
+    <Compile Include="viewModels\BatimentViewModel.cs" />
+    <Compile Include="viewModels\ContreEnquete\BatimentCEViewModel.cs" />
+    <Compile Include="viewModels\ContreEnquete\ContreEnqueteViewModel.cs" />
+    <Compile Include="viewModels\ContreEnquete\LogementCEViewModel.cs" />
+    <Compile Include="viewModels\ContreEnquete\MenageCEViewModel.cs" />
+    <Compile Include="viewModels\ContreEnquete\MenageDetailsViewModel.cs" />
+    <Compile Include="viewModels\ContreEnquete\MenageTypeViewModel.cs" />
+    <Compile Include="viewModels\ContreEnquete\SdeCEViewModel.cs" />
+    <Compile Include="viewModels\ContreEnquete\TreeCEViewModel.cs" />
+    <Compile Include="viewModels\ContreEnquete\QuestionViewModel.cs" />
+    <Compile Include="viewModels\DecesViewModel.cs" />
+    <Compile Include="viewModels\EmigreViewModel.cs" />
+    <Compile Include="viewModels\IndividuViewModel.cs" />
+    <Compile Include="viewModels\ListBoxViewModel.cs" />
+    <Compile Include="viewModels\ListeAgentViewModel.cs" />
+    <Compile Include="viewModels\LogementCollectifViewModel.cs" />
+    <Compile Include="viewModels\LogementTypeViewModel.cs" />
+    <Compile Include="viewModels\LogementViewModel.cs" />
+    <Compile Include="viewModels\MenageDetailsViewModel.cs" />
+    <Compile Include="viewModels\MenageTypeViewModel.cs" />
+    <Compile Include="viewModels\MenageViewModel.cs" />
+    <Compile Include="viewModels\SdeSummaryViewModel.cs" />
+    <Compile Include="viewModels\SdeSumModel.cs" />
+    <Compile Include="viewModels\SdeViewModel.cs" />
+    <Compile Include="viewModels\TabControlViewModel.cs" />
+    <Compile Include="viewModels\TreeViewModel.cs" />
+    <Compile Include="viewModels\UtilisateurViewModel.cs" />
+    <Compile Include="views\Contre_Enquete\AddIndividu.xaml.cs">
+      <DependentUpon>AddIndividu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Contre_Enquete\frm_batiment_vide.xaml.cs">
+      <DependentUpon>frm_batiment_vide.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Contre_Enquete\frm_details_personnes_EV.xaml.cs">
+      <DependentUpon>frm_details_personnes_EV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Contre_Enquete\frm_rpt_comparaison.xaml.cs">
+      <DependentUpon>frm_rpt_comparaison.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Contre_Enquete\frm_save_questions.xaml.cs">
+      <DependentUpon>frm_save_questions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Contre_Enquete\frm_save_CE.xaml.cs">
+      <DependentUpon>frm_save_CE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Contre_Enquete\frm_save_questions_tab_format.xaml.cs">
+      <DependentUpon>frm_save_questions_tab_format.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Contre_Enquete\frm_view_ce.xaml.cs">
+      <DependentUpon>frm_view_ce.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Frm_AddUtilisateur.xaml.cs">
+      <DependentUpon>Frm_AddUtilisateur.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_configurations.xaml.cs">
+      <DependentUpon>frm_configurations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_connexion.xaml.cs">
+      <DependentUpon>frm_connexion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_details_batiments.xaml.cs">
+      <DependentUpon>frm_details_batiments.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_details_deces.xaml.cs">
+      <DependentUpon>frm_details_deces.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_details_emigre.xaml.cs">
+      <DependentUpon>frm_details_emigre.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_details_individus.xaml.cs">
+      <DependentUpon>frm_details_individus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_details_logement.xaml.cs">
+      <DependentUpon>frm_details_logement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_details_menage.xaml.cs">
+      <DependentUpon>frm_details_menage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_details_sdes.xaml.cs">
+      <DependentUpon>frm_details_sdes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_pop_up_transfert.xaml.cs">
+      <DependentUpon>frm_pop_up_transfert.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_questions_agent.xaml.cs">
+      <DependentUpon>frm_questions_agent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_raison_popup.xaml.cs">
+      <DependentUpon>frm_raison_popup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_rapports.xaml.cs">
+      <DependentUpon>frm_rapports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_rapport_deroulement.xaml.cs">
+      <DependentUpon>frm_rapport_deroulement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_retours.xaml.cs">
+      <DependentUpon>frm_retours.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_rpt_dereoulement_entete.xaml.cs">
+      <DependentUpon>frm_rpt_dereoulement_entete.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_rpt_personnel.xaml.cs">
+      <DependentUpon>frm_rpt_personnel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_verification.xaml.cs">
+      <DependentUpon>frm_verification.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_view_agents.xaml.cs">
+      <DependentUpon>frm_view_agents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_view_sdes.xaml.cs">
+      <DependentUpon>frm_view_sdes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\Frm_view_transfert.xaml.cs">
+      <DependentUpon>Frm_view_transfert.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_view_verification.xaml.cs">
+      <DependentUpon>frm_view_verification.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="views\frm_visualisation.xaml.cs">
+      <DependentUpon>frm_visualisation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\RgphWebService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MainWindow1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Contre_Enquete\AddIndividu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Contre_Enquete\frm_batiment_vide.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Contre_Enquete\frm_details_personnes_EV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Contre_Enquete\frm_rpt_comparaison.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Contre_Enquete\frm_save_questions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Contre_Enquete\frm_save_CE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Contre_Enquete\frm_save_questions_tab_format.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Contre_Enquete\frm_view_ce.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Frm_AddUtilisateur.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_configurations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_connexion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_details_batiments.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="views\frm_details_deces.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_details_emigre.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_details_individus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_details_logement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_details_menage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_details_sdes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_pop_up_transfert.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_questions_agent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_raison_popup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_rapports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_rapport_deroulement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_retours.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_rpt_dereoulement_entete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_rpt_personnel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_verification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_view_agents.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_view_sdes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\Frm_view_transfert.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_view_verification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_visualisation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EntityDeploy Include="entites\RgphMobile.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RgphMobile.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="entites\RgphMobile.edmx.diagram">
+      <DependentUpon>RgphMobile.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Web References\RgphWebService\AuthenticateUserResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RgphWebService\InsertBatimentResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\RgphWebService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\RgphWebService\rgphService.wsdl" />
+    <None Include="Web References\RgphWebService\SynchronizeResponse.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ht.Ihsi.Rgph.DataAccess\Ht.Ihsi.Rgph.DataAccess.csproj">
+      <Project>{46a21893-68c1-47ad-b52d-fa140479688c}</Project>
+      <Name>Ht.Ihsi.Rgph.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon-nav-close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\sync.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\trans.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 et x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\individu.png" />
+    <Resource Include="images\individu1.png" />
+    <Resource Include="images\logement.png" />
+    <Resource Include="images\batiment.png" />
+    <Resource Include="images\menage.png" />
+    <Resource Include="images\pda.png" />
+    <Resource Include="images\loading.gif" />
+    <Resource Include="images\done.png" />
+    <Resource Include="images\Error_48.png" />
+    <Resource Include="images\malrempli.png" />
+    <Resource Include="images\Information_48.png" />
+    <Resource Include="images\Question_48.png" />
+    <Resource Include="images\Stop_48.png" />
+    <Resource Include="images\check.png" />
+    <Resource Include="images\malrempli.jpg" />
+    <Resource Include="images\notfinish.png" />
+    <Resource Include="images\delete-xxl.png" />
+    <Resource Include="images\tab_settings.png" />
+    <Resource Include="images\tb_pc.png" />
+    <Resource Include="images\tb_pc_1.png" />
+    <Resource Include="images\hosting.png" />
+    <Resource Include="images\report1.png" />
+    <Resource Include="images\report3.png" />
+    <EmbeddedResource Include="App_data\configuration.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adb\adb.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adb\AdbWinApi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adb\AdbWinUsbApi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="adb\fastboot.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Resource Include="App_data\rapports.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="entites\RgphMobile.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RgphMobile.edmx</DependentUpon>
+      <LastGenOutput>RgphMobile.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="entites\RgphMobile.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RgphMobile.edmx</DependentUpon>
+      <LastGenOutput>RgphMobile.cs</LastGenOutput>
+    </Content>
+    <Resource Include="images\compare.png" />
+    <Resource Include="images\save.png" />
+    <Resource Include="images\update.png" />
+    <Resource Include="images\portable_setting.png" />
+    <Resource Include="images\loading_converted.gif" />
+    <Resource Include="images\loading_converted_1.gif" />
+    <Resource Include="images\validate_check.png" />
+    <Resource Include="images\ce.png" />
+    <Resource Include="images\vi2.png" />
+    <Resource Include="images\verification.png" />
+    <Resource Include="images\formulaire_retour.png" />
+    <Content Include="lib\net35\Microsoft.SharePoint.Client.dll" />
+    <Content Include="lib\net35\Microsoft.SharePoint.Client.Runtime.dll" />
+    <Resource Include="images\database_converted.png" />
+    <Resource Include="images\database.png" />
+    <Resource Include="images\home1_converted.png" />
+    <Resource Include="images\home.png" />
+    <Resource Include="images\logo.png" />
+    <Resource Include="images\survey.png" />
+    <Resource Include="images\trans1.png" />
+    <Resource Include="images\vi1.png" />
+    <Resource Include="images\map.png" />
+    <Resource Include="images\ug.jpg" />
+    <Resource Include="images\tb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://192.168.1.158:8080/rgph/rgph-webservice/rgphService.wsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\RgphWebService\</RelPath>
+      <UpdateFromURL>http://192.168.1.158:8080/rgph/rgph-webservice/rgphService.wsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Ht_Ihsil_Rgph_App_Superviseur_RgphWebService_RGPHServiceService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

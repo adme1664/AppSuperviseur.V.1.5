@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Toolkit.CodeBase</id>
+    <version>1.0.5730.29660</version>
+    <title>Toolkit.CodeBase</title>
+    <authors>Cybermap</authors>
+    <owners>Cybermap</owners>
+    <iconUrl>http://nuget.cybermap.pt/m.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Set of base components and libraries for development</description>
+    <releaseNotes />
+    <copyright>Copyright 2014</copyright>
+    <tags>Cybermap Toolkit Core</tags>
+    <dependencies>
+      <dependency id="Toolkit.Resources" version="1.0.5730.29659" />
+    </dependencies>
+  </metadata>
+</package>

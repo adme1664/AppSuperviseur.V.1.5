@@ -1,0 +1,23 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:Entities="clr-namespace:Ht.Ihsi.Rgph.DataAccess.Entities;assembly=Ht.Ihsi.Rgph.DataAccess"
+             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete.frm_save_batiment" 
+             mc:Ignorable="d"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" >
+
+    <Grid >
+        <GroupBox Header="GroupBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Margin="0,0,-12,-22" x:Name="main_grid">
+                <TextBlock Text="{Binding Libelle}" HorizontalAlignment="Left" Margin="10,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Height="19" Width="505" FontWeight="Bold"/>
+                <dxe:ComboBoxEdit Name="cmb_first" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="505" Height="21" ItemsSource="{Binding ListOfB1}" DisplayMember="LibelleReponse" SelectedIndexChanged="cmb_first_SelectedIndexChanged" />
+            </Grid>
+        </GroupBox>
+    </Grid>
+
+</UserControl>

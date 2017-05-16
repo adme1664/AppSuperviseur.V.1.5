@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_view_verification"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             mc:Ignorable="d" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Background="{DynamicResource {x:Static SystemColors.ControlLightBrushKey}}" BorderBrush="Gray" BorderThickness="1">
+    <Grid>
+        <Grid.Background>
+            <ImageBrush TileMode="FlipX"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="124*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="148*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="309" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--<ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="White" Name="scrl_view_tree" Margin="0,23,0,0">-->
+        <GroupBox Header="SDEs" Margin="0,3,0,6"  Grid.Row="1" BorderThickness="1" BorderBrush="#FF92C0DA" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <ListBox  Name="listBox_sde" ItemsSource="{Binding Path=Sdes}" SelectionChanged="listBox_sde_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="250" BorderBrush="Black" Background="#FF72C0F3"  BorderThickness="1" CornerRadius="2" Margin="2" Padding="2" >
+                            <StackPanel Orientation="Horizontal" Background="#FFF98E43">
+                                <Image Width="16" Height="16" Source="/images/database.png" />
+                                <TextBlock Text="{Binding SdeId}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+        <!--</ScrollViewer>-->
+        <Border BorderBrush="#FF92C0DA" Background="#FFE4481A" BorderThickness="1" CornerRadius="2" Height="25" VerticalAlignment="Top"  Name="brd_name" Grid.Row="0" Grid.RowSpan="2">
+            <StackPanel Orientation="Horizontal" Height="25" Margin="0,0,-1,-2" HorizontalAlignment="Left" Width="308">
+                <TextBlock x:Name="txt_title" Height="18" TextWrapping="Wrap" TextAlignment="Center"  Text="VERIFICATION-SDE:" VerticalAlignment="Center" Width="305" HorizontalAlignment="Center" FontFamily="Arial"  FontSize="12" Foreground="#FFF4F6F7" Margin="0,7,0,0" FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Column="1" HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Grid.RowSpan="4">
+            <Grid Name="grd_details" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <UserControl Background="LightGray"/>
+                <dx:WaitIndicator DeferedVisibility="False" Content="Loading..." Name="wInd">
+                    <dx:WaitIndicator.ContentTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Please Wait" FontSize="20"/>
+                                <TextBlock Text="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </dx:WaitIndicator.ContentTemplate>
+                </dx:WaitIndicator>
+            </Grid>
+        </Grid>
+        <CheckBox Content="Verifier tout le district" HorizontalAlignment="Left" Margin="15,6,0,0" Grid.Row="2" VerticalAlignment="Top" Height="22" Width="131" Name="chkDistrict" Checked="chkDistrict_Checked"/>
+        
+    </Grid>
+    <UserControl.Resources>
+        <Style x:Key="GridSplitterPreviewStyle" >
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Fill="#80000000"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="GridSplitterStyle1" TargetType="{x:Type GridSplitter}">
+            <Setter Property="Background"
+                Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+            <Setter Property="PreviewStyle" Value="{StaticResource GridSplitterPreviewStyle}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridSplitter}">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="5">
+                            <Canvas RenderOptions.EdgeMode="Aliased" UseLayoutRounding="True"
+                                Height="6" VerticalAlignment="Center"
+                                Width="50" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                                <Canvas.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="-88.881"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Canvas.RenderTransform>
+                                <Line X1="0" X2="50" Y1="0" Y2="0"
+                                  Stroke="White" StrokeThickness="1"/>
+                                <Line X1="0" X2="50" Y1="1" Y2="1"
+                                  Stroke="#A0A0A0" StrokeThickness="1"/>
+                                <Line X1="0" X2="50" Y1="4" Y2="4"
+                                  Stroke="White" StrokeThickness="1"/>
+                                <Line X1="0" X2="50" Y1="5" Y2="5"
+                                  Stroke="#A0A0A0" StrokeThickness="1"/>
+                            </Canvas>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+</UserControl>

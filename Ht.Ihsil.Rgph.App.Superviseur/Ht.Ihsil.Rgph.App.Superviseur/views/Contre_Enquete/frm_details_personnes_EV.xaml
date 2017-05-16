@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete.frm_details_personnes_EV"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" Height="351.064" Width="701.064">
+    <Grid>
+        <GroupBox Header="{Binding GrpHeader}" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <TextBlock HorizontalAlignment="Left" Margin="175,22,0,0" TextWrapping="Wrap" Name="Theader" Text="Enfomasyon sou moun anndan menaj la." VerticalAlignment="Top" Width="309" Height="29" FontWeight="Bold" Foreground="#FFFB0303" FontSize="16" RenderTransformOrigin="0.766,0.499"/>
+
+            <Grid HorizontalAlignment="Stretch" Margin="21,51,10,3" VerticalAlignment="Stretch" >
+                <DataGrid HorizontalAlignment="Stretch" Name="dtgInfo"  HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" />
+            </Grid>
+
+        </Grid>
+
+
+
+    </Grid>
+</UserControl>

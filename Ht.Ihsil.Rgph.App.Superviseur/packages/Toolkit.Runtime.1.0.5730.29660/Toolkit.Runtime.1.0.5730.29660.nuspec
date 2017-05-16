@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Toolkit.Runtime</id>
+    <version>1.0.5730.29660</version>
+    <title>Toolkit.Runtime</title>
+    <authors>Cybermap</authors>
+    <owners>Cybermap</owners>
+    <iconUrl>http://nuget.cybermap.pt/m.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Runtime value library</description>
+    <releaseNotes />
+    <copyright>Copyright Cybermap 2014</copyright>
+    <tags>Cybermap Toolkit Runtime</tags>
+    <dependencies>
+      <dependency id="Toolkit.CodeBase" version="1.0.5730.29660" />
+      <dependency id="Toolkit.Resources" version="1.0.5730.29659" />
+    </dependencies>
+  </metadata>
+</package>

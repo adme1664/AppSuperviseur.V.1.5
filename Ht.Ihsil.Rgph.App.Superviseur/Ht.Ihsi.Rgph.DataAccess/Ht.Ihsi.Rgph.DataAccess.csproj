@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{46A21893-68C1-47AD-B52D-FA140479688C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ht.Ihsi.Rgph.DataAccess</RootNamespace>
+    <AssemblyName>Ht.Ihsi.Rgph.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publier\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>C:\Program Files (x86)\System.Data.SQLite\2013\bin\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Ht.Ihsi.Rgph.Logging">
+      <HintPath>..\..\..\..\WEB_APPLICATION\rgphv.1.1\Ht.Ihsi.Rgph\Ht.Ihsi.Rgph.Logging\bin\Debug\Ht.Ihsi.Rgph.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Ht.Ihsi.Rgph.Utility">
+      <HintPath>..\..\..\..\WEB_APPLICATION\rgphv.1.1\Ht.Ihsi.Rgph\Ht.Ihsi.Rgph.Utility\bin\Debug\Ht.Ihsi.Rgph.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="M2Mqtt.Net">
+      <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Toolkit.Scripting.1.0.5730.29661\lib\net35\Microsoft.SharePoint.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SharePoint.Client.Runtime, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Toolkit.Scripting.1.0.5730.29661\lib\net35\Microsoft.SharePoint.Client.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Sparrow">
+      <HintPath>..\packages\Sparrow.0.1.5\lib\net45\Sparrow.dll</HintPath>
+    </Reference>
+    <Reference Include="Sparrow.BulletGraph.Wpf.40">
+      <HintPath>..\packages\Sparrow.BulletGraph.Wpf.13.1.0.118\lib\net40\Sparrow.BulletGraph.Wpf.40.dll</HintPath>
+    </Reference>
+    <Reference Include="Sparrow.Chart.Wpf.40">
+      <HintPath>..\packages\Sparrow.Chart.Wpf.13.1.0.118\lib\net40\Sparrow.Chart.Wpf.40.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite.Designer">
+      <HintPath>C:\Program Files (x86)\System.Data.SQLite\2013\bin\SQLite.Designer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.104.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.104.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.104.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\prism_library\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Toolkit.Charting">
+      <HintPath>..\packages\Toolkit.Charting.1.0.5730.29661\lib\net40\Toolkit.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.CodeBase">
+      <HintPath>..\packages\Toolkit.CodeBase.1.0.5730.29660\lib\net35\Toolkit.CodeBase.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.Data">
+      <HintPath>..\packages\Toolkit.Data.1.0.5730.29660\lib\net35\Toolkit.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.Drawing">
+      <HintPath>..\packages\Toolkit.Drawing.1.0.5730.29660\lib\net35\Toolkit.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.Runtime">
+      <HintPath>..\packages\Toolkit.Runtime.1.0.5730.29660\lib\net35\Toolkit.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Toolkit.Scripting">
+      <HintPath>..\packages\Toolkit.Scripting.1.0.5730.29661\lib\net35\Toolkit.Scripting.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dao\DaoContreEnquete.cs" />
+    <Compile Include="Dao\DaoQuestionReponse.cs" />
+    <Compile Include="Dao\DaoSettings.cs" />
+    <Compile Include="Dao\IDaoContreEnquete.cs" />
+    <Compile Include="Dao\IDaoQuestionReponse.cs" />
+    <Compile Include="Dao\IDaoSettings.cs" />
+    <Compile Include="Dao\IDaoUtilisateurs.cs" />
+    <Compile Include="Dao\DaoUtilisateurs.cs" />
+    <Compile Include="Entities\MobileEntities\MobileDataEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MobileDataEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\MobileDataEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\MobileDataEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MobileDataEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_batiment.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_categorie_question.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_commune.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_deces.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_departement.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_domaine_etude.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_emigre.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_individu.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_logement.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_menage.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_module.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_pays.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_personnel.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_question.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_question_module.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_question_reponse.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_rapportrar.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_reponse.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\MobileEntities\tbl_vqse.cs">
+      <DependentUpon>MobileDataEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\RgphSup.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RgphSup.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\RgphSup.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\RgphSup.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RgphSup.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Agent.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_BatimentCE.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_CategorieQuestion.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Commune.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_ContreEnquete.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_DecesCE.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Departement.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_DetailsRapport.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_IndividusCE.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_LogementCE.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Materiels.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_MenageCE.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Pays.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Probleme.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Questions.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Questions_Reponses.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_RapportPersonnel.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Reponses.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Retour.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_RprtComparaison.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_RprtDeroulement.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Sde.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Utilisateur.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_Utilisation.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_VilleQuartierSectionCommunale.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Exceptions\MessageException.cs" />
+    <Compile Include="Exceptions\NotFoundException.cs" />
+    <Compile Include="Exceptions\RapportException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\GenericDatabaseContext.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\GenericSupDatabaseContext.cs" />
+    <Compile Include="Repositories\MainRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Data\rgph_sup-db.sqlite" />
+    <EntityDeploy Include="Entities\MobileEntities\MobileDataEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MobileDataEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\MobileEntities\MobileDataEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MobileDataEntities.edmx</DependentUpon>
+      <LastGenOutput>MobileDataEntities.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entities\MobileEntities\MobileDataEntities.edmx.diagram">
+      <DependentUpon>MobileDataEntities.edmx</DependentUpon>
+    </None>
+    <None Include="Entities\MobileEntities\MobileDataEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MobileDataEntities.edmx</DependentUpon>
+      <LastGenOutput>MobileDataEntities.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Entities\SupEntities\RgphSup.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RgphSup.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Entities\SupEntities\RgphSup.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RgphSup.edmx</DependentUpon>
+      <LastGenOutput>RgphSup.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Entities\SupEntities\RgphSup.edmx.diagram">
+      <DependentUpon>RgphSup.edmx</DependentUpon>
+    </None>
+    <None Include="Entities\SupEntities\RgphSup.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RgphSup.edmx</DependentUpon>
+      <LastGenOutput>RgphSup.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 et x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\net35\Microsoft.SharePoint.Client.dll" />
+    <Content Include="lib\net35\Microsoft.SharePoint.Client.Runtime.dll" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.104.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.104.0\build\net45\System.Data.SQLite.Core.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Toolkit.Resources</id>
+    <version>1.0.5730.29659</version>
+    <title>Toolkit.Resources</title>
+    <authors>Cybermap</authors>
+    <owners>Cybermap</owners>
+    <iconUrl>http://nuget.cybermap.pt/m.ico</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Resource related functionality</description>
+    <releaseNotes />
+    <copyright>Copyright Cybermap 2014</copyright>
+    <tags>Cybermap Toolkit Resources</tags>
+  </metadata>
+</package>

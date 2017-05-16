@@ -1,0 +1,298 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
+             x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_verification" 
+             mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+
+    <UserControl.Resources>
+        <Style TargetType="dxg:GridColumn">
+            <Setter Property="ReadOnly" Value="True"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <!-- Height="643.55" Width="700"-->
+        <dx:DXTabControl>
+            <dx:DXTabItem Header="Tableau de bord">
+                <dx:DXTabControl>
+                    <dx:DXTabItem Header="TRONC COMMUN">
+                        <dx:DXTabControl>
+                            <dx:DXTabItem Header="Indicateurs de couverture" Name="tabIndCouverture">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="58*"/>
+                                        <RowDefinition Height="9*"/>
+                                        <RowDefinition Height="56*"/>
+                                    </Grid.RowDefinitions>
+                                    <dxg:GridControl  AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Grid.Row="0" Name="dataGridCouverture" SelectionMode="Row">
+                                        <dxg:GridControl.View>
+                                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" NavigationStyle="Row"/>
+                                        </dxg:GridControl.View>
+                                    </dxg:GridControl>
+
+                                    <dxc:ChartControl Grid.Row="2" AnimationMode="OnLoad">
+                                        <dxc:ChartControl.Legend>
+                                            <dxc:Legend/>
+                                        </dxc:ChartControl.Legend>
+                                        <dxc:XYDiagram2D  >
+                                            <dxc:BarSideBySideSeries2D LegendTextPattern=" {A}: {V}" BarWidth="1" DisplayName="Series 1" x:Name="barSeriesIndCouverture" ColorEach="True" Margin="0,0,-28,0">
+                                                <dxc:BarSideBySideSeries2D.Model>
+                                                    <dxc:Quasi3DBar2DModel/>
+                                                </dxc:BarSideBySideSeries2D.Model>
+                                            </dxc:BarSideBySideSeries2D>
+                                        </dxc:XYDiagram2D>
+                                    </dxc:ChartControl>
+
+                                </Grid>
+                            </dx:DXTabItem>
+                            <dx:DXTabItem Header="Indicateurs socio-demographiques">
+                                <Grid>
+                                    <dx:DXTabControl Name="tabControDemographiques">
+                                        <dx:DXTabItem Header="Page 1" Margin="0,3,0,-3" Name="tabPageDemo1">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="166*"/>
+                                                    <RowDefinition Height="13*"/>
+                                                    <RowDefinition Height="197*"/>
+                                                </Grid.RowDefinitions>
+                                                <dxc:ChartControl Grid.Row="0" AnimationMode="OnLoad">
+                                                    <dxc:ChartControl.Legend>
+                                                        <dxc:Legend Visibility="Visible"/>
+                                                    </dxc:ChartControl.Legend>
+                                                    <dxc:XYDiagram2D  Width="450">
+                                                        <dxc:BarSideBySideSeries2D LegendTextPattern="{} {A}: {V}" BarWidth="1" Width="350" DisplayName="Series 1" Name="barSeriesProportionsDetails" ColorEach="True" Height="232" Margin="0,0,-340,0">
+                                                            <dxc:BarSideBySideSeries2D.Model>
+                                                                <dxc:Quasi3DBar2DModel/>
+                                                            </dxc:BarSideBySideSeries2D.Model>
+                                                        </dxc:BarSideBySideSeries2D>
+                                                    </dxc:XYDiagram2D>
+                                                </dxc:ChartControl>
+
+                                                <dxc:ChartControl  Grid.Row="2" AnimationMode="OnLoad">
+                                                    <dxc:ChartControl.Legend>
+                                                        <dxc:Legend Visibility="Visible"/>
+                                                    </dxc:ChartControl.Legend>
+                                                    <dxc:ChartControl.Diagram>
+                                                        <dxc:SimpleDiagram2D Margin="0,-1,0,-9">
+                                                            <dxc:SimpleDiagram2D.Series>
+                                                                <dxc:PieSeries2D Width="150" HoleRadiusPercent="0" Name="pieSeriesNbreFemmes" Height="66" Margin="6,0,56,0" LabelsVisibility="True" ToolTipEnabled="True" >
+                                                                    <dxc:PieSeries2D.PointAnimation>
+                                                                        <dxc:Pie2DFlyInAnimation />
+                                                                    </dxc:PieSeries2D.PointAnimation>
+                                                                    <dxc:PieSeries2D.Label>
+                                                                        <dxc:SeriesLabel Visible="True" dxc:PieSeries.LabelPosition="TwoColumns" RenderMode="RectangleConnectedToCenter" TextPattern="{}{A}: {V}"/>
+                                                                    </dxc:PieSeries2D.Label>
+                                                                    <dxc:PieSeries2D.PointOptions>
+                                                                        <dxc:PointOptions>
+                                                                            <dxc:PointOptions.ValueNumericOptions>
+                                                                                <dxc:NumericOptions Format="Number" Precision="0"/>
+                                                                            </dxc:PointOptions.ValueNumericOptions>
+                                                                        </dxc:PointOptions>
+                                                                    </dxc:PieSeries2D.PointOptions>
+                                                                    <dxc:PieSeries2D.LegendPointOptions>
+                                                                        <dxc:PointOptions Pattern="{}{A}: {V}" />
+                                                                    </dxc:PieSeries2D.LegendPointOptions>
+                                                                </dxc:PieSeries2D>
+                                                            </dxc:SimpleDiagram2D.Series>
+                                                        </dxc:SimpleDiagram2D>
+                                                    </dxc:ChartControl.Diagram>
+                                                </dxc:ChartControl>
+                                            </Grid>
+                                        </dx:DXTabItem>
+                                        <dx:DXTabItem Header="Page 2" Name="tabPageDemo2">
+                                            <Grid Margin="0,0,0,101">
+                                                <dxc:ChartControl Margin="0,0,0,82" AnimationMode="OnLoad">
+                                                    <dxc:ChartControl.Legend>
+                                                        <dxc:Legend/>
+                                                    </dxc:ChartControl.Legend>
+                                                    <dxc:XYDiagram2D     Width="500">
+                                                        <dxc:BarSideBySideSeries2D LegendTextPattern="{} {A}: {V}" BarWidth="1" Width="250"  DisplayName="Series 1" Name="barSeriesIndividus" ColorEach="True" Height="162">
+                                                            <dxc:BarSideBySideSeries2D.Model>
+                                                                <dxc:Quasi3DBar2DModel/>
+                                                            </dxc:BarSideBySideSeries2D.Model>
+                                                        </dxc:BarSideBySideSeries2D>
+                                                    </dxc:XYDiagram2D>
+                                                </dxc:ChartControl>
+                                            </Grid>
+                                        </dx:DXTabItem>
+                                        <dx:DXTabItem Header="Page 3" Name="tabPageDemo3">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="89*"/>
+                                                    <RowDefinition Height="10*"/>
+                                                    <RowDefinition Height="89*"/>
+                                                </Grid.RowDefinitions>
+                                                <dxc:ChartControl   Grid.Row="0" AnimationMode="OnLoad">
+                                                    <dxc:ChartControl.Legend>
+                                                        <dxc:Legend/>
+                                                    </dxc:ChartControl.Legend>
+                                                    <dxc:ChartControl.Diagram>
+                                                        <dxc:SimpleDiagram2D>
+                                                            <dxc:SimpleDiagram2D.Series>
+                                                                <dxc:PieSeries2D HoleRadiusPercent="0"  Name="pieSeriesNbreMenage">
+                                                                    <dxc:PieSeries2D.PointAnimation>
+                                                                        <dxc:Pie2DFlyInAnimation />
+                                                                    </dxc:PieSeries2D.PointAnimation>
+                                                                    <dxc:PieSeries2D.Label>
+                                                                        <dxc:SeriesLabel Visible="True" dxc:PieSeries.LabelPosition="TwoColumns" RenderMode="RectangleConnectedToCenter" TextPattern="{}{A}: {V}"/>
+                                                                    </dxc:PieSeries2D.Label>
+                                                                    <dxc:PieSeries2D.PointOptions>
+                                                                        <dxc:PointOptions>
+                                                                            <dxc:PointOptions.ValueNumericOptions>
+                                                                                <dxc:NumericOptions Format="Number" Precision="0"/>
+                                                                            </dxc:PointOptions.ValueNumericOptions>
+                                                                        </dxc:PointOptions>
+                                                                    </dxc:PieSeries2D.PointOptions>
+                                                                    <dxc:PieSeries2D.LegendPointOptions>
+                                                                        <dxc:PointOptions Pattern="{}{A}: {V}" />
+                                                                    </dxc:PieSeries2D.LegendPointOptions>
+                                                                </dxc:PieSeries2D>
+                                                            </dxc:SimpleDiagram2D.Series>
+                                                        </dxc:SimpleDiagram2D>
+                                                    </dxc:ChartControl.Diagram>
+
+                                                </dxc:ChartControl>
+                                                <dxc:ChartControl  Grid.Row="2" AnimationMode="OnLoad">
+                                                    <dxc:ChartControl.Legend>
+                                                        <dxc:Legend/>
+                                                    </dxc:ChartControl.Legend>
+                                                    <dxc:XYDiagram2D Width="450">
+                                                        <dxc:BarSideBySideSeries2D BarWidth="1" Width="250" Height="240" LegendTextPattern="{} {A}:{V}" DisplayName="Series 1" Name="barSeriesTailleMenage" ColorEach="True">
+                                                            <dxc:BarSideBySideSeries2D.Model>
+                                                                <dxc:Quasi3DBar2DModel/>
+                                                            </dxc:BarSideBySideSeries2D.Model>
+                                                        </dxc:BarSideBySideSeries2D>
+                                                    </dxc:XYDiagram2D>
+                                                </dxc:ChartControl>
+                                            </Grid>
+                                        </dx:DXTabItem>
+                                    </dx:DXTabControl>
+                                </Grid>
+                            </dx:DXTabItem>
+                            <dx:DXTabItem Header="Indicateurs de performance" Name="tabPagePerformance"></dx:DXTabItem>
+                        </dx:DXTabControl>
+                    </dx:DXTabItem>
+                </dx:DXTabControl>
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="Gestion des notes" Name="tabGestionNotes" GotFocus="tabGestionNotes_GotFocus">
+                <dx:DXTabControl Name="tabControlNotes">
+                    <dx:DXTabItem Header="Ajout" Name="tabAjout">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="13*"/>
+                                <RowDefinition Height="79*"/>
+                                <RowDefinition Height="0*"/>
+                            </Grid.RowDefinitions>
+                            <GroupBox Header="Difficultés rencontrées" Grid.Row="1">
+                                <Grid>
+                                    <TextBlock HorizontalAlignment="Left" Margin="3,-7,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="372" Name="txtIndicateur" Foreground="#FF0F79E4"/>
+                                    <Label Content="Code Question" HorizontalAlignment="Left" Margin="3,111,0,0" VerticalAlignment="Top"/>
+                                    <ComboBox HorizontalAlignment="Left" Margin="140,109,0,0" VerticalAlignment="Top" Width="166" Name="cmbCodeQuestion" DisplayMemberPath="CodeQuestion" SelectionChanged="cmbCodeQuestion_SelectionChanged" IsEnabled="False" />
+                                    <TextBlock HorizontalAlignment="Left" Margin="363,51,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="54" Width="259" Name="txtLibelle" Foreground="#FFFF5454" FontStyle="Italic"/>
+                                    <Label Content="Libelle:" HorizontalAlignment="Left" Margin="311,47,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.353,-1.273" Foreground="#FFFD0B0B" FontWeight="Bold" FontStyle="Italic"/>
+                                    <Label Content="Module" HorizontalAlignment="Left" Margin="3,47,0,0" VerticalAlignment="Top"/>
+                                    <ComboBox HorizontalAlignment="Left" Margin="140,45,0,0" VerticalAlignment="Top" Width="166" Name="cmbObjet" SelectionChanged="cmbObjet_SelectionChanged" DisplayMemberPath="Name" IsEnabled="False"/>
+                                    <Label Content="Description du probleme" HorizontalAlignment="Left" Margin="3,144,0,0" VerticalAlignment="Top"/>
+                                    <TextBox HorizontalAlignment="Left" Margin="141,146,0,0" TextWrapping="Wrap" Text="" Name="txtNature" AcceptsReturn="True" Width="166" Height="147" VerticalAlignment="Top" IsEnabled="False" />
+                                    <Label Content="Choisir le(s) code(s) questionnaire(s)" HorizontalAlignment="Left" Margin="313,113,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.357,-0.045"/>
+                                    <ComboBox HorizontalAlignment="Left" Margin="508,114,0,0" VerticalAlignment="Top" Width="68" Name="cmbBatiment" DisplayMemberPath="BatimentId" SelectionChanged="cmbBatiment_SelectionChanged" IsEnabled="False"/>
+                                    <Label Content="Liste des codes" HorizontalAlignment="Left" Margin="612,113,0,0" VerticalAlignment="Top"/>
+                                    <ListBox HorizontalAlignment="Left" Height="178" Margin="701,116,0,0" VerticalAlignment="Top" Width="118" Name="listBCodeBatiment" DisplayMemberPath="BatimentName" IsEnabled="False" />
+                                    <Button Content="Sauvegarder" HorizontalAlignment="Left" Margin="508,143,0,0" VerticalAlignment="Top" Width="116" Name="btn_save" Height="26" Click="btn_save_Click" IsEnabled="False" />
+                                    <Label Content="Domaine" HorizontalAlignment="Left"  Margin="3,81,0,0" VerticalAlignment="Top"/>
+                                    <ComboBox HorizontalAlignment="Left"  Margin="140,76,0,0" VerticalAlignment="Top" Width="166" DisplayMemberPath="Value" Name="cmbDomaine" IsEnabled="False" SelectionChanged="cmbDomaine_SelectionChanged"  />
+                                </Grid>
+                            </GroupBox>
+                            <Label Content="Type de difficultés" HorizontalAlignment="Left" Margin="4,16,0,0" VerticalAlignment="Top" Height="22" Width="96"/>
+                            <ComboBox HorizontalAlignment="Left" Margin="152,16,0,0" VerticalAlignment="Top" Width="166" Name="cmbTypeProbleme" DisplayMemberPath="Value" SelectionChanged="cmbTypeProbleme_SelectionChanged" Height="22"/>
+
+
+                        </Grid>
+                    </dx:DXTabItem>
+                    <dx:DXTabItem Header="Affichage" GotFocus="DXTabItem_GotFocus">
+                        <Grid>
+                            <dxg:GridControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Name="grdDifficulties">
+                                <dxg:GridControl.View>
+                                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" Name="tableView">
+                                        <dxg:TableView.RowCellMenuCustomizations>
+                                            <dxb:BarButtonItem Name="updateRowItem" Content="Modifier" SerializationName="updateRowItem" Glyph="/Ht.Ihsil.Rgph.App.Superviseur;component/images/update.png" GlyphSize="Small" ItemClick="updateRowItem_ItemClick" />
+                                            <dxb:BarButtonItem Name="deleteDataItem" Content="Supprimer" Glyph="/Ht.Ihsil.Rgph.App.Superviseur;component/images/delete-xxl.png" SerializationName="deleteDataItem" ItemClick="deleteDataItem_ItemClick" />
+                                        </dxg:TableView.RowCellMenuCustomizations>
+                                    </dxg:TableView>
+                                </dxg:GridControl.View>
+                            </dxg:GridControl>
+
+                        </Grid>
+                    </dx:DXTabItem>
+                </dx:DXTabControl>
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="Verification 1">
+                <dx:DXTabControl Margin="-2,0,1,-2">
+                    <dx:DXTabItem Header="NON-REPONSE TOTALE">
+                        <GroupBox Header="Verification Totale">
+                            <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_totale" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGeneratingColumn="dtg_non_reponse_totale_AutoGeneratingColumn">
+                                <dxg:TreeListControl.View >
+                                    <dxg:TreeListView AutoExpandAllNodes="True" ShowNodeImages="True" ImageFieldName="Image"  NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListView1" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"   AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD">
+                                        <!--<dxg:TreeListView.RowStyle>
+                                            <Style TargetType="{x:Type dxg:RowControl}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Row.Color}" Value="1">
+                                                        <Setter Property="Background" Value="#FF73F566" />
+                                                        <Setter Property="Foreground" Value="Black" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </dxg:TreeListView.RowStyle>-->
+                                        <dxg:TreeListView.Nodes>
+                                            <dxg:TreeListNode Image="/Ht.Ihsil.Rgph.App.Superviseur;component/images/database.png"></dxg:TreeListNode>
+                                        </dxg:TreeListView.Nodes>
+                                    </dxg:TreeListView>
+                                </dxg:TreeListControl.View>
+                                <dxg:TreeListControl.Columns>
+
+                                </dxg:TreeListControl.Columns>
+                            </dxg:TreeListControl>
+                        </GroupBox>
+                    </dx:DXTabItem>
+                    <dx:DXTabItem Header="NON-REPONSE PARTIELLE">
+                        <GroupBox Header="Verification Partielle">
+                            <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_partielle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <dxg:TreeListControl.View >
+                                    <dxg:TreeListView   AllowPerPixelScrolling="True" ShowTotalSummary="True" Name="treeListView_partielle" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"  AllowScrollAnimation="True" AutoWidth="True" />
+                                </dxg:TreeListControl.View>
+                                <dxg:TreeListControl.Columns>
+
+                                </dxg:TreeListControl.Columns>
+                            </dxg:TreeListControl>
+                        </GroupBox>
+                    </dx:DXTabItem>
+                </dx:DXTabControl>
+
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="Verification 2">
+                <dx:DXTabControl>
+                    <dx:DXTabItem Header="Vérification de la non-réponse par variable">
+                        <GroupBox Header="Tableau de Verification">
+                            <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_totale_variable" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <dxg:TreeListControl.View >
+                                    <dxg:TreeListView  AllowPerPixelScrolling="True" ShowTotalSummary="True" Name="treeListView_par_variable" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"  AllowScrollAnimation="True" AutoWidth="True" />
+                                </dxg:TreeListControl.View>
+                                <dxg:TreeListControl.Columns>
+
+                                </dxg:TreeListControl.Columns>
+                            </dxg:TreeListControl>
+                        </GroupBox>
+                    </dx:DXTabItem>
+                    <dx:DXTabItem Header="Contrôles de cohérence"></dx:DXTabItem>
+                    <dx:DXTabItem Header="Vérification de la codification"></dx:DXTabItem>
+                </dx:DXTabControl>
+            </dx:DXTabItem>
+        </dx:DXTabControl>
+    </Grid>
+</UserControl>

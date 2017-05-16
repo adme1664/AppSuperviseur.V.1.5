@@ -1,0 +1,2654 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sparrow</name>
+    </assembly>
+    <members>
+        <member name="T:Sparrow.Documentation.Comment">
+            <summary>
+            Represents a comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.AggregateComment">
+            <summary>
+            Represents an aggregate comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.AggregateComment.#ctor(System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.AggregateComment"/> class.
+            </summary>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.AggregateComment.Children">
+            <summary>
+            Gets the children.
+            </summary>
+            <value>The children.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.CodeComment">
+            <summary>
+            Represents a <code>code</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.CodeComment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.CodeComment"/> class.
+            </summary>
+            <param name="code">The code.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.CodeComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.CodeComment.Code">
+            <summary>
+            Gets the code.
+            </summary>
+            <value>The code.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.ExampleComment">
+            <summary>
+            Represents an <code>example</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ExampleComment.#ctor(System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.ExampleComment"/> class.
+            </summary>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ExampleComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.ExceptionComment">
+            <summary>
+            Represents an <code>exception</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ExceptionComment.#ctor(System.String,System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.ExceptionComment"/> class.
+            </summary>
+            <param name="member">The member.</param>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ExceptionComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.ExceptionComment.Member">
+            <summary>
+            Gets the member.
+            </summary>
+            <value>The member.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.InlineCodeComment">
+            <summary>
+            Represents an <code>c</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.InlineCodeComment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.InlineCodeComment"/> class.
+            </summary>
+            <param name="code">The code.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.InlineCodeComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.InlineCodeComment.Code">
+            <summary>
+            Gets the code.
+            </summary>
+            <value>The code.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.InlineTextComment">
+            <summary>
+            Represents an inline text comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.InlineTextComment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.InlineTextComment"/> class.
+            </summary>
+            <param name="text">The text.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.InlineTextComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.InlineTextComment.Text">
+            <summary>
+            Gets the text.
+            </summary>
+            <value>The text.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.ParaComment">
+            <summary>
+            Represents a <code>para</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ParaComment.#ctor(System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.ParaComment"/> class.
+            </summary>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ParaComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.ParamComment">
+            <summary>
+            Represents a <code>param</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ParamComment.#ctor(System.String,System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.ParamComment"/> class.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ParamComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.ParamComment.Name">
+            <summary>
+            Gets the name of the parameter.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.ParamRefComment">
+            <summary>
+            Represents a <code>paramref</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ParamRefComment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.ParamRefComment"/> class.
+            </summary>
+            <param name="name">The name.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ParamRefComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.ParamRefComment.Name">
+            <summary>
+            Gets the name of the parameter reference.
+            </summary>
+            <value>
+            The name.
+            </value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.PermissionComment">
+            <summary>
+            Represents a <code>permission</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.PermissionComment.#ctor(System.String,System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.PermissionComment"/> class.
+            </summary>
+            <param name="member">The member.</param>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.PermissionComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.PermissionComment.Member">
+            <summary>
+            Gets the member.
+            </summary>
+            <value>The member.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.RemarksComment">
+            <summary>
+            Represents a <code>remarks</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.RemarksComment.#ctor(System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.RemarksComment"/> class.
+            </summary>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.RemarksComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.ReturnsComment">
+            <summary>
+            Represents a <code>returns</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ReturnsComment.#ctor(System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.ReturnsComment"/> class.
+            </summary>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ReturnsComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.SeeAlsoComment">
+            <summary>
+            Represents a <code>seealso</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.SeeAlsoComment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.SeeAlsoComment"/> class.
+            </summary>
+            <param name="member">The member.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.SeeAlsoComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.SeeAlsoComment.Member">
+            <summary>
+            Gets the member.
+            </summary>
+            <value>The member.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.SeeComment">
+            <summary>
+            Represents a <code>see</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.SeeComment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.SeeComment"/> class.
+            </summary>
+            <param name="member">The member.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.SeeComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.SeeComment.Member">
+            <summary>
+            Gets the member.
+            </summary>
+            <value>The member.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.SummaryComment">
+            <summary>
+            Represents a <code>summary</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.SummaryComment.#ctor(System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.SummaryComment"/> class.
+            </summary>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.SummaryComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.TypeParamComment">
+            <summary>
+            Represents a <code>typeparam</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.TypeParamComment.#ctor(System.String,System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.TypeParamComment"/> class.
+            </summary>
+            <param name="name">The name.</param>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.TypeParamComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.TypeParamComment.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.TypeParamRefComment">
+            <summary>
+            Represents a <code>typeparamref</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.TypeParamRefComment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.TypeParamRefComment"/> class.
+            </summary>
+            <param name="name">The name.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.TypeParamRefComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.TypeParamRefComment.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.ValueComment">
+            <summary>
+            Represents a <code>value</code> comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ValueComment.#ctor(System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.ValueComment"/> class.
+            </summary>
+            <param name="comments">The comments.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.ValueComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="T:Sparrow.Documentation.Comments.WhitespaceComment">
+            <summary>
+            Represents a whitespace comment.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.WhitespaceComment.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Comments.WhitespaceComment"/> class.
+            </summary>
+            <param name="text">The text.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Comments.WhitespaceComment.Accept``1(Sparrow.Documentation.CommentVisitor{``0},``0)">
+            <summary>
+            Accepts the specified visitor.
+            </summary>
+            <typeparam name="T">The context type.</typeparam>
+            <param name="visitor">The visitor.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Comments.WhitespaceComment.Text">
+            <summary>
+            Gets the whitespace text.
+            </summary>
+            <value>The text.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.CommentVisitor`1">
+            <summary>
+            Represents an abstract comment visitor.
+            </summary>
+            <typeparam name="TContext">The type of the context.</typeparam>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.Visit(Sparrow.Documentation.Comment,`0)">
+            <summary>
+            Visits a specified comment using the specified context.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitCode(Sparrow.Documentation.Comments.CodeComment,`0)">
+            <summary>
+            Visits a <c>code</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitExample(Sparrow.Documentation.Comments.ExampleComment,`0)">
+            <summary>
+            Visits a <c>example</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitException(Sparrow.Documentation.Comments.ExceptionComment,`0)">
+            <summary>
+            Visits a <c>exception</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitInlineCode(Sparrow.Documentation.Comments.InlineCodeComment,`0)">
+            <summary>
+            Visits a <c>inlinecode</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitInlineText(Sparrow.Documentation.Comments.InlineTextComment,`0)">
+            <summary>
+            Visits a <c>inlinetext</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitParam(Sparrow.Documentation.Comments.ParamComment,`0)">
+            <summary>
+            Visits a <c>param</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitParamRef(Sparrow.Documentation.Comments.ParamRefComment,`0)">
+            <summary>
+            Visits a <c>paramref</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitPara(Sparrow.Documentation.Comments.ParaComment,`0)">
+            <summary>
+            Visits a <c>para</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitPermission(Sparrow.Documentation.Comments.PermissionComment,`0)">
+            <summary>
+            Visits a <c>permission</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitRemarks(Sparrow.Documentation.Comments.RemarksComment,`0)">
+            <summary>
+            Visits a <c>remarks</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitReturns(Sparrow.Documentation.Comments.ReturnsComment,`0)">
+            <summary>
+            Visits a <c>returns</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitSeeAlso(Sparrow.Documentation.Comments.SeeAlsoComment,`0)">
+            <summary>
+            Visits a <c>seealso</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitSee(Sparrow.Documentation.Comments.SeeComment,`0)">
+            <summary>
+            Visits a <c>see</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitSummary(Sparrow.Documentation.Comments.SummaryComment,`0)">
+            <summary>
+            Visits a <c>summary</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitTypeParam(Sparrow.Documentation.Comments.TypeParamComment,`0)">
+            <summary>
+            Visits a <c>typeparam</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitTypeParamRef(Sparrow.Documentation.Comments.TypeParamRefComment,`0)">
+            <summary>
+            Visits a <c>typeparamref</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitValue(Sparrow.Documentation.Comments.ValueComment,`0)">
+            <summary>
+            Visits a <c>value</c> comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitWhitespace(Sparrow.Documentation.Comments.WhitespaceComment,`0)">
+            <summary>
+            Visits a whitespace comment.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.CommentVisitor`1.VisitChildren(Sparrow.Documentation.Comments.AggregateComment,`0)">
+            <summary>
+            Visits child comments.
+            </summary>
+            <param name="comment">The comment.</param>
+            <param name="context">The context.</param>
+        </member>
+        <member name="T:Sparrow.DocumentedAssembly">
+            <summary>
+            Represents a documented assembly.
+            </summary>
+        </member>
+        <member name="T:Sparrow.DocumentedMember">
+            <summary>
+            Represents a documented member.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentedMember.#ctor(Sparrow.Documentation.Comments.SummaryComment,Sparrow.Documentation.Comments.RemarksComment,Sparrow.Documentation.Comments.ExampleComment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.DocumentedMember"/> class.
+            </summary>
+            <param name="summary">The summary comment.</param>
+            <param name="remarks">The remarks comment.</param>
+            <param name="example">The example comment.</param>
+        </member>
+        <member name="P:Sparrow.DocumentedMember.Summary">
+            <summary>
+            Gets the summary comment.
+            </summary>
+            <value>The summary comment.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedMember.Remarks">
+            <summary>
+            Gets the remarks comment.
+            </summary>
+            <value>The remarks comment.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedMember.Example">
+            <summary>
+            Gets the example comment.
+            </summary>
+            <value>The example comment.</value>
+        </member>
+        <member name="M:Sparrow.DocumentedAssembly.#ctor(Sparrow.Reflection.IAssemblyInfo,System.Collections.Generic.IEnumerable{Sparrow.DocumentedNamespace})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.DocumentedAssembly"/> class.
+            </summary>
+            <param name="info">The assembly information.</param>
+            <param name="namespaces">The namespaces.</param>
+        </member>
+        <member name="P:Sparrow.DocumentedAssembly.Identity">
+            <summary>
+            Gets the identity.
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedAssembly.Model">
+            <summary>
+            Gets the document model.
+            </summary>
+            <value>The document model.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedAssembly.Info">
+            <summary>
+            Gets the assembly information.
+            </summary>
+            <value>The information.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedAssembly.Namespaces">
+            <summary>
+            Gets the types in this namespace.
+            </summary>
+            <value>The types in this namespace.</value>
+        </member>
+        <member name="T:Sparrow.DocumentedMethod">
+            <summary>
+            Represents a documented method.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentedMethod.#ctor(Sparrow.Reflection.IMethodInfo,System.Collections.Generic.IEnumerable{Sparrow.DocumentedParameter},Sparrow.Documentation.Comments.SummaryComment,Sparrow.Documentation.Comments.RemarksComment,Sparrow.Documentation.Comments.ExampleComment,Sparrow.Documentation.Comments.ReturnsComment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.DocumentedMethod"/> class.
+            </summary>
+            <param name="info">The method information.</param>
+            <param name="parameters">The method's parameters.</param>
+            <param name="summary">The summary comment.</param>
+            <param name="remarks">The remarks comment.</param>
+            <param name="example">The example comment.</param>
+            <param name="returns">The return value comment.</param>
+        </member>
+        <member name="P:Sparrow.DocumentedMethod.Identity">
+            <summary>
+            Gets the method's identity.
+            </summary>
+            <value>The method's identity.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedMethod.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedMethod.Info">
+            <summary>
+            Gets the method information.
+            </summary>
+            <value>
+            The method information.
+            </value>
+        </member>
+        <member name="P:Sparrow.DocumentedMethod.Returns">
+            <summary>
+            Gets the return value comment.
+            </summary>
+            <value>
+            The return value comment.
+            </value>
+        </member>
+        <member name="P:Sparrow.DocumentedMethod.Parameters">
+            <summary>
+            Gets the method's parameters.
+            </summary>
+            <value>The parameters.</value>
+        </member>
+        <member name="T:Sparrow.DocumentedNamespace">
+            <summary>
+            Represents a documented namespace.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentedNamespace.#ctor(System.String,System.Collections.Generic.IEnumerable{Sparrow.DocumentedType})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.DocumentedNamespace"/> class.
+            </summary>
+            <param name="identity">The identity.</param>
+            <param name="types">The types.</param>
+        </member>
+        <member name="P:Sparrow.DocumentedNamespace.Identity">
+            <summary>
+            Gets the identity.
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedNamespace.Assembly">
+            <summary>
+            Gets the assembly this namespace is located in.
+            </summary>
+            <value>The assembly this namespace is located in.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedNamespace.Types">
+            <summary>
+            Gets the types in this namespace.
+            </summary>
+            <value>The types in this namespace.</value>
+        </member>
+        <member name="T:Sparrow.DocumentedParameter">
+            <summary>
+            Represents a documented parameter.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentedParameter.#ctor(Mono.Cecil.ParameterDefinition,Sparrow.Documentation.Comments.ParamComment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.DocumentedParameter"/> class.
+            </summary>
+            <param name="definition">The parameter definition.</param>
+            <param name="comment">The parameter comment.</param>
+        </member>
+        <member name="P:Sparrow.DocumentedParameter.Method">
+            <summary>
+            Gets the method.
+            </summary>
+            <value>The method.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedParameter.Name">
+            <summary>
+            Gets the parameter name.
+            </summary>
+            <value>
+            The parameter name.
+            </value>
+        </member>
+        <member name="P:Sparrow.DocumentedParameter.Comment">
+            <summary>
+            Gets the parameter comment.
+            </summary>
+            <value>The parameter comment.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedParameter.Definition">
+            <summary>
+            Gets the parameter definition.
+            </summary>
+            <value>The parameter definition.</value>
+        </member>
+        <member name="T:Sparrow.DocumentedProperty">
+            <summary>
+            Represents a documented property.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentedProperty.#ctor(Sparrow.Reflection.IPropertyInfo,Sparrow.Documentation.Comments.SummaryComment,Sparrow.Documentation.Comments.RemarksComment,Sparrow.Documentation.Comments.ExampleComment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.DocumentedProperty"/> class.
+            </summary>
+            <param name="info">The property info.</param>
+            <param name="summary">The summary comment.</param>
+            <param name="remarks">The remarks comment.</param>
+            <param name="example">The example comment.</param>
+        </member>
+        <member name="P:Sparrow.DocumentedProperty.Identity">
+            <summary>
+            Gets the property's identity.
+            </summary>
+            <value>The method's identity.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedProperty.Type">
+            <summary>
+            Gets the type.
+            </summary>
+            <value>The type.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedProperty.Info">
+            <summary>
+            Gets the property information.
+            </summary>
+            <value>
+            The method information.
+            </value>
+        </member>
+        <member name="T:Sparrow.DocumentedType">
+            <summary>
+            Represents a documented type.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentedType.#ctor(Sparrow.Reflection.ITypeInfo,System.Collections.Generic.IEnumerable{Sparrow.DocumentedMethod},System.Collections.Generic.IEnumerable{Sparrow.DocumentedProperty},System.Collections.Generic.IEnumerable{Sparrow.DocumentedMethod},Sparrow.Documentation.Comments.SummaryComment,Sparrow.Documentation.Comments.RemarksComment,Sparrow.Documentation.Comments.ExampleComment)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.DocumentedType"/> class.
+            </summary>
+            <param name="info">The type information.</param>
+            <param name="constructors">The type's constructors.</param>
+            <param name="properties">The type's properties.</param>
+            <param name="methods">The type's methods</param>
+            <param name="summary">The summary.</param>
+            <param name="remarks">The remarks.</param>
+            <param name="example">The example.</param>
+        </member>
+        <member name="P:Sparrow.DocumentedType.Identity">
+            <summary>
+            Gets the type's identity.
+            </summary>
+            <value>The type's identity.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedType.Namespace">
+            <summary>
+            Gets the namespace.
+            </summary>
+            <value>The namespace.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedType.Info">
+            <summary>
+            Gets the type information.
+            </summary>
+            <value>The information.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedType.Constructors">
+            <summary>
+            Gets the type's constructors.
+            </summary>
+            <value>The type's constructors.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedType.Properties">
+            <summary>
+            Gets the type's properties.
+            </summary>
+            <value>The type's properties.</value>
+        </member>
+        <member name="P:Sparrow.DocumentedType.Methods">
+            <summary>
+            Gets the type's methods.
+            </summary>
+            <value>The type's methods.</value>
+        </member>
+        <member name="T:Sparrow.DocumentModel">
+            <summary>
+            Represents the complete documented model.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentModel.#ctor(System.Collections.Generic.IEnumerable{Sparrow.DocumentedAssembly})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.DocumentModel"/> class.
+            </summary>
+            <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="P:Sparrow.DocumentModel.Assemblies">
+            <summary>
+            Gets the assemblies.
+            </summary>
+            <value>The assemblies.</value>
+        </member>
+        <member name="T:Sparrow.DocumentModelExtensions">
+            <summary>
+            Contains extension methods for <see cref="T:Sparrow.DocumentModel"/>.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentModelExtensions.FindType(Sparrow.DocumentModel,System.String)">
+            <summary>
+            Finds the specified documented type.
+            </summary>
+            <param name="model">The document model.</param>
+            <param name="identity">The identity of the documented type.</param>
+            <returns>The documented type.</returns>
+        </member>
+        <member name="T:Sparrow.DocumentModelGenerator">
+            <summary>
+            Responsible for generating a document model
+            given a reflection model and an XML documentation model.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentModelGenerator.#ctor(Sparrow.IO.IFileSystem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.DocumentModelGenerator"/> class.
+            </summary>
+            <param name="fileSystem">The file system.</param>
+        </member>
+        <member name="M:Sparrow.DocumentModelGenerator.BuildModel(System.Collections.Generic.IEnumerable{Sparrow.IO.FilePath})">
+            <summary>
+            Generates a document model.
+            </summary>
+            <param name="paths">The paths.</param>
+            <returns>The built document model.</returns>
+        </member>
+        <member name="T:Sparrow.DocumentModelMapper">
+            <summary>
+            Responsible for mapping a reflection and a xml documentation model.
+            </summary>
+        </member>
+        <member name="M:Sparrow.DocumentModelMapper.Map(Sparrow.Documentation.Reflection.ReflectionModel,Sparrow.Documentation.Xml.XmlDocumentationModel)">
+            <summary>
+            Generates a document model from a <see cref="T:Sparrow.Documentation.Reflection.ReflectionModel"/>
+            and a <see cref="T:Sparrow.Documentation.Xml.XmlDocumentationModel"/>.
+            </summary>
+            <param name="reflectionModel">The reflection model.</param>
+            <param name="xmlModel">The XML documentation model.</param>
+            <returns>A document model.</returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Identity.MethodIdentityGenerator">
+            <summary>
+            Responsible for generating XML method identities.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Identity.MethodIdentityGenerator.GetIdentity(Mono.Cecil.MethodDefinition)">
+            <summary>
+            Gets the identity for a specific <see cref="T:Mono.Cecil.MethodDefinition"/>.
+            </summary>
+            <param name="method">The type Info.</param>
+            <returns>A string representing the provided <see cref="T:Mono.Cecil.MethodDefinition"/>.</returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Identity.PropertyIdentityGenerator">
+            <summary>
+            Responsible for generating XML property identities.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Identity.PropertyIdentityGenerator.GetIdentity(Mono.Cecil.PropertyDefinition)">
+            <summary>
+            Gets the identity for a specific <see cref="T:Mono.Cecil.PropertyDefinition"/>.
+            </summary>
+            <param name="property">The type Info.</param>
+            <returns>A string representing the provided <see cref="T:Mono.Cecil.PropertyDefinition"/>.</returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Identity.TypeIdentityGenerator">
+            <summary>
+            Responsible for generating XML type identities.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Identity.TypeIdentityGenerator.GetIdentity(Mono.Cecil.TypeReference)">
+            <summary>
+            Gets the identity for a specific <see cref="T:Mono.Cecil.TypeDefinition"/>.
+            </summary>
+            <param name="type">The type Info.</param>
+            <returns>A string representing the provided <see cref="T:Mono.Cecil.TypeReference"/>.</returns>
+        </member>
+        <member name="T:Sparrow.IO.Environment">
+            <summary>
+            Represents the environment Cake operates in.
+            </summary>
+        </member>
+        <member name="T:Sparrow.IO.IEnvironment">
+            <summary>
+            Represents the environment Cake operates in.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.IEnvironment.Is64BitOperativeSystem">
+            <summary>
+            Gets whether or not the current operative system is 64 bit.
+            </summary>
+            <returns>Whether or not the current operative system is 64 bit.</returns>
+        </member>
+        <member name="M:Sparrow.IO.IEnvironment.IsUnix">
+            <summary>
+            Determines whether the current machine is running Unix.
+            </summary>
+            <returns>Whether or not the current machine is running Unix.</returns>
+        </member>
+        <member name="M:Sparrow.IO.IEnvironment.GetSpecialPath(Sparrow.IO.SpecialPath)">
+            <summary>
+            Gets a special path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A <see cref="T:Sparrow.IO.DirectoryPath"/> to the special path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.IEnvironment.GetApplicationRoot">
+            <summary>
+            Gets the application root path.
+            </summary>
+            <returns>The application root path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.IEnvironment.GetEnvironmentVariable(System.String)">
+            <summary>
+            Gets an environment variable.
+            </summary>
+            <param name="variable">The variable.</param>
+            <returns>The value of the environment variable.</returns>
+        </member>
+        <member name="P:Sparrow.IO.IEnvironment.WorkingDirectory">
+            <summary>
+            Gets or sets the working directory.
+            </summary>
+            <value>The working directory.</value>
+        </member>
+        <member name="M:Sparrow.IO.Environment.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.IO.Environment"/> class.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.Environment.Is64BitOperativeSystem">
+            <summary>
+            Gets whether or not the current operative system is 64 bit.
+            </summary>
+            <returns>
+            Whether or not the current operative system is 64 bit.
+            </returns>
+        </member>
+        <member name="M:Sparrow.IO.Environment.IsUnix">
+            <summary>
+            Determines whether the current machine is running Unix.
+            </summary>
+            <returns>
+            Whether or not the current machine is running Unix.
+            </returns>
+        </member>
+        <member name="M:Sparrow.IO.Environment.GetSpecialPath(Sparrow.IO.SpecialPath)">
+            <summary>
+            Gets a special path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>
+            A <see cref="T:Sparrow.IO.DirectoryPath"/> to the special path.
+            </returns>
+        </member>
+        <member name="M:Sparrow.IO.Environment.GetApplicationRoot">
+            <summary>
+            Gets the application root path.
+            </summary>
+            <returns>
+            The application root path.
+            </returns>
+        </member>
+        <member name="M:Sparrow.IO.Environment.GetEnvironmentVariable(System.String)">
+            <summary>
+            Gets an environment variable.
+            </summary>
+            <param name="variable">The variable.</param>
+            <returns>
+            The value of the environment variable.
+            </returns>
+        </member>
+        <member name="P:Sparrow.IO.Environment.WorkingDirectory">
+            <summary>
+            Gets or sets the working directory.
+            </summary>
+            <value>The working directory.</value>
+        </member>
+        <member name="T:Sparrow.IO.IDirectory">
+            <summary>
+            Represents a directory.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.IDirectory.Create">
+            <summary>
+            Creates the directory.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.IDirectory.Delete(System.Boolean)">
+            <summary>
+            Deletes the directory.
+            </summary>
+            <param name="recursive">Will perform a recursive delete if set to <c>true</c>.</param>
+        </member>
+        <member name="M:Sparrow.IO.IDirectory.GetDirectories(System.String,Sparrow.IO.SearchScope)">
+            <summary>
+            Gets directories matching the specified filter and scope.
+            </summary>
+            <param name="filter">The filter.</param>
+            <param name="scope">The scope.</param>
+            <returns>Directories matching the filter and scope.</returns>
+        </member>
+        <member name="M:Sparrow.IO.IDirectory.GetFiles(System.String,Sparrow.IO.SearchScope)">
+            <summary>
+            Gets files matching the specified filter and scope.
+            </summary>
+            <param name="filter">The filter.</param>
+            <param name="scope">The scope.</param>
+            <returns>Files matching the specified filter and scope.</returns>
+        </member>
+        <member name="P:Sparrow.IO.IDirectory.Path">
+            <summary>
+            Gets the path to the directory.
+            </summary>
+            <value>The path.</value>
+        </member>
+        <member name="P:Sparrow.IO.IDirectory.Exists">
+            <summary>
+            Gets a value indicating whether this <see cref="T:Sparrow.IO.IDirectory"/> exists.
+            </summary>
+            <value>
+              <c>true</c> if the directory exists; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Sparrow.IO.DirectoryPath">
+            <summary>
+            Represents a directory path.
+            </summary>
+        </member>
+        <member name="T:Sparrow.IO.Path">
+            <summary>
+            Provides properties and instance methods for working with paths.
+            This class must be inherited.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.Path.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.IO.Path"/> class.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Sparrow.IO.Path.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this path.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="P:Sparrow.IO.Path.FullPath">
+            <summary>
+            Gets the full path.
+            </summary>
+            <value>The full path.</value>
+        </member>
+        <member name="P:Sparrow.IO.Path.IsRelative">
+            <summary>
+            Gets a value indicating whether this path is relative.
+            </summary>
+            <value>
+            <c>true</c> if this path is relative; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Sparrow.IO.Path.Segments">
+            <summary>
+            Gets the segments making up the path.
+            </summary>
+            <value>The segments making up the path.</value>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.IO.DirectoryPath"/> class.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.GetDirectoryName">
+            <summary>
+            Gets the name of the directory.
+            </summary>
+            <returns>The directory name.</returns>
+            <remarks>
+               If this is passed a file path, it will return the file name.
+               This is by-and-large equivalent to how DirectoryInfo handles this scenario.
+               If we wanted to return the *actual* directory name, we'd need to pull in IFileSystem,
+               and do various checks to make sure things exists.
+            </remarks>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.GetFilePath(Sparrow.IO.FilePath)">
+            <summary>
+            Combines the current path with the file name of a <see cref="T:Sparrow.IO.FilePath"/>.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A combination of the current path and the file name of the provided <see cref="T:Sparrow.IO.FilePath"/>.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.CombineWithFilePath(Sparrow.IO.FilePath)">
+            <summary>
+            Combines the current path with a <see cref="T:Sparrow.IO.FilePath"/>.
+            The provided <see cref="T:Sparrow.IO.FilePath"/> must be relative.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A combination of the current path and the provided <see cref="T:Sparrow.IO.FilePath"/>.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.Combine(Sparrow.IO.DirectoryPath)">
+            <summary>
+            Combines the current path with another <see cref="T:Sparrow.IO.DirectoryPath"/>.
+            The provided <see cref="T:Sparrow.IO.DirectoryPath"/> must be relative.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A combination of the current path and the provided <see cref="T:Sparrow.IO.DirectoryPath"/>.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.MakeAbsolute(Sparrow.IO.DirectoryPath)">
+            <summary>
+            Makes the path absolute to another (absolute) path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>An absolute path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.MakeAbsolute(Sparrow.IO.IEnvironment)">
+            <summary>
+            Makes the path absolute (if relative) using the current working directory.
+            </summary>
+            <param name="environment">The environment.</param>
+            <returns>An absolute path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.Collapse">
+            <summary>
+            Collapses a <see cref="T:Sparrow.IO.DirectoryPath"/> containing ellipses.
+            </summary>
+            <returns>A collapsed <see cref="T:Sparrow.IO.DirectoryPath"/>.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.op_Implicit(System.String)~Sparrow.IO.DirectoryPath">
+            <summary>
+            Performs an implicit conversion from <see cref="T:System.String"/> to <see cref="T:Sparrow.IO.DirectoryPath"/>.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A <see cref="T:Sparrow.IO.DirectoryPath"/>.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPath.FromString(System.String)">
+            <summary>
+            Performs a conversion from <see cref="T:System.String"/> to <see cref="T:Sparrow.IO.DirectoryPath"/>.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A <see cref="T:Sparrow.IO.DirectoryPath"/>.</returns>
+        </member>
+        <member name="T:Sparrow.IO.DirectoryPathCollection">
+            <summary>
+            A collection of <see cref="T:Sparrow.IO.DirectoryPath"/>.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.#ctor(Sparrow.IO.PathComparer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.IO.DirectoryPathCollection"/> class.
+            </summary>
+            <param name="comparer">The comparer.</param>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.#ctor(System.Collections.Generic.IEnumerable{Sparrow.IO.DirectoryPath},Sparrow.IO.PathComparer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.IO.DirectoryPathCollection"/> class.
+            </summary>
+            <param name="paths">The paths.</param>
+            <param name="comparer">The comparer.</param>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.Add(Sparrow.IO.DirectoryPath)">
+            <summary>
+            Adds the specified path to the collection.
+            </summary>
+            <param name="path">The path to add.</param>
+            <returns>
+              <c>true</c> if the path was added; <c>false</c> if the path was already present.
+            </returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.Add(System.Collections.Generic.IEnumerable{Sparrow.IO.DirectoryPath})">
+            <summary>
+            Adds the specified paths to the collection.
+            </summary>
+            <param name="paths">The paths to add.</param>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.Remove(Sparrow.IO.DirectoryPath)">
+            <summary>
+            Removes the specified path from the collection.
+            </summary>
+            <param name="path">The path to remove.</param>
+            <returns>
+              <c>true</c> if the path was removed; <c>false</c> if the path was not found in the collection.
+            </returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.Remove(System.Collections.Generic.IEnumerable{Sparrow.IO.DirectoryPath})">
+            <summary>
+            Removes the specified paths from the collection.
+            </summary>
+            <param name="paths">The paths to remove.</param>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.op_Addition(Sparrow.IO.DirectoryPathCollection,Sparrow.IO.DirectoryPath)">
+            <summary>Adds a path to the collection.</summary>
+            <param name="collection">The collection.</param>
+            <param name="path">The path to add.</param>
+            <returns>A new <see cref="T:Sparrow.IO.DirectoryPathCollection"/> that contains the provided path as 
+            well as the paths in the original collection.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.op_Addition(Sparrow.IO.DirectoryPathCollection,System.Collections.Generic.IEnumerable{Sparrow.IO.DirectoryPath})">
+            <summary>Adds multiple paths to the collection.</summary>
+            <param name="collection">The collection.</param>
+            <param name="paths">The paths to add.</param>
+            <returns>A new <see cref="T:Sparrow.IO.DirectoryPathCollection"/> with the content of both collections.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.op_Subtraction(Sparrow.IO.DirectoryPathCollection,Sparrow.IO.DirectoryPath)">
+            <summary>
+            Removes a path from the collection.
+            </summary>
+            <param name="collection">The collection.</param>
+            <param name="path">The path to remove.</param>
+            <returns>A new <see cref="T:Sparrow.IO.DirectoryPathCollection"/> that do not contain the provided path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.op_Subtraction(Sparrow.IO.DirectoryPathCollection,System.Collections.Generic.IEnumerable{Sparrow.IO.DirectoryPath})">
+            <summary>
+            Removes multiple paths from the collection.
+            </summary>
+            <param name="collection">The collection.</param>
+            <param name="paths">The paths to remove.</param>
+            <returns>A new <see cref="T:Sparrow.IO.DirectoryPathCollection"/> that do not contain the provided paths.</returns>
+        </member>
+        <member name="M:Sparrow.IO.DirectoryPathCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="P:Sparrow.IO.DirectoryPathCollection.Count">
+            <summary>
+            Gets the number of directories in the collection.
+            </summary>
+            <value>The number of directories in the collection.</value>
+        </member>
+        <member name="T:Sparrow.IO.IFile">
+            <summary>
+            Represents a file.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.IFile.Copy(Sparrow.IO.FilePath,System.Boolean)">
+            <summary>
+            Copies the file to the specified destination path.
+            </summary>
+            <param name="destination">The destination path.</param>
+            <param name="overwrite">Will overwrite existing destination file if set to <c>true</c>.</param>
+        </member>
+        <member name="M:Sparrow.IO.IFile.Move(Sparrow.IO.FilePath)">
+            <summary>
+            Moves the file to the specified destination path.
+            </summary>
+            <param name="destination">The destination path.</param>
+        </member>
+        <member name="M:Sparrow.IO.IFile.Delete">
+            <summary>
+            Deletes the file.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.IFile.Open(System.IO.FileMode,System.IO.FileAccess,System.IO.FileShare)">
+            <summary>
+            Opens the file using the specified options.
+            </summary>
+            <param name="fileMode">The file mode.</param>
+            <param name="fileAccess">The file access.</param>
+            <param name="fileShare">The file share.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> to the file.</returns>
+        </member>
+        <member name="P:Sparrow.IO.IFile.Path">
+            <summary>
+            Gets the path to the file.
+            </summary>
+            <value>The path.</value>
+        </member>
+        <member name="P:Sparrow.IO.IFile.Exists">
+            <summary>
+            Gets a value indicating whether this <see cref="T:Sparrow.IO.IFile"/> exists.
+            </summary>
+            <value>
+              <c>true</c> if the file exists; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Sparrow.IO.IFile.Length">
+            <summary>
+            Gets the length of the file.
+            </summary>
+            <value>The length of the file.</value>
+        </member>
+        <member name="T:Sparrow.IO.FileExtensions">
+            <summary>
+            Contains extension methods for <see cref="T:Sparrow.IO.IFile"/>.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.FileExtensions.Open(Sparrow.IO.IFile,System.IO.FileMode)">
+            <summary>
+            Opens the file using the specified options.
+            </summary>
+            <param name="file">The file.</param>
+            <param name="mode">The mode.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> to the file.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FileExtensions.Open(Sparrow.IO.IFile,System.IO.FileMode,System.IO.FileAccess)">
+            <summary>
+            Opens the file using the specified options.
+            </summary>
+            <param name="file">The file.</param>
+            <param name="mode">The mode.</param>
+            <param name="access">The access.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> to the file.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FileExtensions.OpenRead(Sparrow.IO.IFile)">
+            <summary>
+            Opens the file for reading.
+            </summary>
+            <param name="file">The file.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> to the file.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FileExtensions.OpenWrite(Sparrow.IO.IFile)">
+            <summary>
+            Opens the file for writing.
+            If the file already exists, it will be overwritten.
+            </summary>
+            <param name="file">The file to be opened.</param>
+            <returns>A <see cref="T:System.IO.Stream"/> to the file.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FileExtensions.ReadLines(Sparrow.IO.IFile,System.Text.Encoding)">
+            <summary>
+            Enumerates line in file
+            </summary>
+            <param name="file">The file to be read from.</param>
+            <param name="encoding">The encoding that is applied to the content of the file.</param>
+            <returns>A <see cref="T:System.Collections.Generic.IEnumerable`1"/> of file line content</returns>
+        </member>
+        <member name="T:Sparrow.IO.FilePath">
+            <summary>
+            Represents a file path.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.IO.FilePath"/> class.
+            </summary>
+            <param name="path">The path.</param>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.GetDirectory">
+            <summary>
+            Gets the directory part of the path.
+            </summary>
+            <returns>The directory part of the path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.GetFilename">
+            <summary>
+            Gets the filename.
+            </summary>
+            <returns>The filename.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.GetExtension">
+            <summary>
+            Gets the file extension.
+            </summary>
+            <returns>The file extension.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.ChangeExtension(System.String)">
+            <summary>
+            Changes the file extension of the path.
+            </summary>
+            <param name="extension">The new extension.</param>
+            <returns>A new <see cref="T:Sparrow.IO.FilePath"/> with a new extension.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.AppendExtension(System.String)">
+            <summary>
+            Appends a file extension to the path.
+            </summary>
+            <param name="extension">The extension.</param>
+            <returns>A new <see cref="T:Sparrow.IO.FilePath"/> with an appended extension.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.MakeAbsolute(Sparrow.IO.IEnvironment)">
+            <summary>
+            Makes the path absolute (if relative) using the current working directory.
+            </summary>
+            <param name="environment">The environment.</param>
+            <returns>An absolute path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.MakeAbsolute(Sparrow.IO.DirectoryPath)">
+            <summary>
+            Makes the path absolute (if relative) using the specified directory path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>An absolute path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.Collapse">
+            <summary>
+            Collapses a <see cref="T:Sparrow.IO.FilePath"/> containing ellipses.
+            </summary>
+            <returns>A collapsed <see cref="T:Sparrow.IO.FilePath"/>.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.op_Implicit(System.String)~Sparrow.IO.FilePath">
+            <summary>
+            Performs an implicit conversion from <see cref="T:System.String"/> to <see cref="T:Sparrow.IO.FilePath"/>.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A <see cref="T:Sparrow.IO.FilePath"/>.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePath.FromString(System.String)">
+            <summary>
+            Performs a conversion from <see cref="T:System.String"/> to <see cref="T:Sparrow.IO.FilePath"/>.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A <see cref="T:Sparrow.IO.FilePath"/>.</returns>
+        </member>
+        <member name="P:Sparrow.IO.FilePath.HasExtension">
+            <summary>
+            Gets a value indicating whether this path has a file extension.
+            </summary>
+            <value>
+            <c>true</c> if this file path has a file extension; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Sparrow.IO.FilePathCollection">
+            <summary>
+            A collection of <see cref="T:Sparrow.IO.FilePath"/>.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.#ctor(Sparrow.IO.PathComparer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.IO.FilePathCollection"/> class.
+            </summary>
+            <param name="comparer">The comparer.</param>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.#ctor(System.Collections.Generic.IEnumerable{Sparrow.IO.FilePath},Sparrow.IO.PathComparer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.IO.FilePathCollection"/> class.
+            </summary>
+            <param name="paths">The paths.</param>
+            <param name="comparer">The comparer.</param>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.Add(Sparrow.IO.FilePath)">
+            <summary>
+            Adds the specified path to the collection.
+            </summary>
+            <param name="path">The path to add.</param>
+            <returns>
+              <c>true</c> if the path was added; <c>false</c> if the path was already present.
+            </returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.Add(System.Collections.Generic.IEnumerable{Sparrow.IO.FilePath})">
+            <summary>
+            Adds the specified paths to the collection.
+            </summary>
+            <param name="paths">The paths to add.</param>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.Remove(Sparrow.IO.FilePath)">
+            <summary>
+            Removes the specified path from the collection.
+            </summary>
+            <param name="path">The path to remove.</param>
+            <returns>
+              <c>true</c> if the path was removed; <c>false</c> if the path was not found in the collection.
+            </returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.Remove(System.Collections.Generic.IEnumerable{Sparrow.IO.FilePath})">
+            <summary>
+            Removes the specified paths from the collection.
+            </summary>
+            <param name="paths">The paths to remove.</param>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.op_Addition(Sparrow.IO.FilePathCollection,Sparrow.IO.FilePath)">
+            <summary>Adds a path to the collection.</summary>
+            <param name="collection">The collection.</param>
+            <param name="path">The path to add.</param>
+            <returns>A new <see cref="T:Sparrow.IO.FilePathCollection"/> that contains the provided path as 
+            well as the paths in the original collection.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.op_Addition(Sparrow.IO.FilePathCollection,System.Collections.Generic.IEnumerable{Sparrow.IO.FilePath})">
+            <summary>Adds multiple paths to the collection.</summary>
+            <param name="collection">The collection.</param>
+            <param name="paths">The paths to add.</param>
+            <returns>A new <see cref="T:Sparrow.IO.FilePathCollection"/> with the content of both collections.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.op_Subtraction(Sparrow.IO.FilePathCollection,Sparrow.IO.FilePath)">
+            <summary>
+            Removes a path from the collection.
+            </summary>
+            <param name="collection">The collection.</param>
+            <param name="path">The path to remove.</param>
+            <returns>A new <see cref="T:Sparrow.IO.FilePathCollection"/> that do not contain the provided path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.op_Subtraction(Sparrow.IO.FilePathCollection,System.Collections.Generic.IEnumerable{Sparrow.IO.FilePath})">
+            <summary>
+            Removes multiple paths from the collection.
+            </summary>
+            <param name="collection">The collection.</param>
+            <param name="paths">The paths to remove.</param>
+            <returns>A new <see cref="T:Sparrow.IO.FilePathCollection"/> that do not contain the provided paths.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FilePathCollection.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="P:Sparrow.IO.FilePathCollection.Count">
+            <summary>
+            Gets the number of files in the collection.
+            </summary>
+            <value>The number of files in the collection.</value>
+        </member>
+        <member name="T:Sparrow.IO.FileSystem">
+            <summary>
+            A physical file system implementation.
+            </summary>
+        </member>
+        <member name="T:Sparrow.IO.IFileSystem">
+            <summary>
+            Represents a file system.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.IFileSystem.GetFile(Sparrow.IO.FilePath)">
+            <summary>
+            Gets a <see cref="T:Sparrow.IO.IFile"/> instance representing the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A <see cref="T:Sparrow.IO.IFile"/> instance representing the specified path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.IFileSystem.GetDirectory(Sparrow.IO.DirectoryPath)">
+            <summary>
+            Gets a <see cref="T:Sparrow.IO.IDirectory"/> instance representing the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A <see cref="T:Sparrow.IO.IDirectory"/> instance representing the specified path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FileSystem.GetFile(Sparrow.IO.FilePath)">
+            <summary>
+            Gets a <see cref="T:Sparrow.IO.IFile"/> instance representing the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A <see cref="T:Sparrow.IO.IFile"/> instance representing the specified path.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FileSystem.GetDirectory(Sparrow.IO.DirectoryPath)">
+            <summary>
+            Gets a <see cref="T:Sparrow.IO.IDirectory"/> instance representing the specified path.
+            </summary>
+            <param name="path">The path.</param>
+            <returns>A <see cref="T:Sparrow.IO.IDirectory"/> instance representing the specified path.</returns>
+        </member>
+        <member name="T:Sparrow.IO.FileSystemExtensions">
+            <summary>
+            Contains extensions for <see cref="T:Sparrow.IO.IFileSystem"/>.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.FileSystemExtensions.Exist(Sparrow.IO.IFileSystem,Sparrow.IO.FilePath)">
+            <summary>
+            Determines if a specified <see cref="T:Sparrow.IO.FilePath"/> exist.
+            </summary>
+            <param name="fileSystem">The file system.</param>
+            <param name="path">The path.</param>
+            <returns>Whether or not the specified file exist.</returns>
+        </member>
+        <member name="M:Sparrow.IO.FileSystemExtensions.Exist(Sparrow.IO.IFileSystem,Sparrow.IO.DirectoryPath)">
+            <summary>
+            Determines if a specified <see cref="T:Sparrow.IO.DirectoryPath"/> exist.
+            </summary>
+            <param name="fileSystem">The file system.</param>
+            <param name="path">The path.</param>
+            <returns>Whether or not the specified directory exist.</returns>
+        </member>
+        <member name="T:Sparrow.IO.Machine">
+            <summary>
+            Responsible for retrieving information about the current machine.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.Machine.Is64BitOperativeSystem">
+            <summary>
+            Determines if the current operative system is 64 bit.
+            </summary>
+            <returns>Whether or not the current operative system is 64 bit.</returns>
+        </member>
+        <member name="M:Sparrow.IO.Machine.IsUnix">
+            <summary>
+            Determines whether the current machine is running Unix.
+            </summary>
+            <returns>Whether or not the current machine is running Unix.</returns>
+        </member>
+        <member name="T:Sparrow.IO.PathComparer">
+            <summary>
+            Compares <see cref="T:Sparrow.IO.Path"/> instances.
+            </summary>
+        </member>
+        <member name="F:Sparrow.IO.PathComparer.Default">
+            <summary>
+            The default path comparer.
+            </summary>
+        </member>
+        <member name="M:Sparrow.IO.PathComparer.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.IO.PathComparer"/> class.
+            </summary>
+            <param name="isCaseSensitive">if set to <c>true</c>, comparison is case sensitive.</param>
+        </member>
+        <member name="M:Sparrow.IO.PathComparer.Equals(Sparrow.IO.Path,Sparrow.IO.Path)">
+            <summary>
+            Determines whether the specified <see cref="T:Sparrow.IO.Path"/> instances are equal.
+            </summary>
+            <param name="x">The first <see cref="T:Sparrow.IO.Path"/> to compare.</param>
+            <param name="y">The second <see cref="T:Sparrow.IO.Path"/> to compare.</param>
+            <returns>
+            True if the specified <see cref="T:Sparrow.IO.Path"/> instances are equal; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:Sparrow.IO.PathComparer.GetHashCode(Sparrow.IO.Path)">
+            <summary>
+            Returns a hash code for the specified <see cref="T:Sparrow.IO.Path"/>.
+            </summary>
+            <param name="obj">The path.</param>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="P:Sparrow.IO.PathComparer.IsCaseSensitive">
+            <summary>
+            Gets a value indicating whether comparison is case sensitive.
+            </summary>
+            <value>
+            <c>true</c> if comparison is case sensitive; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Sparrow.IO.SearchScope">
+            <summary>
+            Represents a search scope.
+            </summary>
+        </member>
+        <member name="F:Sparrow.IO.SearchScope.Current">
+            <summary>
+            The current directory.
+            </summary>
+        </member>
+        <member name="F:Sparrow.IO.SearchScope.Recursive">
+            <summary>
+            The current directory and child directories.
+            </summary>
+        </member>
+        <member name="T:Sparrow.IO.SpecialPath">
+            <summary>
+            Represents a special path.
+            </summary>
+        </member>
+        <member name="F:Sparrow.IO.SpecialPath.ProgramFilesX86">
+            <summary>
+            The Program Files (X86) folder.
+            </summary>
+        </member>
+        <member name="F:Sparrow.IO.SpecialPath.Windows">
+            <summary>
+            The Windows folder.
+            </summary>
+        </member>
+        <member name="T:Sparrow.Documentation.Reflection.ReflectionModel">
+            <summary>
+            Represents the reflection model.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Reflection.ReflectionModel.#ctor(System.Collections.Generic.IEnumerable{Sparrow.Reflection.IAssemblyInfo})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Reflection.ReflectionModel"/> class.
+            </summary>
+            <param name="assemblies">The assemblies.</param>
+        </member>
+        <member name="P:Sparrow.Documentation.Reflection.ReflectionModel.Assemblies">
+            <summary>
+            Gets the types.
+            </summary>
+            <value>The types.</value>
+        </member>
+        <member name="T:Sparrow.Reflection.MethodSignature">
+            <summary>
+            Represents a method signature.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Reflection.MethodSignature.#ctor(System.String,System.String,Sparrow.Reflection.TypeSignature,Sparrow.Reflection.TypeSignature,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{Sparrow.Reflection.ParameterSignature})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Reflection.MethodSignature"/> class.
+            </summary>
+            <param name="identity">The identity.</param>
+            <param name="name">The type name.</param>
+            <param name="declaringType">The declaring type.</param>
+            <param name="returnType">The return type.</param>
+            <param name="genericParameters">The method's generic parameters.</param>
+            <param name="parameters">The parameters.</param>
+        </member>
+        <member name="P:Sparrow.Reflection.MethodSignature.Identity">
+            <summary>
+            Gets the identity.
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.MethodSignature.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.MethodSignature.ReturnType">
+            <summary>
+            Gets the return type.
+            </summary>
+            <value>The return type.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.MethodSignature.DeclaringType">
+            <summary>
+            Gets the declaring type.
+            </summary>
+            <value>The declaring type.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.MethodSignature.GenericParameters">
+            <summary>
+            Gets the method's generic parameters.
+            </summary>
+            <value>The method's generic parameters.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.MethodSignature.Parameters">
+            <summary>
+            Gets the parameters.
+            </summary>
+            <value>The parameters.</value>
+        </member>
+        <member name="T:Sparrow.Reflection.NamespaceName">
+            <summary>
+            Represents the name of a namespace.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Reflection.NamespaceName.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Reflection.NamespaceName"/> class.
+            </summary>
+            <param name="identity">The identity.</param>
+        </member>
+        <member name="P:Sparrow.Reflection.NamespaceName.Identity">
+            <summary>
+            Gets the identity.
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.NamespaceName.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="T:Sparrow.Reflection.ParameterSignature">
+            <summary>
+            Represents a parameter signature.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Reflection.ParameterSignature.#ctor(System.String,Sparrow.Reflection.TypeSignature)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Reflection.ParameterSignature"/> class.
+            </summary>
+            <param name="name">The parameter name.</param>
+            <param name="parameterType">The parameter type.</param>
+        </member>
+        <member name="P:Sparrow.Reflection.ParameterSignature.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.ParameterSignature.ParameterType">
+            <summary>
+            Gets the parameter type.
+            </summary>
+            <value>The parameter type.</value>
+        </member>
+        <member name="T:Sparrow.Reflection.TypeSignature">
+            <summary>
+            Represents the name of a type.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Reflection.TypeSignature.#ctor(System.String,System.String,Sparrow.Reflection.NamespaceName,System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{Sparrow.Reflection.TypeSignature})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Reflection.TypeSignature"/> class.
+            </summary>
+            <param name="identity">The identity.</param>
+            <param name="name">The name.</param>
+            <param name="namespace">The namespace.</param>
+            <param name="genericArguments">The generic arguments.</param>
+            <param name="genericParameters">The generic parameters.</param>
+        </member>
+        <member name="P:Sparrow.Reflection.TypeSignature.Identity">
+            <summary>
+            Gets the identity.
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.TypeSignature.Name">
+            <summary>
+            Gets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.TypeSignature.Namespace">
+            <summary>
+            Gets the namespace.
+            </summary>
+            <value>The namespace.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.TypeSignature.GenericArguments">
+            <summary>
+            Gets the generic arguments.
+            </summary>
+            <value>The generic arguments.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.TypeSignature.GenericParameters">
+            <summary>
+            Gets the generic parameters.
+            </summary>
+            <value>The generic parameters.</value>
+        </member>
+        <member name="T:Sparrow.Reflection.IAssemblyInfo">
+            <summary>
+            Represents reflected assembly information.
+            </summary>
+        </member>
+        <member name="P:Sparrow.Reflection.IAssemblyInfo.Identity">
+            <summary>
+            Gets the assembly identity.
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.IAssemblyInfo.Definition">
+            <summary>
+            Gets the assembly definition.
+            </summary>
+            <value>The assembly definition.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.IAssemblyInfo.Types">
+            <summary>
+            Gets the types.
+            </summary>
+            <value>The types.</value>
+        </member>
+        <member name="T:Sparrow.Reflection.IMethodInfo">
+            <summary>
+            Represents reflected method information.
+            </summary>
+        </member>
+        <member name="P:Sparrow.Reflection.IMethodInfo.Identity">
+            <summary>
+            Gets the type identity.
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.IMethodInfo.Definition">
+            <summary>
+            Gets the method Info.
+            </summary>
+            <value>
+            The method Info.
+            </value>
+        </member>
+        <member name="T:Sparrow.Reflection.IPropertyInfo">
+            <summary>
+            Represents reflected property information.
+            </summary>
+        </member>
+        <member name="P:Sparrow.Reflection.IPropertyInfo.Identity">
+            <summary>
+            Gets the identity.
+            </summary>
+            <value>
+            The identity.
+            </value>
+        </member>
+        <member name="P:Sparrow.Reflection.IPropertyInfo.Definition">
+            <summary>
+            Gets the definition.
+            </summary>
+            <value>
+            The definition.
+            </value>
+        </member>
+        <member name="T:Sparrow.Reflection.ITypeInfo">
+            <summary>
+            Represents reflected type information.
+            </summary>
+        </member>
+        <member name="P:Sparrow.Reflection.ITypeInfo.Identity">
+            <summary>
+            Gets the type identity.
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.ITypeInfo.Definition">
+            <summary>
+            Gets the type Info.
+            </summary>
+            <value>The type Info.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.ITypeInfo.Methods">
+            <summary>
+            Gets the type's methods.
+            </summary>
+            <value>The type's methods.</value>
+        </member>
+        <member name="P:Sparrow.Reflection.ITypeInfo.Properties">
+            <summary>
+            Gets the type's properties.
+            </summary>
+            <value>The type's properties.</value>
+        </member>
+        <member name="T:Sparrow.Reflection.MethodDefinitionExtensions">
+            <summary>
+            Contains extensions for <see cref="T:Mono.Cecil.MethodDefinition"/>.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Reflection.MethodDefinitionExtensions.GetMethodSignatureString(Mono.Cecil.MethodReference)">
+            <summary>
+            Gets the method signature.
+            </summary>
+            <param name="method">The method.</param>
+            <returns>The method signature.</returns>
+        </member>
+        <member name="M:Sparrow.Reflection.MethodDefinitionExtensions.GetMethodSignature(Mono.Cecil.MethodReference)">
+            <summary>
+            Gets the method signature.
+            </summary>
+            <param name="method">The method.</param>
+            <returns>The method signature.</returns>
+        </member>
+        <member name="T:Sparrow.Reflection.TypeReferenceExtensions">
+            <summary>
+            Contains extension methods for <see cref="T:Mono.Cecil.TypeDefinition"/>.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Reflection.TypeReferenceExtensions.GetTypeName(Mono.Cecil.TypeReference)">
+            <summary>
+            Gets the name of the type.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The name of the type.</returns>
+        </member>
+        <member name="M:Sparrow.Reflection.TypeReferenceExtensions.GetTypeSignature(Mono.Cecil.TypeReference)">
+            <summary>
+            Gets a type description for the specified type.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>A type description for the specified type.</returns>
+        </member>
+        <member name="T:Sparrow.SparrowException">
+            <summary>
+            Represents errors that occur within Sparrow.
+            </summary>
+        </member>
+        <member name="M:Sparrow.SparrowException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.SparrowException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.CommentNodeParser`1">
+            <summary>
+            Represents a <see cref="T:System.Xml.XmlNode"/> parser.
+            </summary>
+            <typeparam name="T">The comment type.</typeparam>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.ICommentNodeParser">
+            <summary>
+            Represents a comment node parser.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.ICommentNodeParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns><c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.ICommentNodeParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>The parsed comment.</returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.CommentNodeParser`1.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns><c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.CommentNodeParser`1.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>The parsed comment.</returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.CommentNodeParser`1.Sparrow#Documentation#Xml#ICommentNodeParser#Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>The parsed comment.</returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.CommentParser">
+            <summary>
+            Responsible for parsing XML comments.
+            </summary>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.ICommentParser">
+            <summary>
+            Represents a comment parser.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.ICommentParser.Parse(System.Xml.XmlNode)">
+            <summary>
+            Parses the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>The parsed comment.</returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.CommentParser.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Xml.CommentParser"/> class.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.CommentParser.Parse(System.Xml.XmlNode)">
+            <summary>
+            Parses the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.AggregateParser`1">
+            <summary>
+            Base class for parsing child nodes.
+            </summary>
+            <typeparam name="T">The comment type.</typeparam>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.AggregateParser`1.ParseChildren(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses child nodes of the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>The parsed comments.</returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.CodeParser">
+            <summary>
+            Responsible for parsing <code>code</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.CodeParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.CodeParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.ExampleParser">
+            <summary>
+            Responsible for parsing <code>example</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ExampleParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ExampleParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.ExceptionParser">
+            <summary>
+            Responsible for parsing <code>exception</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ExceptionParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ExceptionParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.InlineCodeParser">
+            <summary>
+            Responsible for parsing <code>inlinecode</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.InlineCodeParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.InlineCodeParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.InlineTextParser">
+            <summary>
+            Responsible for parsing inline text comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.InlineTextParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.InlineTextParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.ParamParser">
+            <summary>
+            Responsible for parsing <code>param</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ParamParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ParamParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.ParamRefParser">
+            <summary>
+            Responsible for parsing <code>paramref</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ParamRefParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ParamRefParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.ParaParser">
+            <summary>
+            Responsible for parsing <code>para</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ParaParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ParaParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.PermissionParser">
+            <summary>
+            Responsible for parsing <code>permission</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.PermissionParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.PermissionParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.RemarksParser">
+            <summary>
+            Responsible for parsing <code>remarks</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.RemarksParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.RemarksParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.ReturnsParser">
+            <summary>
+            Responsible for parsing <code>returns</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ReturnsParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ReturnsParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.SeeAlsoParser">
+            <summary>
+            Responsible for parsing <code>seealso</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.SeeAlsoParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.SeeAlsoParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.SeeParser">
+            <summary>
+            Responsible for parsing <code>see</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.SeeParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.SeeParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.SummaryParser">
+            <summary>
+            Responsible for parsing <code>summary</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.SummaryParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.SummaryParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.TypeParamParser">
+            <summary>
+            Responsible for parsing <code>typeparam</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.TypeParamParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.TypeParamParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.TypeParamRefParser">
+            <summary>
+            Responsible for parsing <code>typeparamref</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.TypeParamRefParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.TypeParamRefParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.ValueParser">
+            <summary>
+            Responsible for parsing <code>value</code> comments.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ValueParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.ValueParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.Parsers.WhitespaceParser">
+            <summary>
+            Represents a whitespace parser.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.WhitespaceParser.CanParse(System.Xml.XmlNode)">
+            <summary>
+            Determines whether this instance can parse the specified node.
+            </summary>
+            <param name="node">The node.</param>
+            <returns>
+              <c>true</c> if this instance can parse the specified node; otherwise <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.Parsers.WhitespaceParser.Parse(Sparrow.Documentation.Xml.ICommentParser,System.Xml.XmlNode)">
+            <summary>
+            Parses the specified <see cref="T:System.Xml.XmlNode"/>.
+            </summary>
+            <param name="parser">The parser.</param>
+            <param name="node">The node.</param>
+            <returns>
+            The parsed comment.
+            </returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.XmlDocumentationMember">
+            <summary>
+            Represents an XML documentation member.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.XmlDocumentationMember.#ctor(System.String,System.Collections.Generic.IEnumerable{Sparrow.Documentation.Comment})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Xml.XmlDocumentationMember"/> class.
+            </summary>
+            <param name="identity">The identity.</param>
+            <param name="comments">The comments.</param>
+            <exception cref="T:System.ArgumentNullException">
+            identity
+            or
+            comments
+            </exception>
+            <exception cref="T:System.InvalidOperationException">Identity cannot be empty.</exception>
+        </member>
+        <member name="P:Sparrow.Documentation.Xml.XmlDocumentationMember.Identity">
+            <summary>
+            Gets the identity.
+            </summary>
+            <value>The identity.</value>
+        </member>
+        <member name="P:Sparrow.Documentation.Xml.XmlDocumentationMember.Comments">
+            <summary>
+            Gets the comments.
+            </summary>
+            <value>The comments.</value>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.XmlDocumentationParser">
+            <summary>
+            Responsible for parsing XML documentation.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.XmlDocumentationParser.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Xml.XmlDocumentationParser"/> class.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.XmlDocumentationParser.Parse(System.Collections.Generic.IEnumerable{System.Xml.XmlDocument})">
+            <summary>
+            Parses the specified documents.
+            </summary>
+            <param name="documents">The documents.</param>
+            <returns>An XMl documentation model.</returns>
+        </member>
+        <member name="T:Sparrow.Documentation.Xml.XmlDocumentationModel">
+            <summary>
+            Represents the XML documentation model.
+            </summary>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.XmlDocumentationModel.#ctor(System.Collections.Generic.IEnumerable{Sparrow.Documentation.Xml.XmlDocumentationMember})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Sparrow.Documentation.Xml.XmlDocumentationModel"/> class.
+            </summary>
+            <param name="members">The XML documentation members.</param>
+        </member>
+        <member name="M:Sparrow.Documentation.Xml.XmlDocumentationModel.Find(System.String)">
+            <summary>
+            Finds the member with the specified identity.
+            </summary>
+            <param name="identity">The identity.</param>
+            <returns>An <see cref="T:Sparrow.Documentation.Xml.XmlDocumentationMember"/> or <c>null</c> if not found.</returns>
+        </member>
+        <member name="P:Sparrow.Documentation.Xml.XmlDocumentationModel.Members">
+            <summary>
+            Gets the assemblies.
+            </summary>
+            <value>The assemblies.</value>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,1289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MobileModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=G:\WORKSPACE\CSHARP\DESKSTOP_APPLICATION\AppSuperviseur.V.1.2_AV\Ht.Ihsil.Rgph.App.Superviseur\Data\rgph_data-db.SQLITE" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_batiment">
+          <Key>
+            <PropertyRef Name="batimentId" />
+          </Key>
+          <Property Name="batimentId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qhabitation" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qrec" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qrgph" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qadresse" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qlocalite" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qb1Etat" Type="integer" />
+          <Property Name="qb2Type" Type="integer" />
+          <Property Name="qb3NombreEtage" Type="integer" />
+          <Property Name="qb4MateriauMur" Type="integer" />
+          <Property Name="qb5MateriauToit" Type="integer" />
+          <Property Name="qb6StatutOccupation" Type="integer" />
+          <Property Name="qb7Utilisation1" Type="integer" />
+          <Property Name="qb7Utilisation2" Type="integer" />
+          <Property Name="qb8NbreLogeCollectif" Type="integer" />
+          <Property Name="qb8NbreLogeIndividuel" Type="integer" />
+          <Property Name="statut" Type="integer" />
+          <Property Name="isValidated" Type="integer" />
+          <Property Name="isSynchroToAppSup" Type="integer" />
+          <Property Name="isSynchroToCentrale" Type="integer" />
+          <Property Name="dateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dateFinCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dureeSaisie" Type="integer" />
+          <Property Name="isFieldAllFilled" Type="integer" />
+          <Property Name="isContreEnqueteMade" Type="integer" />
+          <Property Name="latitude" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="longitude" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_categorie_question' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_categorie_question">
+          <Key>
+            <PropertyRef Name="codeCategorie" />
+            <PropertyRef Name="categorieQuestion" />
+          </Key>
+          <Property Name="codeCategorie" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="categorieQuestion" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="detailsCategorie" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="sousDetailsCategorie" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_commune' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_commune">
+          <Key>
+            <PropertyRef Name="ComId" />
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="ComId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="ComNom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="DeptId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_deces">
+          <Key>
+            <PropertyRef Name="decesId" />
+          </Key>
+          <Property Name="decesId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menageId" Type="integer" />
+          <Property Name="logeId" Type="integer" />
+          <Property Name="batimentId" Type="integer" />
+          <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qd2NoOrdre" Type="integer" />
+          <Property Name="qd2aSexe" Type="integer" />
+          <Property Name="qd2bAgeDecede" Type="integer" />
+          <Property Name="qd2c1CirconstanceDeces" Type="integer" />
+          <Property Name="qd2c2CauseDeces" Type="integer" />
+          <Property Name="statut" Type="integer" />
+          <Property Name="isFieldAllFilled" Type="integer" />
+          <Property Name="dateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dateFinCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dureeSaisie" Type="integer" />
+          <Property Name="isContreEnqueteMade" Type="integer" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_departement' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_departement">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="DeptNom" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_domaine_etude">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="NomDomaine" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="tbl_emigre">
+          <Key>
+            <PropertyRef Name="emigreId" />
+          </Key>
+          <Property Name="emigreId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menageId" Type="integer" />
+          <Property Name="logeId" Type="integer" />
+          <Property Name="batimentId" Type="integer" />
+          <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qn1numeroOrdre" Type="integer" />
+          <Property Name="qn2aNomComplet" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qn2bResidenceActuelle" Type="integer" />
+          <Property Name="qn2cSexe" Type="integer" />
+          <Property Name="qn2dAgeAuMomentDepart" Type="integer" />
+          <Property Name="qn2eNiveauEtudeAuMomentDepart" Type="integer" />
+          <Property Name="qn2fDernierPaysResidence" Type="integer" />
+          <Property Name="statut" Type="integer" />
+          <Property Name="isFieldAllFilled" Type="integer" />
+          <Property Name="dateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dateFinCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dureeSaisie" Type="integer" />
+        </EntityType>
+        <EntityType Name="tbl_individu">
+          <Key>
+            <PropertyRef Name="individuId" />
+          </Key>
+          <Property Name="individuId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="menageId" Type="integer" />
+          <Property Name="logeId" Type="integer" />
+          <Property Name="batimentId" Type="integer" />
+          <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp1NoOrdre" Type="integer" />
+          <Property Name="Q2Nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Q3Prenom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Q6LienDeParente" Type="integer" />
+          <Property Name="Q4Sexe" Type="integer" />
+          <Property Name="Q5bAge" Type="integer" />
+          <Property Name="qp6religion" Type="integer" />
+          <Property Name="qp6AutreReligion" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp7Nationalite" Type="integer" />
+          <Property Name="qp7PaysNationalite" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp8MereEncoreVivante" Type="integer" />
+          <Property Name="qp9EstPlusAge" Type="integer" />
+          <Property Name="qp10LieuNaissance" Type="integer" />
+          <Property Name="qp10CommuneNaissance" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp10LieuNaissanceVqse" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp10PaysNaissance" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp11PeriodeResidence" Type="integer" />
+          <Property Name="qp12DomicileAvantRecensement" Type="integer" />
+          <Property Name="qp12DomicileAvantRecensementComm" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp12DomicileAvantRecensementVqse" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qp12DomicileAvantRecensementPays" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qe1EstAlphabetise" Type="integer" />
+          <Property Name="qe2FreqentationScolaire" Type="integer" />
+          <Property Name="qe3typeEtablissement" Type="integer" />
+          <Property Name="qe4aNiveauEtude" Type="integer" />
+          <Property Name="qe4bDerniereClasseEtude" Type="integer" />
+          <Property Name="qe5DiplomeUniversitaire" Type="integer" />
+          <Property Name="qe6DomaineEtudeUniversitaire" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qe7FormationProf" Type="integer" />
+          <Property Name="qe8DomaineFormationProf" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qaf1aHandicapVoir" Type="integer" />
+          <Property Name="qaf1bUtiliserAppareilVoir" Type="integer" />
+          <Property Name="qaf2aHandicapEntendre" Type="integer" />
+          <Property Name="qaf2bUtiliserAppareilEntendre" Type="integer" />
+          <Property Name="qaf3aHandicapMarcher" Type="integer" />
+          <Property Name="qaf3bUtiliserAppareilMarcher" Type="integer" />
+          <Property Name="qaf4aHandicapSouvenir" Type="integer" />
+          <Property Name="qaf5aHandicapPourSeSoigner" Type="integer" />
+          <Property Name="qaf6aHandicapCommuniquer" Type="integer" />
+          <Property Name="qaf6bUtiliserAppareilCommuniquer" Type="integer" />
+          <Property Name="qt1PossessionTelCellulaire" Type="integer" />
+          <Property Name="qt2UtilisationInternet" Type="integer" />
+          <Property Name="qem1DejaVivreAutrePays" Type="integer" />
+          <Property Name="qem1AutrePays" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qem2MoisRetour" Type="integer" />
+          <Property Name="qem2AnnéeRetour" Type="integer" />
+          <Property Name="qsm1StatutMatrimonial" Type="integer" />
+          <Property Name="qa1ActEconomiqueDerniereSemaine" Type="integer" />
+          <Property Name="qa2ActAvoirDemele1" Type="integer" />
+          <Property Name="qa2ActDomestique2" Type="integer" />
+          <Property Name="qa2ActCultivateur3" Type="integer" />
+          <Property Name="qa2ActAiderParent4" Type="integer" />
+          <Property Name="qa2ActAutre5" Type="integer" />
+          <Property Name="qa3StatutEmploie" Type="integer" />
+          <Property Name="qa4SecteurInstitutionnel" Type="integer" />
+          <Property Name="qa5TypeBienProduitParEntreprise" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qa6LieuActDerniereSemaine" Type="integer" />
+          <Property Name="qa7FoncTravail" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qa8EntreprendreDemarcheTravail" Type="integer" />
+          <Property Name="qa9VouloirTravailler" Type="integer" />
+          <Property Name="qa10DisponibilitePourTravail" Type="integer" />
+          <Property Name="qa11RecevoirTransfertArgent" Type="integer" />
+          <Property Name="qf1aNbreEnfantNeVivantM" Type="integer" />
+          <Property Name="qf2bNbreEnfantNeVivantF" Type="integer" />
+          <Property Name="qf2aNbreEnfantVivantM" Type="integer" />
+          <Property Name="qf2bNbreEnfantVivantF" Type="integer" />
+          <Property Name="qf3aNbreEnfantVivantMenageM" Type="integer" />
+          <Property Name="qf3bNbreEnfantVivantMenageF" Type="integer" />
+          <Property Name="qf3DernierEnfantJour" Type="integer" />
+          <Property Name="qf3DernierEnfantMois" Type="integer" />
+          <Property Name="qf3DernierEnfantAnnee" Type="integer" />
+          <Property Name="qf4SexeDernierVivant" Type="integer" />
+          <Property Name="qf5DENeVivantVit" Type="integer" />
+          <Property Name="statut" Type="integer" />
+          <Property Name="isFieldAllFilled" Type="integer" />
+          <Property Name="dateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dateFinCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dureeSaisie" Type="integer" />
+          <Property Name="isContreEnqueteMade" Type="integer" />
+        </EntityType>
+        <EntityType Name="tbl_logement">
+          <Key>
+            <PropertyRef Name="logeId" />
+          </Key>
+          <Property Name="logeId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="batimentId" Type="integer" />
+          <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qlCategLogement" Type="integer" />
+          <Property Name="qlcTypeLogement" Type="integer" />
+          <Property Name="qllc2bTotalGarcon" Type="integer" />
+          <Property Name="qlc2bTotalFille" Type="integer" />
+          <Property Name="qlcTotalIndividus" Type="integer" />
+          <Property Name="qlin1NumeroOrdre" Type="integer" />
+          <Property Name="qlin2StatutOccupation" Type="integer" />
+          <Property Name="qlin3ExistenceLogement" Type="integer" />
+          <Property Name="qlin4TypeLogement" Type="integer" />
+          <Property Name="qlin5MateriauSol" Type="integer" />
+          <Property Name="qlin6ServiceElectricite" Type="integer" />
+          <Property Name="qlin7ServiceEau" Type="integer" />
+          <Property Name="qlin8QualiteToillettes" Type="integer" />
+          <Property Name="Qlin6NombrePiece" Type="integer" />
+          <Property Name="Qlin7NbreChambreACoucher" Type="integer" />
+          <Property Name="qlin11NbreIndividuVivant" Type="integer" />
+          <Property Name="Qlin8NbreIndividuDepense" Type="integer" />
+          <Property Name="Qlin9NbreTotalMenage" Type="integer" />
+          <Property Name="statut" Type="integer" />
+          <Property Name="isValidated" Type="integer" />
+          <Property Name="dateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dateFinCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dureeSaisie" Type="integer" />
+          <Property Name="isFieldAllFilled" Type="integer" />
+          <Property Name="isContreEnqueteMade" Type="integer" />
+          <Property Name="nbrTentative" Type="integer" />
+        </EntityType>
+        <EntityType Name="tbl_menage">
+          <Key>
+            <PropertyRef Name="menageId" />
+          </Key>
+          <Property Name="menageId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="logeId" Type="integer" />
+          <Property Name="batimentId" Type="integer" />
+          <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qm1NoOrdre" Type="integer" />
+          <Property Name="qm2ModeJouissance" Type="integer" />
+          <Property Name="qm3ModeObtentionLoge" Type="integer" />
+          <Property Name="qm4aModeAprovEauABoire" Type="integer" />
+          <Property Name="qm4aModeAprovEauAUsageCourant" Type="integer" />
+          <Property Name="qm5SrcEnergieCuisson1" Type="integer" />
+          <Property Name="qm5SrcEnergieCuisson2" Type="integer" />
+          <Property Name="qm6TypeEclairage" Type="integer" />
+          <Property Name="qm7ModeEvacDechet" Type="integer" />
+          <Property Name="qm8NbreRadio1" Type="integer" />
+          <Property Name="qm8NbreTelevision2" Type="integer" />
+          <Property Name="qm8NbreRefrigerateur3" Type="integer" />
+          <Property Name="qm8NbreFouElectrique4" Type="integer" />
+          <Property Name="qm8NbreOrdinateur5" Type="integer" />
+          <Property Name="qm8NbreMotoBicyclette6" Type="integer" />
+          <Property Name="qm8NbreVoitureMachine7" Type="integer" />
+          <Property Name="qm8NbreBateau8" Type="integer" />
+          <Property Name="qm8NbrePanneauGeneratrice9" Type="integer" />
+          <Property Name="qm8NbreMilletChevalBourique10" Type="integer" />
+          <Property Name="qm8NbreBoeufVache11" Type="integer" />
+          <Property Name="qm8NbreCochonCabrit12" Type="integer" />
+          <Property Name="qm8NbreBeteVolaille13" Type="integer" />
+          <Property Name="qm9AvoirPersDomestique" Type="integer" />
+          <Property Name="qm9TotalDomestiqueFille" Type="integer" />
+          <Property Name="qm9TotalDomestiqueGarcon" Type="integer" />
+          <Property Name="qm10TotalIndividuVivant" Type="integer" />
+          <Property Name="qm11Emigration" Type="integer" />
+          <Property Name="qm11NbreEmigre" Type="integer" />
+          <Property Name="qm12Deces" Type="integer" />
+          <Property Name="qm12NbreDecede" Type="integer" />
+          <Property Name="statut" Type="integer" />
+          <Property Name="isValidated" Type="integer" />
+          <Property Name="dateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dateFinCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dureeSaisie" Type="integer" />
+          <Property Name="isFieldAllFilled" Type="integer" />
+          <Property Name="isContreEnqueteMade" Type="integer" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_module' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_module">
+          <Key>
+            <PropertyRef Name="codeModule" />
+          </Key>
+          <Property Name="codeModule" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="nomModule" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="typeModule" Type="integer" />
+          <Property Name="description" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="estActif" Type="integer" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_pays' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_pays">
+          <Key>
+            <PropertyRef Name="CodePays" />
+          </Key>
+          <Property Name="CodePays" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="NomPays" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <EntityType Name="tbl_personnel">
+          <Key>
+            <PropertyRef Name="persId" />
+          </Key>
+          <Property Name="persId" Type="integer" Nullable="false" />
+          <Property Name="sdeId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="nom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="prenom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="sexe" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="nomUtilisateur" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="motDePasse" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="email" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="deptId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="comId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="vqseId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="estActif" Type="integer" />
+          <Property Name="ProfileId" Type="integer" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_question' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_question">
+          <Key>
+            <PropertyRef Name="codeQuestion" />
+          </Key>
+          <Property Name="codeQuestion" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="libelle" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="detailsQuestion" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="IndicationsQuestion" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="codeCategorie" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="nomChamps" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="typeQuestion" Type="integer" />
+          <Property Name="caratereAccepte" Type="integer" />
+          <Property Name="nbreValeurMinimal" Type="integer" />
+          <Property Name="nbreCaratereMaximal" Type="integer" />
+          <Property Name="contrainteSautChampsValeur" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="estSautReponse" Type="integer" />
+          <Property Name="qPrecedent" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qSuivant" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_question_module' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_question_module">
+          <Key>
+            <PropertyRef Name="codeModule" />
+            <PropertyRef Name="codeQuestion" />
+          </Key>
+          <Property Name="ordre" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="codeModule" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="codeQuestion" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="estDebut" Type="integer" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_question_reponse' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_question_reponse">
+          <Key>
+            <PropertyRef Name="codeQuestion" />
+            <PropertyRef Name="codeUniqueReponse" />
+            <PropertyRef Name="codeReponse" />
+          </Key>
+          <Property Name="codeQuestion" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="codeUniqueReponse" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="codeReponse" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="libelleReponse" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="estEnfant" Type="integer" />
+          <Property Name="avoirEnfant" Type="integer" />
+          <Property Name="codeParent" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qPrecedent" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="qSuivant" Type="nvarchar" MaxLength="2147483647" />
+        </EntityType>
+        <!--Erreurs détectées durant la génération :
+avertissement 6002: La table/vue 'main.tbl_vqse' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
+        <EntityType Name="tbl_vqse">
+          <Key>
+            <PropertyRef Name="VqseId" />
+            <PropertyRef Name="ComId" />
+          </Key>
+          <Property Name="VqseId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="VqseNom" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="ComId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="MobileModelStoreContainer">
+          <EntitySet Name="tbl_batiment" EntityType="Self.tbl_batiment" store:Type="Tables" />
+          <EntitySet Name="tbl_deces" EntityType="Self.tbl_deces" store:Type="Tables" />
+          <EntitySet Name="tbl_emigre" EntityType="Self.tbl_emigre" store:Type="Tables" />
+          <EntitySet Name="tbl_individu" EntityType="Self.tbl_individu" store:Type="Tables" />
+          <EntitySet Name="tbl_logement" EntityType="Self.tbl_logement" store:Type="Tables" />
+          <EntitySet Name="tbl_menage" EntityType="Self.tbl_menage" store:Type="Tables" />
+          <EntitySet Name="tbl_personnel" EntityType="Self.tbl_personnel" store:Type="Tables" />
+          <EntitySet Name="tbl_categorie_question" EntityType="Self.tbl_categorie_question" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_categorie_question].[codeCategorie] AS [codeCategorie], 
+[tbl_categorie_question].[categorieQuestion] AS [categorieQuestion], 
+[tbl_categorie_question].[detailsCategorie] AS [detailsCategorie], 
+[tbl_categorie_question].[sousDetailsCategorie] AS [sousDetailsCategorie]
+FROM [tbl_categorie_question] AS [tbl_categorie_question]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_commune" EntityType="Self.tbl_commune" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_commune].[ComId] AS [ComId], 
+[tbl_commune].[ComNom] AS [ComNom], 
+[tbl_commune].[DeptId] AS [DeptId]
+FROM [tbl_commune] AS [tbl_commune]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_departement" EntityType="Self.tbl_departement" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_departement].[DeptId] AS [DeptId], 
+[tbl_departement].[DeptNom] AS [DeptNom]
+FROM [tbl_departement] AS [tbl_departement]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_domaine_etude" EntityType="Self.tbl_domaine_etude" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_domaine_etude].[Code] AS [Code], 
+[tbl_domaine_etude].[NomDomaine] AS [NomDomaine]
+FROM [tbl_domaine_etude] AS [tbl_domaine_etude]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_module" EntityType="Self.tbl_module" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_module].[codeModule] AS [codeModule], 
+[tbl_module].[nomModule] AS [nomModule], 
+[tbl_module].[typeModule] AS [typeModule], 
+[tbl_module].[description] AS [description], 
+[tbl_module].[estActif] AS [estActif]
+FROM [tbl_module] AS [tbl_module]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_pays" EntityType="Self.tbl_pays" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_pays].[CodePays] AS [CodePays], 
+[tbl_pays].[NomPays] AS [NomPays]
+FROM [tbl_pays] AS [tbl_pays]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_question" EntityType="Self.tbl_question" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_question].[codeQuestion] AS [codeQuestion], 
+[tbl_question].[libelle] AS [libelle], 
+[tbl_question].[detailsQuestion] AS [detailsQuestion], 
+[tbl_question].[IndicationsQuestion] AS [IndicationsQuestion], 
+[tbl_question].[codeCategorie] AS [codeCategorie], 
+[tbl_question].[nomChamps] AS [nomChamps], 
+[tbl_question].[typeQuestion] AS [typeQuestion], 
+[tbl_question].[caratereAccepte] AS [caratereAccepte], 
+[tbl_question].[nbreValeurMinimal] AS [nbreValeurMinimal], 
+[tbl_question].[nbreCaratereMaximal] AS [nbreCaratereMaximal], 
+[tbl_question].[contrainteSautChampsValeur] AS [contrainteSautChampsValeur], 
+[tbl_question].[estSautReponse] AS [estSautReponse], 
+[tbl_question].[qPrecedent] AS [qPrecedent], 
+[tbl_question].[qSuivant] AS [qSuivant]
+FROM [tbl_question] AS [tbl_question]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_question_module" EntityType="Self.tbl_question_module" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_question_module].[ordre] AS [ordre], 
+[tbl_question_module].[codeModule] AS [codeModule], 
+[tbl_question_module].[codeQuestion] AS [codeQuestion], 
+[tbl_question_module].[estDebut] AS [estDebut]
+FROM [tbl_question_module] AS [tbl_question_module]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_question_reponse" EntityType="Self.tbl_question_reponse" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_question_reponse].[codeQuestion] AS [codeQuestion], 
+[tbl_question_reponse].[codeUniqueReponse] AS [codeUniqueReponse], 
+[tbl_question_reponse].[codeReponse] AS [codeReponse], 
+[tbl_question_reponse].[libelleReponse] AS [libelleReponse], 
+[tbl_question_reponse].[estEnfant] AS [estEnfant], 
+[tbl_question_reponse].[avoirEnfant] AS [avoirEnfant], 
+[tbl_question_reponse].[codeParent] AS [codeParent], 
+[tbl_question_reponse].[qPrecedent] AS [qPrecedent], 
+[tbl_question_reponse].[qSuivant] AS [qSuivant]
+FROM [tbl_question_reponse] AS [tbl_question_reponse]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tbl_vqse" EntityType="Self.tbl_vqse" store:Type="Tables">
+            <DefiningQuery>SELECT 
+[tbl_vqse].[VqseId] AS [VqseId], 
+[tbl_vqse].[VqseNom] AS [VqseNom], 
+[tbl_vqse].[ComId] AS [ComId]
+FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MobileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tbl_batiment">
+          <Key>
+            <PropertyRef Name="batimentId" />
+          </Key>
+          <Property Name="batimentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qhabitation" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qrec" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qrgph" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qadresse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qlocalite" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qb1Etat" Type="Int64" />
+          <Property Name="qb2Type" Type="Int64" />
+          <Property Name="qb3NombreEtage" Type="Int64" />
+          <Property Name="qb4MateriauMur" Type="Int64" />
+          <Property Name="qb5MateriauToit" Type="Int64" />
+          <Property Name="qb6StatutOccupation" Type="Int64" />
+          <Property Name="qb7Utilisation1" Type="Int64" />
+          <Property Name="qb7Utilisation2" Type="Int64" />
+          <Property Name="qb8NbreLogeCollectif" Type="Int64" />
+          <Property Name="qb8NbreLogeIndividuel" Type="Int64" />
+          <Property Name="statut" Type="Int64" />
+          <Property Name="isValidated" Type="Int64" />
+          <Property Name="isSynchroToAppSup" Type="Int64" />
+          <Property Name="isSynchroToCentrale" Type="Int64" />
+          <Property Name="dateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dureeSaisie" Type="Int64" />
+          <Property Name="isFieldAllFilled" Type="Int64" />
+          <Property Name="isContreEnqueteMade" Type="Int64" />
+          <Property Name="latitude" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="longitude" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_deces">
+          <Key>
+            <PropertyRef Name="decesId" />
+          </Key>
+          <Property Name="decesId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menageId" Type="Int64" />
+          <Property Name="logeId" Type="Int64" />
+          <Property Name="batimentId" Type="Int64" />
+          <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qd2NoOrdre" Type="Int64" />
+          <Property Name="qd2aSexe" Type="Int64" />
+          <Property Name="qd2bAgeDecede" Type="Int64" />
+          <Property Name="qd2c1CirconstanceDeces" Type="Int64" />
+          <Property Name="qd2c2CauseDeces" Type="Int64" />
+          <Property Name="statut" Type="Int64" />
+          <Property Name="isFieldAllFilled" Type="Int64" />
+          <Property Name="dateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dureeSaisie" Type="Int64" />
+          <Property Name="isContreEnqueteMade" Type="Int64" />
+        </EntityType>
+        <EntityType Name="tbl_emigre">
+          <Key>
+            <PropertyRef Name="emigreId" />
+          </Key>
+          <Property Name="emigreId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menageId" Type="Int64" />
+          <Property Name="logeId" Type="Int64" />
+          <Property Name="batimentId" Type="Int64" />
+          <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qn1numeroOrdre" Type="Int64" />
+          <Property Name="qn2aNomComplet" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qn2bResidenceActuelle" Type="Int64" />
+          <Property Name="qn2cSexe" Type="Int64" />
+          <Property Name="qn2dAgeAuMomentDepart" Type="Int64" />
+          <Property Name="qn2eNiveauEtudeAuMomentDepart" Type="Int64" />
+          <Property Name="qn2fDernierPaysResidence" Type="Int64" />
+          <Property Name="statut" Type="Int64" />
+          <Property Name="isFieldAllFilled" Type="Int64" />
+          <Property Name="dateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dureeSaisie" Type="Int64" />
+        </EntityType>
+        <EntityType Name="tbl_individu">
+          <Key>
+            <PropertyRef Name="individuId" />
+          </Key>
+          <Property Name="individuId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="menageId" Type="Int64" />
+          <Property Name="logeId" Type="Int64" />
+          <Property Name="batimentId" Type="Int64" />
+          <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp1NoOrdre" Type="Int64" />
+          <Property Name="Q2Nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Q3Prenom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Q6LienDeParente" Type="Int64" />
+          <Property Name="Q4Sexe" Type="Int64" />
+          <Property Name="Q5bAge" Type="Int64" />
+          <Property Name="qp6religion" Type="Int64" />
+          <Property Name="qp6AutreReligion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp7Nationalite" Type="Int64" />
+          <Property Name="qp7PaysNationalite" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp8MereEncoreVivante" Type="Int64" />
+          <Property Name="qp9EstPlusAge" Type="Int64" />
+          <Property Name="qp10LieuNaissance" Type="Int64" />
+          <Property Name="qp10CommuneNaissance" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp10LieuNaissanceVqse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp10PaysNaissance" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp11PeriodeResidence" Type="Int64" />
+          <Property Name="qp12DomicileAvantRecensement" Type="Int64" />
+          <Property Name="qp12DomicileAvantRecensementComm" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp12DomicileAvantRecensementVqse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qp12DomicileAvantRecensementPays" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qe1EstAlphabetise" Type="Int64" />
+          <Property Name="qe2FreqentationScolaire" Type="Int64" />
+          <Property Name="qe3typeEtablissement" Type="Int64" />
+          <Property Name="qe4aNiveauEtude" Type="Int64" />
+          <Property Name="qe4bDerniereClasseEtude" Type="Int64" />
+          <Property Name="qe5DiplomeUniversitaire" Type="Int64" />
+          <Property Name="qe6DomaineEtudeUniversitaire" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qe7FormationProf" Type="Int64" />
+          <Property Name="qe8DomaineFormationProf" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qaf1aHandicapVoir" Type="Int64" />
+          <Property Name="qaf1bUtiliserAppareilVoir" Type="Int64" />
+          <Property Name="qaf2aHandicapEntendre" Type="Int64" />
+          <Property Name="qaf2bUtiliserAppareilEntendre" Type="Int64" />
+          <Property Name="qaf3aHandicapMarcher" Type="Int64" />
+          <Property Name="qaf3bUtiliserAppareilMarcher" Type="Int64" />
+          <Property Name="qaf4aHandicapSouvenir" Type="Int64" />
+          <Property Name="qaf5aHandicapPourSeSoigner" Type="Int64" />
+          <Property Name="qaf6aHandicapCommuniquer" Type="Int64" />
+          <Property Name="qaf6bUtiliserAppareilCommuniquer" Type="Int64" />
+          <Property Name="qt1PossessionTelCellulaire" Type="Int64" />
+          <Property Name="qt2UtilisationInternet" Type="Int64" />
+          <Property Name="qem1DejaVivreAutrePays" Type="Int64" />
+          <Property Name="qem1AutrePays" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qem2MoisRetour" Type="Int64" />
+          <Property Name="qem2AnnéeRetour" Type="Int64" />
+          <Property Name="qsm1StatutMatrimonial" Type="Int64" />
+          <Property Name="qa1ActEconomiqueDerniereSemaine" Type="Int64" />
+          <Property Name="qa2ActAvoirDemele1" Type="Int64" />
+          <Property Name="qa2ActDomestique2" Type="Int64" />
+          <Property Name="qa2ActCultivateur3" Type="Int64" />
+          <Property Name="qa2ActAiderParent4" Type="Int64" />
+          <Property Name="qa2ActAutre5" Type="Int64" />
+          <Property Name="qa3StatutEmploie" Type="Int64" />
+          <Property Name="qa4SecteurInstitutionnel" Type="Int64" />
+          <Property Name="qa5TypeBienProduitParEntreprise" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qa6LieuActDerniereSemaine" Type="Int64" />
+          <Property Name="qa7FoncTravail" Type="String" />
+          <Property Name="qa8EntreprendreDemarcheTravail" Type="Int64" />
+          <Property Name="qa9VouloirTravailler" Type="Int64" />
+          <Property Name="qa10DisponibilitePourTravail" Type="Int64" />
+          <Property Name="qa11RecevoirTransfertArgent" Type="Int64" />
+          <Property Name="qf1aNbreEnfantNeVivantM" Type="Int64" />
+          <Property Name="qf2bNbreEnfantNeVivantF" Type="Int64" />
+          <Property Name="qf2aNbreEnfantVivantM" Type="Int64" />
+          <Property Name="qf2bNbreEnfantVivantF" Type="Int64" />
+          <Property Name="qf3aNbreEnfantVivantMenageM" Type="Int64" />
+          <Property Name="qf3bNbreEnfantVivantMenageF" Type="Int64" />
+          <Property Name="qf3DernierEnfantJour" Type="Int64" />
+          <Property Name="qf3DernierEnfantMois" Type="Int64" />
+          <Property Name="qf3DernierEnfantAnnee" Type="Int64" />
+          <Property Name="qf4SexeDernierVivant" Type="Int64" />
+          <Property Name="qf5DENeVivantVit" Type="Int64" />
+          <Property Name="statut" Type="Int64" />
+          <Property Name="isFieldAllFilled" Type="Int64" />
+          <Property Name="dateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dureeSaisie" Type="Int64" />
+          <Property Name="isContreEnqueteMade" Type="Int64" />
+        </EntityType>
+        <EntityType Name="tbl_logement">
+          <Key>
+            <PropertyRef Name="logeId" />
+          </Key>
+          <Property Name="logeId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="batimentId" Type="Int64" />
+          <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qlCategLogement" Type="Int64" />
+          <Property Name="qlcTypeLogement" Type="Int64" />
+          <Property Name="qllc2bTotalGarcon" Type="Int64" />
+          <Property Name="qlc2bTotalFille" Type="Int64" />
+          <Property Name="qlcTotalIndividus" Type="Int64" />
+          <Property Name="qlin1NumeroOrdre" Type="Int64" />
+          <Property Name="qlin2StatutOccupation" Type="Int64" />
+          <Property Name="qlin3ExistenceLogement" Type="Int64" />
+          <Property Name="qlin4TypeLogement" Type="Int64" />
+          <Property Name="qlin5MateriauSol" Type="Int64" />
+          <Property Name="qlin6ServiceElectricite" Type="Int64" />
+          <Property Name="qlin7ServiceEau" Type="Int64" />
+          <Property Name="qlin8QualiteToillettes" Type="Int64" />
+          <Property Name="Qlin6NombrePiece" Type="Int64" />
+          <Property Name="Qlin7NbreChambreACoucher" Type="Int64" />
+          <Property Name="qlin11NbreIndividuVivant" Type="Int64" />
+          <Property Name="Qlin8NbreIndividuDepense" Type="Int64" />
+          <Property Name="Qlin9NbreTotalMenage" Type="Int64" />
+          <Property Name="statut" Type="Int64" />
+          <Property Name="isValidated" Type="Int64" />
+          <Property Name="dateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dureeSaisie" Type="Int64" />
+          <Property Name="isFieldAllFilled" Type="Int64" />
+          <Property Name="isContreEnqueteMade" Type="Int64" />
+          <Property Name="nbrTentative" Type="Int64" />
+        </EntityType>
+        <EntityType Name="tbl_menage">
+          <Key>
+            <PropertyRef Name="menageId" />
+          </Key>
+          <Property Name="menageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="logeId" Type="Int64" />
+          <Property Name="batimentId" Type="Int64" />
+          <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qm1NoOrdre" Type="Int64" />
+          <Property Name="qm2ModeJouissance" Type="Int64" />
+          <Property Name="qm3ModeObtentionLoge" Type="Int64" />
+          <Property Name="qm4aModeAprovEauABoire" Type="Int64" />
+          <Property Name="qm4aModeAprovEauAUsageCourant" Type="Int64" />
+          <Property Name="qm5SrcEnergieCuisson1" Type="Int64" />
+          <Property Name="qm5SrcEnergieCuisson2" Type="Int64" />
+          <Property Name="qm6TypeEclairage" Type="Int64" />
+          <Property Name="qm7ModeEvacDechet" Type="Int64" />
+          <Property Name="qm8NbreRadio1" Type="Int64" />
+          <Property Name="qm8NbreTelevision2" Type="Int64" />
+          <Property Name="qm8NbreRefrigerateur3" Type="Int64" />
+          <Property Name="qm8NbreFouElectrique4" Type="Int64" />
+          <Property Name="qm8NbreOrdinateur5" Type="Int64" />
+          <Property Name="qm8NbreMotoBicyclette6" Type="Int64" />
+          <Property Name="qm8NbreVoitureMachine7" Type="Int64" />
+          <Property Name="qm8NbreBateau8" Type="Int64" />
+          <Property Name="qm8NbrePanneauGeneratrice9" Type="Int64" />
+          <Property Name="qm8NbreMilletChevalBourique10" Type="Int64" />
+          <Property Name="qm8NbreBoeufVache11" Type="Int64" />
+          <Property Name="qm8NbreCochonCabrit12" Type="Int64" />
+          <Property Name="qm8NbreBeteVolaille13" Type="Int64" />
+          <Property Name="qm9AvoirPersDomestique" Type="Int64" />
+          <Property Name="qm9TotalDomestiqueFille" Type="Int64" />
+          <Property Name="qm9TotalDomestiqueGarcon" Type="Int64" />
+          <Property Name="qm10TotalIndividuVivant" Type="Int64" />
+          <Property Name="qm11Emigration" Type="Int64" />
+          <Property Name="qm11NbreEmigre" Type="Int64" />
+          <Property Name="qm12Deces" Type="Int64" />
+          <Property Name="qm12NbreDecede" Type="Int64" />
+          <Property Name="statut" Type="Int64" />
+          <Property Name="isValidated" Type="Int64" />
+          <Property Name="dateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dureeSaisie" Type="Int64" />
+          <Property Name="isFieldAllFilled" Type="Int64" />
+          <Property Name="isContreEnqueteMade" Type="Int64" />
+        </EntityType>
+        <EntityType Name="tbl_personnel">
+          <Key>
+            <PropertyRef Name="persId" />
+          </Key>
+          <Property Name="persId" Type="Int64" Nullable="false" />
+          <Property Name="sdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="prenom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="sexe" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="nomUtilisateur" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="motDePasse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="deptId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="comId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="vqseId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="estActif" Type="Int64" />
+          <Property Name="ProfileId" Type="Int64" />
+        </EntityType>
+        <EntityType Name="tbl_categorie_question">
+          <Key>
+            <PropertyRef Name="codeCategorie" />
+            <PropertyRef Name="categorieQuestion" />
+          </Key>
+          <Property Name="codeCategorie" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="categorieQuestion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="detailsCategorie" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="sousDetailsCategorie" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_commune">
+          <Key>
+            <PropertyRef Name="ComId" />
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="ComId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ComNom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="DeptId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_departement">
+          <Key>
+            <PropertyRef Name="DeptId" />
+          </Key>
+          <Property Name="DeptId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DeptNom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_domaine_etude">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NomDomaine" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_module">
+          <Key>
+            <PropertyRef Name="codeModule" />
+          </Key>
+          <Property Name="codeModule" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nomModule" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="typeModule" Type="Int64" />
+          <Property Name="description" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="estActif" Type="Int64" />
+        </EntityType>
+        <EntityType Name="tbl_pays">
+          <Key>
+            <PropertyRef Name="CodePays" />
+          </Key>
+          <Property Name="CodePays" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NomPays" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_question">
+          <Key>
+            <PropertyRef Name="codeQuestion" />
+          </Key>
+          <Property Name="codeQuestion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="libelle" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="detailsQuestion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="IndicationsQuestion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="codeCategorie" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="nomChamps" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="typeQuestion" Type="Int64" />
+          <Property Name="caratereAccepte" Type="Int64" />
+          <Property Name="nbreValeurMinimal" Type="Int64" />
+          <Property Name="nbreCaratereMaximal" Type="Int64" />
+          <Property Name="contrainteSautChampsValeur" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="estSautReponse" Type="Int64" />
+          <Property Name="qPrecedent" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qSuivant" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_question_module">
+          <Key>
+            <PropertyRef Name="codeModule" />
+            <PropertyRef Name="codeQuestion" />
+          </Key>
+          <Property Name="ordre" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="codeModule" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="codeQuestion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="estDebut" Type="Int64" />
+        </EntityType>
+        <EntityType Name="tbl_question_reponse">
+          <Key>
+            <PropertyRef Name="codeQuestion" />
+            <PropertyRef Name="codeUniqueReponse" />
+            <PropertyRef Name="codeReponse" />
+          </Key>
+          <Property Name="codeQuestion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="codeUniqueReponse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="codeReponse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="libelleReponse" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="estEnfant" Type="Int64" />
+          <Property Name="avoirEnfant" Type="Int64" />
+          <Property Name="codeParent" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qPrecedent" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="qSuivant" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tbl_vqse">
+          <Key>
+            <PropertyRef Name="VqseId" />
+            <PropertyRef Name="ComId" />
+          </Key>
+          <Property Name="VqseId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="VqseNom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="ComId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="MobileContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tbl_batiment" EntityType="Self.tbl_batiment" />
+          <EntitySet Name="tbl_deces" EntityType="Self.tbl_deces" />
+          <EntitySet Name="tbl_emigre" EntityType="Self.tbl_emigre" />
+          <EntitySet Name="tbl_individu" EntityType="Self.tbl_individu" />
+          <EntitySet Name="tbl_logement" EntityType="Self.tbl_logement" />
+          <EntitySet Name="tbl_menage" EntityType="Self.tbl_menage" />
+          <EntitySet Name="tbl_personnel" EntityType="Self.tbl_personnel" />
+          <EntitySet Name="tbl_categorie_question" EntityType="Self.tbl_categorie_question" />
+          <EntitySet Name="tbl_commune" EntityType="Self.tbl_commune" />
+          <EntitySet Name="tbl_departement" EntityType="Self.tbl_departement" />
+          <EntitySet Name="tbl_domaine_etude" EntityType="Self.tbl_domaine_etude" />
+          <EntitySet Name="tbl_module" EntityType="Self.tbl_module" />
+          <EntitySet Name="tbl_pays" EntityType="Self.tbl_pays" />
+          <EntitySet Name="tbl_question" EntityType="Self.tbl_question" />
+          <EntitySet Name="tbl_question_module" EntityType="Self.tbl_question_module" />
+          <EntitySet Name="tbl_question_reponse" EntityType="Self.tbl_question_reponse" />
+          <EntitySet Name="tbl_vqse" EntityType="Self.tbl_vqse" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MobileModelStoreContainer" CdmEntityContainer="MobileContext">
+          <EntitySetMapping Name="tbl_batiment">
+            <EntityTypeMapping TypeName="MobileModel.tbl_batiment">
+              <MappingFragment StoreEntitySet="tbl_batiment">
+                <ScalarProperty Name="batimentId" ColumnName="batimentId" />
+                <ScalarProperty Name="sdeId" ColumnName="sdeId" />
+                <ScalarProperty Name="qhabitation" ColumnName="qhabitation" />
+                <ScalarProperty Name="qrec" ColumnName="qrec" />
+                <ScalarProperty Name="qrgph" ColumnName="qrgph" />
+                <ScalarProperty Name="qadresse" ColumnName="qadresse" />
+                <ScalarProperty Name="qlocalite" ColumnName="qlocalite" />
+                <ScalarProperty Name="qb1Etat" ColumnName="qb1Etat" />
+                <ScalarProperty Name="qb2Type" ColumnName="qb2Type" />
+                <ScalarProperty Name="qb3NombreEtage" ColumnName="qb3NombreEtage" />
+                <ScalarProperty Name="qb4MateriauMur" ColumnName="qb4MateriauMur" />
+                <ScalarProperty Name="qb5MateriauToit" ColumnName="qb5MateriauToit" />
+                <ScalarProperty Name="qb6StatutOccupation" ColumnName="qb6StatutOccupation" />
+                <ScalarProperty Name="qb7Utilisation1" ColumnName="qb7Utilisation1" />
+                <ScalarProperty Name="qb7Utilisation2" ColumnName="qb7Utilisation2" />
+                <ScalarProperty Name="qb8NbreLogeCollectif" ColumnName="qb8NbreLogeCollectif" />
+                <ScalarProperty Name="qb8NbreLogeIndividuel" ColumnName="qb8NbreLogeIndividuel" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="isValidated" ColumnName="isValidated" />
+                <ScalarProperty Name="isSynchroToAppSup" ColumnName="isSynchroToAppSup" />
+                <ScalarProperty Name="isSynchroToCentrale" ColumnName="isSynchroToCentrale" />
+                <ScalarProperty Name="dateDebutCollecte" ColumnName="dateDebutCollecte" />
+                <ScalarProperty Name="dateFinCollecte" ColumnName="dateFinCollecte" />
+                <ScalarProperty Name="dureeSaisie" ColumnName="dureeSaisie" />
+                <ScalarProperty Name="isFieldAllFilled" ColumnName="isFieldAllFilled" />
+                <ScalarProperty Name="isContreEnqueteMade" ColumnName="isContreEnqueteMade" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_deces">
+            <EntityTypeMapping TypeName="MobileModel.tbl_deces">
+              <MappingFragment StoreEntitySet="tbl_deces">
+                <ScalarProperty Name="decesId" ColumnName="decesId" />
+                <ScalarProperty Name="menageId" ColumnName="menageId" />
+                <ScalarProperty Name="logeId" ColumnName="logeId" />
+                <ScalarProperty Name="batimentId" ColumnName="batimentId" />
+                <ScalarProperty Name="sdeId" ColumnName="sdeId" />
+                <ScalarProperty Name="qd2NoOrdre" ColumnName="qd2NoOrdre" />
+                <ScalarProperty Name="qd2aSexe" ColumnName="qd2aSexe" />
+                <ScalarProperty Name="qd2bAgeDecede" ColumnName="qd2bAgeDecede" />
+                <ScalarProperty Name="qd2c1CirconstanceDeces" ColumnName="qd2c1CirconstanceDeces" />
+                <ScalarProperty Name="qd2c2CauseDeces" ColumnName="qd2c2CauseDeces" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="isFieldAllFilled" ColumnName="isFieldAllFilled" />
+                <ScalarProperty Name="dateDebutCollecte" ColumnName="dateDebutCollecte" />
+                <ScalarProperty Name="dateFinCollecte" ColumnName="dateFinCollecte" />
+                <ScalarProperty Name="dureeSaisie" ColumnName="dureeSaisie" />
+                <ScalarProperty Name="isContreEnqueteMade" ColumnName="isContreEnqueteMade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_emigre">
+            <EntityTypeMapping TypeName="MobileModel.tbl_emigre">
+              <MappingFragment StoreEntitySet="tbl_emigre">
+                <ScalarProperty Name="emigreId" ColumnName="emigreId" />
+                <ScalarProperty Name="menageId" ColumnName="menageId" />
+                <ScalarProperty Name="logeId" ColumnName="logeId" />
+                <ScalarProperty Name="batimentId" ColumnName="batimentId" />
+                <ScalarProperty Name="sdeId" ColumnName="sdeId" />
+                <ScalarProperty Name="qn1numeroOrdre" ColumnName="qn1numeroOrdre" />
+                <ScalarProperty Name="qn2aNomComplet" ColumnName="qn2aNomComplet" />
+                <ScalarProperty Name="qn2bResidenceActuelle" ColumnName="qn2bResidenceActuelle" />
+                <ScalarProperty Name="qn2cSexe" ColumnName="qn2cSexe" />
+                <ScalarProperty Name="qn2dAgeAuMomentDepart" ColumnName="qn2dAgeAuMomentDepart" />
+                <ScalarProperty Name="qn2eNiveauEtudeAuMomentDepart" ColumnName="qn2eNiveauEtudeAuMomentDepart" />
+                <ScalarProperty Name="qn2fDernierPaysResidence" ColumnName="qn2fDernierPaysResidence" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="isFieldAllFilled" ColumnName="isFieldAllFilled" />
+                <ScalarProperty Name="dateDebutCollecte" ColumnName="dateDebutCollecte" />
+                <ScalarProperty Name="dateFinCollecte" ColumnName="dateFinCollecte" />
+                <ScalarProperty Name="dureeSaisie" ColumnName="dureeSaisie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_individu">
+            <EntityTypeMapping TypeName="MobileModel.tbl_individu">
+              <MappingFragment StoreEntitySet="tbl_individu">
+                <ScalarProperty Name="individuId" ColumnName="individuId" />
+                <ScalarProperty Name="menageId" ColumnName="menageId" />
+                <ScalarProperty Name="logeId" ColumnName="logeId" />
+                <ScalarProperty Name="batimentId" ColumnName="batimentId" />
+                <ScalarProperty Name="sdeId" ColumnName="sdeId" />
+                <ScalarProperty Name="qp1NoOrdre" ColumnName="qp1NoOrdre" />
+                <ScalarProperty Name="Q2Nom" ColumnName="Q2Nom" />
+                <ScalarProperty Name="Q3Prenom" ColumnName="Q3Prenom" />
+                <ScalarProperty Name="Q6LienDeParente" ColumnName="Q6LienDeParente" />
+                <ScalarProperty Name="Q4Sexe" ColumnName="Q4Sexe" />
+                <ScalarProperty Name="Q5bAge" ColumnName="Q5bAge" />
+                <ScalarProperty Name="qp6religion" ColumnName="qp6religion" />
+                <ScalarProperty Name="qp6AutreReligion" ColumnName="qp6AutreReligion" />
+                <ScalarProperty Name="qp7Nationalite" ColumnName="qp7Nationalite" />
+                <ScalarProperty Name="qp7PaysNationalite" ColumnName="qp7PaysNationalite" />
+                <ScalarProperty Name="qp8MereEncoreVivante" ColumnName="qp8MereEncoreVivante" />
+                <ScalarProperty Name="qp9EstPlusAge" ColumnName="qp9EstPlusAge" />
+                <ScalarProperty Name="qp10LieuNaissance" ColumnName="qp10LieuNaissance" />
+                <ScalarProperty Name="qp10CommuneNaissance" ColumnName="qp10CommuneNaissance" />
+                <ScalarProperty Name="qp10LieuNaissanceVqse" ColumnName="qp10LieuNaissanceVqse" />
+                <ScalarProperty Name="qp10PaysNaissance" ColumnName="qp10PaysNaissance" />
+                <ScalarProperty Name="qp11PeriodeResidence" ColumnName="qp11PeriodeResidence" />
+                <ScalarProperty Name="qp12DomicileAvantRecensement" ColumnName="qp12DomicileAvantRecensement" />
+                <ScalarProperty Name="qp12DomicileAvantRecensementComm" ColumnName="qp12DomicileAvantRecensementComm" />
+                <ScalarProperty Name="qp12DomicileAvantRecensementVqse" ColumnName="qp12DomicileAvantRecensementVqse" />
+                <ScalarProperty Name="qp12DomicileAvantRecensementPays" ColumnName="qp12DomicileAvantRecensementPays" />
+                <ScalarProperty Name="qe1EstAlphabetise" ColumnName="qe1EstAlphabetise" />
+                <ScalarProperty Name="qe2FreqentationScolaire" ColumnName="qe2FreqentationScolaire" />
+                <ScalarProperty Name="qe3typeEtablissement" ColumnName="qe3typeEtablissement" />
+                <ScalarProperty Name="qe4aNiveauEtude" ColumnName="qe4aNiveauEtude" />
+                <ScalarProperty Name="qe4bDerniereClasseEtude" ColumnName="qe4bDerniereClasseEtude" />
+                <ScalarProperty Name="qe5DiplomeUniversitaire" ColumnName="qe5DiplomeUniversitaire" />
+                <ScalarProperty Name="qe6DomaineEtudeUniversitaire" ColumnName="qe6DomaineEtudeUniversitaire" />
+                <ScalarProperty Name="qe7FormationProf" ColumnName="qe7FormationProf" />
+                <ScalarProperty Name="qe8DomaineFormationProf" ColumnName="qe8DomaineFormationProf" />
+                <ScalarProperty Name="qaf1aHandicapVoir" ColumnName="qaf1aHandicapVoir" />
+                <ScalarProperty Name="qaf1bUtiliserAppareilVoir" ColumnName="qaf1bUtiliserAppareilVoir" />
+                <ScalarProperty Name="qaf2aHandicapEntendre" ColumnName="qaf2aHandicapEntendre" />
+                <ScalarProperty Name="qaf2bUtiliserAppareilEntendre" ColumnName="qaf2bUtiliserAppareilEntendre" />
+                <ScalarProperty Name="qaf3aHandicapMarcher" ColumnName="qaf3aHandicapMarcher" />
+                <ScalarProperty Name="qaf3bUtiliserAppareilMarcher" ColumnName="qaf3bUtiliserAppareilMarcher" />
+                <ScalarProperty Name="qaf4aHandicapSouvenir" ColumnName="qaf4aHandicapSouvenir" />
+                <ScalarProperty Name="qaf5aHandicapPourSeSoigner" ColumnName="qaf5aHandicapPourSeSoigner" />
+                <ScalarProperty Name="qaf6aHandicapCommuniquer" ColumnName="qaf6aHandicapCommuniquer" />
+                <ScalarProperty Name="qaf6bUtiliserAppareilCommuniquer" ColumnName="qaf6bUtiliserAppareilCommuniquer" />
+                <ScalarProperty Name="qt1PossessionTelCellulaire" ColumnName="qt1PossessionTelCellulaire" />
+                <ScalarProperty Name="qt2UtilisationInternet" ColumnName="qt2UtilisationInternet" />
+                <ScalarProperty Name="qem1DejaVivreAutrePays" ColumnName="qem1DejaVivreAutrePays" />
+                <ScalarProperty Name="qem1AutrePays" ColumnName="qem1AutrePays" />
+                <ScalarProperty Name="qem2MoisRetour" ColumnName="qem2MoisRetour" />
+                <ScalarProperty Name="qem2AnnéeRetour" ColumnName="qem2AnnéeRetour" />
+                <ScalarProperty Name="qsm1StatutMatrimonial" ColumnName="qsm1StatutMatrimonial" />
+                <ScalarProperty Name="qa1ActEconomiqueDerniereSemaine" ColumnName="qa1ActEconomiqueDerniereSemaine" />
+                <ScalarProperty Name="qa2ActAvoirDemele1" ColumnName="qa2ActAvoirDemele1" />
+                <ScalarProperty Name="qa2ActDomestique2" ColumnName="qa2ActDomestique2" />
+                <ScalarProperty Name="qa2ActCultivateur3" ColumnName="qa2ActCultivateur3" />
+                <ScalarProperty Name="qa2ActAiderParent4" ColumnName="qa2ActAiderParent4" />
+                <ScalarProperty Name="qa2ActAutre5" ColumnName="qa2ActAutre5" />
+                <ScalarProperty Name="qa3StatutEmploie" ColumnName="qa3StatutEmploie" />
+                <ScalarProperty Name="qa4SecteurInstitutionnel" ColumnName="qa4SecteurInstitutionnel" />
+                <ScalarProperty Name="qa5TypeBienProduitParEntreprise" ColumnName="qa5TypeBienProduitParEntreprise" />
+                <ScalarProperty Name="qa6LieuActDerniereSemaine" ColumnName="qa6LieuActDerniereSemaine" />
+                <ScalarProperty Name="qa7FoncTravail" ColumnName="qa7FoncTravail" />
+                <ScalarProperty Name="qa8EntreprendreDemarcheTravail" ColumnName="qa8EntreprendreDemarcheTravail" />
+                <ScalarProperty Name="qa9VouloirTravailler" ColumnName="qa9VouloirTravailler" />
+                <ScalarProperty Name="qa10DisponibilitePourTravail" ColumnName="qa10DisponibilitePourTravail" />
+                <ScalarProperty Name="qa11RecevoirTransfertArgent" ColumnName="qa11RecevoirTransfertArgent" />
+                <ScalarProperty Name="qf1aNbreEnfantNeVivantM" ColumnName="qf1aNbreEnfantNeVivantM" />
+                <ScalarProperty Name="qf2bNbreEnfantNeVivantF" ColumnName="qf2bNbreEnfantNeVivantF" />
+                <ScalarProperty Name="qf2aNbreEnfantVivantM" ColumnName="qf2aNbreEnfantVivantM" />
+                <ScalarProperty Name="qf2bNbreEnfantVivantF" ColumnName="qf2bNbreEnfantVivantF" />
+                <ScalarProperty Name="qf3aNbreEnfantVivantMenageM" ColumnName="qf3aNbreEnfantVivantMenageM" />
+                <ScalarProperty Name="qf3bNbreEnfantVivantMenageF" ColumnName="qf3bNbreEnfantVivantMenageF" />
+                <ScalarProperty Name="qf3DernierEnfantJour" ColumnName="qf3DernierEnfantJour" />
+                <ScalarProperty Name="qf3DernierEnfantMois" ColumnName="qf3DernierEnfantMois" />
+                <ScalarProperty Name="qf3DernierEnfantAnnee" ColumnName="qf3DernierEnfantAnnee" />
+                <ScalarProperty Name="qf4SexeDernierVivant" ColumnName="qf4SexeDernierVivant" />
+                <ScalarProperty Name="qf5DENeVivantVit" ColumnName="qf5DENeVivantVit" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="isFieldAllFilled" ColumnName="isFieldAllFilled" />
+                <ScalarProperty Name="dateDebutCollecte" ColumnName="dateDebutCollecte" />
+                <ScalarProperty Name="dateFinCollecte" ColumnName="dateFinCollecte" />
+                <ScalarProperty Name="dureeSaisie" ColumnName="dureeSaisie" />
+                <ScalarProperty Name="isContreEnqueteMade" ColumnName="isContreEnqueteMade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_logement">
+            <EntityTypeMapping TypeName="MobileModel.tbl_logement">
+              <MappingFragment StoreEntitySet="tbl_logement">
+                <ScalarProperty Name="nbrTentative" ColumnName="nbrTentative" />
+                <ScalarProperty Name="logeId" ColumnName="logeId" />
+                <ScalarProperty Name="batimentId" ColumnName="batimentId" />
+                <ScalarProperty Name="sdeId" ColumnName="sdeId" />
+                <ScalarProperty Name="qlCategLogement" ColumnName="qlCategLogement" />
+                <ScalarProperty Name="qlcTypeLogement" ColumnName="qlcTypeLogement" />
+                <ScalarProperty Name="qllc2bTotalGarcon" ColumnName="qllc2bTotalGarcon" />
+                <ScalarProperty Name="qlc2bTotalFille" ColumnName="qlc2bTotalFille" />
+                <ScalarProperty Name="qlcTotalIndividus" ColumnName="qlcTotalIndividus" />
+                <ScalarProperty Name="qlin1NumeroOrdre" ColumnName="qlin1NumeroOrdre" />
+                <ScalarProperty Name="qlin2StatutOccupation" ColumnName="qlin2StatutOccupation" />
+                <ScalarProperty Name="qlin3ExistenceLogement" ColumnName="qlin3ExistenceLogement" />
+                <ScalarProperty Name="qlin4TypeLogement" ColumnName="qlin4TypeLogement" />
+                <ScalarProperty Name="qlin5MateriauSol" ColumnName="qlin5MateriauSol" />
+                <ScalarProperty Name="qlin6ServiceElectricite" ColumnName="qlin6ServiceElectricite" />
+                <ScalarProperty Name="qlin7ServiceEau" ColumnName="qlin7ServiceEau" />
+                <ScalarProperty Name="qlin8QualiteToillettes" ColumnName="qlin8QualiteToillettes" />
+                <ScalarProperty Name="Qlin6NombrePiece" ColumnName="Qlin6NombrePiece" />
+                <ScalarProperty Name="Qlin7NbreChambreACoucher" ColumnName="Qlin7NbreChambreACoucher" />
+                <ScalarProperty Name="qlin11NbreIndividuVivant" ColumnName="qlin11NbreIndividuVivant" />
+                <ScalarProperty Name="Qlin8NbreIndividuDepense" ColumnName="Qlin8NbreIndividuDepense" />
+                <ScalarProperty Name="Qlin9NbreTotalMenage" ColumnName="Qlin9NbreTotalMenage" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="isValidated" ColumnName="isValidated" />
+                <ScalarProperty Name="dateDebutCollecte" ColumnName="dateDebutCollecte" />
+                <ScalarProperty Name="dateFinCollecte" ColumnName="dateFinCollecte" />
+                <ScalarProperty Name="dureeSaisie" ColumnName="dureeSaisie" />
+                <ScalarProperty Name="isFieldAllFilled" ColumnName="isFieldAllFilled" />
+                <ScalarProperty Name="isContreEnqueteMade" ColumnName="isContreEnqueteMade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_menage">
+            <EntityTypeMapping TypeName="MobileModel.tbl_menage">
+              <MappingFragment StoreEntitySet="tbl_menage">
+                <ScalarProperty Name="menageId" ColumnName="menageId" />
+                <ScalarProperty Name="logeId" ColumnName="logeId" />
+                <ScalarProperty Name="batimentId" ColumnName="batimentId" />
+                <ScalarProperty Name="sdeId" ColumnName="sdeId" />
+                <ScalarProperty Name="qm1NoOrdre" ColumnName="qm1NoOrdre" />
+                <ScalarProperty Name="qm2ModeJouissance" ColumnName="qm2ModeJouissance" />
+                <ScalarProperty Name="qm3ModeObtentionLoge" ColumnName="qm3ModeObtentionLoge" />
+                <ScalarProperty Name="qm4aModeAprovEauABoire" ColumnName="qm4aModeAprovEauABoire" />
+                <ScalarProperty Name="qm4aModeAprovEauAUsageCourant" ColumnName="qm4aModeAprovEauAUsageCourant" />
+                <ScalarProperty Name="qm5SrcEnergieCuisson1" ColumnName="qm5SrcEnergieCuisson1" />
+                <ScalarProperty Name="qm5SrcEnergieCuisson2" ColumnName="qm5SrcEnergieCuisson2" />
+                <ScalarProperty Name="qm6TypeEclairage" ColumnName="qm6TypeEclairage" />
+                <ScalarProperty Name="qm7ModeEvacDechet" ColumnName="qm7ModeEvacDechet" />
+                <ScalarProperty Name="qm8NbreRadio1" ColumnName="qm8NbreRadio1" />
+                <ScalarProperty Name="qm8NbreTelevision2" ColumnName="qm8NbreTelevision2" />
+                <ScalarProperty Name="qm8NbreRefrigerateur3" ColumnName="qm8NbreRefrigerateur3" />
+                <ScalarProperty Name="qm8NbreFouElectrique4" ColumnName="qm8NbreFouElectrique4" />
+                <ScalarProperty Name="qm8NbreOrdinateur5" ColumnName="qm8NbreOrdinateur5" />
+                <ScalarProperty Name="qm8NbreMotoBicyclette6" ColumnName="qm8NbreMotoBicyclette6" />
+                <ScalarProperty Name="qm8NbreVoitureMachine7" ColumnName="qm8NbreVoitureMachine7" />
+                <ScalarProperty Name="qm8NbreBateau8" ColumnName="qm8NbreBateau8" />
+                <ScalarProperty Name="qm8NbrePanneauGeneratrice9" ColumnName="qm8NbrePanneauGeneratrice9" />
+                <ScalarProperty Name="qm8NbreMilletChevalBourique10" ColumnName="qm8NbreMilletChevalBourique10" />
+                <ScalarProperty Name="qm8NbreBoeufVache11" ColumnName="qm8NbreBoeufVache11" />
+                <ScalarProperty Name="qm8NbreCochonCabrit12" ColumnName="qm8NbreCochonCabrit12" />
+                <ScalarProperty Name="qm8NbreBeteVolaille13" ColumnName="qm8NbreBeteVolaille13" />
+                <ScalarProperty Name="qm9AvoirPersDomestique" ColumnName="qm9AvoirPersDomestique" />
+                <ScalarProperty Name="qm9TotalDomestiqueFille" ColumnName="qm9TotalDomestiqueFille" />
+                <ScalarProperty Name="qm9TotalDomestiqueGarcon" ColumnName="qm9TotalDomestiqueGarcon" />
+                <ScalarProperty Name="qm10TotalIndividuVivant" ColumnName="qm10TotalIndividuVivant" />
+                <ScalarProperty Name="qm11Emigration" ColumnName="qm11Emigration" />
+                <ScalarProperty Name="qm11NbreEmigre" ColumnName="qm11NbreEmigre" />
+                <ScalarProperty Name="qm12Deces" ColumnName="qm12Deces" />
+                <ScalarProperty Name="qm12NbreDecede" ColumnName="qm12NbreDecede" />
+                <ScalarProperty Name="statut" ColumnName="statut" />
+                <ScalarProperty Name="isValidated" ColumnName="isValidated" />
+                <ScalarProperty Name="dateDebutCollecte" ColumnName="dateDebutCollecte" />
+                <ScalarProperty Name="dateFinCollecte" ColumnName="dateFinCollecte" />
+                <ScalarProperty Name="dureeSaisie" ColumnName="dureeSaisie" />
+                <ScalarProperty Name="isFieldAllFilled" ColumnName="isFieldAllFilled" />
+                <ScalarProperty Name="isContreEnqueteMade" ColumnName="isContreEnqueteMade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_personnel">
+            <EntityTypeMapping TypeName="MobileModel.tbl_personnel">
+              <MappingFragment StoreEntitySet="tbl_personnel">
+                <ScalarProperty Name="persId" ColumnName="persId" />
+                <ScalarProperty Name="sdeId" ColumnName="sdeId" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="sexe" ColumnName="sexe" />
+                <ScalarProperty Name="nomUtilisateur" ColumnName="nomUtilisateur" />
+                <ScalarProperty Name="motDePasse" ColumnName="motDePasse" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="deptId" ColumnName="deptId" />
+                <ScalarProperty Name="comId" ColumnName="comId" />
+                <ScalarProperty Name="vqseId" ColumnName="vqseId" />
+                <ScalarProperty Name="estActif" ColumnName="estActif" />
+                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_categorie_question">
+            <EntityTypeMapping TypeName="MobileModel.tbl_categorie_question">
+              <MappingFragment StoreEntitySet="tbl_categorie_question">
+                <ScalarProperty Name="codeCategorie" ColumnName="codeCategorie" />
+                <ScalarProperty Name="categorieQuestion" ColumnName="categorieQuestion" />
+                <ScalarProperty Name="detailsCategorie" ColumnName="detailsCategorie" />
+                <ScalarProperty Name="sousDetailsCategorie" ColumnName="sousDetailsCategorie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_commune">
+            <EntityTypeMapping TypeName="MobileModel.tbl_commune">
+              <MappingFragment StoreEntitySet="tbl_commune">
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+                <ScalarProperty Name="ComNom" ColumnName="ComNom" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_departement">
+            <EntityTypeMapping TypeName="MobileModel.tbl_departement">
+              <MappingFragment StoreEntitySet="tbl_departement">
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="DeptNom" ColumnName="DeptNom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_domaine_etude">
+            <EntityTypeMapping TypeName="MobileModel.tbl_domaine_etude">
+              <MappingFragment StoreEntitySet="tbl_domaine_etude">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="NomDomaine" ColumnName="NomDomaine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_module">
+            <EntityTypeMapping TypeName="MobileModel.tbl_module">
+              <MappingFragment StoreEntitySet="tbl_module">
+                <ScalarProperty Name="codeModule" ColumnName="codeModule" />
+                <ScalarProperty Name="nomModule" ColumnName="nomModule" />
+                <ScalarProperty Name="typeModule" ColumnName="typeModule" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="estActif" ColumnName="estActif" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_pays">
+            <EntityTypeMapping TypeName="MobileModel.tbl_pays">
+              <MappingFragment StoreEntitySet="tbl_pays">
+                <ScalarProperty Name="CodePays" ColumnName="CodePays" />
+                <ScalarProperty Name="NomPays" ColumnName="NomPays" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_question">
+            <EntityTypeMapping TypeName="MobileModel.tbl_question">
+              <MappingFragment StoreEntitySet="tbl_question">
+                <ScalarProperty Name="codeQuestion" ColumnName="codeQuestion" />
+                <ScalarProperty Name="libelle" ColumnName="libelle" />
+                <ScalarProperty Name="detailsQuestion" ColumnName="detailsQuestion" />
+                <ScalarProperty Name="IndicationsQuestion" ColumnName="IndicationsQuestion" />
+                <ScalarProperty Name="codeCategorie" ColumnName="codeCategorie" />
+                <ScalarProperty Name="nomChamps" ColumnName="nomChamps" />
+                <ScalarProperty Name="typeQuestion" ColumnName="typeQuestion" />
+                <ScalarProperty Name="caratereAccepte" ColumnName="caratereAccepte" />
+                <ScalarProperty Name="nbreValeurMinimal" ColumnName="nbreValeurMinimal" />
+                <ScalarProperty Name="nbreCaratereMaximal" ColumnName="nbreCaratereMaximal" />
+                <ScalarProperty Name="contrainteSautChampsValeur" ColumnName="contrainteSautChampsValeur" />
+                <ScalarProperty Name="estSautReponse" ColumnName="estSautReponse" />
+                <ScalarProperty Name="qPrecedent" ColumnName="qPrecedent" />
+                <ScalarProperty Name="qSuivant" ColumnName="qSuivant" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_question_module">
+            <EntityTypeMapping TypeName="MobileModel.tbl_question_module">
+              <MappingFragment StoreEntitySet="tbl_question_module">
+                <ScalarProperty Name="ordre" ColumnName="ordre" />
+                <ScalarProperty Name="codeModule" ColumnName="codeModule" />
+                <ScalarProperty Name="codeQuestion" ColumnName="codeQuestion" />
+                <ScalarProperty Name="estDebut" ColumnName="estDebut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_question_reponse">
+            <EntityTypeMapping TypeName="MobileModel.tbl_question_reponse">
+              <MappingFragment StoreEntitySet="tbl_question_reponse">
+                <ScalarProperty Name="codeQuestion" ColumnName="codeQuestion" />
+                <ScalarProperty Name="codeUniqueReponse" ColumnName="codeUniqueReponse" />
+                <ScalarProperty Name="codeReponse" ColumnName="codeReponse" />
+                <ScalarProperty Name="libelleReponse" ColumnName="libelleReponse" />
+                <ScalarProperty Name="estEnfant" ColumnName="estEnfant" />
+                <ScalarProperty Name="avoirEnfant" ColumnName="avoirEnfant" />
+                <ScalarProperty Name="codeParent" ColumnName="codeParent" />
+                <ScalarProperty Name="qPrecedent" ColumnName="qPrecedent" />
+                <ScalarProperty Name="qSuivant" ColumnName="qSuivant" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_vqse">
+            <EntityTypeMapping TypeName="MobileModel.tbl_vqse">
+              <MappingFragment StoreEntitySet="tbl_vqse">
+                <ScalarProperty Name="VqseId" ColumnName="VqseId" />
+                <ScalarProperty Name="VqseNom" ColumnName="VqseNom" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,490 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sch="http://www.ihsi.ht/RGPHService/schema" xmlns:tns="http://www.ihsi.ht/RGPHService/schema" targetNamespace="http://www.ihsi.ht/RGPHService/schema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <schema xmlns:rgph="http://www.ihsi.ht/RGPHService/schema" elementFormDefault="qualified" targetNamespace="http://www.ihsi.ht/RGPHService/schema" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="SynchronizeRequest">
+        <complexType>
+          <sequence>
+            <element name="username" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="SynchronizeResponse">
+        <complexType>
+          <sequence>
+            <element name="responseHeader" type="rgph:ResponseHeader" />
+            <element minOccurs="0" maxOccurs="unbounded" name="data" type="rgph:AgentSde" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="AuthenticateUserRequest">
+        <complexType>
+          <sequence>
+            <element name="username" type="string" />
+            <element name="password" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="AuthenticateUserResponse">
+        <complexType>
+          <sequence>
+            <element name="responseHeader" type="rgph:ResponseHeader" />
+            <element name="codeUtilisateur" type="string" />
+            <element name="motDePasse" type="string" />
+            <element name="nom" type="string" />
+            <element name="prenom" type="string" />
+            <element name="statut" type="int" />
+            <element name="profileId" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="InsertBatimentRequest">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="batimentData" type="rgph:BatimentType" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="InsertBatimentResponse">
+        <complexType>
+          <sequence>
+            <element name="responseHeader" type="rgph:ResponseHeader" />
+          </sequence>
+        </complexType>
+      </element>
+      <complexType name="ResponseHeader">
+        <sequence>
+          <element name="transactionCode" type="string" />
+          <element name="statusCode" type="string" />
+          <element name="transactionDate" type="string" />
+          <element name="responseTime" type="string" />
+          <element name="errorCode" type="string" />
+          <element name="errorMessage" type="string" />
+        </sequence>
+      </complexType>
+      <complexType name="AgentSde">
+        <sequence>
+          <element name="codeUtilisateur" type="string" />
+          <element name="motDePasse" type="string" />
+          <element name="nom" type="string" />
+          <element name="prenom" type="string" />
+          <element name="sexe" type="string" />
+          <element name="nif" type="string" />
+          <element name="cin" type="string" />
+          <element name="telephone" type="string" />
+          <element name="email" type="string" />
+          <element name="numSde" type="string" />
+          <element name="nbreBatiment" type="int" />
+        </sequence>
+      </complexType>
+      <complexType name="BatimentType">
+        <sequence>
+          <element name="BatimentId" type="long" />
+          <element name="SdeId" type="string" />
+          <element name="Q1Rec" type="string" />
+          <element name="Q2Rgph" type="string" />
+          <element name="Q3Adresse" type="string" />
+          <element name="Q4Habitation" type="string" />
+          <element name="Q5Localite" type="string" />
+          <element name="Qb1Statut" type="int" />
+          <element name="Qb2Etat" type="int" />
+          <element name="Qb3Type" type="int" />
+          <element name="Qb4MateriauMur" type="int" />
+          <element name="Qb5MateriauToit" type="int" />
+          <element name="Qb6PeriodeExistence" type="int" />
+          <element name="Qb7Disponibilite" type="int" />
+          <element name="Qb8Utilisation1" type="int" />
+          <element name="Qb8Utilisation2" type="int" />
+          <element name="Qb9NbreLogeCollectif" type="int" />
+          <element name="Qb9NbreLogeIndividuel" type="int" />
+          <element name="formulaire" type="rgph:FormulaireType" />
+          <element name="statisticCheck" type="rgph:StatisticCheck" />
+          <element minOccurs="0" maxOccurs="unbounded" name="logementCollectif" type="rgph:LogementCollectifType" />
+          <element minOccurs="0" maxOccurs="unbounded" name="logementIndividuel" type="rgph:LogementIndividuelType" />
+        </sequence>
+      </complexType>
+      <complexType name="FormulaireType">
+        <sequence>
+          <element name="anneeInterview" type="int" />
+          <element name="anneeSupervision" type="int" />
+          <element name="difficulte" type="string" />
+          <element name="jourInterview" type="int" />
+          <element name="jourSupervision" type="int" />
+          <element name="moisInterview" type="int" />
+          <element name="moisSupervision" type="int" />
+          <element name="observation" type="string" />
+          <element name="sauvegardePartiel" type="int" />
+          <element name="statut" type="int" />
+          <element name="statutQuestionnaire" type="int" />
+        </sequence>
+      </complexType>
+      <complexType name="StatisticCheck">
+        <sequence>
+          <element name="nombreLogeColletif" type="int" />
+          <element name="nombreLogeIndividuel" type="int" />
+          <element name="nombreMenage" type="int" />
+          <element name="nombreInvididuLC" type="int" />
+          <element name="nombreInvididuLI" type="int" />
+          <element name="nombreDeces" type="int" />
+          <element name="nombreEmigre" type="int" />
+        </sequence>
+      </complexType>
+      <complexType name="LogementCollectifType">
+        <sequence>
+          <element name="LogeId" type="long" />
+          <element name="QlTypeLogement" type="int" />
+          <element name="Qlin1NumeroOrdre" type="string" />
+          <element minOccurs="1" maxOccurs="unbounded" name="inidivus" type="rgph:IndividuType" />
+        </sequence>
+      </complexType>
+      <complexType name="LogementIndividuelType">
+        <sequence>
+          <element name="LogeId" type="long" />
+          <element name="QlTypeLogement" type="int" />
+          <element name="Qlin1NumeroOrdre" type="string" />
+          <element name="Qlin2DebutExistence" type="int" />
+          <element name="Qlin3Occupation" type="int" />
+          <element name="Qlin5MateriauSol" type="int" />
+          <element name="Qlin6ServiceElectricite" type="int" />
+          <element name="Qlin7ServiceEau" type="int" />
+          <element name="Qlin8LieuAisance" type="int" />
+          <element name="Qlin6NombrePiece" type="int" />
+          <element name="Qlin7NbreChambreACoucher" type="int" />
+          <element name="Qlin11NbreIndividuVivant" type="int" />
+          <element name="Qlin8NbreIndividuDepense" type="int" />
+          <element name="Qlin9NbreTotalMenage" type="int" />
+          <element minOccurs="1" maxOccurs="unbounded" name="menages" type="rgph:MenageType" />
+        </sequence>
+      </complexType>
+      <complexType name="MenageType">
+        <sequence>
+          <element name="MenageId" type="long" />
+          <element name="Qm1NoOrdre" type="int" />
+          <element name="Qm2TitreOccupLoge" type="int" />
+          <element name="Qm3ModeObtentionLoge" type="int" />
+          <element name="Qm4DebutObtentionLoge" type="int" />
+          <element name="Qm5DebutOccupLoge" type="int" />
+          <element name="Qm6ModeAprovEauBoire1" type="int" />
+          <element name="Qm6ModeAprovEauBoire2" type="int" />
+          <element name="Qm6ModeAprovEauCourant1" type="int" />
+          <element name="Qm6ModeAprovEauCourant2" type="int" />
+          <element name="Qm7SrcEnergieCuisson1" type="int" />
+          <element name="Qm7SrcEnergieCuisson2" type="int" />
+          <element name="Qm8TypeEclairage1" type="int" />
+          <element name="Qm8TypeEclairage2" type="int" />
+          <element name="Qm9ModeEvacDechet" type="int" />
+          <element name="Qm10NbreRadio1" type="int" />
+          <element name="Qm10NbreTelevision2" type="int" />
+          <element name="Qm10NbreTelephoneFixe3" type="int" />
+          <element name="Qm10NbreVentilateur4" type="int" />
+          <element name="Qm10NbreRefrigerateur5" type="int" />
+          <element name="Qm10NbreFouElectrique6" type="int" />
+          <element name="Qm10NbreMachineLaver7" type="int" />
+          <element name="Qm10NbreOrdinateur8" type="int" />
+          <element name="Qm10NbreTabletteNumerique9" type="int" />
+          <element name="Qm10NbreBicyclette10" type="int" />
+          <element name="Qm10NbreMotocyclette11" type="int" />
+          <element name="Qm10NbreAutomobile12" type="int" />
+          <element name="Qm10NbreBateau13" type="int" />
+          <element name="Qm10NbrePompeElect14" type="int" />
+          <element name="Qm10NbreGeneratrice15" type="int" />
+          <element name="Qm10NbrePanneauSolaire16" type="int" />
+          <element name="Qm10NbreInverter17" type="int" />
+          <element name="Qm10NbreCheval18" type="int" />
+          <element name="Qm10NbreBoeuf19" type="int" />
+          <element name="Qm10NbrePorc20" type="int" />
+          <element name="Qm10NbreCabri21" type="int" />
+          <element name="Qm10NbreVolaille22" type="int" />
+          <element name="Qm11Connexioninternet" type="int" />
+          <element name="Qm12EmploiePersDomestique" type="int" />
+          <element name="Qm12NbrePersDomestique" type="int" />
+          <element name="Qm13NbreTotalIndividu" type="int" />
+          <element name="Qm14Emigration" type="int" />
+          <element name="Qm14NbreEmigre" type="int" />
+          <element name="Qm15Deces" type="int" />
+          <element name="Qm15NbreDecede" type="int" />
+          <element minOccurs="1" maxOccurs="unbounded" name="individus" type="rgph:IndividuType" />
+          <element minOccurs="0" maxOccurs="unbounded" name="emigres" type="rgph:EmigreType" />
+          <element minOccurs="0" maxOccurs="unbounded" name="deces" type="rgph:DecesType" />
+        </sequence>
+      </complexType>
+      <complexType name="EmigreType">
+        <sequence>
+          <element name="EmigreId" type="int" />
+          <element name="Qn1numeroOrdre" type="int" />
+          <element name="Qn2aNomComplet" type="string" />
+          <element name="Qn2bStatut" type="int" />
+          <element name="Qn2cSexe" type="int" />
+          <element name="Qn2dAge" type="int" />
+          <element name="Qn2eNiveauEtude" type="int" />
+          <element name="Qn2fDomaineEtude" type="int" />
+          <element name="Qn2gPaysAccueil" type="int" />
+          <element name="Qn2hRaisonDepart" type="int" />
+          <element name="Qn2iAnneeDepart" type="int" />
+        </sequence>
+      </complexType>
+      <complexType name="DecesType">
+        <sequence>
+          <element name="DecesId" type="int" />
+          <element name="Qn3NoOrdre" type="int" />
+          <element name="Qn4aSexe" type="int" />
+          <element name="Qn4bAge" type="int" />
+          <element name="Qn4c1EpoqueDeces" type="int" />
+          <element name="Qn4c2LieuDeces" type="int" />
+          <element name="Qn4dCauseDeces" type="int" />
+          <element name="Qn4eActeDeces" type="int" />
+        </sequence>
+      </complexType>
+      <complexType name="IndividuType">
+        <sequence>
+          <element name="IndividuId" type="long" />
+          <element name="QpNumeroOrdreMenage" type="int" />
+          <element name="Qp1NoOrdre" type="int" />
+          <element name="Qp2Nom" type="string" />
+          <element name="Qp2Prenom" type="string" />
+          <element name="Qp3Sexe" type="int" />
+          <element name="Q4MoisNaissance" type="int" />
+          <element name="Q4AnneeNaissance" type="int" />
+          <element name="Qp4Age" type="int" />
+          <element name="Qp5RelationChefMenage" type="int" />
+          <element name="Qp6religion" type="int" />
+          <element name="Qp6AutreReligion" type="string" />
+          <element name="Qp7ActeNaissance" type="int" />
+          <element name="Qp8Nationalite" type="int" />
+          <element name="Qp8NationaliteEtrangere" type="string" />
+          <element name="Qp9Cin" type="int" />
+          <element name="Qp10MereEncoreVivante" type="int" />
+          <element name="Qp11EstPlusAge" type="int" />
+          <element name="Qp12HandicapVoir1" type="int" />
+          <element name="Qp12HandicapEntendre2" type="int" />
+          <element name="Qp12HandicapParler3" type="int" />
+          <element name="Qp12HandicapMarcher4" type="int" />
+          <element name="Qp12HandicapPrendre5" type="int" />
+          <element name="Qp12HandicapMouvoir6" type="int" />
+          <element name="Qp12HandicapSouvenir7" type="int" />
+          <element name="Qp12HandicapApprendre8" type="int" />
+          <element name="Qp12HandicapVetir9" type="int" />
+          <element name="Qp12HandicapManger10" type="int" />
+          <element name="Qp12HandicapCommuniquer11" type="int" />
+          <element name="Qp12HandicapComprendre12" type="int" />
+          <element name="Qp12AnneeHandicapVoir1" type="int" />
+          <element name="Qp12AnneeHandicapEntendre2" type="int" />
+          <element name="Qp12AnneeHandicapParler3" type="int" />
+          <element name="Qp12AnneeHandicapMarcher4" type="int" />
+          <element name="Qp12AnneeHandicapPrendre5" type="int" />
+          <element name="Qp12AnneeHandicapMouvoir6" type="int" />
+          <element name="Qp12AnneeHandicapSouvenir7" type="int" />
+          <element name="Qp12AnneeHandicapApprendre8" type="int" />
+          <element name="Qp12AnneeHandicapVetir9" type="int" />
+          <element name="Qp12AnneeHandicapManger10" type="int" />
+          <element name="Qp12AnneeHandicapCommuniquer11" type="int" />
+          <element name="Qp12AnneeHandicapComprendre12" type="int" />
+          <element name="Qp12CauseHandicapVoir1" type="int" />
+          <element name="Qp12CauseHandicapEntendre2" type="int" />
+          <element name="Qp12CauseHandicapParler3" type="int" />
+          <element name="Qp12CauseHandicapMarcher4" type="int" />
+          <element name="Qp12CauseHandicapPrendre5" type="int" />
+          <element name="Qp12causeHandicapMouvoir6" type="int" />
+          <element name="Qp12CauseHandicapSouvenir7" type="int" />
+          <element name="Qp12CauseHandicapApprendre8" type="int" />
+          <element name="Qp12CauseHandicapVetir9" type="int" />
+          <element name="Qp12CauseHandicapManger10" type="int" />
+          <element name="Qp12CauseHandicapCommuniquer11" type="int" />
+          <element name="Qp12CauseHandicapComprendre12" type="int" />
+          <element name="Qp13UtiliserLunette1" type="int" />
+          <element name="Qp13UtiliserCanne2" type="int" />
+          <element name="Qp13UtiliserBraille3" type="int" />
+          <element name="Qp13UtiliserOreillette4" type="int" />
+          <element name="Qp13UtiliserFauteuil5" type="int" />
+          <element name="Qp13UtiliserBequille6" type="int" />
+          <element name="Qp13UtiliserProthese7" type="int" />
+          <element name="Qp13UtiliserCarnetElect8" type="int" />
+          <element name="Qp13UtiliserOrthese9" type="int" />
+          <element name="Qp13UtiliserTableauComm10" type="int" />
+          <element name="Qp14MaladieDiabete1" type="int" />
+          <element name="Qp14MaladieTensionArterielle2" type="int" />
+          <element name="Qp14MaladieCholesterol3" type="int" />
+          <element name="Qp14MaladieCancer4" type="int" />
+          <element name="Qp14MaladieVIH5" type="int" />
+          <element name="Qp14MaladieRespiratoire6" type="int" />
+          <element name="Qp14MaladieGlaucomeCataracte7" type="int" />
+          <element name="Qp14MaladieCholera8" type="int" />
+          <element name="Qp14MaladieTuberculose9" type="int" />
+          <element name="Qp14MaladieMalaria10" type="int" />
+          <element name="Qp14MaladieTyphoïde11" type="int" />
+          <element name="Qp14MaladieFilariose12" type="int" />
+          <element name="Qp15CommuneNaissance" type="string" />
+          <element name="Q15TypeLieuNaissance" type="int" />
+          <element name="Qp15LieuNaissanceZone" type="string" />
+          <element name="Qp15LieuNaissance" type="int" />
+          <element name="Qp15PaysNaissance" type="string" />
+          <element name="Qp16PeriodeResidence" type="int" />
+          <element name="Q17Lieu12Janvier2010" type="int" />
+          <element name="Q17Lieu12Janvier2010Comm" type="string" />
+          <element name="Q17Lieu12Janvier2010Type" type="int" />
+          <element name="Q17Lieu12Janvier2010Zone" type="string" />
+          <element name="Q17Lieu12Janvier2010Pays" type="string" />
+          <element name="Qe1VivreDejaPaysEtranger" type="int" />
+          <element name="Qem2DernierPaysAccueilSejour" type="string" />
+          <element name="Qem3DureeMigration" type="int" />
+          <element name="Qem4CauseMigration" type="int" />
+          <element name="Qem5DernierAnneMigration" type="int" />
+          <element name="Qem5DernierMoisMigration" type="int" />
+          <element name="Qem6RetourAnneeMigration" type="int" />
+          <element name="Qem6RetourMoisMigration" type="int" />
+          <element name="Qem7CauseRetourEnHaiti" type="int" />
+          <element name="Qe1EstAlphabetise" type="int" />
+          <element name="Qe2FreqentationScolaire" type="int" />
+          <element name="Qe3typeEtablissement" type="int" />
+          <element name="Qe4AideEtatFamille1" type="int" />
+          <element name="Qe4AideEtatEcole2" type="int" />
+          <element name="Qe4AideONGFamille3" type="int" />
+          <element name="Qe4AideONGEcole4" type="int" />
+          <element name="Qe4AideParentHaiti5" type="int" />
+          <element name="Qe4AideParentEtranger6" type="int" />
+          <element name="Qe4AideAutre7" type="int" />
+          <element name="Qe5NiveauEtude" type="int" />
+          <element name="Qe5ClasseEtude" type="int" />
+          <element name="Qe6DiplomeUniversitaire" type="int" />
+          <element name="Qe8DomaineEtudeUniversitaire" type="string" />
+          <element name="Qe9FormationProf" type="int" />
+          <element name="Qe9DiplomeFormationProf" type="int" />
+          <element name="Qe9DureeFormationProf" type="int" />
+          <element name="Qe10DomaineFormationProf" type="string" />
+          <element name="Qe11PossessionTelCellulaire" type="int" />
+          <element name="Qe12Utilisationinternet" type="int" />
+          <element name="Qe13MoyenAccessNetOrdi1" type="int" />
+          <element name="Qe13MoyenAccessNetTel2" type="int" />
+          <element name="Qe13MoyenAccessNetAutre3" type="int" />
+          <element name="Qe14LieuAccessNetChezSoi1" type="int" />
+          <element name="Qe14LieuAccessNetChezAmi2" type="int" />
+          <element name="Qe14LieuAccessNetBureau3" type="int" />
+          <element name="Qe14LieuAccessNetEcole4" type="int" />
+          <element name="Qe14LieuAccessNetCybercafe5" type="int" />
+          <element name="Qsm1StatutMatrimonial" type="int" />
+          <element name="Qa1ActEconomique1" type="int" />
+          <element name="Qa2ActAvoirDemele2" type="int" />
+          <element name="Qa2ActPourAutreMenage3" type="int" />
+          <element name="Qa2ActGarderie4" type="int" />
+          <element name="Qa2ActCultiverParcelle5" type="int" />
+          <element name="Qa2ActVendreService6" type="int" />
+          <element name="Qa2ActVendreSAP7" type="int" />
+          <element name="Qa2ActAiderParent8" type="int" />
+          <element name="Qa2ActStage9" type="int" />
+          <element name="Qa2ActCashForWork10" type="int" />
+          <element name="Qa2ActAutre11" type="int" />
+          <element name="Qa3TypeTravail" type="string" />
+          <element name="Qa4NombreHeureTravail" type="int" />
+          <element name="Qa5LieuTravail" type="int" />
+          <element name="Qa6FoncTravail" type="int" />
+          <element name="Qa7ProducTravail" type="string" />
+          <element name="Qa8SecteurTravail" type="int" />
+          <element name="Qa9InstitutionTravail" type="int" />
+          <element name="Qa9AutreInstitutionTravail" type="string" />
+          <element name="Qa10MoisDebutTravail1" type="int" />
+          <element name="Qa10AnneeDebutTravail2" type="int" />
+          <element name="Qa11AssurSanteEtat1" type="int" />
+          <element name="Qa11AssurSantePrive2" type="int" />
+          <element name="Qa11AssurSantePersonnel3" type="int" />
+          <element name="Qa11AssurSanteAutrePersonne4" type="int" />
+          <element name="Qa11AssurCAS5" type="int" />
+          <element name="Qa11AssurVieillesse6" type="int" />
+          <element name="Qa11AssurAccident7" type="int" />
+          <element name="Qa12TransfertArgent" type="int" />
+          <element name="Qa13ExpedTransfertArgent" type="int" />
+          <element name="Qa14FreqTransfertArgent" type="int" />
+          <element name="Qa15TransfArgentMoyenBureau1" type="int" />
+          <element name="Qa15TransfArgentMoyenBanque2" type="int" />
+          <element name="Qa15TransfArgentMoyenPersonne3" type="int" />
+          <element name="Qa15TransfArgentMoyenAutre4" type="int" />
+          <element name="Qf1EnfantNeVivant" type="int" />
+          <element name="Qf2NbreEnfantNeVivantG" type="int" />
+          <element name="Qf2NbreEnfantNeVivantF" type="int" />
+          <element name="Qf3NbreEnfantMenageG" type="int" />
+          <element name="Qf3NbreEnfantMenageF" type="int" />
+          <element name="Qf4NbreEVHorsMenageG" type="int" />
+          <element name="Qf4NbreEVHorsMenageF" type="int" />
+          <element name="Qf4NbreEVHorsMenage" type="int" />
+          <element name="Qf5NbreEnfantMortG" type="int" />
+          <element name="Qf5NbreEnfantMortF" type="int" />
+          <element name="Qf6DernierEnfantMois" type="int" />
+          <element name="Qf6DernierEnfantAnnee" type="int" />
+          <element name="Qf7SexeDENeVivant" type="int" />
+          <element name="Qf8LieuNaisDENeVivant" type="int" />
+          <element name="Qf9AideAccouchDENeVivant" type="int" />
+          <element name="Qf10DENeVivantVit" type="int" />
+          <element name="Qf11MoisMort" type="int" />
+          <element name="Qf11AnneeMort" type="int" />
+          <element name="StatutFecondite" type="int" />
+        </sequence>
+      </complexType>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="AuthenticateUserRequest">
+    <wsdl:part name="AuthenticateUserRequest" element="tns:AuthenticateUserRequest" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeRequest">
+    <wsdl:part name="SynchronizeRequest" element="tns:SynchronizeRequest" />
+  </wsdl:message>
+  <wsdl:message name="InsertBatimentResponse">
+    <wsdl:part name="InsertBatimentResponse" element="tns:InsertBatimentResponse" />
+  </wsdl:message>
+  <wsdl:message name="AuthenticateUserResponse">
+    <wsdl:part name="AuthenticateUserResponse" element="tns:AuthenticateUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertBatimentRequest">
+    <wsdl:part name="InsertBatimentRequest" element="tns:InsertBatimentRequest" />
+  </wsdl:message>
+  <wsdl:message name="SynchronizeResponse">
+    <wsdl:part name="SynchronizeResponse" element="tns:SynchronizeResponse" />
+  </wsdl:message>
+  <wsdl:portType name="RGPHService">
+    <wsdl:operation name="AuthenticateUser">
+      <wsdl:input name="AuthenticateUserRequest" message="tns:AuthenticateUserRequest" />
+      <wsdl:output name="AuthenticateUserResponse" message="tns:AuthenticateUserResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="Synchronize">
+      <wsdl:input name="SynchronizeRequest" message="tns:SynchronizeRequest" />
+      <wsdl:output name="SynchronizeResponse" message="tns:SynchronizeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertBatiment">
+      <wsdl:input name="InsertBatimentRequest" message="tns:InsertBatimentRequest" />
+      <wsdl:output name="InsertBatimentResponse" message="tns:InsertBatimentResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RGPHServiceSoap11" type="tns:RGPHService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AuthenticateUser">
+      <soap:operation soapAction="" />
+      <wsdl:input name="AuthenticateUserRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AuthenticateUserResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Synchronize">
+      <soap:operation soapAction="" />
+      <wsdl:input name="SynchronizeRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="SynchronizeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertBatiment">
+      <soap:operation soapAction="" />
+      <wsdl:input name="InsertBatimentRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="InsertBatimentResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RGPHServiceService">
+    <wsdl:port name="RGPHServiceSoap11" binding="tns:RGPHServiceSoap11">
+      <soap:address location="http://192.168.1.3:8082/rgph/rgph-webservice" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
