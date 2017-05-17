@@ -754,10 +754,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             listOf.Add(new KeyValue(4, "Ranpli nèt depi nan premye entèvyou a"));
             listOf.Add(new KeyValue(5, "Refus converti"));
             listOf.Add(new KeyValue(6, "Randevou ou retou pwograme/fèt/fini"));
+            //Menage
             listOf.Add(new KeyValue(7, "Moun ki tap reponn nan pa vle kontinye"));
             listOf.Add(new KeyValue(8, "Moun ki tap reponn nan kanpe, men gen randevou"));
             listOf.Add(new KeyValue(9, "Lojman an okipe, men moun yo pa la"));
             listOf.Add(new KeyValue(10, "Lòt. Presize poukisa..."));
+            //Menage
             listOf.Add(new KeyValue(11, "\"Refus non converti\" / Kesyonè a pa fini (NRP)"));
             listOf.Add(new KeyValue(12, "Moun ki pou reponn nan pa janm la/disponib pou AR la fin ranpli kesyonè a"));
             listOf.Add(new KeyValue(13, "Lojman an okipe, men moun yo pa la"));

@@ -52,10 +52,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             listOfBatiments = new List<BatimentModel>();
 
             //Style of the tabcontrol
+            #region Ajout des donnees dans les tableaux
             reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
             List<TableVerificationModel> verificationsNonReponseTotal = Utilities.getVerificatoinNonReponseTotal(MAIN_DATABASE_PATH, sde.SdeId);
             dtg_non_reponse_totale.ItemsSource = verificationsNonReponseTotal;
 
+            List<TableVerificationModel> verificationsNonReponsePartielle = Utilities.getVerificationNonReponsePartielle(MAIN_DATABASE_PATH, sde.SdeId);
+            dtg_non_reponse_partielle.ItemsSource = verificationsNonReponsePartielle;
+
+            List<VerificationFlag> verficationFlags = Utilities.getVerificationNonReponseParVariable(MAIN_DATABASE_PATH, sde.SdeId);
+            dtg_non_reponse_totale_variable.ItemsSource = verficationFlags;
+            #endregion
+
+            #region Ajout des images dans les nodes
             //Expand the node in level 1
             foreach (TreeListNode node in treeListView1.Nodes)
             {
@@ -76,11 +85,55 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
             }
             //
+            foreach (TreeListNode node in treeListView_partielle.Nodes)
+            {
+                node.IsExpanded = true;
+                node.Image = new BitmapImage(new Uri(@"/images/report3.png", UriKind.Relative));
+                foreach (TreeListNode childNode in node.Nodes)
+                {
+                    TableVerificationModel model = childNode.Content as TableVerificationModel;
+                    if (model.Niveau == "2")
+                    {
+                        childNode.IsExpanded = true;
+                        childNode.Image = new BitmapImage(new Uri(@"/images/malrempli.png", UriKind.Relative));
+                    }
+                    //Node logement
+                    foreach (TreeListNode logementChild in childNode.Nodes)
+                    {
+                        TableVerificationModel niveau3 = logementChild.Content as TableVerificationModel;
+                        if (niveau3.Niveau == "3")
+                        {
+                            logementChild.Image = new BitmapImage(new Uri(@"/images/logement.png", UriKind.Relative));
+                        }
+                        //a l'interieur du node Logement
+                        foreach (TreeListNode menageChild in logementChild.Nodes)
+                        {
+                            TableVerificationModel niveau4 = menageChild.Content as TableVerificationModel;
+                            if (niveau4.Niveau == "4")
+                            {
+                                menageChild.Image = new BitmapImage(new Uri(@"/images/home.png", UriKind.Relative));
+                            }
+                        }
+                    }
+                    //Node Menage
+                    foreach (TreeListNode menageChild in childNode.Nodes)
+                    {
+                        TableVerificationModel niveau3 = menageChild.Content as TableVerificationModel;
+                        if (niveau3.Niveau == "5")
+                        {
+                            menageChild.Image = new BitmapImage(new Uri(@"/images/menage.png", UriKind.Relative));
+                        }
+                        if (niveau3.Niveau == "6")
+                        {
+                            menageChild.Image = new BitmapImage(new Uri(@"/images/individu1.png", UriKind.Relative));
+                        }
+                    }
 
-            List<TableVerificationModel> verificationsNonReponsePartielle = Utilities.getVerificationNonReponsePartielle(MAIN_DATABASE_PATH, sde.SdeId);
-            dtg_non_reponse_partielle.ItemsSource = verificationsNonReponsePartielle;
-            List<VerificationFlag> verficationFlags = Utilities.getVerificationNonReponseParVariable(MAIN_DATABASE_PATH, sde.SdeId);
-            dtg_non_reponse_totale_variable.ItemsSource = verficationFlags;
+                }
+            }
+            #endregion
+            //           
+            
             tabIndCouverture.Focus();
 
         }
@@ -123,8 +176,41 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 batimanChild.Image = new BitmapImage(new Uri(@"/images/home.png", UriKind.Relative));
                             }
                         }
+                    }                   
+                }
+            }
+            //treeListView_partielle
+            //
+            foreach (TreeListNode node in treeListView_partielle.Nodes)
+            {
+                node.IsExpanded = true;
+                node.Image = new BitmapImage(new Uri(@"/images/report3.png", UriKind.Relative));
+                foreach (TreeListNode childNode in node.Nodes)
+                {
+                    TableVerificationModel model = childNode.Content as TableVerificationModel;
+                    if (model.Niveau == "2")
+                    {
+                        childNode.IsExpanded = true;
+                        childNode.Image = new BitmapImage(new Uri(@"/images/malrempli.png", UriKind.Relative));
                     }
-                   
+                    //Node Sde
+                    foreach (TreeListNode sdeChild in childNode.Nodes)
+                    {
+                        TableVerificationModel niveau3 = sdeChild.Content as TableVerificationModel;
+                        if (niveau3.Niveau == "3")
+                        {
+                            sdeChild.Image = new BitmapImage(new Uri(@"/images/database.png", UriKind.Relative));
+                        }
+                        //Node batiment
+                        foreach (TreeListNode batimanChild in sdeChild.Nodes)
+                        {
+                            TableVerificationModel niveau4 = batimanChild.Content as TableVerificationModel;
+                            if (niveau4.Niveau == "4")
+                            {
+                                batimanChild.Image = new BitmapImage(new Uri(@"/images/home.png", UriKind.Relative));
+                            }
+                        }
+                    }
                 }
             }
             //
@@ -509,7 +595,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 e.Column.Visible = false;
             if (e.Column.FieldName == "Niveau")
                 e.Column.Visible = false;
-
         }
         #endregion
 
@@ -616,9 +701,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() =>
                         barSeriesTailleMenage.Points.Add(new SeriesPoint("Taille moyenne des ménages", 85))));
                 barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() =>
-                            barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages unipersonnels (1 personne au plus)", nbreBatiment))));
+                            barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages unipersonnels (1 personne au plus)", nbreMenageUniPersonnel))));
                 barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() =>
-                            barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages de grande taille (6  et plus)", nbreBatiment))));
+                            barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages de grande taille (6  et plus)", nbreMenage6Personnes))));
 
                 pieSeriesNbreMenage.Dispatcher.BeginInvoke((Action)(() =>
                        pieSeriesNbreMenage.Points.Add(new SeriesPoint("Nombre de ménages recensés", nbreMenage))));
@@ -783,6 +868,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 createIndicateursPerformances(true);
             }
+        }
+
+        private void dtg_non_reponse_partielle_AutoGeneratingColumn(object sender, AutoGeneratingColumnEventArgs e)
+        {
+            if (e.Column.FieldName == "Color")
+                e.Column.Visible = false;
+            if (e.Column.FieldName == "Niveau")
+                e.Column.Visible = false;
+            if (e.Column.FieldName == "Image")
+                e.Column.Visible = false;
         }
     }
 }

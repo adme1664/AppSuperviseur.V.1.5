@@ -468,15 +468,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     foreach (BatimentJson bat in batimentsJsons)
                     {
-                        dataJson.Data = JsonConvert.SerializeObject(bat);
+                        dataJson.Data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
                         string dJson = JsonConvert.SerializeObject(dataJson);
                         byte[] datas = Encoding.UTF8.GetBytes(dJson);
                         write.Write(Encoding.UTF8.GetString(datas, 0, datas.Length));     
-                    }
-                                      
-                }
-              
-
+                    }                                     
+                }              
                 //
                 sqliteWrite = new SqliteDataWriter(sdeId);
                 List<BatimentType> listOfBatiment = new List<BatimentType>();

@@ -1852,9 +1852,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qaf2HandicapEntendre == 0 || i.qaf3HandicapMarcher == 0 ||
-                                                           i.qaf1HandicapVoir == 0 || i.qaf4HandicapSouvenir == 0 ||
-                                                           i.qaf5HandicapPourSeSoigner == 0 || i.qaf6HandicapCommuniquer == 0).Count();
+                return repository.MIndividuRepository.Find(i => i.qaf2HandicapEntendre > 1 || i.qaf3HandicapMarcher > 1 ||
+                                                           i.qaf1HandicapVoir > 1 || i.qaf4HandicapSouvenir > 1 ||
+                                                           i.qaf5HandicapPourSeSoigner > 1 || i.qaf6HandicapCommuniquer > 1).Count();
             }
             catch (Exception ex)
             {

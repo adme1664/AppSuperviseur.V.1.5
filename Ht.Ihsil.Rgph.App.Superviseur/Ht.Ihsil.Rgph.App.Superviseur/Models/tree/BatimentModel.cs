@@ -16,7 +16,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public string VqseId { get; set; }
         public string SdeId { get; set; }
         public short Zone { get; set; }
-        public string DisctrictId { get; set; }
+        public string DistrictId { get; set; }
         public string Qhabitation { get; set; }
         public string Qlocalite { get; set; }
         public string Qadresse { get; set; }
@@ -45,15 +45,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public string CodeAgentRecenceur { get; set; }
-
         public bool IsChecked { get; set; }
         public bool IsMalRempli { get; set; }
         public bool IsFinished { get; set; }
         public bool IsNotFinished { get; set; }
         public Nullable<int> Termine { get; set; }
-
         public int TypeContreEnquete { get; set; }
-
         public bool IsValidate { get; set; }
         public string BatimentName
         {

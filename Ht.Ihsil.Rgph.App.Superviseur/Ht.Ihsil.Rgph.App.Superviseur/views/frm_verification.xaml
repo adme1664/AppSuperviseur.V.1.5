@@ -258,32 +258,18 @@
                             <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_totale" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGeneratingColumn="dtg_non_reponse_totale_AutoGeneratingColumn" SelectionMode="Row">
                                 <dxg:TreeListControl.View >
                                     <dxg:TreeListView  ShowNodeImages="True" ImageFieldName="Image"  NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListView1" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"   AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD">
-                                        <!--<dxg:TreeListView.RowStyle>
-                                            <Style TargetType="{x:Type dxg:RowControl}">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Row.Color}" Value="1">
-                                                        <Setter Property="Background" Value="#FF73F566" />
-                                                        <Setter Property="Foreground" Value="Black" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </dxg:TreeListView.RowStyle>-->
-                                        <!--<dxg:TreeListView.Nodes>
-                                            <dxg:TreeListNode Image="/Ht.Ihsil.Rgph.App.Superviseur;component/images/database.png"></dxg:TreeListNode>
-                                        </dxg:TreeListView.Nodes>-->
                                     </dxg:TreeListView>
                                 </dxg:TreeListControl.View>
                                 <dxg:TreeListControl.Columns>
-
-                                </dxg:TreeListControl.Columns>
+                            </dxg:TreeListControl.Columns>
                             </dxg:TreeListControl>
                         </GroupBox>
                     </dx:DXTabItem>
                     <dx:DXTabItem Header="NON-REPONSE PARTIELLE">
                         <GroupBox Header="Verification Partielle">
-                            <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_partielle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_partielle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGeneratingColumn="dtg_non_reponse_partielle_AutoGeneratingColumn" SelectionMode="Row">
                                 <dxg:TreeListControl.View >
-                                    <dxg:TreeListView   AllowPerPixelScrolling="True" ShowTotalSummary="True" Name="treeListView_partielle" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"  AllowScrollAnimation="True" AutoWidth="True" />
+                                    <dxg:TreeListView   ShowNodeImages="True" ImageFieldName="Image"  NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListView_partielle" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"  AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD" />
                                 </dxg:TreeListControl.View>
                                 <dxg:TreeListControl.Columns>
 

@@ -698,7 +698,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.ParentID = lastParentId;
                         report.Niveau = "4";
                         rapports.Add(report);
-                        lastId = report.ID + 1;
+                        lastId = report.ID;
                     }
                 }
             #endregion
@@ -717,7 +717,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int batimentInobservableId = 0;
                 report = new TableVerificationModel();
                 report.Type = "2- BÂTIMENTS INOBSERVABLES / TAUX DE NON-RÉPONSE TOTALE NRT 1 (%)";
-                report.ID = lastId;
+                report.ID = lastId+1;
                 report.ParentID = firstParentId;
                 report.Indicateur = "BÂTIMENTS INOBSERVABLES (B1=5)";
                 report.Total = "" + nbreBatimentInobservables;
@@ -752,7 +752,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.ParentID = lastParentId;
                         report.Niveau = "4";
                         rapports.Add(report);
-                        lastId = report.ID + 1;
+                        lastId = report.ID;
                     }
                 }
                 #endregion
@@ -771,7 +771,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 }
                 report = new TableVerificationModel();
                 report.Type = "3-TAUX DE NON-RÉPONSE TOTALE (%)";
-                report.ID = lastId;
+                report.ID = lastId+1;
                 BatimentObjetVideId = report.ID;
                 report.ParentID = firstParentId;
                 report.Indicateur = "Objet Logement pas rempli du tout";
@@ -808,7 +808,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.ParentID = lastParentId;
                         report.Niveau = "4";
                         rapports.Add(report);
-                        lastId = report.ID + 1;
+                        lastId = report.ID;
                     }
                 }
                 #endregion
@@ -836,7 +836,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 lastParentId = lastId;
                 report = new TableVerificationModel();
                 report.Type = "4-DISTRIBUTION DES QUESTIONNAIRES EN NRT2 SELON LA RAISON (%)";
-                report.ID = lastId;
+                report.ID = lastId+1;
                 BatimentInobservableEtVideParentId = report.ID;
                 report.ParentID = firstParentId;
                 report.Indicateur = "";
@@ -946,7 +946,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ParentID = sdeParentId;
                     report.Total = "" + nonbreRefusTotal;
                     rapports.Add(report);
-                    lastId = report.ID + 1;
+                    lastId = report.ID;
                     //On ajoute les batiments dans la branche
                     foreach (BatimentModel batiment in batimentsEnRefus)
                     {
@@ -956,7 +956,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.ParentID = refusParent;
                         report.Niveau = "4";
                         rapports.Add(report);
-                        lastId = report.ID + 1;
+                        lastId = report.ID;
                     }
 
                     //On ajoute la branche Indisponibilité avec rendez-vous
@@ -968,7 +968,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ParentID = sdeParentId;
                     report.Total = "" + NbreIndAvecRendezVous;
                     rapports.Add(report);
-                    lastId = report.ID + 1;
+                    lastId = report.ID;
                     //On ajoute les batiments dans la branche
                     foreach (BatimentModel batiment in batimentsEnIndAvecRendezVous)
                     {
@@ -978,7 +978,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.ParentID = indAvecRDParent;
                         report.Niveau = "4";
                         rapports.Add(report);
-                        lastId = report.ID + 1;
+                        lastId = report.ID;
                     }
 
                     //On ajoute la branche Indisponibilité
@@ -990,7 +990,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ParentID = sdeParentId;
                     report.Total = "" + nbreIndisponible;
                     rapports.Add(report);
-                    lastId = report.ID + 1;
+                    lastId = report.ID;
                     //On ajoute les batiments dans la branche
                     foreach (BatimentModel batiment in batimentsIndisponible)
                     {
@@ -1000,7 +1000,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.ParentID = indParent;
                         report.Niveau = "4";
                         rapports.Add(report);
-                        lastId = report.ID + 1;
+                        lastId = report.ID ;
                     }
                     //On ajoute la branche Autre
                     report = new TableVerificationModel();
@@ -1011,7 +1011,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ParentID = sdeParentId;
                     report.Total = "" + nbreAutre;
                     rapports.Add(report);
-                    lastId = report.ID + 1;
+                    lastId = report.ID;
                     //On ajoute les batiments dans la branche
                     foreach (BatimentModel batiment in batimentsEnAutre)
                     {
@@ -1021,13 +1021,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         report.ParentID = autreParent;
                         report.Niveau = "4";
                         rapports.Add(report);
-                        lastId = report.ID + 1;
+                        lastId = report.ID;
                     }
                     ////////////////////////
                 }
 #endregion
-
-                
+             
             }
             #endregion
             return rapports;
@@ -1056,6 +1055,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             report.Indicateur = "";
             report.ParentID = 0;
             report.ID = 1;
+            report.Niveau = "1";
             lastId = report.ID;
             lastParentId = report.ID;
             parent_0 = lastParentId;
@@ -1069,6 +1069,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             report.ParentID = lastParentId;
             report.ID = lastId+1;
             parent_1 = report.ID;
+            report.Niveau = "2";
             report.Total = "" + (service.Sr.GetAllLogementIndNotFinish().Count() + service.Sr.GetAllMenageNotFinish().Count() + service.Sr.GetAllIndividuNotFinish().Count());
             report.Taux = "" + getPourcentage(Convert.ToInt32(report.Total), (nbreTotalIndividus + nbreTotalLogement + nbreTotalMenages)) + "%";
             lastId = report.ID;
@@ -1083,6 +1084,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             report = new TableVerificationModel();
             report.ID = lastId + 1;
             report.ParentID = parent_1;
+            report.Niveau = "3";
             report.Type = "Nombre de logements individuels";
             report.Total = ""+logementsPartiellesRemplis.Count();
             report.Taux = "" + getPourcentage(nbreLogementTotalPR, nbreTotalLogement)+"%";
@@ -1098,6 +1100,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ID = lastId + 1;
                     report.Type = "Batiman-" + logement.BatimentId + "/Lojman-" + logement.LogeId;
                     report.ParentID = lastParentId;
+                    report.Niveau = "4";
                     rapports.Add(report);
                     lastId = report.ID;
                 }
@@ -1110,8 +1113,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             report.ID = lastId + 1;
             report.ParentID = parent_1;
             report.Type = "Nombre de menages";
-            report.Total = "" + menagesPartiellesRemplis.Count();
+            report.Total = "" + nbreMenagesPartiellesRemplis;
             report.Taux = "" + getPourcentage(nbreMenagesPartiellesRemplis, nbreTotalMenages) + "%";
+            report.Niveau = "5";
             rapports.Add(report);
             lastId = report.ID;
             lastParentId = report.ID;
@@ -1124,6 +1128,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ID = lastId + 1;
                     report.Type = "Batiman-" + men.BatimentId + "/Lojman-" + men.LogeId+"/Menaj-"+men.MenageId;
                     report.ParentID = lastParentId;
+                    report.Niveau = "";
                     rapports.Add(report);
                     lastId = report.ID;
                 }
@@ -1138,6 +1143,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             report.Type = "Nombre d'individus";
             report.Total = "" + nbreindividusPartiellesRemplis;
             report.Taux = "" + getPourcentage(nbreindividusPartiellesRemplis, nbreTotalMenages) + "%";
+            report.Niveau = "6";
             rapports.Add(report);
             lastId = report.ID;
             lastParentId = report.ID;
@@ -1150,6 +1156,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ID = lastId + 1;
                     report.Type = "Batiman-" + ind.BatimentId + "/Lojman-" + ind.LogeId + "/Menaj-" + ind.MenageId+"/Envidivi-"+ind.IndividuId;
                     report.ParentID = lastParentId;
+                    report.Niveau = "6";
                     rapports.Add(report);
                     lastId = report.ID;
                }
@@ -1165,6 +1172,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             report.ParentID = 1;
             report.ID = lastId + 1;
             parent_2 = report.ID;
+            report.Niveau = "2";
             report.Total = "" + nbreLogOccupantAbsent;
             report.Taux = "" + getPourcentage(nbreLogOccupantAbsent, nbreTotalLogement);
             lastId = report.ID;
@@ -1181,12 +1189,53 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.Type = "Batiman-" + logement.BatimentId + "/Lojman-" + logement.LogeId;
                     report.ParentID = lastParentId;
                     lastId = report.ID;
+                    report.Niveau = "3";
                     rapports.Add(report);
                 }
             }
             #endregion
 
+            #region MENAGES PARTIELLEMENT REMPLIS
+            report = new TableVerificationModel();
+            report.Type = "3- %  DE MÉNAGES PARTIELLEMENT REMPLIS";
+            report.ParentID = 1;
+            report.ID = lastId + 1;
+            parent_2 = report.ID;
+            report.Niveau = "2";
+            report.Total = "" + nbreMenagesPartiellesRemplis;
+            report.Taux = "" + getPourcentage(nbreMenagesPartiellesRemplis, nbreTotalMenages);
+            rapports.Add(report);
+            lastId = report.ID;
+            lastParentId = report.ID;
+            if (nbreMenagesPartiellesRemplis > 0)
+            {
+                 //Nombre Indisponibilité avec rendez-vous
+                int NbreIndAvecRendezVous = 0;
+                List<MenageModel> menageEnIndAvecRendezVous = new List<MenageModel>();
+                string raisonAvecRendezVous = "";
 
+                //Abandon
+                int nbreAbandon = 0;
+                List<MenageModel> menageAbandon = new List<MenageModel>();
+                string raisonAbandon = "";
+
+                //Autre
+                int nbreAutre = 0;
+                List<MenageModel> menageEnAutre = new List<MenageModel>();
+                string raisonAutre = "";
+                foreach (MenageModel menage in menagesPartiellesRemplis)
+                {
+                    List<RapportArModel> rarForMenage=service.Sr.GetAllRptAgentRecenseurByMenage(menage.MenageId);
+                    foreach (RapportArModel rar in rarForMenage)
+                    {
+                        if (rar.RaisonActionId == 7)
+                        {
+
+                        }
+                    }
+                }
+            }
+            #endregion
             #endregion
 
 
