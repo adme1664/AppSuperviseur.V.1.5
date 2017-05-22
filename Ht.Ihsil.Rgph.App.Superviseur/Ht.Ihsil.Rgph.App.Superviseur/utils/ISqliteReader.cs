@@ -207,6 +207,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<RapportArModel> GetAllRptAgentRecenseurByBatiment(long batimentId);
         List<RapportArModel> GetAllRptAgentRecenseurByLogement(long logeId);
         List<RapportArModel> GetAllRptAgentRecenseurByMenage(long menageId);
+        List<RapportArModel> GetAllRptAgentRecenseurByIndividu(long individuId);
         List<RapportArModel> GetAllRptAgentRecenseurForNotFinishedObject();
         #endregion
     }

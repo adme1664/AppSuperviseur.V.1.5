@@ -2506,16 +2506,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return null;
         }
+        
+        public List<RapportArModel> GetAllRptAgentRecenseurByIndividu(long individuId)
+        {
+            try
+            {
+                return ModelMapper.MapToListRapportARModel(repository.MRapportARRepository.Find(r => r.individuId ==individuId).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader:/GetAllRptAgentRecenseurByIndividu:" + ex.Message);
+            }
+            return null;
+        }
         #endregion
-
-
-
-
-
-
-
-
-
-
     }
 }
