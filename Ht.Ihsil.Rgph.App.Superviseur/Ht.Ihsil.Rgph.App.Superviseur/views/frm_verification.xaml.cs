@@ -145,7 +145,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             tabIndCouverture.Focus();
             
             List<TableVerificationModel> verificationsNonReponseTotal = Utilities.getVerificatoinNonReponseTotalForAllSdes(MAIN_DATABASE_PATH);
+            List<TableVerificationModel> verificationsNonReponsePartielle = Utilities.getVerificationNonReponsePartielleForAllSdes(MAIN_DATABASE_PATH);
             dtg_non_reponse_totale.ItemsSource = verificationsNonReponseTotal;
+            dtg_non_reponse_partielle.ItemsSource = verificationsNonReponsePartielle;
             //Expand the node in level 2
             foreach (TreeListNode node in treeListView1.Nodes)
             {
@@ -202,12 +204,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             sdeChild.Image = new BitmapImage(new Uri(@"/images/database.png", UriKind.Relative));
                         }
                         //Node batiment
-                        foreach (TreeListNode batimanChild in sdeChild.Nodes)
+                        foreach (TreeListNode logementChild in sdeChild.Nodes)
                         {
-                            TableVerificationModel niveau4 = batimanChild.Content as TableVerificationModel;
+                            TableVerificationModel niveau4 = logementChild.Content as TableVerificationModel;
                             if (niveau4.Niveau == "4")
                             {
-                                batimanChild.Image = new BitmapImage(new Uri(@"/images/home.png", UriKind.Relative));
+                                logementChild.Image = new BitmapImage(new Uri(@"/images/menu-image.png", UriKind.Relative));
+                            }
+                            foreach (TreeListNode batimanChild in logementChild.Nodes)
+                            {
+                                TableVerificationModel niveau5 = batimanChild.Content as TableVerificationModel;
+                                if (niveau5.Niveau == "5")
+                                {
+                                    batimanChild.Image = new BitmapImage(new Uri(@"/images/home.png", UriKind.Relative));
+                                }
                             }
                         }
                     }

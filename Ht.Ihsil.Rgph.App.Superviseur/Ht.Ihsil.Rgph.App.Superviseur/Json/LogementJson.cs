@@ -8,32 +8,32 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
 {
     public class LogementJson
     {
-        public long LogeId { get; set; }
-        public long BatimentId { get; set; }
-        public string SdeId { get; set; }
-        public short QlCategLogement { get; set; }
-        public short Qlin1NumeroOrdre { get; set; }
-        public short Qlc1TypeLogement { get; set; }
-        public short Qlc2bTotalGarcon { get; set; }
-        public short Qlc2bTotalFille { get; set; }
-        public short QlcTotalIndividus { get; set; }
-        public short Qlin2StatutOccupation { get; set; }
-        public short Qlin3ExistenceLogement { get; set; }
-        public short Qlin4TypeLogement { get; set; }
-        public short Qlin5MateriauSol { get; set; }
-        public short Qlin6NombrePiece { get; set; }
-        public short Qlin7NbreChambreACoucher { get; set; }
-        public short Qlin8NbreIndividuDepense { get; set; }
-        public short Qlin9NbreTotalMenage { get; set; }
-        public short Statut { get; set; }
-        public bool IsValidated { get; set; }
-        public string DateDebutCollecte { get; set; }
-        public string DateFinCollecte { get; set; }
-        public int DureeSaisie { get; set; }
-        public bool IsFieldAllFilled { get; set; }
-        public bool IsContreEnqueteMade { get; set; }
-        public short NbrTentative { get; set; }
-        public string CodeAgentRecenceur { get; set; }
+        public long logeId { get; set; }
+        public long batimentId { get; set; }
+        public string sdeId { get; set; }
+        public short qlCategLogement { get; set; }
+        public short qlin1NumeroOrdre { get; set; }
+        public short qlc1TypeLogement { get; set; }
+        public short qlc2bTotalGarcon { get; set; }
+        public short qlc2bTotalFille { get; set; }
+        public short qlcTotalIndividus { get; set; }
+        public short qlin2StatutOccupation { get; set; }
+        public short qlin3ExistenceLogement { get; set; }
+        public short qlin4TypeLogement { get; set; }
+        public short qlin5MateriauSol { get; set; }
+        public short qlin6NombrePiece { get; set; }
+        public short qlin7NbreChambreACoucher { get; set; }
+        public short qlin8NbreIndividuDepense { get; set; }
+        public short qlin9NbreTotalMenage { get; set; }
+        public short statut { get; set; }
+        public bool isValidated { get; set; }
+        public string dateDebutCollecte { get; set; }
+        public string dateFinCollecte { get; set; }
+        public int dureeSaisie { get; set; }
+        public bool isFieldAllFilled { get; set; }
+        public bool isContreEnqueteMade { get; set; }
+        public short nbrTentative { get; set; }
+        public string codeAgentRecenceur { get; set; }
 
         public List<MenageJson> Menages { get; set; }
     }

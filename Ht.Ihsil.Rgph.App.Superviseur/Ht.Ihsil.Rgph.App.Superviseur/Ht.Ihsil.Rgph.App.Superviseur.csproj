@@ -929,6 +929,7 @@
     <Resource Include="images\vi2.png" />
     <Resource Include="images\verification.png" />
     <Resource Include="images\formulaire_retour.png" />
+    <Resource Include="images\menu-image.png" />
     <Content Include="lib\net35\Microsoft.SharePoint.Client.dll" />
     <Content Include="lib\net35\Microsoft.SharePoint.Client.Runtime.dll" />
     <Resource Include="images\database_converted.png" />

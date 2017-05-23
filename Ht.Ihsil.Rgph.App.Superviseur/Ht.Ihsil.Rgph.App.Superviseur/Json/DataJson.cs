@@ -8,8 +8,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
 {
    public class DataJson
     {
-       public string Username { get; set; }
-       public string DeptId { get; set; }
-       public string Data { get; set; }
+       public string username { get; set; }
+       public string deptId { get; set; }
+       public string data { get; set; }
     }
 }

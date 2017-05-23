@@ -8,22 +8,22 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
 {
    public class EmigreJson
     {
-        public long EmigreId { get; set; }
-        public long MenageId { get; set; }
-        public long LogeId { get; set; }
-        public long BatimentId { get; set; }
-        public string SdeId { get; set; }
-        public short Qn1numeroOrdre { get; set; }
-        public string Qn2aNomComplet { get; set; }
-        public short Qn2bSexe { get; set; }
-        public string Qn2cAgeAuMomentDepart { get; set; }
-        public short Qn2dVivantToujours { get; set; }
-        public short Qn2eDernierPaysResidence { get; set; }
-        public short Statut { get; set; }
-        public bool IsFieldAllFilled { get; set; }
-        public string DateDebutCollecte { get; set; }
-        public string DateFinCollecte { get; set; }
-        public int DureeSaisie { get; set; }
-        public string CodeAgentRecenceur { get; set; }
+        public long emigreId { get; set; }
+        public long menageId { get; set; }
+        public long logeId { get; set; }
+        public long batimentId { get; set; }
+        public string sdeId { get; set; }
+        public short qn1numeroOrdre { get; set; }
+        public string qn2aNomComplet { get; set; }
+        public short qn2bSexe { get; set; }
+        public string qn2cAgeAuMomentDepart { get; set; }
+        public short qn2dVivantToujours { get; set; }
+        public short qn2eDernierPaysResidence { get; set; }
+        public short statut { get; set; }
+        public bool isFieldAllFilled { get; set; }
+        public string dateDebutCollecte { get; set; }
+        public string dateFinCollecte { get; set; }
+        public int dureeSaisie { get; set; }
+        public string codeAgentRecenceur { get; set; }
     }
 }

@@ -91,7 +91,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public int DureeSaisie { get; set; }
         public bool IsContreEnqueteMade { get; set; }
         public string CodeAgentRecenceur { get; set; }
-
+        public string Raison { get; set; }
 
         public string IndividuName
         {

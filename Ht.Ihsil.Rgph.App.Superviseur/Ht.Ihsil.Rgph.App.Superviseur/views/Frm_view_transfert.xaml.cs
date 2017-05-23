@@ -461,14 +461,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 log.Info("JSON Executed:" + batimentsJsons.Count);
                 //MemoryStream stream1 = new MemoryStream();
                 DataJson dataJson = new DataJson();
-                dataJson.Username = "Adme Jean Jeff";
-                dataJson.DeptId = "01";
+                dataJson.username = "Adme Jean Jeff";
+                dataJson.deptId = "01";
                 //DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BatimentJson));
                 using (StreamWriter write = new StreamWriter(MAIN_DATABASE_PATH + "DataJson.json"))
                 {
                     foreach (BatimentJson bat in batimentsJsons)
                     {
-                        dataJson.Data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
+                        dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
                         string dJson = JsonConvert.SerializeObject(dataJson);
                         byte[] datas = Encoding.UTF8.GetBytes(dJson);
                         write.Write(Encoding.UTF8.GetString(datas, 0, datas.Length));     

@@ -1450,22 +1450,31 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return rapports;
         }
         public static List<TableVerificationModel> getVerificationNonReponsePartielleForAllSdes(string path)
+
         {
             List<TableVerificationModel> rapports = new List<TableVerificationModel>();
             IConfigurationService configurationService = new ConfigurationService();
             List<SdeModel> listOfSdes = configurationService.searchAllSdes();
             int nbreLogements = 0;
+            int nbreTotalLogement = 0;
+            int nbreTotalMenages = 0;
+            int nbreTotalIndividus = 0;
             int nbreMenages = 0;
             int nbreIndividus = 0;
+            int nbreLogementsOccupantsAbsents = 0;
             int notFinishObject = 0;
             ISqliteReader service = null;
 
             foreach (SdeModel sde in listOfSdes)
             {
                 service = new SqliteReader(Utilities.getConnectionString(path, sde.SdeId));
+                nbreTotalIndividus += service.GetAllIndividus().Count;
+                nbreTotalLogement += service.GetAllLogements().Count;
+                nbreTotalMenages += service.GetAllMenages().Count;
                 nbreLogements = nbreLogements + service.GetAllLogementIndNotFinish().Count;
                 nbreMenages += service.GetAllMenageNotFinish().Count;
                 nbreIndividus += service.GetAllIndividuNotFinish().Count;
+                nbreLogementsOccupantsAbsents += service.GetAllLogementOccupantAbsent().Count;
                 notFinishObject += (service.GetAllLogementIndNotFinish().Count() + service.GetAllMenageNotFinish().Count() + service.GetAllIndividuNotFinish().Count());
             }
 
@@ -1473,6 +1482,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             int parent_0 = 0;
             int parent_1 = 0;
             int parent_2 = 0;
+            int parentLogement = 0;
+            int parentMenage = 0;
+            int parentIndividus = 0;
             int lastId = 0;
             int lastParentId = 0;
 
@@ -1489,6 +1501,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             parent_0 = lastParentId;
             rapports.Add(report);
 
+            #region NOMBRE QUESTIONNAIRES PARTIELLEMENT REMPLIS
             //Branche 1
             report = new TableVerificationModel();
             report.Type = "1- NOMBRE QUESTIONNAIRES PARTIELLEMENT REMPLIS";
@@ -1501,27 +1514,436 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             rapports.Add(report);
 
             //Liste des logements, menages individus
-            List<LogementModel> logements=service.GetAllLogementIndNotFinish();
-            List<MenageModel> menages=service.GetAllMenageNotFinish();
-            List<IndividuModel> individus=service.GetAllIndividuNotFinish();
+            List<LogementModel> logements = null;
+            List<MenageModel> menages=null;
+            List<IndividuModel> individus=null;
             //
             //Ajout des sdes
             foreach (SdeModel sd in listOfSdes)
             {
+                service = new SqliteReader(Utilities.getConnectionString(path, sd.SdeId));
+                logements = service.GetAllLogementIndNotFinish();
+                menages=service.GetAllMenageNotFinish();
+                individus=service.GetAllIndividuNotFinish();
                 report = new TableVerificationModel();
                 report.Type = ""+sd.SdeId;
                 report.ID = lastId + 1;
                 lastId = report.ID;
                 report.Niveau = "3";
                 report.ParentID = parent_1;
+                parent_2 = report.ID;
+                rapports.Add(report);
+                //
+                //Ajout de la branche Logements
+                report = new TableVerificationModel();
+                report.ID = lastId + 1;
+                report.ParentID = parent_2;
+                report.Type = "Nombre de logements individuels";
+                report.Total = ""+logements.Count;
+                report.Niveau = "4";
+                report.Taux ="%"+ getPourcentage(logements.Count, service.GetAllLogements().Count);
+                lastId = report.ID;
+                parentLogement = report.ID;
                 rapports.Add(report);
                 //Ajout des branches logements, menages individus dans la SDE
+
+
                 foreach (LogementModel logment in logements)
                 {
+                    report = new TableVerificationModel();
+                    report.ID = lastId + 1;
+                    report.ParentID = parentLogement;
+                    report.Type = "Batiman-" + logment.BatimentId + "/Lojman-" + logment.LogeId;
+                    lastId = report.ID;
+                    report.Niveau = "5";
+                    rapports.Add(report);
+                }
+                //
+                //Ajout de la branche Menages
+                report = new TableVerificationModel();
+                report.ID = lastId + 1;
+                report.ParentID = parent_2;
+                report.Type = "Nombre de ménages";
+                report.Total = "" + menages.Count;
+                report.Niveau = "4";
+                report.Taux = "%" + getPourcentage(menages.Count, service.GetAllMenages().Count);
+                lastId = report.ID;
+                parentMenage = report.ID;
+                rapports.Add(report);
 
+                foreach(MenageModel men in menages )
+                {
+                    report = new TableVerificationModel();
+                    report.ID = lastId + 1;
+                    report.ParentID = parentMenage;
+                    report.Type = "Batiman-" + men.BatimentId + "/Lojman-" + men.LogeId+"/Menaj-"+men.MenageId;
+                    lastId = report.ID;
+                    report.Niveau = "5";
+                    rapports.Add(report);
+                }
+                //
+                //Ajout de la branche Menages
+                report = new TableVerificationModel();
+                report.ID = lastId + 1;
+                report.ParentID = parent_2;
+                report.Type = "Nombre d´individus";
+                report.Total = "" + individus.Count;
+                report.Niveau = "4";
+                report.Taux = "%" + getPourcentage(individus.Count, service.GetAllIndividus().Count);
+                lastId = report.ID;
+                parentIndividus = report.ID;
+                rapports.Add(report);
+                foreach (IndividuModel ind in individus)
+                {
+                    report = new TableVerificationModel();
+                    report.ID = lastId + 1;
+                    report.ParentID = parentIndividus;
+                    report.Type = "Batiman-" + ind.BatimentId + "/Lojman-" + ind.LogeId + "/Menaj-" + ind.MenageId+"/Endividi-"+ind.IndividuId;
+                    lastId = report.ID;
+                    report.Niveau = "5";
+                    rapports.Add(report);
+                }
+
+            }
+            #endregion
+
+            #region NOMBRE DE LOGEMENTS OCCUPÉS AVEC OCCUPANTS ABSENTS
+            report = new TableVerificationModel();
+            report.Type = "2- NOMBRE DE LOGEMENTS OCCUPÉS AVEC OCCUPANTS ABSENTS";
+            report.ID = lastId + 1;
+            report.ParentID = parent_0;
+            lastId = report.ID;
+            parent_1 = report.ID;
+            report.Total = "" + nbreLogementsOccupantsAbsents;
+            report.Taux = "" + getPourcentage(nbreLogementsOccupantsAbsents, nbreTotalLogement)+"%";
+            report.Niveau = "2";
+            rapports.Add(report);
+
+            //AJout des branches Sdes
+            foreach (SdeModel sd in listOfSdes)
+            {
+                service = new SqliteReader(Utilities.getConnectionString(path, sd.SdeId));
+                logements = new List<LogementModel>();
+                logements = service.GetAllLogementOccupantAbsent();
+                report = new TableVerificationModel();
+                report.Type = "" + sd.SdeId;
+                report.ID = lastId + 1;
+                lastId = report.ID;
+                report.Total = ""+logements.Count;
+                report.Taux = "" + getPourcentage(logements.Count, nbreTotalLogement) + "%";
+                report.Niveau = "3";
+                report.ParentID = parent_1;
+                parent_2 = report.ID;
+                rapports.Add(report);
+
+                //Ajout des logemnts dans chaque SDE
+                foreach (LogementModel logChild in logements)
+                {
+                    report = new TableVerificationModel();
+                    report.Type = "Batiman-" + logChild.BatimentId + "/Lojman-" + logChild.LogeId;
+                    report.ID = lastId + 1;
+                    lastId = report.ID;
+                    report.Niveau = "5";
+                    report.ParentID = parent_2;
+                    rapports.Add(report);
                 }
             }
+            #endregion
 
+            #region DE MÉNAGES PARTIELLEMENT REMPLIS
+            int parentAbandon = 0;
+            int parentRendezVous = 0;
+            int parentAutre = 0;
+            report = new TableVerificationModel();
+            report.Type = "3- % DE MÉNAGES PARTIELLEMENT REMPLIS";
+            report.ID = lastId + 1;
+            report.ParentID = parent_0;
+            lastId = report.ID;
+            parent_1 = report.ID;
+            report.Total = "" + nbreMenages;
+            report.Taux = "" + getPourcentage(nbreMenages, nbreTotalMenages) + "%";
+            report.Niveau = "2";
+            rapports.Add(report);
+
+            foreach (SdeModel sd in listOfSdes)
+            {
+                service = new SqliteReader(Utilities.getConnectionString(path, sd.SdeId));
+                menages = service.GetAllMenageNotFinish();
+                report = new TableVerificationModel();
+                report.Type = "" + sd.SdeId;
+                report.ID = lastId + 1;
+                lastId = report.ID;
+                report.Total = ""+menages.Count;
+                report.Taux = "" + getPourcentage(menages.Count, nbreTotalMenages);
+                report.Niveau = "3";
+                report.ParentID = parent_1;
+                parent_2 = report.ID;
+                rapports.Add(report);
+
+                //Ajout des branches Abandon, Rendex-Vous, Autre et leurs filles
+                int NbreIndAvecRendezVous = 0;
+                List<MenageModel> menageEnIndAvecRendezVous = new List<MenageModel>();
+                string raisonAvecRendezVous = "";
+
+                //Abandon
+                int nbreAbandon = 0;
+                List<MenageModel> menageAbandon = new List<MenageModel>();
+                string raisonAbandon = "";
+
+                //Autre
+                int nbreAutre = 0;
+                List<MenageModel> menageEnAutre = new List<MenageModel>();
+                string raisonAutre = "";
+                //
+                //Constrcution des branches Abandon, Rendexvous, Autre
+                foreach (MenageModel menage in menages)
+                {
+                    List<RapportArModel> rarForMenage = service.GetAllRptAgentRecenseurByMenage(menage.MenageId);
+                    foreach (RapportArModel rar in rarForMenage)
+                    {
+                        if (rar.RaisonActionId == 7)
+                        {
+                            nbreAbandon = nbreAbandon + 1;
+                            menageAbandon.Add(menage);
+                            raisonAbandon = Constant.getRaison(rar.RaisonActionId).Value;
+                        }
+                        if (rar.RaisonActionId == 8)
+                        {
+                            NbreIndAvecRendezVous = NbreIndAvecRendezVous + 1;
+                            menageEnIndAvecRendezVous.Add(menage);
+                            raisonAvecRendezVous = Constant.getRaison(rar.RaisonActionId).Value;
+                        }
+                        if (rar.RaisonActionId == 10)
+                        {
+                            nbreAutre = nbreAutre + 1;
+                            menageEnAutre.Add(menage);
+                            raisonAutre = Constant.getRaison(rar.RaisonActionId).Value;
+                        }
+
+                    }
+                }
+                //
+                //Ajout de la branche Refus
+                report = new TableVerificationModel();
+                report.Type = "Abandon";
+                report.ID = lastId + 1;
+                report.ParentID = parent_2;
+                parentAbandon = report.ID;
+                report.Niveau = "4";
+                lastId = report.ID;
+                report.Total = "" + menageAbandon.Count;
+                report.Taux = "" + getPourcentage(menageAbandon.Count, nbreTotalMenages);
+                rapports.Add(report);
+                //Ajout des menages se trouvant a l'interieur 
+                foreach (MenageModel men in menageAbandon)
+                {
+                    report = new TableVerificationModel();
+                    report.Type = "Batiman-" + men.BatimentId + "/Lojman-" + men.LogeId + "'Menaj-" + men.MenageId;
+                    report.ID = lastId + 1;
+                    report.ParentID = parentAbandon;
+                    lastId = report.ID;
+                    report.Niveau = "5";
+                    rapports.Add(report);
+                }
+
+                //Ajout de la branche Interruption avec Rendez-vous
+                report = new TableVerificationModel();
+                report.ID = lastId + 1;
+                report.ParentID = parent_2;
+                report.Type = "Interruption avec Rendez-vous";
+                report.Total = "" + menageEnIndAvecRendezVous.Count;
+                parentRendezVous = report.ID;
+                report.Niveau = "4";
+                lastId = report.ID;
+                report.Taux = "" + getPourcentage(menageEnIndAvecRendezVous.Count, nbreTotalMenages);
+                rapports.Add(report);
+                //Ajout de menages se trouvant a l'interieur
+                foreach (MenageModel men in menageEnIndAvecRendezVous)
+                {
+                    report = new TableVerificationModel();
+                    report.Type = "Batiman-" + men.BatimentId + "/Lojman-" + men.LogeId + "'Menaj-" + men.MenageId;
+                    report.ID = lastId + 1;
+                    report.ParentID = parentRendezVous;
+                    lastId = report.ID;
+                    report.Niveau = "5";
+                    rapports.Add(report);
+                }
+                //Ajout de la branche Autre
+                report = new TableVerificationModel();
+                report.ID = lastId + 1;
+                report.ParentID = parent_2;
+                report.Type = "Autre";
+                report.Total = "" + menageEnAutre.Count;
+                parentAutre = report.ID;
+                report.Niveau = "4";
+                lastId = report.ID;
+                report.Taux = "" + getPourcentage(menageEnAutre.Count, nbreTotalMenages);
+                rapports.Add(report);
+                //Ajout de menages se trouvant a l'interieur
+                foreach (MenageModel men in menageEnAutre)
+                {
+                    report = new TableVerificationModel();
+                    report.Type = "Batiman-" + men.BatimentId + "/Lojman-" + men.LogeId + "'Menaj-" + men.MenageId;
+                    report.ID = lastId + 1;
+                    report.ParentID = parentAutre;
+                    lastId = report.ID;
+                    report.Niveau = "5";
+                    rapports.Add(report);
+                }
+
+            }
+            #endregion
+
+            #region % D´INDIVIDUS PARTIELLEMENT REMPLIS
+             parentAbandon = 0;
+             parentRendezVous = 0;
+             parentAutre = 0;
+
+             report = new TableVerificationModel();
+             report.Type = "4- % D´INDIVIDUS PARTIELLEMENT REMPLI";
+             report.ID = lastId + 1;
+             report.ParentID = parent_0;
+             lastId = report.ID;
+             parent_1 = report.ID;
+             report.Total = "" + nbreIndividus;
+             report.Taux = "" + getPourcentage(nbreIndividus, nbreTotalIndividus) + "%";
+             report.Niveau = "2";
+             rapports.Add(report);
+
+             foreach (SdeModel sd in listOfSdes)
+             {
+                 service = new SqliteReader(Utilities.getConnectionString(path, sd.SdeId));
+                 individus = new List<IndividuModel>();
+                 individus = service.GetAllIndividuNotFinish();
+                 report = new TableVerificationModel();
+                 report.Type = "" + sd.SdeId;
+                 report.ID = lastId + 1;
+                 lastId = report.ID;
+                 report.Total = "" + individus.Count;
+                 report.Taux = "" + getPourcentage(individus.Count, nbreTotalIndividus)+"%";
+                 report.Niveau = "3";
+                 report.ParentID = parent_1;
+                 parent_2 = report.ID;
+                 rapports.Add(report);
+
+                 //Ajout des branches Abandon, Rendex-Vous, Autre et leurs filles
+                 int NbreIndAvecRendezVous = 0;
+                 List<IndividuModel> individusEnIndAvecRendezVous = new List<IndividuModel>();
+                 string raisonAvecRendezVous = "";
+
+                 //Abandon
+                 int nbreAbandon = 0;
+                 List<IndividuModel> individusAbandon = new List<IndividuModel>();
+                 string raisonAbandon = "";
+
+                 //Autre
+                 int nbreAutre = 0;
+                 List<IndividuModel> individusEnAutre = new List<IndividuModel>();
+                 string raisonAutre = "";
+                 //
+                 //Constrcution des branches Abandon, Rendexvous, Autre
+                 foreach (IndividuModel ind in individus)
+                 {
+                     List<RapportArModel> rarForIndividu = service.GetAllRptAgentRecenseurByIndividu(ind.IndividuId);
+                     foreach (RapportArModel rar in rarForIndividu)
+                     {
+                         if (rar.RaisonActionId == 7)
+                         {
+                             nbreAbandon = nbreAbandon + 1;
+                             individusAbandon.Add(ind);
+                             raisonAbandon = Constant.getRaison(rar.RaisonActionId).Value;
+                         }
+                         if (rar.RaisonActionId == 8)
+                         {
+                             NbreIndAvecRendezVous = NbreIndAvecRendezVous + 1;
+                             individusEnIndAvecRendezVous.Add(ind);
+                         }
+                         if (rar.RaisonActionId == 10)
+                         {
+                             nbreAutre = nbreAutre + 1;
+                             ind.Raison = rar.AutreRaisonAction;
+                             individusEnAutre.Add(ind);
+                             raisonAutre = Constant.getRaison(rar.RaisonActionId).Value;
+
+                         }
+
+                     }
+                 }
+                 //
+                 //Ajout de la branche Refus
+                 report = new TableVerificationModel();
+                 report.Type = "Abandon";
+                 report.ID = lastId + 1;
+                 report.ParentID = parent_2;
+                 parentAbandon = report.ID;
+                 report.Niveau = "4";
+                 lastId = report.ID;
+                 report.Total = "" + individusAbandon.Count;
+                 report.Taux = "" + getPourcentage(individusAbandon.Count, nbreTotalIndividus);
+                 rapports.Add(report);
+                 //Ajout des menages se trouvant a l'interieur 
+                 foreach (IndividuModel ind in individusAbandon)
+                 {
+                     report = new TableVerificationModel();
+                     report.Type = "Batiman-" + ind.BatimentId + "/Lojman-" + ind.LogeId + "Menaj-" + ind.MenageId+"/Endividi"+ind.IndividuId;
+                     report.ID = lastId + 1;
+                     report.ParentID = parentAbandon;
+                     report.Indicateur = raisonAbandon;
+                     lastId = report.ID;
+                     report.Niveau = "5";
+                     rapports.Add(report);
+                 }
+
+                 //Ajout de la branche Interruption avec Rendez-vous
+                 report = new TableVerificationModel();
+                 report.ID = lastId + 1;
+                 report.ParentID = parent_2;
+                 report.Type = "Interruption avec Rendez-vous";
+                 report.Total = "" + individusEnIndAvecRendezVous.Count;
+                 parentRendezVous = report.ID;
+                 report.Niveau = "4";
+                 lastId = report.ID;
+                 report.Taux = "" + getPourcentage(individusEnIndAvecRendezVous.Count, nbreTotalIndividus);
+                 rapports.Add(report);
+                 //Ajout de menages se trouvant a l'interieur
+                 foreach (IndividuModel ind in individusEnIndAvecRendezVous)
+                 {
+                     report = new TableVerificationModel();
+                     report.Type = "Batiman-" + ind.BatimentId + "/Lojman-" + ind.LogeId + "Menaj-" + ind.MenageId + "/Endividi" + ind.IndividuId;
+                     report.ID = lastId + 1;
+                     report.ParentID = parentRendezVous;
+                     report.Indicateur = raisonAvecRendezVous;
+                     lastId = report.ID;
+                     report.Niveau = "5";
+                     rapports.Add(report);
+                 }
+                 //Ajout de la branche Autre
+                 report = new TableVerificationModel();
+                 report.ID = lastId + 1;
+                 report.ParentID = parent_2;
+                 report.Type = "Autre";
+                 report.Total = "" + individusEnAutre.Count;
+                 parentAutre = report.ID;
+                 report.Niveau = "4";
+                 lastId = report.ID;
+                 report.Taux = "" + getPourcentage(individusEnAutre.Count, nbreTotalIndividus);
+                 rapports.Add(report);
+                 //Ajout de menages se trouvant a l'interieur
+                 foreach (IndividuModel ind in individusEnAutre)
+                 {
+                     report = new TableVerificationModel();
+                     report.Type = "Batiman-" + ind.BatimentId + "/Lojman-" + ind.LogeId + "Menaj-" + ind.MenageId + "/Endividi" + ind.IndividuId;
+                     report.ID = lastId + 1;
+                     report.ParentID = parentAutre;
+                     lastId = report.ID;
+                     report.Niveau = "5";
+                     report.Indicateur = ind.Raison;
+                     rapports.Add(report);
+                 }
+
+             }
+
+            #endregion
 
             #endregion
 

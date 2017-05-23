@@ -8,41 +8,41 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
 {
   public  class BatimentJson
     {
-        public long BatimentId { get; set; }
-        public string DeptId { get; set; }
-        public string ComId { get; set; }
-        public string VqseId { get; set; }
-        public string SdeId { get; set; }
-        public short Zone { get; set; }
-        public string DisctrictId { get; set; }
-        public string Qhabitation { get; set; }
-        public string Qlocalite { get; set; }
-        public string Qadresse { get; set; }
-        public string Qrec { get; set; }
-        public string Qrgph { get; set; }
-        public short Qb1Etat { get; set; }
-        public short Qb2Type { get; set; }
-        public short Qb3NombreEtage { get; set; }
-        public short Qb4MateriauMur { get; set; }
-        public short Qb5MateriauToit { get; set; }
-        public short Qb6StatutOccupation { get; set; }
-        public short Qb7Utilisation1 { get; set; }
-        public short Qb7Utilisation2 { get; set; }
-        public short Qb8NbreLogeCollectif { get; set; }
-        public short Qb8NbreLogeIndividuel { get; set; }
-        public short Statut { get; set; }
-        public string DateEnvoi { get; set; }
-        public bool IsValidated { get; set; }
-        public bool IsSynchroToAppSup { get; set; }
-        public bool IsSynchroToCentrale { get; set; }
-        public string DateDebutCollecte { get; set; }
-        public string DateFinCollecte { get; set; }
-        public int DureeSaisie { get; set; }
-        public bool IsFieldAllFilled { get; set; }
-        public bool IsContreEnqueteMade { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
-        public string CodeAgentRecenceur { get; set; }
+        public long batimentId { get; set; }
+        public string deptId { get; set; }
+        public string comId { get; set; }
+        public string vqseId { get; set; }
+        public string sdeId { get; set; }
+        public short zone { get; set; }
+        public string disctrictId { get; set; }
+        public string qhabitation { get; set; }
+        public string qlocalite { get; set; }
+        public string qadresse { get; set; }
+        public string qrec { get; set; }
+        public string qrgph { get; set; }
+        public short qb1Etat { get; set; }
+        public short qb2Type { get; set; }
+        public short qb3NombreEtage { get; set; }
+        public short qb4MateriauMur { get; set; }
+        public short qb5MateriauToit { get; set; }
+        public short qb6StatutOccupation { get; set; }
+        public short qb7Utilisation1 { get; set; }
+        public short qb7Utilisation2 { get; set; }
+        public short qb8NbreLogeCollectif { get; set; }
+        public short qb8NbreLogeIndividuel { get; set; }
+        public short statut { get; set; }
+        public string dateEnvoi { get; set; }
+        public bool isValidated { get; set; }
+        public bool isSynchroToAppSup { get; set; }
+        public bool isSynchroToCentrale { get; set; }
+        public string dateDebutCollecte { get; set; }
+        public string dateFinCollecte { get; set; }
+        public int dureeSaisie { get; set; }
+        public bool isFieldAllFilled { get; set; }
+        public bool isContreEnqueteMade { get; set; }
+        public string latitude { get; set; }
+        public string longitude { get; set; }
+        public string codeAgentRecenceur { get; set; }
 
         public List<LogementJson> Logements { get; set; }
     }
