@@ -9,7 +9,7 @@
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
              x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_verification" 
-             mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="901">
+             mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="944.284" Width="1001.925">
 
     <UserControl.Resources>
         <Style TargetType="dxg:GridColumn">
@@ -295,7 +295,9 @@
                         </GroupBox>
                     </dx:DXTabItem>
                     <dx:DXTabItem Header="Contrôles de cohérence"></dx:DXTabItem>
-                    <dx:DXTabItem Header="Vérification de la codification"></dx:DXTabItem>
+                    <dx:DXTabItem Header="Vérification de la codification">
+                        
+                    </dx:DXTabItem>
                 </dx:DXTabControl>
             </dx:DXTabItem>
         </dx:DXTabControl>

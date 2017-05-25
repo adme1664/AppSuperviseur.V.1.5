@@ -468,6 +468,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     foreach (BatimentJson bat in batimentsJsons)
                     {
+                        bat.dateEnvoi = DateTime.Now.ToShortDateString();
                         dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
                         string dJson = JsonConvert.SerializeObject(dataJson);
                         byte[] datas = Encoding.UTF8.GetBytes(dJson);

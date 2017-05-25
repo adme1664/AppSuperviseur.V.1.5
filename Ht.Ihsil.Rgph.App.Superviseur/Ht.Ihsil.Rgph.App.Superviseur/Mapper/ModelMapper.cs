@@ -303,44 +303,46 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         {
             if (batiment != null)
             {
-                return new BatimentJson
+                BatimentJson batimentJson = new BatimentJson();
+                batimentJson.batimentId = Convert.ToInt32(batiment.BatimentId);
+                batimentJson.deptId = batiment.DeptId;
+                batimentJson.comId = batiment.ComId;
+                batimentJson.vqseId = batiment.VqseId;
+                batimentJson.sdeId = batiment.SdeId;
+                batimentJson.zone = Convert.ToByte(batiment.Zone);
+                batimentJson.disctrictId = batiment.DistrictId;
+                batimentJson.qhabitation = batiment.Qhabitation;
+                batimentJson.qlocalite = batiment.Qlocalite;
+                batimentJson.qadresse = batiment.Qadresse;
+                batimentJson.qrec = batiment.Qrec;
+                batimentJson.qrgph = batiment.Qrgph;
+                batimentJson.qb1Etat = Convert.ToByte(batiment.Qb1Etat);
+                batimentJson.qb2Type = Convert.ToByte(batiment.Qb2Type);
+                batimentJson.qb3NombreEtage = Convert.ToByte(batiment.Qb3NombreEtage);
+                batimentJson.qb4MateriauMur = Convert.ToByte(batiment.Qb4MateriauMur);
+                batimentJson.qb5MateriauToit = Convert.ToByte(batiment.Qb5MateriauToit);
+                batimentJson.qb6StatutOccupation = Convert.ToByte(batiment.Qb6StatutOccupation);
+                batimentJson.qb7Utilisation1 = Convert.ToByte(batiment.Qb7Utilisation1);
+                batimentJson.qb7Utilisation2 = Convert.ToByte(batiment.Qb7Utilisation2);
+                batimentJson.qb8NbreLogeCollectif = Convert.ToByte(batiment.Qb8NbreLogeCollectif);
+                batimentJson.qb8NbreLogeIndividuel = Convert.ToByte(batiment.Qb8NbreLogeIndividuel);
+                batimentJson.statut = Convert.ToByte(batiment.Statut);
+                //batimentJson.dateEnvoi = DateTime.ParseExact(batiment.DateEnvoi, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                batimentJson.isValidated = Convert.ToBoolean(batiment.IsValidated);
+                batimentJson.isSynchroToAppSup = Convert.ToBoolean(batiment.IsSynchroToAppSup);
+                batimentJson.isSynchroToCentrale = Convert.ToBoolean(batiment.IsSynchroToCentrale);
+                batimentJson.dateDebutCollecte = DateTime.ParseExact(batiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                if (batiment.DateFinCollecte != null)
                 {
-                    batimentId = Convert.ToInt32(batiment.BatimentId),
-                    deptId = batiment.DeptId,
-                    comId = batiment.ComId,
-                    vqseId = batiment.VqseId,
-                    sdeId = batiment.SdeId,
-                    zone = Convert.ToByte(batiment.Zone),
-                    disctrictId = batiment.DistrictId,
-                    qhabitation = batiment.Qhabitation,
-                    qlocalite = batiment.Qlocalite,
-                    qadresse = batiment.Qadresse,
-                    qrec = batiment.Qrec,
-                    qrgph = batiment.Qrgph,
-                    qb1Etat = Convert.ToByte(batiment.Qb1Etat),
-                    qb2Type = Convert.ToByte(batiment.Qb2Type),
-                    qb3NombreEtage = Convert.ToByte(batiment.Qb3NombreEtage),
-                    qb4MateriauMur = Convert.ToByte(batiment.Qb4MateriauMur),
-                    qb5MateriauToit = Convert.ToByte(batiment.Qb5MateriauToit),
-                    qb6StatutOccupation = Convert.ToByte(batiment.Qb6StatutOccupation),
-                    qb7Utilisation1 = Convert.ToByte(batiment.Qb7Utilisation1),
-                    qb7Utilisation2 = Convert.ToByte(batiment.Qb7Utilisation2),
-                    qb8NbreLogeCollectif = Convert.ToByte(batiment.Qb8NbreLogeCollectif),
-                    qb8NbreLogeIndividuel = Convert.ToByte(batiment.Qb8NbreLogeIndividuel),
-                    statut = Convert.ToByte(batiment.Statut),
-                    dateEnvoi = batiment.DateEnvoi,
-                    isValidated = Convert.ToBoolean(batiment.IsValidated),
-                    isSynchroToAppSup = Convert.ToBoolean(batiment.IsSynchroToAppSup),
-                    isSynchroToCentrale = Convert.ToBoolean(batiment.IsSynchroToCentrale),
-                    dateDebutCollecte = batiment.DateDebutCollecte,
-                    dateFinCollecte = batiment.DateFinCollecte,
-                    dureeSaisie = Convert.ToInt32(batiment.DureeSaisie),
-                    isFieldAllFilled = Convert.ToBoolean(batiment.IsFieldAllFilled),
-                    isContreEnqueteMade = Convert.ToBoolean(batiment.IsContreEnqueteMade),
-                    latitude = batiment.Latitude,
-                    longitude = batiment.Longitude,
-                    codeAgentRecenceur = batiment.CodeAgentRecenceur
-                };
+                    batimentJson.dateFinCollecte = DateTime.ParseExact(batiment.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                batimentJson.dureeSaisie = Convert.ToInt32(batiment.DureeSaisie);
+                batimentJson.isFieldAllFilled = Convert.ToBoolean(batiment.IsFieldAllFilled);
+                batimentJson.isContreEnqueteMade = Convert.ToBoolean(batiment.IsContreEnqueteMade);
+                batimentJson.latitude = batiment.Latitude;
+                batimentJson.longitude = batiment.Longitude;
+                batimentJson.codeAgentRecenceur = batiment.CodeAgentRecenceur;
+                return batimentJson;
             }
             return new BatimentJson();
         }
@@ -348,35 +350,40 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         {
             if (logement != null)
             {
-                return new LogementJson
+                LogementJson logementJson = new LogementJson();
+                logementJson.logeId = Convert.ToInt32(logement.LogeId);
+                logementJson.batimentId = Convert.ToInt32(logement.BatimentId);
+                logementJson.sdeId = logement.SdeId;
+                logementJson.qlCategLogement = Convert.ToByte(logement.QlCategLogement);
+                logementJson.qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre);
+                logementJson.qlc1TypeLogement = Convert.ToByte(logement.Qlc1TypeLogement);
+                logementJson.qlc2bTotalGarcon = Convert.ToByte(logement.Qlc2bTotalGarcon);
+                logementJson.qlc2bTotalFille = Convert.ToByte(logement.Qlc2bTotalFille);
+                logementJson.qlcTotalIndividus = Convert.ToByte(logement.QlcTotalIndividus);
+                logementJson.qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
+                logementJson.qlin3ExistenceLogement = Convert.ToByte(logement.Qlin3ExistenceLogement);
+                logementJson.qlin4TypeLogement = Convert.ToByte(logement.Qlin4TypeLogement);
+                logementJson.qlin5MateriauSol = Convert.ToByte(logement.Qlin5MateriauSol);
+                logementJson.qlin6NombrePiece = Convert.ToByte(logement.Qlin6NombrePiece);
+                logementJson.qlin7NbreChambreACoucher = Convert.ToByte(logement.Qlin7NbreChambreACoucher);
+                logementJson.qlin8NbreIndividuDepense = Convert.ToByte(logement.Qlin8NbreIndividuDepense);
+                logementJson.qlin9NbreTotalMenage = Convert.ToByte(logement.Qlin9NbreTotalMenage);
+                logementJson.statut = Convert.ToByte(logement.Statut);
+                logementJson.isValidated = Convert.ToBoolean(logement.IsValidated);
+                if (logement.DateDebutCollecte!=null)
                 {
-                    logeId = Convert.ToInt32(logement.LogeId),
-                    batimentId = Convert.ToInt32(logement.BatimentId),
-                    sdeId = logement.SdeId,
-                    qlCategLogement = Convert.ToByte(logement.QlCategLogement),
-                    qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre),
-                    qlc1TypeLogement = Convert.ToByte(logement.Qlc1TypeLogement),
-                    qlc2bTotalGarcon = Convert.ToByte(logement.Qlc2bTotalGarcon),
-                    qlc2bTotalFille = Convert.ToByte(logement.Qlc2bTotalFille),
-                    qlcTotalIndividus = Convert.ToByte(logement.QlcTotalIndividus),
-                    qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation),
-                    qlin3ExistenceLogement = Convert.ToByte(logement.Qlin3ExistenceLogement),
-                    qlin4TypeLogement = Convert.ToByte(logement.Qlin4TypeLogement),
-                    qlin5MateriauSol = Convert.ToByte(logement.Qlin5MateriauSol),
-                    qlin6NombrePiece = Convert.ToByte(logement.Qlin6NombrePiece),
-                    qlin7NbreChambreACoucher = Convert.ToByte(logement.Qlin7NbreChambreACoucher),
-                    qlin8NbreIndividuDepense = Convert.ToByte(logement.Qlin8NbreIndividuDepense),
-                    qlin9NbreTotalMenage = Convert.ToByte(logement.Qlin9NbreTotalMenage),
-                    statut = Convert.ToByte(logement.Statut),
-                    isValidated = Convert.ToBoolean(logement.IsValidated),
-                    dateDebutCollecte = logement.DateDebutCollecte,
-                    dateFinCollecte = logement.DateFinCollecte,
-                    dureeSaisie = Convert.ToInt32(logement.DureeSaisie),
-                    isFieldAllFilled = Convert.ToBoolean(logement.IsFieldAllFilled),
-                    isContreEnqueteMade = Convert.ToBoolean(logement.IsContreEnqueteMade),
-                    nbrTentative = Convert.ToByte(logement.NbrTentative),
-                    codeAgentRecenceur = logement.CodeAgentRecenceur
-                };
+                    logementJson.dateDebutCollecte = logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                if (logement.DateFinCollecte != null)
+                {
+                    logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                logementJson.dureeSaisie = Convert.ToInt32(logement.DureeSaisie);
+                logementJson.isFieldAllFilled = Convert.ToBoolean(logement.IsFieldAllFilled);
+                logementJson.isContreEnqueteMade = Convert.ToBoolean(logement.IsContreEnqueteMade);
+                logementJson.nbrTentative = Convert.ToByte(logement.NbrTentative);
+                logementJson.codeAgentRecenceur = logement.CodeAgentRecenceur;
+                return logementJson;
             }
             return new LogementJson();
         }
@@ -384,52 +391,57 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         {
             if (menage != null)
             {
-                return new MenageJson
+                MenageJson menageJson = new MenageJson();
+                menageJson.menageId = Convert.ToInt32(menage.MenageId);
+                menageJson.logeId = Convert.ToInt32(menage.LogeId);
+                menageJson.batimentId = Convert.ToInt32(menage.BatimentId);
+                menageJson.sdeId = menage.SdeId;
+                menageJson.qm1NoOrdre = Convert.ToByte(menage.Qm1NoOrdre);
+                menageJson.qm2ModeJouissance = Convert.ToByte(menage.Qm2ModeJouissance);
+                menageJson.qm3ModeObtentionLoge = Convert.ToByte(menage.Qm3ModeObtentionLoge);
+                menageJson.qm4_1ModeAprovEauABoire = Convert.ToByte(menage.Qm4_1ModeAprovEauABoire);
+                menageJson.qm4_2ModeAprovEauAUsageCourant = Convert.ToByte(menage.Qm4_2ModeAprovEauAUsageCourant);
+                menageJson.qm5SrcEnergieCuisson1 = Convert.ToByte(menage.Qm5SrcEnergieCuisson1);
+                menageJson.qm5SrcEnergieCuisson2 = Convert.ToByte(menage.Qm5SrcEnergieCuisson2);
+                menageJson.qm6TypeEclairage = Convert.ToByte(menage.Qm6TypeEclairage);
+                menageJson.qm7ModeEvacDechet = Convert.ToByte(menage.Qm7ModeEvacDechet);
+                menageJson.qm8EndroitBesoinPhysiologique = Convert.ToByte(menage.Qm8EndroitBesoinPhysiologique);
+                menageJson.qm9NbreRadio1 = Convert.ToInt32(menage.Qm9NbreRadio1);
+                menageJson.qm9NbreTelevision2 = Convert.ToInt32(menage.Qm9NbreTelevision2);
+                menageJson.qm9NbreRefrigerateur3 = Convert.ToInt32(menage.Qm9NbreRefrigerateur3);
+                menageJson.qm9NbreFouElectrique4 = Convert.ToInt32(menage.Qm9NbreFouElectrique4);
+                menageJson.qm9NbreOrdinateur5 = Convert.ToInt32(menage.Qm9NbreOrdinateur5);
+                menageJson.qm9NbreMotoBicyclette6 = Convert.ToInt32(menage.Qm9NbreMotoBicyclette6);
+                menageJson.qm9NbreVoitureMachine7 = Convert.ToInt32(menage.Qm9NbreVoitureMachine7);
+                menageJson.qm9NbreBateau8 = Convert.ToInt32(menage.Qm9NbreBateau8);
+                menageJson.qm9NbrePanneauGeneratrice9 = Convert.ToInt32(menage.Qm9NbrePanneauGeneratrice9);
+                menageJson.qm9NbreMilletChevalBourique10 = Convert.ToInt32(menage.Qm9NbreMilletChevalBourique10);
+                menageJson.qm9NbreBoeufVache11 = Convert.ToInt32(menage.Qm9NbreBoeufVache11);
+                menageJson.qm9NbreCochonCabrit12 = Convert.ToInt32(menage.Qm9NbreCochonCabrit12);
+                menageJson.qm9NbreBeteVolaille13 = Convert.ToInt32(menage.Qm9NbreBeteVolaille13);
+                menageJson.qm10AvoirPersDomestique = Convert.ToByte(menage.Qm10AvoirPersDomestique);
+                menageJson.qm10TotalDomestiqueFille = Convert.ToByte(menage.Qm10TotalDomestiqueFille);
+                menageJson.qm10TotalDomestiqueGarcon = Convert.ToByte(menage.Qm10TotalDomestiqueGarcon);
+                menageJson.qm11TotalIndividuVivant = Convert.ToInt32(menage.Qm11TotalIndividuVivant);
+                menageJson.qn1Emigration = Convert.ToByte(menage.Qn1Emigration);
+                menageJson.qn1NbreEmigre = Convert.ToByte(menage.Qn1NbreEmigre);
+                menageJson.qd1Deces = Convert.ToByte(menage.Qd1Deces);
+                menageJson.qd1NbreDecede = Convert.ToByte(menage.Qd1NbreDecede);
+                menageJson.statut = Convert.ToByte(menage.Statut);
+                menageJson.isValidated = Convert.ToBoolean(menage.IsValidated);
+                if (menage.DateDebutCollecte != null)
                 {
-                    menageId = Convert.ToInt32(menage.MenageId),
-                    logeId = Convert.ToInt32(menage.LogeId),
-                    batimentId = Convert.ToInt32(menage.BatimentId),
-                    sdeId = menage.SdeId,
-                    qm1NoOrdre = Convert.ToByte(menage.Qm1NoOrdre),
-                    qm2ModeJouissance = Convert.ToByte(menage.Qm2ModeJouissance),
-                    qm3ModeObtentionLoge = Convert.ToByte(menage.Qm3ModeObtentionLoge),
-                    qm4_1ModeAprovEauABoire = Convert.ToByte(menage.Qm4_1ModeAprovEauABoire),
-                    qm4_2ModeAprovEauAUsageCourant = Convert.ToByte(menage.Qm4_2ModeAprovEauAUsageCourant),
-                    qm5SrcEnergieCuisson1 = Convert.ToByte(menage.Qm5SrcEnergieCuisson1),
-                    qm5SrcEnergieCuisson2 = Convert.ToByte(menage.Qm5SrcEnergieCuisson2),
-                    qm6TypeEclairage = Convert.ToByte(menage.Qm6TypeEclairage),
-                    qm7ModeEvacDechet = Convert.ToByte(menage.Qm7ModeEvacDechet),
-                    qm8EndroitBesoinPhysiologique = Convert.ToByte(menage.Qm8EndroitBesoinPhysiologique),
-                    qm9NbreRadio1 = Convert.ToInt32(menage.Qm9NbreRadio1),
-                    qm9NbreTelevision2 = Convert.ToInt32(menage.Qm9NbreTelevision2),
-                    qm9NbreRefrigerateur3 = Convert.ToInt32(menage.Qm9NbreRefrigerateur3),
-                    qm9NbreFouElectrique4 = Convert.ToInt32(menage.Qm9NbreFouElectrique4),
-                    qm9NbreOrdinateur5 = Convert.ToInt32(menage.Qm9NbreOrdinateur5),
-                    qm9NbreMotoBicyclette6 = Convert.ToInt32(menage.Qm9NbreMotoBicyclette6),
-                    qm9NbreVoitureMachine7 = Convert.ToInt32(menage.Qm9NbreVoitureMachine7),
-                    qm9NbreBateau8 = Convert.ToInt32(menage.Qm9NbreBateau8),
-                    qm9NbrePanneauGeneratrice9 = Convert.ToInt32(menage.Qm9NbrePanneauGeneratrice9),
-                    qm9NbreMilletChevalBourique10 = Convert.ToInt32(menage.Qm9NbreMilletChevalBourique10),
-                    qm9NbreBoeufVache11 = Convert.ToInt32(menage.Qm9NbreBoeufVache11),
-                    qm9NbreCochonCabrit12 = Convert.ToInt32(menage.Qm9NbreCochonCabrit12),
-                    qm9NbreBeteVolaille13 = Convert.ToInt32(menage.Qm9NbreBeteVolaille13),
-                    qm10AvoirPersDomestique = Convert.ToByte(menage.Qm10AvoirPersDomestique),
-                    qm10TotalDomestiqueFille = Convert.ToByte(menage.Qm10TotalDomestiqueFille),
-                    qm10TotalDomestiqueGarcon = Convert.ToByte(menage.Qm10TotalDomestiqueGarcon),
-                    qm11TotalIndividuVivant = Convert.ToInt32(menage.Qm11TotalIndividuVivant),
-                    qn1Emigration = Convert.ToByte(menage.Qn1Emigration),
-                    qn1NbreEmigre = Convert.ToByte(menage.Qn1NbreEmigre),
-                    qd1Deces = Convert.ToByte(menage.Qd1Deces),
-                    qd1NbreDecede = Convert.ToByte(menage.Qd1NbreDecede),
-                    statut = Convert.ToByte(menage.Statut),
-                    isValidated = Convert.ToBoolean(menage.IsValidated),
-                    dateDebutCollecte = menage.DateDebutCollecte,
-                    dateFinCollecte = menage.DateFinCollecte,
-                    dureeSaisie = Convert.ToInt32(menage.DureeSaisie),
-                    isFieldAllFilled = Convert.ToBoolean(menage.IsFieldAllFilled),
-                    isContreEnqueteMade = Convert.ToBoolean(menage.IsContreEnqueteMade),
-                    codeAgentRecenceur = menage.CodeAgentRecenceur
-                };
+                    menageJson.dateDebutCollecte = DateTime.ParseExact(menage.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                if (menage.DateFinCollecte != null)
+                {
+                    menageJson.dateFinCollecte = DateTime.ParseExact(menage.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                menageJson.dureeSaisie = Convert.ToInt32(menage.DureeSaisie);
+                menageJson.isFieldAllFilled = Convert.ToBoolean(menage.IsFieldAllFilled);
+                menageJson.isContreEnqueteMade = Convert.ToBoolean(menage.IsContreEnqueteMade);
+                menageJson.codeAgentRecenceur = menage.CodeAgentRecenceur;
+                return menageJson;
             }
             return new MenageJson();
         }
@@ -437,26 +449,30 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         {
             if (emigre != null)
             {
-                return new EmigreJson
+                EmigreJson emigreJson = new EmigreJson();
+                emigreJson.emigreId = Convert.ToInt32(emigre.EmigreId);
+                emigreJson.menageId = Convert.ToInt32(emigre.MenageId);
+                emigreJson.logeId = Convert.ToInt32(emigre.LogeId);
+                emigreJson.batimentId = Convert.ToInt32(emigre.BatimentId);
+                emigreJson.sdeId = emigre.SdeId;
+                emigreJson.qn1numeroOrdre = Convert.ToByte(emigre.Qn1numeroOrdre);
+                emigreJson.qn2aNomComplet = emigre.Qn2aNomComplet;
+                emigreJson.qn2bSexe = Convert.ToByte(emigre.Qn2bSexe);
+                emigreJson.qn2cAgeAuMomentDepart = emigre.Qn2cAgeAuMomentDepart;
+                emigreJson.qn2dVivantToujours = Convert.ToByte(emigre.Qn2dVivantToujours);
+                emigreJson.qn2eDernierPaysResidence = Convert.ToByte(emigre.Qn2eDernierPaysResidence);
+                emigreJson.statut = Convert.ToByte(emigre.Statut);
+                emigreJson.isFieldAllFilled = Convert.ToBoolean(emigre.IsFieldAllFilled);
+                if (emigre.DateDebutCollecte != null)
                 {
-                    emigreId = Convert.ToInt32(emigre.EmigreId),
-                    menageId = Convert.ToInt32(emigre.MenageId),
-                    logeId = Convert.ToInt32(emigre.LogeId),
-                    batimentId = Convert.ToInt32(emigre.BatimentId),
-                    sdeId = emigre.SdeId,
-                    qn1numeroOrdre = Convert.ToByte(emigre.Qn1numeroOrdre),
-                    qn2aNomComplet = emigre.Qn2aNomComplet,
-                    qn2bSexe = Convert.ToByte(emigre.Qn2bSexe),
-                    qn2cAgeAuMomentDepart = emigre.Qn2cAgeAuMomentDepart,
-                    qn2dVivantToujours = Convert.ToByte(emigre.Qn2dVivantToujours),
-                    qn2eDernierPaysResidence = Convert.ToByte(emigre.Qn2eDernierPaysResidence),
-                    statut = Convert.ToByte(emigre.Statut),
-                    isFieldAllFilled = Convert.ToBoolean(emigre.IsFieldAllFilled),
-                    dateDebutCollecte = emigre.DateDebutCollecte,
-                    dateFinCollecte = emigre.DateFinCollecte,
-                    dureeSaisie = Convert.ToInt32(emigre.DureeSaisie),
-                    codeAgentRecenceur = emigre.CodeAgentRecenceur
-                };
+                    emigreJson.dateDebutCollecte = DateTime.ParseExact(emigre.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                if (emigre.DateFinCollecte != null)
+                {
+                    emigreJson.dateFinCollecte = DateTime.ParseExact(emigre.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                emigreJson.codeAgentRecenceur = emigre.CodeAgentRecenceur;
+                return emigreJson;
             }
             return new EmigreJson();
         }
@@ -464,26 +480,31 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         {
             if (deces != null)
             {
-                return new DecesJson
+                DecesJson decesJson = new DecesJson();
+                decesJson.decesId = Convert.ToInt32(deces.DecesId);
+                decesJson.menageId = Convert.ToInt32(deces.MenageId);
+                decesJson.logeId = Convert.ToInt32(deces.LogeId);
+                decesJson.batimentId = Convert.ToInt32(deces.BatimentId);
+                decesJson.sdeId = deces.SdeId;
+                decesJson.qd2NoOrdre = Convert.ToByte(deces.Qd2NoOrdre);
+                decesJson.qd2aSexe = Convert.ToByte(deces.Qd2aSexe);
+                decesJson.qd2bAgeDecede = deces.Qd2bAgeDecede;
+                decesJson.qd2c1CirconstanceDeces = Convert.ToByte(deces.Qd2c1CirconstanceDeces);
+                decesJson.qd2c2CauseDeces = Convert.ToByte(deces.Qd2c2CauseDeces);
+                decesJson.statut = Convert.ToByte(deces.Statut);
+                decesJson.isFieldAllFilled = Convert.ToBoolean(deces.IsFieldAllFilled);
+                if (deces.DateDebutCollecte != null)
                 {
-                    decesId = Convert.ToInt32(deces.DecesId),
-                    menageId = Convert.ToInt32(deces.MenageId),
-                    logeId = Convert.ToInt32(deces.LogeId),
-                    batimentId = Convert.ToInt32(deces.BatimentId),
-                    sdeId = deces.SdeId,
-                    qd2NoOrdre = Convert.ToByte(deces.Qd2NoOrdre),
-                    qd2aSexe = Convert.ToByte(deces.Qd2aSexe),
-                    qd2bAgeDecede = deces.Qd2bAgeDecede,
-                    qd2c1CirconstanceDeces = Convert.ToByte(deces.Qd2c1CirconstanceDeces),
-                    qd2c2CauseDeces = Convert.ToByte(deces.Qd2c2CauseDeces),
-                    statut = Convert.ToByte(deces.Statut),
-                    isFieldAllFilled = Convert.ToBoolean(deces.IsFieldAllFilled),
-                    dateDebutCollecte = deces.DateDebutCollecte,
-                    dateFinCollecte = deces.DateFinCollecte,
-                    dureeSaisie = Convert.ToInt32(deces.DureeSaisie),
-                    isContreEnqueteMade = Convert.ToBoolean(deces.IsContreEnqueteMade),
-                    codeAgentRecenceur = deces.CodeAgentRecenceur
-                };
+                    decesJson.dateDebutCollecte = DateTime.ParseExact(deces.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                if (deces.DateFinCollecte != null)
+                {
+                    decesJson.dateFinCollecte = DateTime.ParseExact(deces.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                decesJson.dureeSaisie = Convert.ToInt32(deces.DureeSaisie);
+                decesJson.isContreEnqueteMade = Convert.ToBoolean(deces.IsContreEnqueteMade);
+                decesJson.codeAgentRecenceur = deces.CodeAgentRecenceur;
+                return decesJson;
             }
             return new DecesJson();
         }
@@ -491,91 +512,95 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         {
             if (individu != null)
             {
-                return new IndividuJson
+                IndividuJson individuJson = new IndividuJson();
+                individuJson.individuId = Convert.ToInt32(individu.IndividuId);
+                individuJson.menageId = Convert.ToInt32(individu.MenageId);
+                individuJson.logeId = Convert.ToInt32(individu.LogeId);
+                individuJson.batimentId = Convert.ToInt32(individu.BatimentId);
+                individuJson.sdeId = individu.SdeId;
+                individuJson.q1NoOrdre = Convert.ToByte(individu.Q1NoOrdre);
+                individuJson.qp2APrenom = individu.Qp2APrenom;
+                individuJson.qp2BNom = individu.Qp2BNom;
+                individuJson.qp3LienDeParente = Convert.ToByte(individu.Qp3LienDeParente);
+                individuJson.qp3HabiteDansMenage = Convert.ToByte(individu.Qp3HabiteDansMenage);
+                individuJson.qp4Sexe = Convert.ToByte(individu.Qp4Sexe);
+                individuJson.qp5DateNaissanceJour = Convert.ToByte(individu.Qp5DateNaissanceJour);
+                individuJson.qp5DateNaissanceMois = Convert.ToByte(individu.Qp5DateNaissanceMois);
+                individuJson.qp5DateNaissanceAnnee = Convert.ToInt32(individu.Qp5DateNaissanceAnnee);
+                individuJson.qp5bAge = Convert.ToByte(individu.Qp5bAge);
+                individuJson.qp6religion = Convert.ToByte(individu.Qp6religion);
+                individuJson.qp6AutreReligion = individu.Qp6AutreReligion;
+                individuJson.qp7Nationalite = Convert.ToByte(individu.Qp7Nationalite);
+                individuJson.qp7PaysNationalite = individu.Qp7PaysNationalite;
+                individuJson.qp8MereEncoreVivante = Convert.ToByte(individu.Qp8MereEncoreVivante);
+                individuJson.qp9EstPlusAge = Convert.ToByte(individu.Qp9EstPlusAge);
+                individuJson.qp10LieuNaissance = Convert.ToByte(individu.Qp10LieuNaissance);
+                individuJson.qp10CommuneNaissance = individu.Qp10CommuneNaissance;
+                individuJson.qp10VqseNaissance = individu.Qp10VqseNaissance;
+                individuJson.qp10PaysNaissance = individu.Qp10PaysNaissance;
+                individuJson.qp11PeriodeResidence = Convert.ToByte(individu.Qp11PeriodeResidence);
+                individuJson.qp12DomicileAvantRecensement = Convert.ToByte(individu.Qp12DomicileAvantRecensement);
+                individuJson.qp12CommuneDomicileAvantRecensement = individu.Qp12CommuneDomicileAvantRecensement;
+                individuJson.qp12VqseDomicileAvantRecensement = individu.Qp12VqseDomicileAvantRecensement;
+                individuJson.qp12PaysDomicileAvantRecensement = individu.Qp12PaysDomicileAvantRecensement;
+                individuJson.qe1EstAlphabetise = Convert.ToByte(individu.Qe1EstAlphabetise);
+                individuJson.qe2FreqentationScolaireOuUniv = Convert.ToByte(individu.Qe2FreqentationScolaireOuUniv);
+                individuJson.qe3typeEcoleOuUniv = Convert.ToByte(individu.Qe3typeEcoleOuUniv);
+                individuJson.qe4aNiveauEtude = Convert.ToByte(individu.Qe4aNiveauEtude);
+                individuJson.qe4bDerniereClasseOUAneEtude = individu.Qe4bDerniereClasseOUAneEtude;
+                individuJson.qe5DiplomeUniversitaire = Convert.ToByte(individu.Qe5DiplomeUniversitaire);
+                individuJson.qe6DomaineEtudeUniversitaire = individu.Qe6DomaineEtudeUniversitaire;
+                individuJson.qaf1HandicapVoir = Convert.ToByte(individu.Qaf1HandicapVoir);
+                individuJson.qaf2HandicapEntendre = Convert.ToByte(individu.Qaf2HandicapEntendre);
+                individuJson.qaf3HandicapMarcher = Convert.ToByte(individu.Qaf3HandicapMarcher);
+                individuJson.qaf4HandicapSouvenir = Convert.ToByte(individu.Qaf4HandicapSouvenir);
+                individuJson.qaf5HandicapPourSeSoigner = Convert.ToByte(individu.Qaf5HandicapPourSeSoigner);
+                individuJson.qaf6HandicapCommuniquer = Convert.ToByte(individu.Qaf6HandicapCommuniquer);
+                individuJson.qt1PossessionTelCellulaire = Convert.ToByte(individu.Qt1PossessionTelCellulaire);
+                individuJson.qt2UtilisationInternet = Convert.ToByte(individu.Qt2UtilisationInternet);
+                individuJson.qem1DejaVivreAutrePays = Convert.ToByte(individu.Qem1DejaVivreAutrePays);
+                individuJson.qem1AutrePays = individu.Qem1AutrePays;
+                individuJson.qem2MoisRetour = Convert.ToByte(individu.Qem2MoisRetour);
+                individuJson.qem2AnneeRetour = Convert.ToInt32(individu.Qem2AnneeRetour);
+                individuJson.qsm1StatutMatrimonial = Convert.ToByte(individu.Qsm1StatutMatrimonial);
+                individuJson.qa1ActEconomiqueDerniereSemaine = Convert.ToByte(individu.Qa1ActEconomiqueDerniereSemaine);
+                individuJson.qa2ActAvoirDemele1 = Convert.ToByte(individu.Qa2ActAvoirDemele1);
+                individuJson.qa2ActDomestique2 = Convert.ToByte(individu.Qa2ActDomestique2);
+                individuJson.qa2ActCultivateur3 = Convert.ToByte(individu.Qa2ActCultivateur3);
+                individuJson.qa2ActAiderParent4 = Convert.ToByte(individu.Qa2ActAiderParent4);
+                individuJson.qa2ActAutre5 = Convert.ToByte(individu.Qa2ActAutre5);
+                individuJson.qa3StatutEmploie = Convert.ToByte(individu.Qa3StatutEmploie);
+                individuJson.qa4SecteurInstitutionnel = Convert.ToByte(individu.Qa4SecteurInstitutionnel);
+                individuJson.qa5TypeBienProduitParEntreprise = individu.Qa5TypeBienProduitParEntreprise;
+                individuJson.qa5PreciserTypeBienProduitParEntreprise = individu.Qa5PreciserTypeBienProduitParEntreprise;
+                individuJson.qa6LieuActDerniereSemaine = Convert.ToByte(individu.Qa6LieuActDerniereSemaine);
+                individuJson.qa7FoncTravail = Convert.ToByte(individu.Qa7FoncTravail);
+                individuJson.qa8EntreprendreDemarcheTravail = Convert.ToByte(individu.Qa8EntreprendreDemarcheTravail);
+                individuJson.qa9VouloirTravailler = Convert.ToByte(individu.Qa9VouloirTravailler);
+                individuJson.qa10DisponibilitePourTravail = Convert.ToByte(individu.Qa10DisponibilitePourTravail);
+                individuJson.qa11RecevoirTransfertArgent = Convert.ToByte(individu.Qa11RecevoirTransfertArgent);
+                individuJson.qf1aNbreEnfantNeVivantM = Convert.ToInt32(individu.Qf1aNbreEnfantNeVivantM);
+                individuJson.qf1bNbreEnfantNeVivantF = Convert.ToInt32(individu.Qf1bNbreEnfantNeVivantF);
+                individuJson.qf2aNbreEnfantVivantM = Convert.ToInt32(individu.Qf2aNbreEnfantVivantM);
+                individuJson.qf2bNbreEnfantVivantF = Convert.ToInt32(individu.Qf2bNbreEnfantVivantF);
+                individuJson.qf3DernierEnfantJour = Convert.ToByte(individu.Qf3DernierEnfantJour);
+                individuJson.qf3DernierEnfantMois = Convert.ToByte(individu.Qf3DernierEnfantMois);
+                individuJson.qf3DernierEnfantAnnee = Convert.ToInt32(individu.Qf3DernierEnfantAnnee);
+                individuJson.qf4DENeVivantVit = Convert.ToByte(individu.Qf4DENeVivantVit);
+                individuJson.statut = Convert.ToByte(individu.Statut);
+                individuJson.isFieldAllFilled = Convert.ToBoolean(individu.IsFieldAllFilled);
+                if (individu.DateDebutCollecte != null)
                 {
-
-                    individuId = Convert.ToInt32(individu.IndividuId),
-                    menageId = Convert.ToInt32(individu.MenageId),
-                    logeId = Convert.ToInt32(individu.LogeId),
-                    batimentId = Convert.ToInt32(individu.BatimentId),
-                    sdeId = individu.SdeId,
-                    q1NoOrdre = Convert.ToByte(individu.Q1NoOrdre),
-                    qp2APrenom = individu.Qp2APrenom,
-                    qp2BNom = individu.Qp2BNom,
-                    qp3LienDeParente = Convert.ToByte(individu.Qp3LienDeParente),
-                    qp3HabiteDansMenage = Convert.ToByte(individu.Qp3HabiteDansMenage),
-                    qp4Sexe = Convert.ToByte(individu.Qp4Sexe),
-                    qp5DateNaissanceJour = Convert.ToByte(individu.Qp5DateNaissanceJour),
-                    qp5DateNaissanceMois = Convert.ToByte(individu.Qp5DateNaissanceMois),
-                    qp5DateNaissanceAnnee = Convert.ToInt32(individu.Qp5DateNaissanceAnnee),
-                    qp5bAge = Convert.ToByte(individu.Qp5bAge),
-                    qp6religion = Convert.ToByte(individu.Qp6religion),
-                    qp6AutreReligion = individu.Qp6AutreReligion,
-                    qp7Nationalite = Convert.ToByte(individu.Qp7Nationalite),
-                    qp7PaysNationalite = individu.Qp7PaysNationalite,
-                    qp8MereEncoreVivante = Convert.ToByte(individu.Qp8MereEncoreVivante),
-                    qp9EstPlusAge = Convert.ToByte(individu.Qp9EstPlusAge),
-                    qp10LieuNaissance = Convert.ToByte(individu.Qp10LieuNaissance),
-                    qp10CommuneNaissance = individu.Qp10CommuneNaissance,
-                    qp10VqseNaissance = individu.Qp10VqseNaissance,
-                    qp10PaysNaissance = individu.Qp10PaysNaissance,
-                    qp11PeriodeResidence = Convert.ToByte(individu.Qp11PeriodeResidence),
-                    qp12DomicileAvantRecensement = Convert.ToByte(individu.Qp12DomicileAvantRecensement),
-                    qp12CommuneDomicileAvantRecensement = individu.Qp12CommuneDomicileAvantRecensement,
-                    qp12VqseDomicileAvantRecensement = individu.Qp12VqseDomicileAvantRecensement,
-                    qp12PaysDomicileAvantRecensement = individu.Qp12PaysDomicileAvantRecensement,
-                    qe1EstAlphabetise = Convert.ToByte(individu.Qe1EstAlphabetise),
-                    qe2FreqentationScolaireOuUniv = Convert.ToByte(individu.Qe2FreqentationScolaireOuUniv),
-                    qe3typeEcoleOuUniv = Convert.ToByte(individu.Qe3typeEcoleOuUniv),
-                    qe4aNiveauEtude = Convert.ToByte(individu.Qe4aNiveauEtude),
-                    qe4bDerniereClasseOUAneEtude = individu.Qe4bDerniereClasseOUAneEtude,
-                    qe5DiplomeUniversitaire = Convert.ToByte(individu.Qe5DiplomeUniversitaire),
-                    qe6DomaineEtudeUniversitaire = individu.Qe6DomaineEtudeUniversitaire,
-                    qaf1HandicapVoir = Convert.ToByte(individu.Qaf1HandicapVoir),
-                    qaf2HandicapEntendre = Convert.ToByte(individu.Qaf2HandicapEntendre),
-                    qaf3HandicapMarcher = Convert.ToByte(individu.Qaf3HandicapMarcher),
-                    qaf4HandicapSouvenir = Convert.ToByte(individu.Qaf4HandicapSouvenir),
-                    qaf5HandicapPourSeSoigner = Convert.ToByte(individu.Qaf5HandicapPourSeSoigner),
-                    qaf6HandicapCommuniquer = Convert.ToByte(individu.Qaf6HandicapCommuniquer),
-                    qt1PossessionTelCellulaire = Convert.ToByte(individu.Qt1PossessionTelCellulaire),
-                    qt2UtilisationInternet = Convert.ToByte(individu.Qt2UtilisationInternet),
-                    qem1DejaVivreAutrePays = Convert.ToByte(individu.Qem1DejaVivreAutrePays),
-                    qem1AutrePays = individu.Qem1AutrePays,
-                    qem2MoisRetour = Convert.ToByte(individu.Qem2MoisRetour),
-                    qem2AnneeRetour = Convert.ToInt32(individu.Qem2AnneeRetour),
-                    qsm1StatutMatrimonial = Convert.ToByte(individu.Qsm1StatutMatrimonial),
-                    qa1ActEconomiqueDerniereSemaine = Convert.ToByte(individu.Qa1ActEconomiqueDerniereSemaine),
-                    qa2ActAvoirDemele1 = Convert.ToByte(individu.Qa2ActAvoirDemele1),
-                    qa2ActDomestique2 = Convert.ToByte(individu.Qa2ActDomestique2),
-                    qa2ActCultivateur3 = Convert.ToByte(individu.Qa2ActCultivateur3),
-                    qa2ActAiderParent4 = Convert.ToByte(individu.Qa2ActAiderParent4),
-                    qa2ActAutre5 = Convert.ToByte(individu.Qa2ActAutre5),
-                    qa3StatutEmploie = Convert.ToByte(individu.Qa3StatutEmploie),
-                    qa4SecteurInstitutionnel = Convert.ToByte(individu.Qa4SecteurInstitutionnel),
-                    qa5TypeBienProduitParEntreprise = individu.Qa5TypeBienProduitParEntreprise,
-                    qa5PreciserTypeBienProduitParEntreprise = individu.Qa5PreciserTypeBienProduitParEntreprise,
-                    qa6LieuActDerniereSemaine = Convert.ToByte(individu.Qa6LieuActDerniereSemaine),
-                    qa7FoncTravail = Convert.ToByte(individu.Qa7FoncTravail),
-                    qa8EntreprendreDemarcheTravail = Convert.ToByte(individu.Qa8EntreprendreDemarcheTravail),
-                    qa9VouloirTravailler = Convert.ToByte(individu.Qa9VouloirTravailler),
-                    qa10DisponibilitePourTravail = Convert.ToByte(individu.Qa10DisponibilitePourTravail),
-                    qa11RecevoirTransfertArgent = Convert.ToByte(individu.Qa11RecevoirTransfertArgent),
-                    qf1aNbreEnfantNeVivantM = Convert.ToInt32(individu.Qf1aNbreEnfantNeVivantM),
-                    qf1bNbreEnfantNeVivantF = Convert.ToInt32(individu.Qf1bNbreEnfantNeVivantF),
-                    qf2aNbreEnfantVivantM = Convert.ToInt32(individu.Qf2aNbreEnfantVivantM),
-                    qf2bNbreEnfantVivantF = Convert.ToInt32(individu.Qf2bNbreEnfantVivantF),
-                    qf3DernierEnfantJour = Convert.ToByte(individu.Qf3DernierEnfantJour),
-                    qf3DernierEnfantMois = Convert.ToByte(individu.Qf3DernierEnfantMois),
-                    qf3DernierEnfantAnnee = Convert.ToInt32(individu.Qf3DernierEnfantAnnee),
-                    qf4DENeVivantVit = Convert.ToByte(individu.Qf4DENeVivantVit),
-                    statut = Convert.ToByte(individu.Statut),
-                    isFieldAllFilled = Convert.ToBoolean(individu.IsFieldAllFilled),
-                    dateDebutCollecte = individu.DateDebutCollecte,
-                    dateFinCollecte = individu.DateFinCollecte,
-                    dureeSaisie = Convert.ToInt32(individu.DureeSaisie),
-                    isContreEnqueteMade = Convert.ToBoolean(individu.IsContreEnqueteMade),
-                    codeAgentRecenceur = individu.CodeAgentRecenceur,
-                };
+                    individuJson.dateDebutCollecte = DateTime.ParseExact(individu.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                if (individu.DateFinCollecte != null)
+                {
+                    individuJson.dateFinCollecte = DateTime.ParseExact(individu.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                individuJson.dureeSaisie = Convert.ToInt32(individu.DureeSaisie);
+                individuJson.isContreEnqueteMade = Convert.ToBoolean(individu.IsContreEnqueteMade);
+                individuJson.codeAgentRecenceur = individu.CodeAgentRecenceur;
+                return individuJson;
             }
             return new IndividuJson();
         }

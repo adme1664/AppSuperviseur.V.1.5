@@ -1530,6 +1530,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ID = lastId + 1;
                 lastId = report.ID;
                 report.Niveau = "3";
+                report.Total = ""+ (logements.Count + menages.Count + individus.Count);
                 report.ParentID = parent_1;
                 parent_2 = report.ID;
                 rapports.Add(report);

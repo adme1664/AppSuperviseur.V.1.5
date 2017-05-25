@@ -89,6 +89,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         //Nombre individus femmes de 13 ans sans info sur le nbre de garcons et de filles nes vivants
         List<IndividuModel> GetAllIndividusFemmes13ansSansFGNesVivants();
 
+        //Nombre indivius dont la variable P10=1
+        List<IndividuModel> GetAllIndividus_P12_1();
+
+        //Nombre indivius dont la variable P10=2
+        List<IndividuModel> GetAllIndividus_P12_2();
+
+        //Nombre indivius dont la variable P10=3
+        List<IndividuModel> GetAllIndividus_P12_3();
+
             
         #endregion
 

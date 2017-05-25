@@ -985,6 +985,29 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             throw new NotImplementedException();
         }
 
+        public List<IndividuModel> GetAllIndividus_P12_1()
+        {
+            string methodName="GetAllIndividus_P12_1";
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<IndividuModel>();
+        }
+
+        public List<IndividuModel> GetAllIndividus_P12_2()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<IndividuModel> GetAllIndividus_P12_3()
+        {
+            throw new NotImplementedException();
+        }
         #endregion
 
         #region Retrieving data for LOGEMENT
@@ -2520,5 +2543,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return null;
         }
         #endregion
+
+
+       
     }
 }
