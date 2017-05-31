@@ -52,16 +52,31 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             foreach (BatimentModel bat in listsOfBatimentModels)
             {
                 BatimentJson batJson = ModelMapper.MapToJson(bat);
-                //Recherche de logement pour un batiment
-                List<LogementJson> logements = new List<LogementJson>();
-                List<LogementModel> logModels = GetAllLogementsByBatiment(bat.BatimentId);
+                //Recherche de logement (Collectif ou indivi) pour un batiment
+                #region RECHERCHE DE LOGEMENTS COLLECTIFS
+                batJson.logementCs = new List<LogementCJson>();
+                List<LogementCJson> logementsCollectifs = ModelMapper.MapToListLCJson(GetLogementCByBatiment(bat.BatimentId));
+                foreach (LogementCJson logCJson in logementsCollectifs)
+                {
+                    List<IndividuJson> individusCollectifs = ModelMapper.MapToListJson(GetIndividuByLoge(logCJson.logeId));
+                    if (individusCollectifs.Count!=0)
+                    {
+                        logCJson.individus = new List<IndividuJson>();
+                        logCJson.individus = individusCollectifs;
+                    }
+                    batJson.logementCs.Add(logCJson);
+                }               
+                #endregion
+
+                #region RECHERCHE DE LOGEMENTS INDIVIDUELS
+                List<LogementIsJson> logModels =ModelMapper.MapToListLIJson( GetLogementIByBatiment(bat.BatimentId));
                 if (logModels != null)
                 {
-                    foreach (LogementModel logm in logModels)
+                    foreach (LogementIsJson logm in logModels)
                     {
-                        LogementJson logJson = ModelMapper.MapToJson(logm);
                         //Recherche de menage(s) dans le logement
-                        List<MenageModel> menModels = GetMenageByLogement(logm.LogeId);
+                        LogementIsJson logJson = logm;
+                        List<MenageModel> menModels = GetMenageByLogement(logm.logeId);
                         if (menModels != null)
                         {
                             List<MenageJson> menages = new List<MenageJson>();
@@ -72,36 +87,38 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                                 List<EmigreModel> emModels = ModelMapper.MapToListEmigre(repository.MEmigreRepository.Find(em => em.menageId == men.MenageId).ToList());
                                 if (emModels != null)
                                 {
-                                    menageJson.Emigres = new List<EmigreJson>();
+                                    menageJson.emigres = new List<EmigreJson>();
                                     foreach (EmigreModel em in emModels)
                                     {
                                         EmigreJson emigreJson = ModelMapper.MapToJson(em);
-                                        menageJson.Emigres.Add(emigreJson);
+                                        menageJson.emigres.Add(emigreJson);
                                     }
                                 }
                                 //Recherche de Deces
                                 List<DecesModel> decModels = GetDecesByMenage(men.MenageId).ToList();
                                 if (decModels != null)
                                 {
-                                    menageJson.Deces = new List<DecesJson>();
-                                    menageJson.Deces = ModelMapper.MapToListJson(decModels);
+                                    menageJson.deces = new List<DecesJson>();
+                                    menageJson.deces = ModelMapper.MapToListJson(decModels);
                                 }
                                 //Recherche des individus
                                 List<IndividuModel> indModels = GetIndividuByMenage(men.MenageId);
                                 if (indModels != null)
                                 {
-                                    menageJson.Individus = new List<IndividuJson>();
-                                    menageJson.Individus = ModelMapper.MapToListJson(indModels);
+                                    menageJson.individus = new List<IndividuJson>();
+                                    menageJson.individus = ModelMapper.MapToListJson(indModels);
                                 }
                                 menages.Add(menageJson);
                             }
-                            logJson.Menages = new List<MenageJson>();
-                            logJson.Menages = menages;
-                            batJson.Logements = new List<LogementJson>();
-                            batJson.Logements.Add(logJson);
+                            logJson.menages = new List<MenageJson>();
+                            logJson.menages = menages;
+                            batJson.logementIs = new List<LogementIsJson>();
+                            batJson.logementIs.Add(logJson);
                         }
                     }
                 }
+                #endregion
+
                 listOfJsons.Add(batJson);
             }
             return listOfJsons;
@@ -985,26 +1002,61 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             throw new NotImplementedException();
         }
 
-        public List<IndividuModel> GetAllIndividus_P12_1()
+        public int GetAllIndividus_P12_1()
         {
             string methodName="GetAllIndividus_P12_1";
+            int nbre=0;
             try
             {
+               List<IndividuModel> listOfIndividus= ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(ind => ind.qp12DomicileAvantRecensement == 1 && ind.statut==(int)Constant.StatutModule.Fini).ToList());
+               if (listOfIndividus != null)
+               {
+                   foreach (IndividuModel ind in listOfIndividus)
+                   {
+                       if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                       {
+                           nbre += 1;
+                       }
+                   }
+                   return nbre;
+               }
+               
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return 0;
+        }
+
+        public int GetAllIndividus_P12_2()
+        {
+            string methodName = "GetAllIndividus_P12_2";
+            int nbre = 0;
+            try
+            {
+                List<IndividuModel> listOfIndividus = ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(ind => ind.qp12DomicileAvantRecensement == 2  && ind.statut == (int)Constant.StatutModule.Fini).ToList());
+                if (listOfIndividus != null)
+                {
+                    foreach (IndividuModel ind in listOfIndividus)
+                    {
+                        if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                        {
+                            nbre += 1;
+                        }
+                    }
+                    return nbre;
+                }
 
             }
             catch (Exception ex)
             {
                 log.Info("SqliteReader/" + methodName + ":" + ex.Message);
             }
-            return new List<IndividuModel>();
+            return 0;
         }
 
-        public List<IndividuModel> GetAllIndividus_P12_2()
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<IndividuModel> GetAllIndividus_P12_3()
+        public int GetAllIndividus_P12_3()
         {
             throw new NotImplementedException();
         }

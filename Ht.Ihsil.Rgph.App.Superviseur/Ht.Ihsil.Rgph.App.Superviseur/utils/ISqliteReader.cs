@@ -90,13 +90,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<IndividuModel> GetAllIndividusFemmes13ansSansFGNesVivants();
 
         //Nombre indivius dont la variable P10=1
-        List<IndividuModel> GetAllIndividus_P12_1();
+        int GetAllIndividus_P12_1();
 
         //Nombre indivius dont la variable P10=2
-        List<IndividuModel> GetAllIndividus_P12_2();
+        int GetAllIndividus_P12_2();
 
         //Nombre indivius dont la variable P10=3
-        List<IndividuModel> GetAllIndividus_P12_3();
+        int GetAllIndividus_P12_3();
 
             
         #endregion

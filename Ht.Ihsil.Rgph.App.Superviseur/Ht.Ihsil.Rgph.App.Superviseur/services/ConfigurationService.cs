@@ -495,9 +495,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
         }
         #endregion
-
-
-
      
     }
 }

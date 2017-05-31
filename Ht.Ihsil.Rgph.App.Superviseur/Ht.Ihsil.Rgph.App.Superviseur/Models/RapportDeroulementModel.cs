@@ -16,5 +16,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
             get;
             set;
         }
+        public List<DetailsRapportModel> RdcDetails { get; set; }
     }
 }

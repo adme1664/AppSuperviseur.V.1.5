@@ -63,15 +63,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 sde.DeptId = sdeId.Substring(0, 1);
                 sde.ComId = sdeId.Substring(0, 3);
                 sde.VqseId = sdeId.Substring(0, 6);
-
-                //if (dep.Substring(0, 2) == "00")
-                //{
-                //    sde.DeptId = dep.Substring(1, 2);
-                //}
-                //else
-                //{
-                //    sde.DeptId = dep.Substring(0, 2);
-                //}
                 return sde;
             }
             catch (Exception)
@@ -79,6 +70,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
             }
             return null;
+        }
+        public static string getSdeFormatSent(string sdeId)
+        {
+            string[] splits = sdeId.Split('-');
+            string convertSde = "0"+splits[0] + "-" + splits[1] + "-" + splits[2];
+            //SdeInformation sde = getSdeInformation(sdeId);
+            //return "0" + sde.ComId + "-" + sde.DeptId + "-" + sde.VqseId;
+            return convertSde;
         }
         public static string getGeoInformation(string sdeId)
         {

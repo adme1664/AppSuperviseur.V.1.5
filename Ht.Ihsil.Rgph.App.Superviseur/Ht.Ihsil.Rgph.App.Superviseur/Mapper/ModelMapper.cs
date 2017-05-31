@@ -308,7 +308,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 batimentJson.deptId = batiment.DeptId;
                 batimentJson.comId = batiment.ComId;
                 batimentJson.vqseId = batiment.VqseId;
-                batimentJson.sdeId = batiment.SdeId;
+                batimentJson.sdeId = Utilities.getSdeFormatSent(batiment.SdeId);
                 batimentJson.zone = Convert.ToByte(batiment.Zone);
                 batimentJson.disctrictId = batiment.DistrictId;
                 batimentJson.qhabitation = batiment.Qhabitation;
@@ -334,7 +334,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 batimentJson.dateDebutCollecte = DateTime.ParseExact(batiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
                 if (batiment.DateFinCollecte != null)
                 {
-                    batimentJson.dateFinCollecte = DateTime.ParseExact(batiment.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                    batimentJson.dateFinCollecte = DateTime.ParseExact(batiment.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToUniversalTime().ToString();
                 }
                 batimentJson.dureeSaisie = Convert.ToInt32(batiment.DureeSaisie);
                 batimentJson.isFieldAllFilled = Convert.ToBoolean(batiment.IsFieldAllFilled);
@@ -353,7 +353,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 LogementJson logementJson = new LogementJson();
                 logementJson.logeId = Convert.ToInt32(logement.LogeId);
                 logementJson.batimentId = Convert.ToInt32(logement.BatimentId);
-                logementJson.sdeId = logement.SdeId;
+                logementJson.sdeId = Utilities.getSdeFormatSent(logement.SdeId);
                 logementJson.qlCategLogement = Convert.ToByte(logement.QlCategLogement);
                 logementJson.qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre);
                 logementJson.qlc1TypeLogement = Convert.ToByte(logement.Qlc1TypeLogement);
@@ -387,6 +387,78 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return new LogementJson();
         }
+        public static LogementCJson MapToLCJson(LogementModel logement)
+        {
+            LogementCJson logementJson = new LogementCJson();
+            if (logement != null)
+            {
+                logementJson.logeId = Convert.ToInt32(logement.LogeId);
+                logementJson.batimentId = Convert.ToInt32(logement.BatimentId);
+                logementJson.sdeId = Utilities.getSdeFormatSent(logement.SdeId);
+                logementJson.qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre);
+                logementJson.qlc1TypeLogement = Convert.ToByte(logement.Qlc1TypeLogement);
+                logementJson.qlc2bTotalGarcon = Convert.ToByte(logement.Qlc2bTotalGarcon);
+                logementJson.qlc2bTotalFille = Convert.ToByte(logement.Qlc2bTotalFille);
+                logementJson.qlcTotalIndividus = Convert.ToByte(logement.QlcTotalIndividus);
+                logementJson.statut = Convert.ToByte(logement.Statut);
+                logementJson.isValidated = Convert.ToBoolean(logement.IsValidated);
+                if (logement.DateDebutCollecte != null)
+                {
+                    logementJson.dateDebutCollecte = logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                if (logement.DateFinCollecte != null)
+                {
+                    logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                logementJson.dureeSaisie = Convert.ToInt32(logement.DureeSaisie);
+                logementJson.isFieldAllFilled = Convert.ToBoolean(logement.IsFieldAllFilled);
+                logementJson.isContreEnqueteMade = Convert.ToBoolean(logement.IsContreEnqueteMade);
+                logementJson.codeAgentRecenceur = logement.CodeAgentRecenceur;
+                return logementJson;
+            }
+            return new LogementCJson();
+        }
+        public static LogementIsJson MapToLIJson(LogementModel logement)
+        {
+            if (logement != null)
+            {
+                LogementIsJson logementJson = new LogementIsJson();
+                logementJson.logeId = Convert.ToInt32(logement.LogeId);
+                logementJson.batimentId = Convert.ToInt32(logement.BatimentId);
+                logementJson.sdeId = Utilities.getSdeFormatSent(logement.SdeId);
+                logementJson.qlCategLogement = Convert.ToByte(logement.QlCategLogement);
+                logementJson.qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre);
+                logementJson.qlc1TypeLogement = Convert.ToByte(logement.Qlc1TypeLogement);
+                logementJson.qlc2bTotalGarcon = Convert.ToByte(logement.Qlc2bTotalGarcon);
+                logementJson.qlc2bTotalFille = Convert.ToByte(logement.Qlc2bTotalFille);
+                logementJson.qlcTotalIndividus = Convert.ToByte(logement.QlcTotalIndividus);
+                logementJson.qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
+                logementJson.qlin3ExistenceLogement = Convert.ToByte(logement.Qlin3ExistenceLogement);
+                logementJson.qlin4TypeLogement = Convert.ToByte(logement.Qlin4TypeLogement);
+                logementJson.qlin5MateriauSol = Convert.ToByte(logement.Qlin5MateriauSol);
+                logementJson.qlin6NombrePiece = Convert.ToByte(logement.Qlin6NombrePiece);
+                logementJson.qlin7NbreChambreACoucher = Convert.ToByte(logement.Qlin7NbreChambreACoucher);
+                logementJson.qlin8NbreIndividuDepense = Convert.ToByte(logement.Qlin8NbreIndividuDepense);
+                logementJson.qlin9NbreTotalMenage = Convert.ToByte(logement.Qlin9NbreTotalMenage);
+                logementJson.statut = Convert.ToByte(logement.Statut);
+                logementJson.isValidated = Convert.ToBoolean(logement.IsValidated);
+                if (logement.DateDebutCollecte != null)
+                {
+                    logementJson.dateDebutCollecte = logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                if (logement.DateFinCollecte != null)
+                {
+                    logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                }
+                logementJson.dureeSaisie = Convert.ToInt32(logement.DureeSaisie);
+                logementJson.isFieldAllFilled = Convert.ToBoolean(logement.IsFieldAllFilled);
+                logementJson.isContreEnqueteMade = Convert.ToBoolean(logement.IsContreEnqueteMade);
+                logementJson.nbrTentative = Convert.ToByte(logement.NbrTentative);
+                logementJson.codeAgentRecenceur = logement.CodeAgentRecenceur;
+                return logementJson;
+            }
+            return new LogementIsJson();
+        }
         public static MenageJson MapToJson(MenageModel menage)
         {
             if (menage != null)
@@ -395,7 +467,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 menageJson.menageId = Convert.ToInt32(menage.MenageId);
                 menageJson.logeId = Convert.ToInt32(menage.LogeId);
                 menageJson.batimentId = Convert.ToInt32(menage.BatimentId);
-                menageJson.sdeId = menage.SdeId;
+                menageJson.sdeId = Utilities.getSdeFormatSent(menage.SdeId);
                 menageJson.qm1NoOrdre = Convert.ToByte(menage.Qm1NoOrdre);
                 menageJson.qm2ModeJouissance = Convert.ToByte(menage.Qm2ModeJouissance);
                 menageJson.qm3ModeObtentionLoge = Convert.ToByte(menage.Qm3ModeObtentionLoge);
@@ -454,7 +526,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 emigreJson.menageId = Convert.ToInt32(emigre.MenageId);
                 emigreJson.logeId = Convert.ToInt32(emigre.LogeId);
                 emigreJson.batimentId = Convert.ToInt32(emigre.BatimentId);
-                emigreJson.sdeId = emigre.SdeId;
+                emigreJson.sdeId = Utilities.getSdeFormatSent(emigre.SdeId);
                 emigreJson.qn1numeroOrdre = Convert.ToByte(emigre.Qn1numeroOrdre);
                 emigreJson.qn2aNomComplet = emigre.Qn2aNomComplet;
                 emigreJson.qn2bSexe = Convert.ToByte(emigre.Qn2bSexe);
@@ -485,7 +557,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 decesJson.menageId = Convert.ToInt32(deces.MenageId);
                 decesJson.logeId = Convert.ToInt32(deces.LogeId);
                 decesJson.batimentId = Convert.ToInt32(deces.BatimentId);
-                decesJson.sdeId = deces.SdeId;
+                decesJson.sdeId = Utilities.getSdeFormatSent(deces.SdeId);
                 decesJson.qd2NoOrdre = Convert.ToByte(deces.Qd2NoOrdre);
                 decesJson.qd2aSexe = Convert.ToByte(deces.Qd2aSexe);
                 decesJson.qd2bAgeDecede = deces.Qd2bAgeDecede;
@@ -517,7 +589,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 individuJson.menageId = Convert.ToInt32(individu.MenageId);
                 individuJson.logeId = Convert.ToInt32(individu.LogeId);
                 individuJson.batimentId = Convert.ToInt32(individu.BatimentId);
-                individuJson.sdeId = individu.SdeId;
+                individuJson.sdeId = Utilities.getSdeFormatSent(individu.SdeId);
                 individuJson.q1NoOrdre = Convert.ToByte(individu.Q1NoOrdre);
                 individuJson.qp2APrenom = individu.Qp2APrenom;
                 individuJson.qp2BNom = individu.Qp2BNom;
@@ -591,11 +663,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 individuJson.isFieldAllFilled = Convert.ToBoolean(individu.IsFieldAllFilled);
                 if (individu.DateDebutCollecte != null)
                 {
-                    individuJson.dateDebutCollecte = DateTime.ParseExact(individu.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                    individuJson.dateDebutCollecte = DateTime.ParseExact(individu.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToUniversalTime().ToString();
                 }
                 if (individu.DateFinCollecte != null)
                 {
-                    individuJson.dateFinCollecte = DateTime.ParseExact(individu.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                    individuJson.dateFinCollecte = DateTime.ParseExact(individu.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToUniversalTime().ToString();
                 }
                 individuJson.dureeSaisie = Convert.ToInt32(individu.DureeSaisie);
                 individuJson.isContreEnqueteMade = Convert.ToBoolean(individu.IsContreEnqueteMade);
@@ -604,7 +676,86 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return new IndividuJson();
         }
-
+        public static RapportPersonnelJson MapToJson(RapportPersonnelModel rpt)
+        {
+            RapportPersonnelJson model = new RapportPersonnelJson();
+            if (rpt != null)
+            {
+                model.codeDistrict = rpt.codeDistrict;
+                model.comId = rpt.comId;
+                model.dateEvaluation = rpt.dateEvaluation;
+                model.deptId = rpt.deptId;
+                model.persId = rpt.persId;
+                model.q1 = rpt.q1;
+                model.q10 = rpt.q10;
+                model.q11 = rpt.q11;
+                model.q12 = rpt.q12;
+                model.q13 = rpt.q13;
+                model.q14 = rpt.q14;
+                model.q15 = rpt.q15;
+                model.q9 = rpt.q9;
+                model.q8 = rpt.q8;
+                model.q7 = rpt.q7;
+                model.q6 = rpt.q6;
+                model.q5 = rpt.q5;
+                model.q4 = rpt.q4;
+                model.q3 = rpt.q3;
+                model.q2 = rpt.q2;
+                model.q1 = rpt.q1;
+                model.reportSenderId = rpt.ReportSenderId;
+                model.score = rpt.score;
+                model.rapportId = rpt.rapportId;
+                model.rapportName = "Rapport-" + rpt.rapportId;
+            }
+            return model;
+        }
+        public static ProblemeJson MapToJson(ProblemeModel probleme)
+        {
+            ProblemeJson model = new ProblemeJson();
+            if (probleme != null)
+            {
+                model.batimentId = probleme.BatimentId;
+                model.codeQuestion = probleme.CodeQuestion;
+                model.problemeId = probleme.ProblemeId;
+                model.domaine = probleme.Domaine;
+                model.nature = probleme.Nature;
+                model.objet = probleme.Objet;
+                model.sdeId = Utilities.getSdeFormatSent(probleme.SdeId);
+                model.statut = probleme.Statut;
+            }
+            return model;
+        }
+        public static DetailsRapportJson MapToJson(DetailsRapportModel rpt )
+        {
+            DetailsRapportJson model = new DetailsRapportJson();
+            if (rpt != null)
+            {
+                model.commentaire = rpt.Commentaire;
+                model.detailsRapportId = rpt.DetailsRapportId;
+                model.rapportId = rpt.RapportId;
+                model.precisions = rpt.Precisions;
+                model.probleme = rpt.Probleme;
+                model.solution = rpt.Solution;
+                model.domaine = rpt.Domaine;
+                model.sousDomaine = rpt.SousDomaine;
+                model.suggestions = rpt.Suggestions;
+                model.suivi = rpt.Suivi;
+            }
+           return model;
+        }
+        public static RapportDeroulementJson MapToJson(RapportDeroulementModel rpt)
+        {
+            RapportDeroulementJson json = new RapportDeroulementJson();
+            if (rpt != null)
+            {
+                json.rapportId = rpt.RapportId;
+                json.rapportName = rpt.RapportName;
+                json.dateRapport = rpt.DateRapport;
+                json.codeDistrict = rpt.CodeDistrict;
+                json.rdcDetails = MapToListJson(rpt.RdcDetails);
+            }
+            return json;
+        }
         public static List<BatimentJson> MapToListJson(List<BatimentModel> batiments)
         {
             if (batiments != null)
@@ -633,6 +784,35 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return new List<LogementJson>();
         }
+        public static List<LogementCJson> MapToListLCJson(List<LogementModel> logements)
+        {
+            if (logements != null)
+            {
+                List<LogementCJson> lists = new List<LogementCJson>();
+                foreach (LogementModel logement in logements)
+                {
+                    LogementCJson logementJson = ModelMapper.MapToLCJson(logement);
+                    lists.Add(logementJson);
+                }
+                return lists;
+            }
+            return new List<LogementCJson>();
+        }
+        public static List<LogementIsJson> MapToListLIJson(List<LogementModel> logements)
+        {
+            if (logements != null)
+            {
+                List<LogementIsJson> lists = new List<LogementIsJson>();
+                foreach (LogementModel logement in logements)
+                {
+                    LogementIsJson logementJson = ModelMapper.MapToLIJson(logement);
+                    lists.Add(logementJson);
+                }
+                return lists;
+            }
+            return new List<LogementIsJson>();
+        }
+
         public static List<MenageJson> MapToListJson(List<MenageModel> menages)
         {
             if (menages != null)
@@ -688,6 +868,62 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 return lists;
             }
             return new List<IndividuJson>();
+        }
+        public static List<ProblemeJson> MapToListJson(List<ProblemeModel> problemes)
+        {
+            if (problemes != null)
+            {
+                List<ProblemeJson> lists = new List<ProblemeJson>();
+                foreach (ProblemeModel prob in problemes)
+                {
+                    ProblemeJson json = ModelMapper.MapToJson(prob);
+                    lists.Add(json);
+                }
+                return lists;
+            }
+            return new List<ProblemeJson>();
+        }
+        public static List<DetailsRapportJson> MapToListJson(List<DetailsRapportModel> details)
+        {
+            if (details != null)
+            {
+                List<DetailsRapportJson> lists = new List<DetailsRapportJson>();
+                foreach (DetailsRapportModel dt in details)
+                {
+                    DetailsRapportJson json = ModelMapper.MapToJson(dt);
+                    lists.Add(json);
+                }
+                return lists;
+            }
+            return new List<DetailsRapportJson>();
+        }
+        public static List<RapportDeroulementJson> MapToListJson(List<RapportDeroulementModel> rapports)
+        {
+            if (rapports != null)
+            {
+                List<RapportDeroulementJson> lists = new List<RapportDeroulementJson>();
+                foreach(RapportDeroulementModel rpt in rapports)
+                {
+                    RapportDeroulementJson json = ModelMapper.MapToJson(rpt);
+                    lists.Add(json);
+                }
+                return lists;
+            }
+            return new List<RapportDeroulementJson>();
+        }
+        public static List<RapportPersonnelJson> MapToListJson(List<RapportPersonnelModel> rapports)
+        {
+            if (rapports != null)
+            {
+                List<RapportPersonnelJson> lists = new List<RapportPersonnelJson>();
+                foreach (RapportPersonnelModel rpt in rapports)
+                {
+                    RapportPersonnelJson json = ModelMapper.MapToJson(rpt);
+                    lists.Add(json);
+                }
+                return lists;
+            }
+            return new List<RapportPersonnelJson>();
         }
         #endregion
 

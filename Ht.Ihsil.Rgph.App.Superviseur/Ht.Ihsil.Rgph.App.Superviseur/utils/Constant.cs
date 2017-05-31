@@ -485,6 +485,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string TOPIC_RAPPORT_DATA = "VirtualTopic/Rgph/Rapport";
         public static string TOPIC_RAPPORT_DEROULEMENTCOLLECTE = "VirtualTopic/Rgph/RDC";
         public static string TOPIC_RAPPORT_SUPERVISION_DIRECTE = "VirtualTopic/Rgph/RSD";
+        public static string TOPIC_PROBLEME_RENCONTREE = "VirtualTopic/Rgph/PR";
         public static string TOPIC_ALERTDATA = "VirtualTopic/Rgph/Alert";
         #endregion
 

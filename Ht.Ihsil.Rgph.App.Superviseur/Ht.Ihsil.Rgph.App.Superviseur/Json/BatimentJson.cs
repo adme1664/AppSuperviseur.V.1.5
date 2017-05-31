@@ -44,6 +44,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public string longitude { get; set; }
         public string codeAgentRecenceur { get; set; }
 
-        public List<LogementJson> Logements { get; set; }
+        public List<LogementCJson> logementCs { get; set; }
+        public List<LogementIsJson> logementIs { get; set; }
     }
 }

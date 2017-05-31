@@ -1,4 +1,5 @@
 ﻿using Ht.Ihsi.Rgph.Logging.Logs;
+using Ht.Ihsil.Rgph.App.Superviseur.Json;
 using Ht.Ihsil.Rgph.App.Superviseur.Schema;
 using Ht.Ihsil.Rgph.App.Superviseur.utils;
 using System;
@@ -53,7 +54,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
        }
 
        
-       public bool publishBatimentData(BatimentData data)
+       public bool publishBatimentData(string data)
        {
 
            try
@@ -64,8 +65,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                   log.Info("PING THE SERVER================<>RESPONSE:" + true);
                   if (data != null)
                   {
-                      string strXml = XmlUtils.GetXMLFromObject(data);
-                      mqttClient.Publish(Constant.TOPIC_COLLECT_DATA, Encoding.UTF8.GetBytes(strXml), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+                      mqttClient.Publish(Constant.TOPIC_COLLECT_DATA, Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
                       return true;
                   }
               }
@@ -106,7 +106,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
            return false;
        }
 
-       public bool publishRapportSupervisionDirect(RapportSuperviseurDirectType rapport)
+       public bool publishRapportSupervisionDirect(string rapport)
        {
            try
            {
@@ -114,8 +114,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                {
                    if (rapport != null)
                    {
-                       string xml = XmlUtils.GetXMLFromObject(rapport);
-                       mqttClient.Publish(Constant.TOPIC_RAPPORT_SUPERVISION_DIRECTE, Encoding.UTF8.GetBytes(xml), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+                       mqttClient.Publish(Constant.TOPIC_RAPPORT_SUPERVISION_DIRECTE, Encoding.UTF8.GetBytes(rapport), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
                        return true;
                    }
                }
@@ -130,7 +129,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
            }
            return false;
        }
-       public bool publishRapporDeroulementCollecte(RapportDeroulementCollecteType rapport)
+       public bool publishRapporDeroulementCollecte(string rapport)
        {
            try
            {
@@ -138,8 +137,30 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                {
                    if (rapport != null)
                    {
-                       string xml = XmlUtils.GetXMLFromObject(rapport);
-                       mqttClient.Publish(Constant.TOPIC_RAPPORT_DEROULEMENTCOLLECTE, Encoding.UTF8.GetBytes(xml), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+                       mqttClient.Publish(Constant.TOPIC_RAPPORT_DEROULEMENTCOLLECTE, Encoding.UTF8.GetBytes(rapport), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+                       return true;
+                   }
+               }
+               else
+               {
+                   log.Info("PING THE SERVER================<>RESPONSE:" + false);
+               }
+           }
+           catch (Exception ex)
+           {
+               log.Info("ERROR=============================<>:" + ex.Message);
+           }
+           return false;
+       }
+       public bool publishRapportProbleme(string rapport)
+       {
+           try
+           {
+               if (Utilities.pingTheServer(adrSvrMqtt) == true)
+               {
+                   if (rapport != null)
+                   {
+                       mqttClient.Publish(Constant.TOPIC_PROBLEME_RENCONTREE, Encoding.UTF8.GetBytes(rapport), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
                        return true;
                    }
                }

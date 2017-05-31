@@ -9,7 +9,7 @@
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
              x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_verification" 
-             mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" Height="944.284" Width="1001.925">
+             mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
 
     <UserControl.Resources>
         <Style TargetType="dxg:GridColumn">
@@ -296,7 +296,268 @@
                     </dx:DXTabItem>
                     <dx:DXTabItem Header="Contrôles de cohérence"></dx:DXTabItem>
                     <dx:DXTabItem Header="Vérification de la codification">
-                        
+                        <GroupBox Header="Codification">
+                            <Grid>
+                                <dxc:ChartControl Name="chartControl1">
+                                    <dxc:ChartControl.Diagram>
+                                        <dxc:XYDiagram2D>
+                                            <dxc:XYDiagram2D.Series>
+                                                <dxc:BarFullStackedSeries2D Name="entierementPreCodifie" DisplayName="Entièrement Pré-Codifié">
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10/Lieu de naissance" Value="2" />
+                                                        <dxc:SeriesPoint Argument="P12/Lieu de residence" Value="2" />
+                                                        <dxc:SeriesPoint Argument="A5/Branche d'activite" Value="1" />
+                                                        <dxc:SeriesPoint Argument="A7/Occupation" Value="6" />
+                                                    </dxc:BarFullStackedSeries2D.Points>
+                                                    <dxc:BarFullStackedSeries2D.Model>
+                                                        <dxc:Quasi3DBar2DModel />
+                                                    </dxc:BarFullStackedSeries2D.Model>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
+                                                     Visible="True" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.PointOptions>
+                                                        <dxc:PointOptions>
+                                                            <dxc:PointOptions.ValueNumericOptions>
+                                                                <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                            </dxc:PointOptions.ValueNumericOptions>
+                                                        </dxc:PointOptions>
+                                                    </dxc:BarFullStackedSeries2D.PointOptions>
+                                                </dxc:BarFullStackedSeries2D>
+                                                <dxc:BarFullStackedSeries2D Name="partielleemntPreCodifieAutre" DisplayName="Partiellement Pré-Codifié (Autre)">
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10/Lieu de naissance" Value="4" />
+                                                        <dxc:SeriesPoint Argument="P12/Lieu de residence" Value="3" />
+                                                        <dxc:SeriesPoint Argument="A5/Branche d'activite" Value="2" />
+                                                        <dxc:SeriesPoint Argument="A7/Occupation" Value="1" />
+                                                    </dxc:BarFullStackedSeries2D.Points>
+                                                    <dxc:BarFullStackedSeries2D.Model>
+                                                        <dxc:Quasi3DBar2DModel />
+                                                    </dxc:BarFullStackedSeries2D.Model>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}" Visible="True" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.PointOptions>
+                                                        <dxc:PointOptions>
+                                                            <dxc:PointOptions.ValueNumericOptions>
+                                                                <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                            </dxc:PointOptions.ValueNumericOptions>
+                                                        </dxc:PointOptions>
+                                                    </dxc:BarFullStackedSeries2D.PointOptions>
+                                                </dxc:BarFullStackedSeries2D>
+                                                <dxc:BarFullStackedSeries2D Name="pasDuToutPreCodifieAutre" DisplayName="Pas du tout Pré-Codifié (Autre)">
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10/Lieu de naissance" Value="4" />
+                                                        <dxc:SeriesPoint Argument="P12/Lieu de residence" Value="3" />
+                                                        <dxc:SeriesPoint Argument="A5/Branche d'activite" Value="2" />
+                                                        <dxc:SeriesPoint Argument="A7/Occupation" Value="1" />
+                                                    </dxc:BarFullStackedSeries2D.Points>
+                                                    <dxc:BarFullStackedSeries2D.Model>
+                                                        <dxc:Quasi3DBar2DModel />
+                                                    </dxc:BarFullStackedSeries2D.Model>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
+                                                     Visible="True" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.PointOptions>
+                                                        <dxc:PointOptions>
+                                                            <dxc:PointOptions.ValueNumericOptions>
+                                                                <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                            </dxc:PointOptions.ValueNumericOptions>
+                                                        </dxc:PointOptions>
+                                                    </dxc:BarFullStackedSeries2D.PointOptions>
+                                                </dxc:BarFullStackedSeries2D>
+                                                <dxc:BarFullStackedSeries2D Name="partiellementPreCodifie" DisplayName="Partiellement Pré-Codifié">
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10/Lieu de naissance" Value="4" />
+                                                        <dxc:SeriesPoint Argument="P12/Lieu de residence" Value="3" />
+                                                        <dxc:SeriesPoint Argument="A5/Branche d'activite" Value="2" />
+                                                        <dxc:SeriesPoint Argument="A7/Occupation" Value="1" />
+                                                    </dxc:BarFullStackedSeries2D.Points>
+                                                    <dxc:BarFullStackedSeries2D.Model>
+                                                        <dxc:Quasi3DBar2DModel />
+                                                    </dxc:BarFullStackedSeries2D.Model>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
+                                                     Visible="True" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.PointOptions>
+                                                        <dxc:PointOptions>
+                                                            <dxc:PointOptions.ValueNumericOptions>
+                                                                <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                            </dxc:PointOptions.ValueNumericOptions>
+                                                        </dxc:PointOptions>
+                                                    </dxc:BarFullStackedSeries2D.PointOptions>
+                                                </dxc:BarFullStackedSeries2D>
+                                                <dxc:BarFullStackedSeries2D Name="pasDuToutPreCodifie" DisplayName="Pas du tout Pré-Codifié">
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10/Lieu de naissance" Value="4" />
+                                                        <dxc:SeriesPoint Argument="P12/Lieu de residence" Value="3" />
+                                                        <dxc:SeriesPoint Argument="A5/Branche d'activite" Value="2" />
+                                                        <dxc:SeriesPoint Argument="A7/Occupation" Value="1" />
+                                                    </dxc:BarFullStackedSeries2D.Points>
+                                                    <dxc:BarFullStackedSeries2D.Model>
+                                                        <dxc:Quasi3DBar2DModel />
+                                                    </dxc:BarFullStackedSeries2D.Model>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
+                                                     Visible="True" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.PointOptions>
+                                                        <dxc:PointOptions>
+                                                            <dxc:PointOptions.ValueNumericOptions>
+                                                                <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                            </dxc:PointOptions.ValueNumericOptions>
+                                                        </dxc:PointOptions>
+                                                    </dxc:BarFullStackedSeries2D.PointOptions>
+                                                </dxc:BarFullStackedSeries2D>
+                                            </dxc:XYDiagram2D.Series>
+                                        </dxc:XYDiagram2D>
+                                    </dxc:ChartControl.Diagram>
+                                    <dxc:ChartControl.Legend>
+                                        <dxc:Legend />
+                                    </dxc:ChartControl.Legend>
+                                    <dxc:ChartControl.Titles>
+                                        <dxc:Title Dock="Top" HorizontalAlignment="Center">Graphique</dxc:Title>
+                                        <dxc:Title Dock="Top" HorizontalAlignment="Center" FontSize="16">Distribution des individus avec variables à codifier selon le degré de pré-codification</dxc:Title>
+                                        <dxc:Title Dock="Bottom" HorizontalAlignment="Right" FontSize="12" Foreground="Silver" Margin="0,10,0,0">IHSI</dxc:Title>
+                                    </dxc:ChartControl.Titles>
+                                    <!--<dxc:ChartControl Name="chart" BorderThickness="0" AnimationMode="OnLoad">
+                                    <dxc:ChartControl.ToolTipController>
+                                        <dxc:ChartToolTipController AutoPopDelay="00:00:00" />
+                                    </dxc:ChartControl.ToolTipController>
+                                    <dxc:ChartControl.Diagram>
+                                        <dxc:XYDiagram2D BarDistance="0.04">
+                                            <dxc:XYDiagram2D.DefaultPane>
+                                                <dxc:Pane MirrorHeight="100.0"/>
+                                            </dxc:XYDiagram2D.DefaultPane>
+                                            --><!--<dxc:XYDiagram2D.AxisX>
+                                                <dxc:AxisX2D />
+                                            </dxc:XYDiagram2D.AxisX>
+                                            <dxc:XYDiagram2D.AxisY>
+                                                <dxc:AxisY2D>
+                                                    <dxc:AxisY2D.WholeRange>
+                                                        <dxc:Range MinValue="0" MaxValue="1" SideMarginsValue="0"/>
+                                                    </dxc:AxisY2D.WholeRange>
+                                                    <dxc:AxisY2D.NumericOptions>
+                                                        <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                    </dxc:AxisY2D.NumericOptions>
+                                                </dxc:AxisY2D>
+                                            </dxc:XYDiagram2D.AxisY>--><!--
+                                            
+                                            <dxc:XYDiagram2D.Series>
+                                                
+                                                <dxc:BarFullStackedSeries2D x:Name="entiereRemplisAutre"
+                                                        DisplayName="Entièrement pré-codifié (Autre)"
+                                                        AnimationAutoStartMode="SetStartState">
+                                                    <dxc:BarFullStackedSeries2D.PointAnimation>
+                                                        <dxc:Bar2DSlideFromLeftAnimation PointOrder="Inverted" />
+                                                    </dxc:BarFullStackedSeries2D.PointAnimation>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
+                                                     Visible="true" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.PointOptions>
+                                                        <dxc:PointOptions>
+                                                            <dxc:PointOptions.ValueNumericOptions>
+                                                                <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                            </dxc:PointOptions.ValueNumericOptions>
+                                                        </dxc:PointOptions>
+                                                    </dxc:BarFullStackedSeries2D.PointOptions>
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10" Value="450.3" />
+                                                        <dxc:SeriesPoint Argument="P12" Value="850.9" />
+                                                        <dxc:SeriesPoint Argument="A5" Value="120.9" />
+                                                        <dxc:SeriesPoint Argument="A7" Value="140.8" />
+                                                    </dxc:BarFullStackedSeries2D.Points>
+                                                </dxc:BarFullStackedSeries2D>
+                                                <dxc:BarFullStackedSeries2D x:Name="partiellementPreCodifie"
+                                                        DisplayName="Partiellement pré-codifié"
+                                                        AnimationAutoStartMode="SetStartState">
+                                                    <dxc:BarFullStackedSeries2D.PointAnimation>
+                                                        <dxc:Bar2DSlideFromLeftAnimation BeginTime="00:00:00.200"
+                                                                     PointOrder="Inverted" />
+                                                    </dxc:BarFullStackedSeries2D.PointAnimation>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
+                                                     Visible="True" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10" Value="564.3" />
+                                                        <dxc:SeriesPoint Argument="P12" Value="956.9" />
+                                                        <dxc:SeriesPoint Argument="A5" Value="105.9" />
+                                                        <dxc:SeriesPoint Argument="A7" Value="120.8" />
+                                                    </dxc:BarFullStackedSeries2D.Points>
+                                                </dxc:BarFullStackedSeries2D>
+                                                <dxc:BarFullStackedSeries2D x:Name="pasCodifieAutre"
+                                                        DisplayName="Pas du tout pré-codifié (Autre)"
+                                                        AnimationAutoStartMode="SetStartState">
+                                                    <dxc:BarFullStackedSeries2D.PointAnimation>
+                                                        <dxc:Bar2DSlideFromLeftAnimation BeginTime="00:00:00.400"
+                                                                     PointOrder="Inverted" />
+                                                    </dxc:BarFullStackedSeries2D.PointAnimation>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
+                                                     Visible="true" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10" Value="564.3" />
+                                                        <dxc:SeriesPoint Argument="P12" Value="956.9" />
+                                                        <dxc:SeriesPoint Argument="A5" Value="105.9" />
+                                                        <dxc:SeriesPoint Argument="A7" Value="120.8" />
+                                                    </dxc:BarFullStackedSeries2D.Points>
+                                                </dxc:BarFullStackedSeries2D>
+                                                <dxc:BarFullStackedSeries2D x:Name="partiellementCodifie"
+                                                        DisplayName="Partiellement pré-codifié"
+                                                        AnimationAutoStartMode="SetStartState">
+                                                    <dxc:BarFullStackedSeries2D.PointAnimation>
+                                                        <dxc:Bar2DSlideFromLeftAnimation BeginTime="00:00:00.600"
+                                                                     PointOrder="Inverted" />
+                                                    </dxc:BarFullStackedSeries2D.PointAnimation>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
+                                                     Visible="true" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10" Value="564.3" />
+                                                        <dxc:SeriesPoint Argument="P12" Value="956.9" />
+                                                        <dxc:SeriesPoint Argument="A5" Value="105.9" />
+                                                        <dxc:SeriesPoint Argument="A7" Value="120.8" />
+                                                    </dxc:BarFullStackedSeries2D.Points>
+                                                </dxc:BarFullStackedSeries2D>
+                                                <dxc:BarFullStackedSeries2D x:Name="pasPreCodifie"
+                                                        DisplayName="Pas du tout pré-codifié"
+                                                        AnimationAutoStartMode="SetStartState">
+                                                    <dxc:BarFullStackedSeries2D.PointAnimation>
+                                                        <dxc:Bar2DSlideFromLeftAnimation BeginTime="00:00:00.800"
+                                                                     PointOrder="Inverted" />
+                                                    </dxc:BarFullStackedSeries2D.PointAnimation>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
+                                                     Visible="True" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.Points>
+                                                        <dxc:SeriesPoint Argument="P10" Value="564.3" />
+                                                        <dxc:SeriesPoint Argument="P12" Value="956.9" />
+                                                        <dxc:SeriesPoint Argument="A5" Value="105.9" />
+                                                        <dxc:SeriesPoint Argument="A7" Value="120.8" />
+                                                     </dxc:BarFullStackedSeries2D.Points>
+                                                </dxc:BarFullStackedSeries2D>
+                                            </dxc:XYDiagram2D.Series>
+                                        </dxc:XYDiagram2D>
+                                    </dxc:ChartControl.Diagram>
+                                    <dxc:ChartControl.Legend>
+                                        <dxc:Legend ReverseItems="True" />
+                                    </dxc:ChartControl.Legend>
+                                    <dxc:ChartControl.Titles>
+                                        <dxc:Title Dock="Top" HorizontalAlignment="Center">Graphique</dxc:Title>
+                                        <dxc:Title Dock="Top" HorizontalAlignment="Center" FontSize="16">Distribution des individus avec variables à codifier selon le degré de pré-codification</dxc:Title>
+                                        <dxc:Title Dock="Bottom" HorizontalAlignment="Right" FontSize="12" Foreground="Silver" Margin="0,10,0,0">IHSI</dxc:Title>
+                                    </dxc:ChartControl.Titles>
+                                </dxc:ChartControl>-->
+                                </dxc:ChartControl>
+                            </Grid>
+                        </GroupBox>
                     </dx:DXTabItem>
                 </dx:DXTabControl>
             </dx:DXTabItem>

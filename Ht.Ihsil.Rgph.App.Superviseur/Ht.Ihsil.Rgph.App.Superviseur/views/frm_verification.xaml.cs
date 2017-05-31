@@ -391,9 +391,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         else
                         {
                             result = configuration.updateProbleme(probleme);
-                        }
-                        
-                        
+                        }                       
                     }
                     if (result == true)
                     {

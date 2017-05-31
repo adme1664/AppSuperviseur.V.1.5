@@ -51,8 +51,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public bool isFieldAllFilled { get; set; }
         public bool isContreEnqueteMade { get; set; }
         public string codeAgentRecenceur { get; set; }
-        public List<EmigreJson> Emigres { get; set; }
-        public List<DecesJson> Deces { get; set; }
-        public List<IndividuJson> Individus { get; set; }
+        public List<EmigreJson> emigres { get; set; }
+        public List<DecesJson> deces { get; set; }
+        public List<IndividuJson> individus { get; set; }
     }
 }

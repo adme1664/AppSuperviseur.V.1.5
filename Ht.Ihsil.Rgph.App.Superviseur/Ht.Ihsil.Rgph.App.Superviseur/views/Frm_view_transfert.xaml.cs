@@ -457,28 +457,30 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 service = new SqliteDataReaderService(Utilities.getConnectionString(Users.users.DatabasePath, sdeId));
 
                 //
-                List<BatimentJson> batimentsJsons = service.GetAllBatimentsInJson();
-                log.Info("JSON Executed:" + batimentsJsons.Count);
-                //MemoryStream stream1 = new MemoryStream();
-                DataJson dataJson = new DataJson();
-                dataJson.username = "Adme Jean Jeff";
-                dataJson.deptId = "01";
-                //DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BatimentJson));
-                using (StreamWriter write = new StreamWriter(MAIN_DATABASE_PATH + "DataJson.json"))
-                {
-                    foreach (BatimentJson bat in batimentsJsons)
-                    {
-                        bat.dateEnvoi = DateTime.Now.ToShortDateString();
-                        dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
-                        string dJson = JsonConvert.SerializeObject(dataJson);
-                        byte[] datas = Encoding.UTF8.GetBytes(dJson);
-                        write.Write(Encoding.UTF8.GetString(datas, 0, datas.Length));     
-                    }                                     
-                }              
+                //List<BatimentJson> batimentsJsons = service.GetAllBatimentsInJson();
+                //log.Info("JSON Executed:" + batimentsJsons.Count);
+                ////MemoryStream stream1 = new MemoryStream();
+                //DataJson dataJson = new DataJson();
+                //dataJson.username = "Adme Jean Jeff";
+                //dataJson.deptId = "01";
+                ////DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BatimentJson));
+                //using (StreamWriter write = new StreamWriter(MAIN_DATABASE_PATH + "DataJson.json"))
+                //{
+                //    foreach (BatimentJson bat in batimentsJsons)
+                //    {
+                //        bat.dateEnvoi = DateTime.Now.ToShortDateString();
+                //        dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
+                //        string dJson = JsonConvert.SerializeObject(dataJson);
+                //        byte[] datas = Encoding.UTF8.GetBytes(dJson);
+                //        write.Write(Encoding.UTF8.GetString(datas, 0, datas.Length));     
+                //    }                                     
+                //}              
                 //
                 sqliteWrite = new SqliteDataWriter(sdeId);
-                List<BatimentType> listOfBatiment = new List<BatimentType>();
-                listOfBatiment = service.GetAllBatimentType();
+                TransfertService transfert = new TransfertService();
+                List<BatimentJson> batimentsJsons = service.GetAllBatimentsInJson();
+                log.Info("JSON Executed:" + batimentsJsons.Count);
+
                 Dispatcher.Invoke(new Action(() =>
                 {
                     lbl_sde.Content = "SDE:" + this.sdeId;
@@ -487,7 +489,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     prg_trans_sc.Value = 0;
                 }));
                 float percent = 0;
-                int nbreBat = listOfBatiment.Count();
+                int nbreBat = batimentsJsons.Count();
                 if (nbreBat != 0)
                 {
                     percent = calculPercent(nbreBat);
@@ -503,21 +505,25 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         prg_trans_sc.Value = 0;
                     }));
                 }
-
-                if (listOfBatiment.Count > 0)
+//
+                //
+                #region ENVOI DES BATIMENTS
+                if (batimentsJsons.Count > 0)
                 {
-                    TransfertService transfert = new TransfertService();
+                    
                     sqliteWrite = new SqliteDataWriter();
-                    foreach (BatimentType b in listOfBatiment)
+                    foreach (BatimentJson bat in batimentsJsons)
                     {
-                        BatimentType bat = service.ReadBatimentType(Convert.ToInt32(b.batimentId));
                         if (Utils.IsNotNull(bat) && bat.isSynchroToCentrale == false)
                         {
-                            BatimentData batimentData = new BatimentData();
-                            batimentData.data = bat;
-                            batimentData.dataType = 1;
-                            //batimentData. = new BatimentCEData();
-                            if (transfert.publishBatimentData(batimentData))
+                            DataJson dataJson = new DataJson();
+                            dataJson.username = "Adme Jean Jeff";
+                            dataJson.deptId = "01";
+                            bat.dateEnvoi = DateTime.Now.ToShortDateString();
+                            dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
+                            string dJson = JsonConvert.SerializeObject(dataJson);
+
+                            if (transfert.publishBatimentData(dJson))
                             {
                                 //Ecriture dans le fichier sqlite pr dire que le batiment a ete transfere vers le serveur centrale
                                 BatimentModel btm = new BatimentModel();
@@ -529,7 +535,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 //
                                 Dispatcher.Invoke(new Action(() =>
                                 {
-                                    txt_sortie.Text += "<>===================== Batiment:" + b.batimentId + " transféré avec succes" + Environment.NewLine;
+                                    txt_sortie.Text += "<>===================== Batiment:" + bat.batimentId + " transféré avec succes" + Environment.NewLine;
                                     txt_sortie.CaretIndex = txt_sortie.Text.Length;
                                     var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
                                     txt_sortie.ScrollToHorizontalOffset(rect.Right);
@@ -595,7 +601,118 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         btn_transfertr_sc.IsEnabled = true;
                     }));
                 }
+                //
+                #endregion
 
+                //#region ENVOI DES RAPPORTS
+                //IContreEnqueteService contreEnqueteService = new ContreEnqueteService();
+                //#region RAPPORT PERSONNEL
+                //List<RapportPersonnelJson> rapportPersonnels = ModelMapper.MapToListJson(contreEnqueteService.searchRptPersonnel());
+                //if (rapportPersonnels != null)
+                //{
+                //    DataJson data = new DataJson();
+                //    data.deptId = "01";
+                //    data.username="user";
+                //    foreach (RapportPersonnelJson rpt in rapportPersonnels) 
+                //    {
+                //        data.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(rpt)));
+                //        string dJson = JsonConvert.SerializeObject(data);
+                //        if (transfert.publishRapportSupervisionDirect(dJson))
+                //        {
+                //            //Ecriture dans le fichier sqlite pr dire que le rapport a ete transfere vers le serveur centrale
+                            
+                //            //
+                //            Dispatcher.Invoke(new Action(() =>
+                //            {
+                //                txt_sortie.Text += "<>===================== Rapport:" + rpt.rapportId + " transféré avec succes" + Environment.NewLine;
+                //                txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //                txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //                prg_trans_sc.Value += percent;
+                //                btn_transfert_pda.IsEnabled = false;
+                //            }), System.Windows.Threading.DispatcherPriority.Background);
+
+                //        }
+                //        else
+                //        {
+                //            Dispatcher.Invoke(new Action(() =>
+                //            {
+                //                txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                //                txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //                txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //                prg_trans_sc.Value += percent;
+                //                btn_transfert_pda.IsEnabled = false;
+                //            }), System.Windows.Threading.DispatcherPriority.Background);
+                //        }
+                //    }
+
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Pa gen rapo.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                //    Dispatcher.Invoke(new Action(() =>
+                //    {
+                //        lbl_sde.Content = "";
+                //        lbl_statut_transfert.Content = "";
+                //        prg_trans_sc.Value = 0;
+                //        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                //        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                //        img_loading_ser.Visibility = Visibility.Hidden;
+                //        btn_transfertr_sc.IsEnabled = true;
+                //    }));
+                //}
+                //#endregion
+
+                //#region RAPPORT PROBLEME
+                //settings = new ConfigurationService();
+                //List<ProblemeJson> problemes = ModelMapper.MapToListJson(settings.searchAllProblemesBySdeId(sdeId));
+                //if (problemes != null)
+                //{
+                //    DataJson data = new DataJson();
+                //    data.deptId = "01";
+                //    data.username = "user";
+                //    foreach (ProblemeJson prob in problemes)
+                //    {
+                //        data.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(prob)));
+                //        string dJson = JsonConvert.SerializeObject(data);
+                //        if (transfert.publishRapportProbleme(dJson))
+                //        {
+                //            //Ecriture dans le fichier sqlite pr dire que le rapport a ete transfere vers le serveur centrale
+
+                //            //
+                //            Dispatcher.Invoke(new Action(() =>
+                //            {
+                //                txt_sortie.Text += "<>===================== Rapport/Batiman:" + prob.problemeId + " transféré avec succes" + Environment.NewLine;
+                //                txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //                txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //                prg_trans_sc.Value += percent;
+                //                btn_transfert_pda.IsEnabled = false;
+                //            }), System.Windows.Threading.DispatcherPriority.Background);
+
+                //        }
+                //        else
+                //        {
+                //            Dispatcher.Invoke(new Action(() =>
+                //            {
+                //                txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                //                txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //                txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //                prg_trans_sc.Value += percent;
+                //                btn_transfert_pda.IsEnabled = false;
+                //            }), System.Windows.Threading.DispatcherPriority.Background);
+                //        }
+                //    }
+                //}
+                //#endregion
+
+                //#endregion
 
             }
             else
