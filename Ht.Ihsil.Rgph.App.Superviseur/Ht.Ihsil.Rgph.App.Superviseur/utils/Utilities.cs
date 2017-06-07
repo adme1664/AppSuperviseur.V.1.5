@@ -273,17 +273,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         }
 
         //Retourne le pourcentage entre 2 nombres
-        public static double getPourcentage(int nbre1, int nbre2)
+        /// <summary>
+        /// Retourne le pourcentage de 2 nombres
+        /// </summary>
+        /// <param name="nbreACalculer"></param>
+        /// <param name="nbreTotal"></param>
+        /// <returns></returns>
+        public static double getPourcentage(int nbreACalculer, int nbreTotal)
         {
             double percent = 0;
             try
             {
-                if (nbre1 == 0 || nbre2 == 0)
+                if (nbreACalculer == 0 || nbreTotal == 0)
                 {
                     return percent;
                 }
                 else
-                    percent = (nbre1 * 100) / nbre2;
+                    percent = (nbreACalculer * 100) / nbreTotal;
 
             }
             catch (Exception)

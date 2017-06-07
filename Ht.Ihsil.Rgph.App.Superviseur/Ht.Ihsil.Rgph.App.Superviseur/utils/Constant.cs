@@ -745,7 +745,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string SUPDATABASE_FILE_NAME = "rgph_sup-db.sqlite";
         public static string XML_ELEMENT_ADR_SERVER = "adrServer";
         public static string XML_ELEMENT_VARIABLE = "variable";
+        public static string PA_KONNEN_KOMIN_OU_PEYI = "9999";
+        public static string PA_KONNEN_SEKSYON_KOMINAL = "9999-99";
 
+        #region OTHERS STUFF
         public static List<KeyValue> ListOfRaisons()
         {
             List<KeyValue> listOf = new List<KeyValue>();
@@ -817,5 +820,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             listOf.Add(new NameValue("B3.18", "B3.18. Existe-t-il des domaines sensibles pour lesquels les réponses pourraient être peu ou non fiables ?"));
             return listOf;
         }
+        #endregion
     }
 }

@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="16c9b17ae0ed44d69c95ee7f8a457eb9" Name="Diagram1" ZoomLevel="77">
+      <Diagram DiagramId="16c9b17ae0ed44d69c95ee7f8a457eb9" Name="Diagram1" ZoomLevel="63">
         <EntityTypeShape EntityType="MobileEntities.tbl_batiment" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MobileEntities.tbl_deces" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MobileEntities.tbl_emigre" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MobileEntities.tbl_individu" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MobileEntities.tbl_individu" Width="3" PointX="6.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MobileEntities.tbl_logement" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MobileEntities.tbl_menage" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MobileEntities.tbl_personnel" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />

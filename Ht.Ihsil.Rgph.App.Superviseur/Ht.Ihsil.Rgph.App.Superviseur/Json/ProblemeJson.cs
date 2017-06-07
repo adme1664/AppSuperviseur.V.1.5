@@ -10,11 +10,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
     {
         public long problemeId { get; set; }
         public string sdeId { get; set; }
-        public Nullable<long> batimentId { get; set; }
+        public Nullable<long> questionnaireId { get; set; }
         public string objet { get; set; }
         public string domaine { get; set; }
         public string codeQuestion { get; set; }
-        public string nature { get; set; }
+        public string descProbleme { get; set; }
         public Nullable<long> statut { get; set; }
     }
 }

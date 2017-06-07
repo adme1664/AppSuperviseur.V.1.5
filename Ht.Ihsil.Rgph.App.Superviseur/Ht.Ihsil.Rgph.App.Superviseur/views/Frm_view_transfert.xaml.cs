@@ -71,7 +71,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             log = new Logger();
             this.main = main;
             mdfService = new MdfService();
-            xmlConfiguration = new XmlUtils(CONFIGURATION_PATH+"configuration.xml");
+            xmlConfiguration = new XmlUtils(CONFIGURATION_PATH + "configuration.xml");
             List<SdeModel> listOfSde = mdfService.getAllSde().ToList();
             Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
             DataContext = this;
@@ -142,7 +142,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
         }
 
-        
+
         public void pullFile()
         {
 
@@ -158,7 +158,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     info = dev.getDeviceInformation();
                     Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
                     settings = new ConfigurationService();
-                    
+
                     mat = settings.getMateriels(info.Serial);
                     if (mat != null)
                     {
@@ -229,17 +229,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             {
                                 foreach (BatimentModel bat in listOfBatiment)
                                 {
-                                    if(listOfRetours!=null)
+                                    if (listOfRetours != null)
                                     {
                                         foreach (RetourModel retour in listOfRetours)
                                         {
 
                                         }
                                     }
-                                    
+
                                     //if(bat.BatimentId==settings.sea)
                                 }
-                            
+
                             }
                             //
                             prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 100));
@@ -290,7 +290,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         public void pushFile()
         {
-           
+
             string sdeId = null;
             if (device.IsConnected == true)
             {
@@ -320,7 +320,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 string destFileName = System.IO.Path.Combine(TEMP_DATABASE_PATH, Constant.DB_NAME + ".db");
                                 if (!System.IO.File.Exists(destFileName))
                                 {
-                                    System.IO.File.Copy(f, destFileName,true);
+                                    System.IO.File.Copy(f, destFileName, true);
                                 }
                                 else
                                 {
@@ -378,7 +378,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
         }
 
-       
+
         private void btn_pc_tab_Click(object sender, RoutedEventArgs e)
         {
             waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = true));
@@ -505,122 +505,126 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         prg_trans_sc.Value = 0;
                     }));
                 }
-//
                 //
-                #region ENVOI DES BATIMENTS
-                if (batimentsJsons.Count > 0)
-                {
-                    
-                    sqliteWrite = new SqliteDataWriter();
-                    foreach (BatimentJson bat in batimentsJsons)
-                    {
-                        if (Utils.IsNotNull(bat) && bat.isSynchroToCentrale == false)
-                        {
-                            DataJson dataJson = new DataJson();
-                            dataJson.username = "Adme Jean Jeff";
-                            dataJson.deptId = "01";
-                            bat.dateEnvoi = DateTime.Now.ToShortDateString();
-                            dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
-                            string dJson = JsonConvert.SerializeObject(dataJson);
-
-                            if (transfert.publishBatimentData(dJson))
-                            {
-                                //Ecriture dans le fichier sqlite pr dire que le batiment a ete transfere vers le serveur centrale
-                                BatimentModel btm = new BatimentModel();
-                                btm.BatimentId = bat.batimentId;
-                                //btm.SdeId = bat.sdeId;
-                                btm.SdeId = sdeId;
-                                btm.IsSynchroToCentrale = true;
-                                //sqliteWrite.syncroBatimentToServeur(btm);
-                                //
-                                Dispatcher.Invoke(new Action(() =>
-                                {
-                                    txt_sortie.Text += "<>===================== Batiment:" + bat.batimentId + " transféré avec succes" + Environment.NewLine;
-                                    txt_sortie.CaretIndex = txt_sortie.Text.Length;
-                                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                                    txt_sortie.ScrollToHorizontalOffset(rect.Right);
-                                    txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                                    prg_trans_sc.Value += percent;
-                                    btn_transfert_pda.IsEnabled = false;
-                                }), System.Windows.Threading.DispatcherPriority.Background);
-
-                            }
-                            else
-                            {
-                                Dispatcher.Invoke(new Action(() =>
-                                {
-                                    txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
-                                    txt_sortie.CaretIndex = txt_sortie.Text.Length;
-                                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                                    txt_sortie.ScrollToHorizontalOffset(rect.Right);
-                                    txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                                    prg_trans_sc.Value += percent;
-                                    btn_transfert_pda.IsEnabled = false;
-                                }), System.Windows.Threading.DispatcherPriority.Background);
-                            }
-                        }
-                        else
-                        {
-                            Dispatcher.Invoke(new Action(() =>
-                            {
-                                txt_sortie.Text += "<>=========Batiment deja transfere=========<>" + Environment.NewLine;
-                                txt_sortie.CaretIndex = txt_sortie.Text.Length;
-                                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                                txt_sortie.ScrollToHorizontalOffset(rect.Right);
-                                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                                prg_trans_sc.Value += percent;
-                                btn_transfert_pda.IsEnabled = false;
-                            }), System.Windows.Threading.DispatcherPriority.Background);
-                        }
-                    }
-
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        lbl_sde.Content = "Transfert " + sdeId;
-                        lbl_statut_transfert.Content = "Termine";
-                        lbl_statut_transfert.Foreground = (Brush)bc.ConvertFrom("#FF26BD64");
-                        img_loading_ser.Visibility = Visibility.Hidden;
-                        btn_transfertr_sc.IsEnabled = true;
-                        btn_effacer.IsEnabled = true;
-                        writeInBusyTool("Transfert termine.");
-                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
-                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
-                    }));
-                }
-                else
-                {
-                    MessageBox.Show("Pa gen batiman.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        lbl_sde.Content = "";
-                        lbl_statut_transfert.Content = "";
-                        prg_trans_sc.Value = 0;
-                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
-                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
-                        img_loading_ser.Visibility = Visibility.Hidden;
-                        btn_transfertr_sc.IsEnabled = true;
-                    }));
-                }
                 //
-                #endregion
+                //#region ENVOI DES BATIMENTS
+                //if (batimentsJsons.Count > 0)
+                //{
+
+                //    sqliteWrite = new SqliteDataWriter();
+                //    foreach (BatimentJson bat in batimentsJsons)
+                //    {
+
+
+                //        if (Utils.IsNotNull(bat) && bat.isSynchroToCentrale == false)
+                //        {
+                //            DataJson dataJson = new DataJson();
+                //            dataJson.username = "Adme Jean Jeff";
+                //            dataJson.deptId = "01";
+                //            bat.dateEnvoi = DateTime.Now.ToShortDateString();
+                //            dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
+                //            string dJson = JsonConvert.SerializeObject(dataJson);
+
+                //            if (transfert.publishBatimentData(dJson))
+                //            {
+                //                //Ecriture dans le fichier sqlite pr dire que le batiment a ete transfere vers le serveur centrale
+                //                BatimentModel btm = new BatimentModel();
+                //                btm.BatimentId = bat.batimentId;
+                //                //btm.SdeId = bat.sdeId;
+                //                btm.SdeId = sdeId;
+                //                btm.IsSynchroToCentrale = true;
+                //                //sqliteWrite.syncroBatimentToServeur(btm);
+                //                //
+                //                Dispatcher.Invoke(new Action(() =>
+                //                {
+                //                    txt_sortie.Text += "<>===================== Batiment:" + bat.batimentId + " transféré avec succes" + Environment.NewLine;
+                //                    txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //                    txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //                    txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //                    prg_trans_sc.Value += percent;
+                //                    btn_transfert_pda.IsEnabled = false;
+                //                }), System.Windows.Threading.DispatcherPriority.Background);
+
+                //            }
+                //            else
+                //            {
+                //                Dispatcher.Invoke(new Action(() =>
+                //                {
+                //                    txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                //                    txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //                    txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //                    txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //                    prg_trans_sc.Value += percent;
+                //                    btn_transfert_pda.IsEnabled = false;
+                //                }), System.Windows.Threading.DispatcherPriority.Background);
+                //            }
+                //        }
+                //        else
+                //        {
+                //            Dispatcher.Invoke(new Action(() =>
+                //            {
+                //                txt_sortie.Text += "<>=========Batiment deja transfere=========<>" + Environment.NewLine;
+                //                txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //                txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //                prg_trans_sc.Value += percent;
+                //                btn_transfert_pda.IsEnabled = false;
+                //            }), System.Windows.Threading.DispatcherPriority.Background);
+                //        }
+
+
+                //    }
+
+                //    Dispatcher.Invoke(new Action(() =>
+                //    {
+                //        lbl_sde.Content = "Transfert " + sdeId;
+                //        lbl_statut_transfert.Content = "Termine";
+                //        lbl_statut_transfert.Foreground = (Brush)bc.ConvertFrom("#FF26BD64");
+                //        img_loading_ser.Visibility = Visibility.Hidden;
+                //        btn_transfertr_sc.IsEnabled = true;
+                //        btn_effacer.IsEnabled = true;
+                //        writeInBusyTool("Transfert termine.");
+                //        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                //        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                //    }));
+                //}
+                //else
+                //{
+                //    MessageBox.Show("Pa gen batiman.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                //    Dispatcher.Invoke(new Action(() =>
+                //    {
+                //        lbl_sde.Content = "";
+                //        lbl_statut_transfert.Content = "";
+                //        prg_trans_sc.Value = 0;
+                //        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                //        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                //        img_loading_ser.Visibility = Visibility.Hidden;
+                //        btn_transfertr_sc.IsEnabled = true;
+                //    }));
+                //}
+                ////
+                //#endregion
 
                 //#region ENVOI DES RAPPORTS
-                //IContreEnqueteService contreEnqueteService = new ContreEnqueteService();
+                IContreEnqueteService contreEnqueteService = new ContreEnqueteService();
                 //#region RAPPORT PERSONNEL
                 //List<RapportPersonnelJson> rapportPersonnels = ModelMapper.MapToListJson(contreEnqueteService.searchRptPersonnel());
                 //if (rapportPersonnels != null)
                 //{
                 //    DataJson data = new DataJson();
                 //    data.deptId = "01";
-                //    data.username="user";
-                //    foreach (RapportPersonnelJson rpt in rapportPersonnels) 
+                //    data.username = "user";
+                //    foreach (RapportPersonnelJson rpt in rapportPersonnels)
                 //    {
                 //        data.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(rpt)));
                 //        string dJson = JsonConvert.SerializeObject(data);
                 //        if (transfert.publishRapportSupervisionDirect(dJson))
                 //        {
                 //            //Ecriture dans le fichier sqlite pr dire que le rapport a ete transfere vers le serveur centrale
-                            
+
                 //            //
                 //            Dispatcher.Invoke(new Action(() =>
                 //            {
@@ -674,43 +678,176 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 //    DataJson data = new DataJson();
                 //    data.deptId = "01";
                 //    data.username = "user";
-                //    foreach (ProblemeJson prob in problemes)
+                //    data.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(problemes)));
+                //    string dJson = JsonConvert.SerializeObject(data);
+                //    if (transfert.publishRapportProbleme(dJson))
                 //    {
-                //        data.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(prob)));
-                //        string dJson = JsonConvert.SerializeObject(data);
-                //        if (transfert.publishRapportProbleme(dJson))
-                //        {
-                //            //Ecriture dans le fichier sqlite pr dire que le rapport a ete transfere vers le serveur centrale
+                //        //Ecriture dans le fichier sqlite pr dire que le rapport a ete transfere vers le serveur centrale
 
-                //            //
-                //            Dispatcher.Invoke(new Action(() =>
-                //            {
-                //                txt_sortie.Text += "<>===================== Rapport/Batiman:" + prob.problemeId + " transféré avec succes" + Environment.NewLine;
-                //                txt_sortie.CaretIndex = txt_sortie.Text.Length;
-                //                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                //                txt_sortie.ScrollToHorizontalOffset(rect.Right);
-                //                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                //                prg_trans_sc.Value += percent;
-                //                btn_transfert_pda.IsEnabled = false;
-                //            }), System.Windows.Threading.DispatcherPriority.Background);
-
-                //        }
-                //        else
+                //        //
+                //        Dispatcher.Invoke(new Action(() =>
                 //        {
-                //            Dispatcher.Invoke(new Action(() =>
-                //            {
-                //                txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
-                //                txt_sortie.CaretIndex = txt_sortie.Text.Length;
-                //                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                //                txt_sortie.ScrollToHorizontalOffset(rect.Right);
-                //                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                //                prg_trans_sc.Value += percent;
-                //                btn_transfert_pda.IsEnabled = false;
-                //            }), System.Windows.Threading.DispatcherPriority.Background);
-                //        }
+                //            txt_sortie.Text += "<>===================== Liste de problemes transférés avec succes" + Environment.NewLine;
+                //            txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //            var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //            txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //            txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //            prg_trans_sc.Value += percent;
+                //            btn_transfert_pda.IsEnabled = false;
+                //        }), System.Windows.Threading.DispatcherPriority.Background);
+
                 //    }
+                //    else
+                //    {
+                //        Dispatcher.Invoke(new Action(() =>
+                //        {
+                //            txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                //            txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //            var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //            txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //            txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //            prg_trans_sc.Value += percent;
+                //            btn_transfert_pda.IsEnabled = false;
+                //        }), System.Windows.Threading.DispatcherPriority.Background);
+                //    }
+                //    //
+                //    //foreach (ProblemeJson prob in problemes)
+                //    //{
+                //    //    data.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(prob)));
+                //    //    string dJson = JsonConvert.SerializeObject(data);
+                //    //    if (transfert.publishRapportProbleme(dJson))
+                //    //    {
+                //    //        //Ecriture dans le fichier sqlite pr dire que le rapport a ete transfere vers le serveur centrale
+
+                //    //        //
+                //    //        Dispatcher.Invoke(new Action(() =>
+                //    //        {
+                //    //            txt_sortie.Text += "<>===================== Rapport/Batiman:" + prob.problemeId + " transféré avec succes" + Environment.NewLine;
+                //    //            txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //    //            var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //    //            txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //    //            txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //    //            prg_trans_sc.Value += percent;
+                //    //            btn_transfert_pda.IsEnabled = false;
+                //    //        }), System.Windows.Threading.DispatcherPriority.Background);
+
+                //    //    }
+                //    //    else
+                //    //    {
+                //    //        Dispatcher.Invoke(new Action(() =>
+                //    //        {
+                //    //            txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                //    //            txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                //    //            var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                //    //            txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                //    //            txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                //    //            prg_trans_sc.Value += percent;
+                //    //            btn_transfert_pda.IsEnabled = false;
+                //    //        }), System.Windows.Threading.DispatcherPriority.Background);
+                //    //    }
+                //    //}
+                //    lbl_sde.Content = "";
+                //    lbl_statut_transfert.Content = "";
+                //    prg_trans_sc.Value = 0;
+                //    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                //    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                //    img_loading_ser.Visibility = Visibility.Hidden;
+                //    btn_transfertr_sc.IsEnabled = true;
                 //}
                 //#endregion
+
+                #region RAPPORT PROBLEME
+                List<RapportDeroulementJson> rapportsDeroulements = ModelMapper.MapToListJson(contreEnqueteService.searchRptDeroulment());
+                if (rapportsDeroulements != null)
+                {
+                    DataJson data = new DataJson();
+                    data.deptId = "01";
+                    data.username = "user";
+                    foreach (RapportDeroulementJson rpt in rapportsDeroulements)
+                    {
+                        RapportDeroulementModel model=new RapportDeroulementModel();
+                        model.RapportId=rpt.rapportId;
+                        List<DetailsRapportJson> lists = ModelMapper.MapToListJson(contreEnqueteService.searchDetailsReport(model));
+                        rpt.rdcDetails = lists;
+                        data.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(rpt)));
+                        string dJson = JsonConvert.SerializeObject(data);
+                        if (transfert.publishRapporDeroulementCollecte(dJson))
+                        {
+                            //Ecriture dans le fichier sqlite pr dire que le rapport a ete transfere vers le serveur centrale
+
+                            //
+                            Dispatcher.Invoke(new Action(() =>
+                            {
+                                txt_sortie.Text += "<>===================== Rapport deroulement transfert avec succees" + Environment.NewLine;
+                                txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                                txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                                prg_trans_sc.Value += percent;
+                                btn_transfert_pda.IsEnabled = false;
+                            }), System.Windows.Threading.DispatcherPriority.Background);
+
+                        }
+                        else
+                        {
+                            Dispatcher.Invoke(new Action(() =>
+                            {
+                                txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                                txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                                txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                                prg_trans_sc.Value += percent;
+                                btn_transfert_pda.IsEnabled = false;
+                            }), System.Windows.Threading.DispatcherPriority.Background);
+                        }
+                    }
+                    
+                    //
+                    //foreach (ProblemeJson prob in problemes)
+                    //{
+                    //    data.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(prob)));
+                    //    string dJson = JsonConvert.SerializeObject(data);
+                    //    if (transfert.publishRapportProbleme(dJson))
+                    //    {
+                    //        //Ecriture dans le fichier sqlite pr dire que le rapport a ete transfere vers le serveur centrale
+
+                    //        //
+                    //        Dispatcher.Invoke(new Action(() =>
+                    //        {
+                    //            txt_sortie.Text += "<>===================== Rapport/Batiman:" + prob.problemeId + " transféré avec succes" + Environment.NewLine;
+                    //            txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                    //            var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                    //            txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                    //            txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                    //            prg_trans_sc.Value += percent;
+                    //            btn_transfert_pda.IsEnabled = false;
+                    //        }), System.Windows.Threading.DispatcherPriority.Background);
+
+                    //    }
+                    //    else
+                    //    {
+                    //        Dispatcher.Invoke(new Action(() =>
+                    //        {
+                    //            txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                    //            txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                    //            var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                    //            txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                    //            txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                    //            prg_trans_sc.Value += percent;
+                    //            btn_transfert_pda.IsEnabled = false;
+                    //        }), System.Windows.Threading.DispatcherPriority.Background);
+                    //    }
+                    //}
+                    lbl_sde.Content = "";
+                    lbl_statut_transfert.Content = "";
+                    prg_trans_sc.Value = 0;
+                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                    img_loading_ser.Visibility = Visibility.Hidden;
+                    btn_transfertr_sc.IsEnabled = true;
+                }
+                #endregion
 
                 //#endregion
 

@@ -714,11 +714,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             ProblemeJson model = new ProblemeJson();
             if (probleme != null)
             {
-                model.batimentId = probleme.BatimentId;
+                model.questionnaireId = probleme.BatimentId;
                 model.codeQuestion = probleme.CodeQuestion;
                 model.problemeId = probleme.ProblemeId;
                 model.domaine = probleme.Domaine;
-                model.nature = probleme.Nature;
+                model.descProbleme = probleme.Nature;
                 model.objet = probleme.Objet;
                 model.sdeId = Utilities.getSdeFormatSent(probleme.SdeId);
                 model.statut = probleme.Statut;
@@ -751,7 +751,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 json.rapportId = rpt.RapportId;
                 json.rapportName = rpt.RapportName;
                 json.dateRapport = rpt.DateRapport;
-                json.codeDistrict = rpt.CodeDistrict;
+                json.districtId = rpt.CodeDistrict;
                 json.rdcDetails = MapToListJson(rpt.RdcDetails);
             }
             return json;

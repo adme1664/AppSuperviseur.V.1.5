@@ -9,7 +9,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
     public class RapportDeroulementJson
     {
         public long rapportId { get; set; }
-        public string codeDistrict { get; set; }
+        public string districtId { get; set; }
         public string dateRapport { get; set; }
         public string rapportName
         {

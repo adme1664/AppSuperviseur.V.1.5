@@ -203,9 +203,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Info("Erreur:/" + ex.Message);
             }
         }
         private void cm_valide_bat_Click(object sender, RoutedEventArgs e)

@@ -428,6 +428,7 @@
     <Compile Include="Models\BatimentInCeModel.cs" />
     <Compile Include="Models\CategorieQuestionModel.cs" />
     <Compile Include="Models\CheckListItemModel.cs" />
+    <Compile Include="Models\Codification.cs" />
     <Compile Include="Models\CommuneModel.cs" />
     <Compile Include="Models\ContreEnqueteModel.cs" />
     <Compile Include="Models\CouvertureModel.cs" />
@@ -437,6 +438,7 @@
     <Compile Include="Models\DepartementModel.cs" />
     <Compile Include="Models\DetailsRapportDeroulement.cs" />
     <Compile Include="Models\DetailsRapportModel.cs" />
+    <Compile Include="Models\Flag.cs" />
     <Compile Include="Models\ProblemeModel.cs" />
     <Compile Include="Models\QuestionModule.cs" />
     <Compile Include="Models\VerificationFlag.cs" />
