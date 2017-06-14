@@ -32,7 +32,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         public SqliteDataReaderService(string connectionString)
         {
             Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
-            sqliteRepository = new MainRepository(Users.users.SupDatabasePath,true);
+            sqliteRepository = new MainRepository(Users.users.SupDatabasePath, true);
             log = new Logger();
             log.Info("Path:" + connectionString);
             sr = new SqliteReader(connectionString);
@@ -84,28 +84,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         {
             try
             {
-                if (sde!=null)
+                if (sde != null)
                 {
                     Tbl_Sde _sde = sqliteRepository.SdeRepository.FindOne(sde.SdeId);
                     _sde.TotalBatRecense = sde.TotalBatRecense;
                     _sde.TotalLogeCRecense = sde.TotalLogeCRecense;
                     _sde.TotalLogeIRecense = sde.TotalLogeIRecense;
                     _sde.TotalMenageRecense = sde.TotalMenageRecense;
-                    _sde.TotalBatRecenseV = sde.TotalBatRecenseV;
-                    _sde.TotalLogeCRecenseV = sde.TotalLogeCRecenseV;
-                    _sde.TotalLogeIRecenseV = sde.TotalLogeIRecenseV;
-                    _sde.TotalMenageRecenseV = sde.TotalMenageRecenseV;
-                    _sde.TotalLogeIRecenseNV = sde.TotalLogeIRecenseNV;
-                    _sde.TotalMenageRecenseNV = sde.TotalMenageRecenseNV;
                     _sde.TotalIndRecense = sde.TotalIndRecense;
-                    _sde.TotalIndFRecense = sde.TotalIndFRecense;
-                    _sde.TotalIndGRecense = sde.TotalIndGRecense;
                     _sde.TotalEmigreRecense = sde.TotalEmigreRecense;
-                    _sde.TotalEmigreFRecense = sde.TotalEmigreFRecense;
-                    _sde.TotalEmigreGRecense = sde.TotalEmigreGRecense;
                     _sde.TotalDecesRecense = sde.TotalDecesRecense;
-                    _sde.TotalDecesFRecense = sde.TotalDecesFRecense;
-                    _sde.TotalDecesGRecense = sde.TotalDecesGRecense;
                     sqliteRepository.SdeRepository.Update(_sde);
                     sqliteRepository.Save();
                     return true;
@@ -219,7 +207,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             {
                 log.Info("SqliteDataReaderService/getEmigreDetail" + ex.Message);
             }
-           
+
             return null;
         }
         /// <summary>
@@ -262,7 +250,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                 {
                     return Sr.GetAllBatimentModel().ToArray();
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -289,7 +277,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         #region OPERATION DE CONTRE-ENQUETE
         public List<BatimentModel> getAllBatimentVide()
         {
-          try
+            try
             {
                 return Sr.GetAllBatimentVide();
             }
@@ -356,6 +344,33 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             MenageModel menage = _men;
             return menage;
         }
+
+        public List<BatimentModel> getAllBatimentWithLogementOccupantAbsent()
+        {
+
+            string methodName = "getAllBatimentWithLogementOccupantAbsent";
+            List<BatimentModel> listOfBatiment = new List<BatimentModel>();
+            try
+            {
+                List<LogementModel> listOfLogement = sr.GetAllLogementOccupantAbsent();
+                if (listOfLogement.Count != 0)
+                {
+                    foreach (LogementModel logement in listOfLogement)
+                    {
+                        BatimentModel bat = new BatimentModel();
+                        bat.BatimentId = logement.BatimentId;
+                        bat.SdeId = logement.SdeId;
+                        listOfBatiment.Add(bat);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteDataReaderService/" + methodName + ":Erreur=>" + ex.Message);
+            }
+            return listOfBatiment;
+        }
+
         /// <summary>
         /// Retourne 10 batiments ayant au moins un logement individuel et un Menage 
         /// </summary>
@@ -364,145 +379,96 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         {
             try
             {
-                
+
                 List<BatimentModel> listOfBatiments = new List<BatimentModel>();
                 List<BatimentModel> listOfBatimentsUnique = new List<BatimentModel>();
                 List<BatimentModel> listOfBatWithLInd = new List<BatimentModel>();
                 listOfBatiments = Sr.GetAllBatimentFinishedWithLogInd();
-                    if (Utils.IsNotNull(listOfBatiments))
+                if (Utils.IsNotNull(listOfBatiments))
+                {
+                    #region si le nombre de batiments collectes dans la SDE est superieur a 10
+                    if (listOfBatiments.Count() >= 10)
                     {
-                        #region si le nombre de batiments collectes dans la SDE est superieur a 10
-                        if (listOfBatiments.Count() >= 10)
+                        Random random = new Random();
+                        //On prend 8 batiments ayant au moins un logement et un Menage;
+                        foreach (BatimentModel b in listOfBatiments)
                         {
-                            Random random = new Random();
-                            //On prend 8 batiments ayant au moins un logement et un Menage;
-                            foreach (BatimentModel b in listOfBatiments)
+                            BatimentModel next = listOfBatiments.ElementAt(random.Next(1, listOfBatiments.Count()));
+                            if (isBatimentsExistInList(listOfBatimentsUnique, next) == false)
                             {
-                                BatimentModel next = listOfBatiments.ElementAt(random.Next(1, listOfBatiments.Count()));
-                                if (isBatimentsExistInList(listOfBatimentsUnique, next) == false)
-                                {
-                                    listOfBatimentsUnique.Add(next);
-                                }
-                                if (listOfBatimentsUnique.Count == 8)
-                                {
-                                    break;
-                                }
+                                listOfBatimentsUnique.Add(next);
                             }
-                            //On ajoute les autres 2 batiments ayant un logment avec un Menage avec au moins un deces
-                            List<BatimentModel> listBatWithDeces = new List<BatimentModel>();
-                            listBatWithDeces = Sr.GetBatLogMenWithDeces();
-                            foreach (BatimentModel _b in listBatWithDeces)
+                            if (listOfBatimentsUnique.Count == 8)
                             {
-                                if (isBatimentsExistInList(listOfBatimentsUnique, _b) == false)
-                                {
-                                    listOfBatimentsUnique.Add(_b);
-                                }
-                                if (listOfBatimentsUnique.Count == 10)
-                                {
-                                    break;
-                                }
+                                break;
                             }
-                            //
-                            //On remplit les 8 premiers batiments selectionnes
-                            foreach (BatimentModel _bat in listOfBatimentsUnique)
+                        }
+                        //On ajoute les autres 2 batiments ayant un logment avec un Menage avec au moins un deces
+                        List<BatimentModel> listBatWithDeces = new List<BatimentModel>();
+                        listBatWithDeces = Sr.GetBatLogMenWithDeces();
+                        foreach (BatimentModel _b in listBatWithDeces)
+                        {
+                            if (isBatimentsExistInList(listOfBatimentsUnique, _b) == false)
                             {
-                                if (Convert.ToInt32(_bat.BatimentId) != 0)
+                                listOfBatimentsUnique.Add(_b);
+                            }
+                            if (listOfBatimentsUnique.Count == 10)
+                            {
+                                break;
+                            }
+                        }
+                        //
+                        //On remplit les 8 premiers batiments selectionnes
+                        foreach (BatimentModel _bat in listOfBatimentsUnique)
+                        {
+                            if (Convert.ToInt32(_bat.BatimentId) != 0)
+                            {
+                                List<LogementModel> listOfLogmentInd = new List<LogementModel>();
+                                listOfLogmentInd = Sr.GetLogementIByBatiment(_bat.BatimentId);
+                                if (listOfLogmentInd.Count() == 1)
                                 {
-                                    List<LogementModel> listOfLogmentInd = new List<LogementModel>();
-                                    listOfLogmentInd = Sr.GetLogementIByBatiment(_bat.BatimentId);
-                                    if (listOfLogmentInd.Count() == 1)
+                                    LogementModel _log = listOfLogmentInd.FirstOrDefault();
+                                    _log.SdeId = _bat.SdeId;
+                                    List<MenageModel> listOfMenage = new List<MenageModel>();
+                                    listOfMenage = Sr.GetMenageByLogement(Convert.ToInt32(_log.LogeId));
+                                    //Si le nombre de menages est egal a 1
+                                    if (listOfMenage.Count() == 1)
                                     {
-                                        LogementModel _log = listOfLogmentInd.FirstOrDefault();
+                                        MenageModel _men = listOfMenage.FirstOrDefault();
+                                        _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                                        _men.SdeId = _bat.SdeId;
+                                        _log.Menages = new List<MenageModel>();
+                                        _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                                        _bat.Logement = new List<LogementModel>();
+                                        _bat.Logement.Add(_log);
+                                        listOfBatWithLInd.Add(_bat);
+                                    }
+                                    else
+                                    {
+                                        //Sinon
+                                        if (listOfMenage.Count() > 1)
+                                        {
+                                            Random rand = new Random();
+                                            MenageModel _men = listOfMenage.ElementAt(rand.Next(1, listOfMenage.Count()));
+                                            _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                                            _men.SdeId = _bat.SdeId;
+                                            _log.Menages = new List<MenageModel>();
+                                            _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                                            _bat.Logement = new List<LogementModel>();
+                                            _bat.Logement.Add(_log);
+                                            listOfBatWithLInd.Add(_bat);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (listOfLogmentInd.Count() > 1)
+                                    {
+                                        Random rand = new Random();
+                                        LogementModel _log = listOfLogmentInd.ElementAt(rand.Next(1, listOfLogmentInd.Count()));
                                         _log.SdeId = _bat.SdeId;
                                         List<MenageModel> listOfMenage = new List<MenageModel>();
                                         listOfMenage = Sr.GetMenageByLogement(Convert.ToInt32(_log.LogeId));
-                                        //Si le nombre de menages est egal a 1
-                                        if (listOfMenage.Count() == 1)
-                                        {
-                                            MenageModel _men = listOfMenage.FirstOrDefault();
-                                            _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                            _men.SdeId = _bat.SdeId;
-                                            _log.Menages = new List<MenageModel>();
-                                            _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                            _bat.Logement = new List<LogementModel>();
-                                            _bat.Logement.Add(_log);
-                                            listOfBatWithLInd.Add(_bat);
-                                        }
-                                        else
-                                        {
-                                            //Sinon
-                                            if (listOfMenage.Count() > 1)
-                                            {
-                                                Random rand = new Random();
-                                                MenageModel _men = listOfMenage.ElementAt(rand.Next(1, listOfMenage.Count()));
-                                                _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                                _men.SdeId = _bat.SdeId;
-                                                _log.Menages = new List<MenageModel>();
-                                                _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                                _bat.Logement = new List<LogementModel>();
-                                                _bat.Logement.Add(_log);
-                                                listOfBatWithLInd.Add(_bat);
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (listOfLogmentInd.Count() > 1)
-                                        {
-                                            Random rand = new Random();
-                                            LogementModel _log = listOfLogmentInd.ElementAt(rand.Next(1, listOfLogmentInd.Count()));
-                                            _log.SdeId = _bat.SdeId;
-                                            List<MenageModel> listOfMenage = new List<MenageModel>();
-                                            listOfMenage = Sr.GetMenageByLogement(Convert.ToInt32(_log.LogeId));
-                                            if (listOfMenage.Count() == 1)
-                                            {
-                                                MenageModel _men = listOfMenage.FirstOrDefault();
-                                                _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                                _men.SdeId = _bat.SdeId;
-                                                _log.Menages = new List<MenageModel>();
-                                                _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                                _bat.Logement = new List<LogementModel>();
-                                                _bat.Logement.Add(_log);
-                                                listOfBatWithLInd.Add(_bat);
-                                            }
-                                            else
-                                            {
-                                                if (listOfMenage.Count() > 1)
-                                                {
-                                                    Random rand1 = new Random();
-                                                    MenageModel _men = listOfMenage.ElementAt(rand1.Next(1, listOfMenage.Count()));
-                                                    _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                                    _men.SdeId = _bat.SdeId;
-                                                    _log.Menages = new List<MenageModel>();
-                                                    _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                                    _bat.Logement = new List<LogementModel>();
-                                                    _bat.Logement.Add(_log);
-                                                    listOfBatWithLInd.Add(_bat);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        #endregion
-                        #region si le nombre de batiments collectes dans la SDE est inferieur a 10
-                        else
-                        {
-                            #region si le nombre de batiments est egal 1
-                            if (listOfBatiments.Count == 1)
-                            {
-                                BatimentModel _bat = listOfBatiments.ElementAt(0);
-                                if (Convert.ToInt32(_bat.BatimentId) != 0)
-                                {
-                                    List<LogementModel> listOfLogmentInd = new List<LogementModel>();
-                                    listOfLogmentInd = Sr.GetLogementIFiniByBatiment(Convert.ToInt32(_bat.BatimentId));
-                                    if (listOfLogmentInd.Count() == 1)
-                                    {
-                                        LogementModel _log = listOfLogmentInd.FirstOrDefault();
-                                        _log.SdeId = _bat.SdeId;
-                                        List<MenageModel> listOfMenage = new List<MenageModel>();
-                                        listOfMenage = Sr.GetMenageFiniByLogement(Convert.ToInt32(_log.LogeId));
                                         if (listOfMenage.Count() == 1)
                                         {
                                             MenageModel _men = listOfMenage.FirstOrDefault();
@@ -518,12 +484,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                                         {
                                             if (listOfMenage.Count() > 1)
                                             {
-                                                Random rand = new Random();
-                                                //foreach (MenageModel menageFini in listOfMenage)
-                                                //{
-                                                //    if(menageFini.Statut==Constant.STATUT_MODULE_KI_FINI_1)
-                                                //}
-                                                MenageModel _men = listOfMenage.ElementAt(rand.Next(1, listOfMenage.Count()));
+                                                Random rand1 = new Random();
+                                                MenageModel _men = listOfMenage.ElementAt(rand1.Next(1, listOfMenage.Count()));
                                                 _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
                                                 _men.SdeId = _bat.SdeId;
                                                 _log.Menages = new List<MenageModel>();
@@ -531,141 +493,194 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                                                 _bat.Logement = new List<LogementModel>();
                                                 _bat.Logement.Add(_log);
                                                 listOfBatWithLInd.Add(_bat);
-
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (listOfLogmentInd.Count() > 1)
-                                        {
-                                            Random rand = new Random();
-                                            LogementModel _log = listOfLogmentInd.ElementAt(rand.Next(1, listOfLogmentInd.Count()));
-                                            _log.SdeId = _bat.SdeId;
-                                            List<MenageModel> listOfMenage = new List<MenageModel>();
-                                            listOfMenage = Sr.GetMenageFiniByLogement(Convert.ToInt32(_log.LogeId));
-                                            if (listOfMenage.Count() == 1)
-                                            {
-                                                MenageModel _men = listOfMenage.FirstOrDefault();
-                                                _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                                _men.SdeId = _bat.SdeId;
-                                                _log.Menages = new List<MenageModel>();
-                                                _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                                _bat.Logement = new List<LogementModel>();
-                                                _bat.Logement.Add(_log);
-                                                listOfBatWithLInd.Add(_bat);
-                                            }
-                                            else
-                                            {
-                                                if (listOfMenage.Count() > 1)
-                                                {
-                                                    Random rand1 = new Random();
-                                                    MenageModel _men = listOfMenage.ElementAt(rand1.Next(1, listOfMenage.Count()));
-                                                    _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                                    _men.SdeId = _bat.SdeId;
-                                                    _log.Menages = new List<MenageModel>();
-                                                    _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                                    _bat.Logement = new List<LogementModel>();
-                                                    _bat.Logement.Add(_log);
-                                                    listOfBatWithLInd.Add(_bat);
-                                                }
                                             }
                                         }
                                     }
                                 }
                             }
-                            #endregion
-                            #region si le nombre est superieur a 1
-                            else
-                            {
-                                Random random = new Random();
-                                for (int i = 0; i <= listOfBatiments.Count(); i++)
-                                {
-                                    BatimentModel _bat = listOfBatiments.ElementAt(random.Next(1, listOfBatiments.Count()));
-                                    if (Convert.ToInt32(_bat.BatimentId) != 0)
-                                    {
-                                        List<LogementModel> listOfLogmentInd = new List<LogementModel>();
-                                        listOfLogmentInd = Sr.GetLogementIByBatiment(Convert.ToInt32(_bat.BatimentId));
-                                        if (listOfLogmentInd.Count() == 1)
-                                        {
-                                            LogementModel _log = listOfLogmentInd.FirstOrDefault();
-                                            _log.SdeId = _bat.SdeId;
-                                            List<MenageModel> listOfMenage = new List<MenageModel>();
-                                            listOfMenage = Sr.GetMenageFiniByLogement(Convert.ToInt32(_log.LogeId));
-                                            if (listOfMenage.Count() == 1)
-                                            {
-                                                MenageModel _men = listOfMenage.FirstOrDefault();
-                                                _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                                _men.SdeId = _bat.SdeId;
-                                                _log.Menages = new List<MenageModel>();
-                                                _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                                _bat.Logement = new List<LogementModel>();
-                                                _bat.Logement.Add(_log);
-                                                listOfBatWithLInd.Add(_bat);
-                                            }
-                                            else
-                                            {
-                                                if (listOfMenage.Count() > 1)
-                                                {
-                                                    Random rand = new Random();
-                                                    MenageModel _men = listOfMenage.ElementAt(rand.Next(1, listOfMenage.Count()));
-                                                    _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                                    _men.SdeId = _bat.SdeId;
-                                                    _log.Menages = new List<MenageModel>();
-                                                    _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                                    _bat.Logement = new List<LogementModel>();
-                                                    _bat.Logement.Add(_log);
-                                                    listOfBatWithLInd.Add(_bat);
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (listOfLogmentInd.Count() > 1)
-                                            {
-                                                Random rand = new Random();
-                                                LogementModel _log = listOfLogmentInd.ElementAt(rand.Next(1, listOfLogmentInd.Count()));
-                                                _log.SdeId = _bat.SdeId;
-                                                List<MenageModel> listOfMenage = new List<MenageModel>();
-                                                listOfMenage = Sr.GetMenageFiniByLogement(Convert.ToInt32(_log.LogeId));
-                                                if (listOfMenage.Count() == 1)
-                                                {
-                                                    MenageModel _men = listOfMenage.FirstOrDefault();
-                                                    _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                                    _men.SdeId = _bat.SdeId;
-                                                    _log.Menages = new List<MenageModel>();
-                                                    _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                                    _bat.Logement = new List<LogementModel>();
-                                                    _bat.Logement.Add(_log);
-                                                    listOfBatWithLInd.Add(_bat);
-                                                }
-                                                else
-                                                {
-                                                    if (listOfMenage.Count() > 1)
-                                                    {
-                                                        Random rand1 = new Random();
-                                                        MenageModel _men = listOfMenage.ElementAt(rand1.Next(1, listOfMenage.Count()));
-                                                        _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
-                                                        _men.SdeId = _bat.SdeId;
-                                                        _log.Menages = new List<MenageModel>();
-                                                        _log.Menages.Add(getMenageModel(_men, _bat, _log));
-                                                        _bat.Logement = new List<LogementModel>();
-                                                        _bat.Logement.Add(_log);
-                                                        listOfBatWithLInd.Add(_bat);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                               }
-                            }
-                            #endregion
                         }
-                        #endregion
-                        IEnumerable<BatimentModel> lBat = listOfBatWithLInd.GroupBy(b => b.BatimentId).Select(group => group.First());
-                        return lBat.ToList();
                     }
-                
+                    #endregion
+                    #region si le nombre de batiments collectes dans la SDE est inferieur a 10
+                    //else
+                    //{
+                    //    #region si le nombre de batiments est egal 1
+                    //    if (listOfBatiments.Count == 1)
+                    //    {
+                    //        BatimentModel _bat = listOfBatiments.ElementAt(0);
+                    //        if (Convert.ToInt32(_bat.BatimentId) != 0)
+                    //        {
+                    //            List<LogementModel> listOfLogmentInd = new List<LogementModel>();
+                    //            listOfLogmentInd = Sr.GetLogementIFiniByBatiment(Convert.ToInt32(_bat.BatimentId));
+                    //            if (listOfLogmentInd.Count() == 1)
+                    //            {
+                    //                LogementModel _log = listOfLogmentInd.FirstOrDefault();
+                    //                _log.SdeId = _bat.SdeId;
+                    //                List<MenageModel> listOfMenage = new List<MenageModel>();
+                    //                listOfMenage = Sr.GetMenageFiniByLogement(Convert.ToInt32(_log.LogeId));
+                    //                if (listOfMenage.Count() == 1)
+                    //                {
+                    //                    MenageModel _men = listOfMenage.FirstOrDefault();
+                    //                    _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                    //                    _men.SdeId = _bat.SdeId;
+                    //                    _log.Menages = new List<MenageModel>();
+                    //                    _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                    //                    _bat.Logement = new List<LogementModel>();
+                    //                    _bat.Logement.Add(_log);
+                    //                    listOfBatWithLInd.Add(_bat);
+                    //                }
+                    //                else
+                    //                {
+                    //                    if (listOfMenage.Count() > 1)
+                    //                    {
+                    //                        Random rand = new Random();
+                    //                        //foreach (MenageModel menageFini in listOfMenage)
+                    //                        //{
+                    //                        //    if(menageFini.Statut==Constant.STATUT_MODULE_KI_FINI_1)
+                    //                        //}
+                    //                        MenageModel _men = listOfMenage.ElementAt(rand.Next(1, listOfMenage.Count()));
+                    //                        _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                    //                        _men.SdeId = _bat.SdeId;
+                    //                        _log.Menages = new List<MenageModel>();
+                    //                        _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                    //                        _bat.Logement = new List<LogementModel>();
+                    //                        _bat.Logement.Add(_log);
+                    //                        listOfBatWithLInd.Add(_bat);
+
+                    //                    }
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //                if (listOfLogmentInd.Count() > 1)
+                    //                {
+                    //                    Random rand = new Random();
+                    //                    LogementModel _log = listOfLogmentInd.ElementAt(rand.Next(1, listOfLogmentInd.Count()));
+                    //                    _log.SdeId = _bat.SdeId;
+                    //                    List<MenageModel> listOfMenage = new List<MenageModel>();
+                    //                    listOfMenage = Sr.GetMenageFiniByLogement(Convert.ToInt32(_log.LogeId));
+                    //                    if (listOfMenage.Count() == 1)
+                    //                    {
+                    //                        MenageModel _men = listOfMenage.FirstOrDefault();
+                    //                        _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                    //                        _men.SdeId = _bat.SdeId;
+                    //                        _log.Menages = new List<MenageModel>();
+                    //                        _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                    //                        _bat.Logement = new List<LogementModel>();
+                    //                        _bat.Logement.Add(_log);
+                    //                        listOfBatWithLInd.Add(_bat);
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        if (listOfMenage.Count() > 1)
+                    //                        {
+                    //                            Random rand1 = new Random();
+                    //                            MenageModel _men = listOfMenage.ElementAt(rand1.Next(1, listOfMenage.Count()));
+                    //                            _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                    //                            _men.SdeId = _bat.SdeId;
+                    //                            _log.Menages = new List<MenageModel>();
+                    //                            _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                    //                            _bat.Logement = new List<LogementModel>();
+                    //                            _bat.Logement.Add(_log);
+                    //                            listOfBatWithLInd.Add(_bat);
+                    //                        }
+                    //                    }
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //    #endregion
+                    //    #region si le nombre est superieur a 1
+                    //    else
+                    //    {
+                    //        Random random = new Random();
+                    //        for (int i = 0; i <= listOfBatiments.Count(); i++)
+                    //        {
+                    //            BatimentModel _bat = listOfBatiments.ElementAt(random.Next(1, listOfBatiments.Count()));
+                    //            if (Convert.ToInt32(_bat.BatimentId) != 0)
+                    //            {
+                    //                List<LogementModel> listOfLogmentInd = new List<LogementModel>();
+                    //                listOfLogmentInd = Sr.GetLogementIByBatiment(Convert.ToInt32(_bat.BatimentId));
+                    //                if (listOfLogmentInd.Count() == 1)
+                    //                {
+                    //                    LogementModel _log = listOfLogmentInd.FirstOrDefault();
+                    //                    _log.SdeId = _bat.SdeId;
+                    //                    List<MenageModel> listOfMenage = new List<MenageModel>();
+                    //                    listOfMenage = Sr.GetMenageFiniByLogement(Convert.ToInt32(_log.LogeId));
+                    //                    if (listOfMenage.Count() == 1)
+                    //                    {
+                    //                        MenageModel _men = listOfMenage.FirstOrDefault();
+                    //                        _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                    //                        _men.SdeId = _bat.SdeId;
+                    //                        _log.Menages = new List<MenageModel>();
+                    //                        _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                    //                        _bat.Logement = new List<LogementModel>();
+                    //                        _bat.Logement.Add(_log);
+                    //                        listOfBatWithLInd.Add(_bat);
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        if (listOfMenage.Count() > 1)
+                    //                        {
+                    //                            Random rand = new Random();
+                    //                            MenageModel _men = listOfMenage.ElementAt(rand.Next(1, listOfMenage.Count()));
+                    //                            _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                    //                            _men.SdeId = _bat.SdeId;
+                    //                            _log.Menages = new List<MenageModel>();
+                    //                            _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                    //                            _bat.Logement = new List<LogementModel>();
+                    //                            _bat.Logement.Add(_log);
+                    //                            listOfBatWithLInd.Add(_bat);
+                    //                        }
+                    //                    }
+                    //                }
+                    //                else
+                    //                {
+                    //                    if (listOfLogmentInd.Count() > 1)
+                    //                    {
+                    //                        Random rand = new Random();
+                    //                        LogementModel _log = listOfLogmentInd.ElementAt(rand.Next(1, listOfLogmentInd.Count()));
+                    //                        _log.SdeId = _bat.SdeId;
+                    //                        List<MenageModel> listOfMenage = new List<MenageModel>();
+                    //                        listOfMenage = Sr.GetMenageFiniByLogement(Convert.ToInt32(_log.LogeId));
+                    //                        if (listOfMenage.Count() == 1)
+                    //                        {
+                    //                            MenageModel _men = listOfMenage.FirstOrDefault();
+                    //                            _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                    //                            _men.SdeId = _bat.SdeId;
+                    //                            _log.Menages = new List<MenageModel>();
+                    //                            _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                    //                            _bat.Logement = new List<LogementModel>();
+                    //                            _bat.Logement.Add(_log);
+                    //                            listOfBatWithLInd.Add(_bat);
+                    //                        }
+                    //                        else
+                    //                        {
+                    //                            if (listOfMenage.Count() > 1)
+                    //                            {
+                    //                                Random rand1 = new Random();
+                    //                                MenageModel _men = listOfMenage.ElementAt(rand1.Next(1, listOfMenage.Count()));
+                    //                                _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
+                    //                                _men.SdeId = _bat.SdeId;
+                    //                                _log.Menages = new List<MenageModel>();
+                    //                                _log.Menages.Add(getMenageModel(_men, _bat, _log));
+                    //                                _bat.Logement = new List<LogementModel>();
+                    //                                _bat.Logement.Add(_log);
+                    //                                listOfBatWithLInd.Add(_bat);
+                    //                            }
+                    //                        }
+                    //                    }
+                    //                }
+                    //            }
+                    //       }
+                    //    }
+                    //    #endregion
+                    //}
+                    #endregion
+                    IEnumerable<BatimentModel> lBat = listOfBatWithLInd.GroupBy(b => b.BatimentId).Select(group => group.First());
+                    return lBat.ToList();
+                }
+
             }
             catch (Exception ex)
             {
@@ -802,7 +817,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         List<LogementModel> listLogementVide = new List<LogementModel>();
                         foreach (LogementModel logement in listOfLogementIndividuel)
                         {
-                            if (logement.Qlin2StatutOccupation == 3)
+                            if (logement.Qlin2StatutOccupation == 3 || logement.Qlin2StatutOccupation == 4)
                             {
                                 logement.SdeId = batiment.SdeId;
                                 listLogementVide.Add(logement);
@@ -884,7 +899,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             {
                 log.Info("SqliteDataReaderService/getMenageInBatiment" + ex.Message);
             }
-            
+
             return null;
         }
         /// <summary>
@@ -925,7 +940,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             {
                 log.Info("SqliteDataReaderService/getBlankLogementIndividuel" + ex.Message);
             }
-            
+
             return null;
         }
 
@@ -950,7 +965,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         {
             return new MenageTypeModel[]
             {
+
                 new MenageTypeModel("Dèsè"),
+                new MenageTypeModel("Emigre"),
                 new MenageTypeModel("Endividi"),
             };
         }
@@ -1003,14 +1020,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     Sr = new SqliteReader(Utilities.getConnectionString(Users.users.DatabasePath, _model.SdeId));
                 }
                 return Sr.GetDecesByMenageDetails(_model.MenageId).ToArray();
-                
+
             }
             catch (Exception ex)
             {
                 log.Info("SqliteDataReaderService/getDecesForMenage" + ex.Message);
             }
             return null;
-          }
+        }
         /// <summary>
         /// Retourne les emigres a l'interieur d'un Menage
         /// </summary>
@@ -1073,7 +1090,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         }
         public List<tbl_question_module> listOfQuestionModule(string codeModule, string sdeId)
         {
-             if(Sr == null)
+            if (Sr == null)
             {
                 Sr = new SqliteReader(Utilities.getConnectionString(Users.users.DatabasePath, sdeId));
             }
@@ -1088,7 +1105,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             return Sr.getLibelleCategorie(codeCategorie);
         }
-        public tbl_categorie_question getCategorie(string codeCategorie,string sdeId)
+        public tbl_categorie_question getCategorie(string codeCategorie, string sdeId)
         {
             if (Sr == null)
             {

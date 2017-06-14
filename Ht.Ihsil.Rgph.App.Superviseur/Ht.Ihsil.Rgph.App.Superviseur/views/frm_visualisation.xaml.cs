@@ -37,6 +37,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         #region DECLARATION
 
         Logger log;
+        private static string MAIN_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Data\Databases\";
         TreeViewModel model;
         SqliteDataReaderService service = null;
         ContreEnqueteService service_ce = null;
@@ -136,7 +137,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                                 List<IndividuCEModel> individus = ModelMapper.MapToListIndividuCEModel(service_ce.daoCE.searchAllIndividuCE(_bat.BatimentId, _log.LogeId, _bat.SdeId, _men.MenageId));
                                                 foreach (IndividuCEModel _ind in individus)
                                                 {
-                                                    if (_ind.Q6LienDeParente.GetValueOrDefault() == 1)
+                                                    if (_ind.Q3LienDeParente.GetValueOrDefault() == 1)
                                                     {
                                                         batModel.NomChefMenage = _ind.Q2Nom + " " + _ind.Q3Prenom;
                                                         frm_view_ce view = new frm_view_ce(batModel);
@@ -368,6 +369,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     if (args.ProgressPercentage == 20)
                     {
                         service_ce = new ContreEnqueteService(_sde.SdeName);
+                        service=new SqliteDataReaderService(Utilities.getConnectionString(MAIN_DATABASE_PATH,_sde.SdeName));
                         batiment = service_ce.getBatimentWithLogementC();
                     }
                     if (args.ProgressPercentage == 30)
@@ -407,10 +409,33 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                         log.Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
                                         log.Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre);
                                         service_ce.saveLogementCE(log);
+
+                                        if (logement.QlcTotalIndividus != 0)
+                                        {
+                                            List<IndividuModel> listOfInds = service.Sr.GetIndividuByLoge(logement.LogeId);
+                                            if (listOfInds.Count != 0)
+                                            {
+                                                foreach(IndividuModel ind in listOfInds)
+                                                {
+                                                    IndividuCEModel indCe=new IndividuCEModel();
+                                                    indCe.BatimentId=ind.BatimentId;
+                                                    indCe.MenageId=ind.MenageId;
+                                                    indCe.LogeId=ind.LogeId;
+                                                    indCe.SdeId=ind.SdeId;
+                                                    indCe.IndividuId = ind.IndividuId;
+                                                    indCe.Qp1NoOrdre=ind.Q1NoOrdre;
+                                                    indCe.Q2Nom=ind.Qp2BNom;
+                                                    indCe.Q3Prenom=ind.Qp2APrenom;
+                                                    indCe.Q3LienDeParente=ind.Qp3LienDeParente;
+                                                    service_ce.saveIndividuCE(indCe);
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                                 MessageBox.Show("batiman yo anregistre avek siske.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                                 waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
                             }
                         }
                         else
@@ -529,11 +554,135 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     catch (MessageException ex)
                     {
                         MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
 
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+
+                    }
+                    if (resultat == true)
+                    {
+                        MessageBox.Show("Batiman yo anregistre avek siske.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                    }
+                }
+            };
+            bckw.RunWorkerCompleted += (s, args) =>
+            {
+                if (args.Error != null)
+                {
+                    MessageBox.Show("Gen yon erè pandan operasyon an.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+            };
+            bckw.RunWorkerAsync();
+        }
+
+        private void cm_batiments_lojman_occupe_occasionnellement_Click(object sender, RoutedEventArgs e)
+        {
+            busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = true));
+            busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "N'ap chèche batiman ki gen lojman ki okipe yon lè konsa."));
+            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = true));
+            SdeViewModel _sde = GetTreeviewItem.DataContext as SdeViewModel;
+            List<BatimentModel> listOfBat = new List<BatimentModel>();
+            bckw = new BackgroundWorker { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+            bckw.DoWork += (s, args) =>
+            {
+                for (int i = 0; i <= 100; i += 10)
+                {
+                    Thread.Sleep(1000);
+                    bckw.ReportProgress(i);
+                }
+            };
+            bckw.ProgressChanged += (s, args) =>
+            {
+                if (args.ProgressPercentage == 20)
+                {
+                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Rechèch la ap fèt"));
+                    service_ce = new ContreEnqueteService(_sde.SdeName);
+                    listOfBat = service_ce.readerService.getAllBatimentWithLogementOccupantAbsent();
+                }
+                if (args.ProgressPercentage == 30)
+                {
+                    bool resultat = false;
+                    try
+                    {
+                        if (listOfBat.Count < 3)
+                        {
+                            throw new MessageException("Pa gen kantite batiman pou kont ankèt sa a.");
+                        }
+                        foreach (BatimentModel batiment in listOfBat)
+                        {
+                            if (Convert.ToInt32(batiment.BatimentId) != 0)
+                            {
+                                if (service_ce.isBatimentExist(Convert.ToInt32(batiment.BatimentId), batiment.SdeId) == false)
+                                {
+                                    BatimentCEModel b = new BatimentCEModel();
+                                    ContreEnqueteModel ce = new ContreEnqueteModel();
+                                    ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                    ce.SdeId = batiment.SdeId;
+                                    ce.NomSuperviseur = Users.users.Nom;
+                                    ce.PrenomSuperviseur = Users.users.Prenom;
+                                    ce.ModelTirage = 1;
+                                    ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementInvididuelVide);
+                                    ce.DateDebut = DateTime.Now.ToString();
+                                    ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
+                                    service_ce.saveContreEnquete(ce);
+                                    b.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                    b.SdeId = batiment.SdeId;
+                                    b.Qrgph = batiment.Qrgph;
+                                    b.Qrec = batiment.Qrec;
+                                    b.Qadresse = batiment.Qadresse;
+                                    b.Qhabitation = batiment.Qhabitation;
+                                    b.Qlocalite = batiment.Qlocalite;
+                                    service_ce.saveBatiment(b);
+                                    if (batiment.Logement.Count() != 0)
+                                    {
+                                        foreach (LogementModel logement in batiment.Logement)
+                                        {
+                                            LogementCEModel log = new LogementCEModel();
+                                            log.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                            log.SdeId = batiment.SdeId;
+                                            log.LogeId = logement.LogeId;
+                                            log.QlCategLogement = Convert.ToByte(logement.QlCategLogement);
+                                            log.Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
+                                            log.Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre.ToString());
+                                            service_ce.saveLogementCE(log);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Ou gentan chwazi batiman sa yo deja.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                                    resultat = false;
+                                    break;
+                                }
+                            }
+                            resultat = true;
+                        }
+
+                    }
+                    catch (MessageException ex)
+                    {
+                        MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
 
                     }
                     if (resultat == true)
@@ -593,6 +742,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     {
                         try
                         {
+                            if (listOfBat.Count < 10)
+                            {
+                                throw new MessageException("Pa gen ase batiman. Dwe gen pou pi piti 10 batiman.");
+                            }
                             foreach (BatimentModel batiment in listOfBat)
                             {
                                 if (Convert.ToInt32(batiment.BatimentId) != 0)
@@ -671,7 +824,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                                                 ind.Q5bAge = Convert.ToByte(_ind.Qp5bAge);
                                                                 ind.Q2Nom = _ind.Qp2BNom;
                                                                 ind.Q3Prenom = _ind.Qp2APrenom;
-                                                                ind.Q6LienDeParente = Convert.ToByte(_ind.Qp3LienDeParente);
+                                                                ind.Q3LienDeParente = Convert.ToByte(_ind.Qp3LienDeParente);
                                                                 service_ce.saveIndividuCE(ind);
                                                             }
                                                         }
@@ -695,8 +848,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         }
                         catch (MessageException ex)
                         {
-                            resultat = false;
-                            log.Info("Error:" + ex.Message);
+                            MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
                         }
                         catch (Exception ex)
                         {
@@ -1081,6 +1235,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         {
             
         }
+
+       
     }
 
 }

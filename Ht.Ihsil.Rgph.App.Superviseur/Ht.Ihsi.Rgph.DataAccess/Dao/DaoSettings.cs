@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Ht.Ihsi.Rgph.DataAccess.Dao
 {
-    public class DaoSettings:IDaoSettings
+    public class DaoSettings : IDaoSettings
     {
         #region DECLARATIONS
         MainRepository repository;
@@ -26,7 +26,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         }
         public DaoSettings(string connectionString)
         {
-            repository = new MainRepository(connectionString,true);
+            repository = new MainRepository(connectionString, true);
             log = new Logger();
         }
         #endregion
@@ -36,9 +36,9 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         {
             try
             {
-            repository.MaterielsRepository.Insert(materiels);
-                 repository.Save();
-                 return true;
+                repository.MaterielsRepository.Insert(materiels);
+                repository.Save();
+                return true;
             }
             catch (Exception ex)
             {
@@ -87,7 +87,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                 repository.Save();
                 return true;
             }
-            catch (Exception )
+            catch (Exception)
             {
 
             }
@@ -101,7 +101,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                 Tbl_Sde entity = repository.SdeRepository.Find(s => s.SdeId == sde.SdeId).FirstOrDefault();
                 entity.SdeId = sde.SdeId;
                 entity.NoOrdre = sde.NoOrdre;
-                //entity.StatutContreEnquete = sde.StatutContreEnquete.GetValueOrDefault();
+                entity.StatutContreEnquete = sde.StatutContreEnquete.GetValueOrDefault();
                 entity.StatutCollecte = sde.StatutCollecte.GetValueOrDefault();
                 entity.RaisonCouverture = sde.RaisonCouverture.GetValueOrDefault();
                 entity.TotalBatCartographie = sde.TotalBatCartographie.GetValueOrDefault();
@@ -109,38 +109,10 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                 entity.TotalLogeCRecense = sde.TotalLogeCRecense.GetValueOrDefault();
                 entity.TotalLogeIRecense = sde.TotalLogeIRecense.GetValueOrDefault();
                 entity.TotalMenageRecense = sde.TotalMenageRecense.GetValueOrDefault();
-                entity.TotalBatRecenseV = sde.TotalBatRecenseV.GetValueOrDefault();
-                entity.TotalLogeCRecenseV = sde.TotalLogeCRecenseV.GetValueOrDefault();
-                entity.TotalLogeIRecenseV = sde.TotalLogeIRecenseV.GetValueOrDefault();
-                entity.TotalMenageRecenseV = sde.TotalMenageRecenseV.GetValueOrDefault();
-                //entity.TotalBatRecenseNV = sde.TotalBatRecenseNV.GetValueOrDefault();
-                //entity.TotalLogeCRecenseNV = sde.TotalLogeCRecenseNV.GetValueOrDefault();
-                entity.TotalLogeIRecenseNV = sde.TotalLogeIRecenseNV.GetValueOrDefault();
-                entity.TotalMenageRecenseNV = sde.TotalMenageRecenseNV.GetValueOrDefault();
                 entity.TotalIndRecense = sde.TotalIndRecense.GetValueOrDefault();
-                entity.TotalIndFRecense = sde.TotalIndFRecense.GetValueOrDefault();
-                entity.TotalIndGRecense = sde.TotalIndGRecense.GetValueOrDefault();
                 entity.TotalEmigreRecense = sde.TotalEmigreRecense.GetValueOrDefault();
-                entity.TotalEmigreFRecense = sde.TotalEmigreFRecense.GetValueOrDefault();
-                entity.TotalEmigreGRecense = sde.TotalEmigreGRecense.GetValueOrDefault();
                 entity.TotalDecesRecense = sde.TotalDecesRecense.GetValueOrDefault();
-                entity.TotalDecesFRecense = sde.TotalDecesFRecense.GetValueOrDefault();
-                entity.TotalDecesGRecense = sde.TotalDecesGRecense.GetValueOrDefault();
-                entity.TotalEnfantDeMoinsDe5Ans = sde.TotalEnfantDeMoinsDe5Ans.GetValueOrDefault();
-                entity.TotalIndividu10AnsEtPlus = sde.TotalIndividu10AnsEtPlus.GetValueOrDefault();
-                entity.TotalIndividu18AnsEtPlus = sde.TotalIndividu18AnsEtPlus.GetValueOrDefault();
-                entity.TotalIndividu65AnsEtPlus = sde.TotalIndividu65AnsEtPlus.GetValueOrDefault();
-                entity.TotalLogeIOccupeRecense = sde.TotalLogeIOccupeRecense.GetValueOrDefault();
-                entity.TotalLogeIOccupeRecenseNV = sde.TotalLogeIOccupeRecenseNV.GetValueOrDefault();
-                entity.TotalLogeIOccupeRecenseV = sde.TotalLogeIOccupeRecenseV.GetValueOrDefault();
                 entity.TotalLogeIRecense = sde.TotalLogeIRecense.GetValueOrDefault();
-                entity.TotalLogeIUsageTemporelRecense = sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault();
-                entity.TotalLogeIUsageTemporelRecenseNV = entity.TotalLogeIUsageTemporelRecenseNV.GetValueOrDefault();
-                entity.TotalLogeIUsageTemporelRecenseV = sde.TotalLogeIUsageTemporelRecenseV.GetValueOrDefault();
-                entity.TotalLogeIVideRecense = sde.TotalLogeIVideRecense.GetValueOrDefault();
-                entity.TotalLogeIVideRecenseNV = sde.TotalLogeIVideRecenseNV.GetValueOrDefault();
-                entity.TotalLogeIVideRecenseV = sde.TotalLogeIVideRecenseV.GetValueOrDefault();
-                entity.IndiceMasculinite = sde.IndiceMasculinite.GetValueOrDefault();
                 repository.SdeRepository.Update(entity);
                 repository.Save();
                 return true;
@@ -196,7 +168,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                     repository.Save();
                 }
             }
-            catch (Exception )
+            catch (Exception)
             {
 
             }
@@ -288,7 +260,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
             }
             catch (Exception ex)
             {
-                log.Info("==================<> Erreur:DaoSettings/saveRetour:"+ex.Message);
+                log.Info("==================<> Erreur:DaoSettings/saveRetour:" + ex.Message);
                 throw new MessageException(ex.Message);
             }
         }
@@ -310,7 +282,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         {
             try
             {
-                return repository.RetourRepository.Find(r=>r.SdeId==sdeId).ToList();
+                return repository.RetourRepository.Find(r => r.SdeId == sdeId).ToList();
             }
             catch (Exception ex)
             {
@@ -334,7 +306,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         #endregion
 
         #region GESTION DES PROBLEMES POUR LA VERIFICATION
-     
+
         /// <summary>
         /// Enregistrer un probleme rencontre par l'agent recenseur pour la verification
         /// </summary>
@@ -371,7 +343,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                     probToUpdate.BatimentId = probleme.BatimentId;
                     repository.ProblemeRepository.Update(probToUpdate);
                     repository.Save();
-                    result= true;
+                    result = true;
                 }
                 return result;
             }
@@ -436,11 +408,11 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                 throw new MessageException(ex.Message);
             }
         }
-       
+
 
         public Tbl_Probleme getProblemeByCodeQuestionAndBatiment(string codeQuestion, long batimentId)
         {
-            
+
             try
             {
                 return repository.ProblemeRepository.Find(p => p.CodeQuestion == codeQuestion && p.BatimentId == batimentId).FirstOrDefault();

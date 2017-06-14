@@ -21,6 +21,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
         public string Domaine { get; set; }
         public string CodeQuestion { get; set; }
         public string Nature { get; set; }
+        public string CreateDate { get; set; }
         public Nullable<long> Statut { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="02e7d8b0b57b468187ebd37b8c6d18f2" Name="Diagram1">
+      <Diagram DiagramId="6e02d36cd6a04ab183cd3be5aba5ac04" Name="Diagram1">
         <EntityTypeShape EntityType="RgphModel.Tbl_Agent" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RgphModel.Tbl_BatimentCE" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RgphModel.Tbl_ContreEnquete" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
@@ -20,16 +20,17 @@
         <EntityTypeShape EntityType="RgphModel.Tbl_RprtComparaison" Width="1.5" PointX="10.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RgphModel.Tbl_RprtDeroulement" Width="1.5" PointX="10.75" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="RgphModel.Tbl_Sde" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_Utilisateur" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_Utilisation" Width="1.5" PointX="2.75" PointY="13.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_CategorieQuestion" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_Commune" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_Departement" Width="1.5" PointX="14.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_Pays" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_Questions" Width="1.5" PointX="14.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_Questions_Reponses" Width="1.5" PointX="4.75" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_Reponses" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RgphModel.Tbl_VilleQuartierSectionCommunale" Width="1.5" PointX="16.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_Utilisateur" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_Utilisation" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_CategorieQuestion" Width="1.5" PointX="12.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_Commune" Width="1.5" PointX="0.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_Departement" Width="1.5" PointX="2.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_Pays" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_Questions" Width="1.5" PointX="14.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_Questions_Reponses" Width="1.5" PointX="14.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_Reponses" Width="1.5" PointX="14.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_VilleQuartierSectionCommunale" Width="1.5" PointX="4.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RgphModel.Tbl_EmigreCE" Width="1.5" PointX="11.375" PointY="15.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

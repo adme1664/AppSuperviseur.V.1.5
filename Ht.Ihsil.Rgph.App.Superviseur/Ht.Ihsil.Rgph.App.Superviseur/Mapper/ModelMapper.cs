@@ -25,21 +25,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             {
                 int countf = 0;
                 int counth = 0;
-                if (type == Constant.CODE_TYPE_ENVDIVIDI)
-                {
-                    countf = Convert.ToInt32(s.TotalIndFRecense.GetValueOrDefault());
-                    counth = Convert.ToInt32(s.TotalIndGRecense.GetValueOrDefault());
-                }
-                else if (type == Constant.CODE_TYPE_EMIGRE)
-                {
-                    countf = Convert.ToInt32(s.TotalEmigreFRecense.GetValueOrDefault());
-                    counth = Convert.ToInt32(s.TotalEmigreGRecense.GetValueOrDefault());
-                }
-                else
-                {
-                    countf = Convert.ToInt32(s.TotalDecesFRecense.GetValueOrDefault());
-                    counth = Convert.ToInt32(s.TotalDecesGRecense.GetValueOrDefault());
-                }
+                //if (type == Constant.CODE_TYPE_ENVDIVIDI)
+                //{
+                //    countf = Convert.ToInt32(s.TotalIndFRecense.GetValueOrDefault());
+                //    counth = Convert.ToInt32(s.TotalIndGRecense.GetValueOrDefault());
+                //}
+                //else if (type == Constant.CODE_TYPE_EMIGRE)
+                //{
+                //    countf = Convert.ToInt32(s.TotalEmigreFRecense.GetValueOrDefault());
+                //    counth = Convert.ToInt32(s.TotalEmigreGRecense.GetValueOrDefault());
+                //}
+                //else
+                //{
+                //    countf = Convert.ToInt32(s.TotalDecesFRecense.GetValueOrDefault());
+                //    counth = Convert.ToInt32(s.TotalDecesGRecense.GetValueOrDefault());
+                //}
 
                 result.Add(new KeyValuePair<string, int>(" " + countf + " F", countf));
                 result.Add(new KeyValuePair<string, int>(" " + counth + " G", counth));
@@ -91,39 +91,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 model.TotalLogeCRecense = Convert.ToInt32(sde.TotalLogeCRecense.GetValueOrDefault());
                 model.TotalLogeIRecense = Convert.ToInt32(sde.TotalLogeIRecense.GetValueOrDefault());
                 model.TotalMenageRecense = Convert.ToInt32(sde.TotalMenageRecense.GetValueOrDefault());
-                model.TotalBatRecenseV = Convert.ToInt32(sde.TotalBatRecenseV.GetValueOrDefault());
-                model.TotalLogeCRecenseV = Convert.ToInt32(sde.TotalLogeCRecenseV.GetValueOrDefault());
-                model.TotalLogeIRecenseV = Convert.ToInt32(sde.TotalLogeIRecenseV.GetValueOrDefault());
-                model.TotalMenageRecenseV = Convert.ToInt32(sde.TotalMenageRecenseV.GetValueOrDefault());
-                //model.TotalBatRecenseNV = Convert.ToInt32(sde.TotalBatRecenseNV.GetValueOrDefault());
-                //model.TotalLogeCRecenseNV = Convert.ToInt32(sde.TotalLogeCRecenseNV_.GetValueOrDefault());
-                model.TotalLogeIRecenseNV = Convert.ToInt32(sde.TotalLogeIRecenseNV.GetValueOrDefault());
-                //model.TotalMenageRecenseNV = sde.TotalMenageRecenseNV.GetValueOrDefault();
                 model.TotalIndRecense = Convert.ToInt32(sde.TotalIndRecense.GetValueOrDefault());
-                model.TotalIndFRecense = Convert.ToInt32(sde.TotalIndFRecense.GetValueOrDefault());
-                model.TotalIndGRecense = Convert.ToInt32(sde.TotalIndGRecense.GetValueOrDefault());
                 model.TotalEmigreRecense = Convert.ToInt32(sde.TotalEmigreRecense.GetValueOrDefault());
-                model.TotalEmigreFRecense = Convert.ToInt32(sde.TotalEmigreFRecense.GetValueOrDefault());
-                model.TotalEmigreGRecense = Convert.ToInt32(sde.TotalEmigreGRecense.GetValueOrDefault());
                 model.TotalDecesRecense = Convert.ToInt32(sde.TotalDecesRecense.GetValueOrDefault());
-                model.TotalDecesFRecense = Convert.ToInt32(sde.TotalDecesFRecense.GetValueOrDefault());
-                model.TotalDecesGRecense = Convert.ToInt32(sde.TotalDecesGRecense.GetValueOrDefault());
-                model.TotalEnfantDeMoinsDe5Ans = Convert.ToInt32(sde.TotalEnfantDeMoinsDe5Ans.GetValueOrDefault());
-                model.TotalIndividu10AnsEtPlus = Convert.ToInt32(sde.TotalIndividu10AnsEtPlus.GetValueOrDefault());
-                model.TotalIndividu18AnsEtPlus = Convert.ToInt32(sde.TotalIndividu18AnsEtPlus.GetValueOrDefault());
-                model.TotalIndividu65AnsEtPlus = Convert.ToInt32(sde.TotalIndividu65AnsEtPlus.GetValueOrDefault());
-                model.TotalLogeIOccupeRecense = Convert.ToInt32(sde.TotalLogeIOccupeRecense.GetValueOrDefault());
-                model.TotalLogeIOccupeRecenseNV = Convert.ToInt32(sde.TotalLogeIOccupeRecenseNV.GetValueOrDefault());
-                model.TotalLogeIOccupeRecenseV = Convert.ToInt32(sde.TotalLogeIOccupeRecenseV.GetValueOrDefault());
                 model.TotalLogeIRecense = Convert.ToInt32(sde.TotalLogeIRecense.GetValueOrDefault());
-                model.TotalLogeIUsageTemporelRecense = Convert.ToInt32(sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault());
-                model.TotalLogeIUsageTemporelRecenseNV = Convert.ToInt32(model.TotalLogeIUsageTemporelRecenseNV.GetValueOrDefault());
-                model.TotalLogeIUsageTemporelRecenseV = Convert.ToInt32(sde.TotalLogeIUsageTemporelRecenseV.GetValueOrDefault());
-                model.TotalLogeIVideRecense = Convert.ToInt32(sde.TotalLogeIVideRecense.GetValueOrDefault());
-                model.TotalLogeIVideRecenseNV = Convert.ToInt32(sde.TotalLogeIVideRecenseNV.GetValueOrDefault());
-                model.TotalLogeIVideRecenseV = Convert.ToInt32(sde.TotalLogeIVideRecenseV.GetValueOrDefault());
-                model.IndiceMasculinite = sde.IndiceMasculinite.GetValueOrDefault();
-            }
+             }
             catch (Exception)
             {
 
@@ -148,38 +120,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 entity.TotalLogeCRecense = sde.TotalLogeCRecense.GetValueOrDefault();
                 entity.TotalLogeIRecense = sde.TotalLogeIRecense.GetValueOrDefault();
                 entity.TotalMenageRecense = sde.TotalMenageRecense.GetValueOrDefault();
-                entity.TotalBatRecenseV = sde.TotalBatRecenseV.GetValueOrDefault();
-                entity.TotalLogeCRecenseV = sde.TotalLogeCRecenseV.GetValueOrDefault();
-                entity.TotalLogeIRecenseV = sde.TotalLogeIRecenseV.GetValueOrDefault();
-                entity.TotalMenageRecenseV = sde.TotalMenageRecenseV.GetValueOrDefault();
-                //entity.TotalBatRecenseNV = sde.TotalBatRecenseNV.GetValueOrDefault();
-                //entity.TotalLogeCRecenseNV_ = sde.TotalLogeCRecenseNV.GetValueOrDefault();
-                entity.TotalLogeIRecenseNV = sde.TotalLogeIRecenseNV.GetValueOrDefault();
-                entity.TotalMenageRecenseNV = sde.TotalMenageRecenseNV.GetValueOrDefault();
                 entity.TotalIndRecense = sde.TotalIndRecense.GetValueOrDefault();
-                entity.TotalIndFRecense = sde.TotalIndFRecense.GetValueOrDefault();
-                entity.TotalIndGRecense = sde.TotalIndGRecense.GetValueOrDefault();
                 entity.TotalEmigreRecense = sde.TotalEmigreRecense.GetValueOrDefault();
-                entity.TotalEmigreFRecense = sde.TotalEmigreFRecense.GetValueOrDefault();
-                entity.TotalEmigreGRecense = sde.TotalEmigreGRecense.GetValueOrDefault();
                 entity.TotalDecesRecense = sde.TotalDecesRecense.GetValueOrDefault();
-                entity.TotalDecesFRecense = sde.TotalDecesFRecense.GetValueOrDefault();
-                entity.TotalDecesGRecense = sde.TotalDecesGRecense.GetValueOrDefault();
-                entity.TotalEnfantDeMoinsDe5Ans = sde.TotalEnfantDeMoinsDe5Ans.GetValueOrDefault();
-                entity.TotalIndividu10AnsEtPlus = sde.TotalIndividu10AnsEtPlus.GetValueOrDefault();
-                entity.TotalIndividu18AnsEtPlus = sde.TotalIndividu18AnsEtPlus.GetValueOrDefault();
-                entity.TotalIndividu65AnsEtPlus = sde.TotalIndividu65AnsEtPlus.GetValueOrDefault();
-                entity.TotalLogeIOccupeRecense = sde.TotalLogeIOccupeRecense.GetValueOrDefault();
-                entity.TotalLogeIOccupeRecenseNV = sde.TotalLogeIOccupeRecenseNV.GetValueOrDefault();
-                entity.TotalLogeIOccupeRecenseV = sde.TotalLogeIOccupeRecenseV.GetValueOrDefault();
                 entity.TotalLogeIRecense = sde.TotalLogeIRecense.GetValueOrDefault();
-                entity.TotalLogeIUsageTemporelRecense = sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault();
-                entity.TotalLogeIUsageTemporelRecenseNV = entity.TotalLogeIUsageTemporelRecenseNV.GetValueOrDefault();
-                entity.TotalLogeIUsageTemporelRecenseV = sde.TotalLogeIUsageTemporelRecenseV.GetValueOrDefault();
-                entity.TotalLogeIVideRecense = sde.TotalLogeIVideRecense.GetValueOrDefault();
-                entity.TotalLogeIVideRecenseNV = sde.TotalLogeIVideRecenseNV.GetValueOrDefault();
-                entity.TotalLogeIVideRecenseV = sde.TotalLogeIVideRecenseV.GetValueOrDefault();
-
             }
             catch (Exception)
             {
@@ -1727,7 +1671,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             individu.MenageId = _ind.MenageId.GetValueOrDefault();
             individu.IndividuId = _ind.IndividuId;
             individu.SdeId = _ind.SdeId;
-            individu.Q6LienDeParente = Convert.ToByte(_ind.Q6LienDeParente.GetValueOrDefault());
+            individu.Qp1NoOrdre = _ind.Qp1NoOrdre;
+            individu.Q3LienDeParente = Convert.ToByte(_ind.Q3LienDeParente.GetValueOrDefault());
+            individu.Q3aRaisonChefMenage = Convert.ToByte(_ind.Q3aRaisonChefMenage.GetValueOrDefault());
             individu.Q5bAge = Convert.ToByte(_ind.Q5bAge.GetValueOrDefault());
             individu.Q2Nom = _ind.Q2Nom;
             individu.Q3Prenom = _ind.Q3Prenom;
@@ -1773,9 +1719,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             individu.BatimentId = _ind.BatimentId;
             individu.LogeId = _ind.LogeId;
             individu.MenageId = _ind.MenageId;
+            individu.Qp1NoOrdre = _ind.Qp1NoOrdre;
             individu.SdeId = _ind.SdeId;
             individu.IndividuId = _ind.IndividuId;
-            individu.Q6LienDeParente = Convert.ToByte(_ind.Q6LienDeParente.GetValueOrDefault());
+            individu.Q3LienDeParente = Convert.ToByte(_ind.Q3LienDeParente.GetValueOrDefault());
+            individu.Q3aRaisonChefMenage = Convert.ToByte(_ind.Q3aRaisonChefMenage.GetValueOrDefault());
             individu.Q5bAge = Convert.ToByte(_ind.Q5bAge.GetValueOrDefault());
             individu.Q2Nom = _ind.Q2Nom;
             individu.Q3Prenom = _ind.Q3Prenom;
@@ -1837,8 +1785,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             _dec.Qd2NoOrdre = Convert.ToByte(_deces.Qd2NoOrdre.GetValueOrDefault());
             _dec.Qd1Deces = Convert.ToByte(_deces.Qd1Deces.GetValueOrDefault());
             //_dec.Qd2bAgeDecede = Convert.ToByte(_deces.Qd2bAgeDecede.GetValueOrDefault());
-            _dec.Qd1NbreDecedeFille = Convert.ToByte(_deces.Qd1NbreDecedeFille.GetValueOrDefault());
-            _dec.Qd1NbreDecedeGarcon = Convert.ToByte(_deces.Qd1NbreDecedeGarcon.GetValueOrDefault());
+            _dec.Qd1aNbreDecesF = Convert.ToByte(_deces.Qd1aNbreDecesF.GetValueOrDefault());
+            _dec.Qd1aNbreDecesG = Convert.ToByte(_deces.Qd1aNbreDecesG.GetValueOrDefault());
             _dec.DureeSaisie = Convert.ToByte(_deces.DureeSaisie.GetValueOrDefault());
             _dec.IsContreEnqueteMade = _deces.IsContreEnqueteMade.GetValueOrDefault();
             _dec.IsValidated = _deces.IsValidated.GetValueOrDefault();
@@ -1855,8 +1803,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             _dec.Qd2NoOrdre = Convert.ToByte(_deces.Qd2NoOrdre.GetValueOrDefault());
             _dec.Qd1Deces = Convert.ToByte(_deces.Qd1Deces.GetValueOrDefault());
             //_dec.Qd2bAgeDecede = Convert.ToByte(_deces.Qd2bAgeDecede.GetValueOrDefault());
-            _dec.Qd1NbreDecedeFille = Convert.ToByte(_deces.Qd1NbreDecedeFille.GetValueOrDefault());
-            _dec.Qd1NbreDecedeGarcon = Convert.ToByte(_deces.Qd1NbreDecedeGarcon.GetValueOrDefault());
+            _dec.Qd1aNbreDecesF = Convert.ToByte(_deces.Qd1aNbreDecesF.GetValueOrDefault());
+            _dec.Qd1aNbreDecesG = Convert.ToByte(_deces.Qd1aNbreDecesG.GetValueOrDefault());
             _dec.DureeSaisie = Convert.ToByte(_deces.DureeSaisie.GetValueOrDefault());
             _dec.IsContreEnqueteMade = _deces.IsContreEnqueteMade.GetValueOrDefault();
             _dec.IsValidated = _deces.IsValidated.GetValueOrDefault();
@@ -1871,6 +1819,58 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 list.Add(model);
             }
             return list;
+        }
+
+        public static Tbl_EmigreCE MapToTbl_EmigreCE(EmigreCEModel _emigre)
+        {
+            Tbl_EmigreCE _em = new Tbl_EmigreCE();
+            if (_emigre != null)
+            {
+                _em.BatimentId = _emigre.BatimentId;
+                _em.LogeId = _emigre.LogeId;
+                _em.MenageId = _emigre.MenageId;
+                _em.EmigreId = _emigre.EmigreId;
+                _em.DateDebutCollecte = _emigre.DateDebutCollecte;
+                _em.DateFinCollecte = _emigre.DateFinCollecte;
+                _em.IsContreEnqueteMade = _emigre.IsContreEnqueteMade;
+                _em.IsValidated = _emigre.IsValidated;
+                _em.Qn1NbreEmigreF = _emigre.Qn1NbreEmigreF;
+                _em.Qn1Emigration = _emigre.Qn1Emigration;
+                _emigre.Qn1numeroOrdre = _emigre.Qn1numeroOrdre;
+                _em.SdeId = _emigre.SdeId;
+            }
+            return _em;
+        }
+
+        public static EmigreCEModel MapToEmigreCEModel(Tbl_EmigreCE _emigre)
+        {
+            EmigreCEModel _em = new EmigreCEModel();
+            if (_emigre != null)
+            {
+                _em.BatimentId = _emigre.BatimentId;
+                _em.LogeId = _emigre.LogeId;
+                _em.MenageId = _emigre.MenageId;
+                _em.EmigreId = _emigre.EmigreId;
+                _em.DateDebutCollecte = _emigre.DateDebutCollecte;
+                _em.DateFinCollecte = _emigre.DateFinCollecte;
+                _em.IsContreEnqueteMade = _emigre.IsContreEnqueteMade;
+                _em.IsValidated = _emigre.IsValidated;
+                _em.Qn1NbreEmigreF = _emigre.Qn1NbreEmigreF;
+                _em.Qn1Emigration = _emigre.Qn1Emigration;
+                _emigre.Qn1numeroOrdre = _emigre.Qn1numeroOrdre;
+                _em.SdeId = _emigre.SdeId;
+            }
+            return _em;
+        }
+        public static List<EmigreCEModel> MapToListEmigreCEModel(List<Tbl_EmigreCE> list)
+        {
+            List<EmigreCEModel> listOfEmigres = new List<EmigreCEModel>();
+            foreach (Tbl_EmigreCE _em in list)
+            {
+                EmigreCEModel emigre = MapToEmigreCEModel(_em);
+                listOfEmigres.Add(emigre);
+            }
+            return listOfEmigres;
         }
         #endregion
 

@@ -96,7 +96,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 individu = contreEnqueteService.getIndividuCEModel(Convert.ToInt32(detailsViewModel.MenageType.Id), detailsViewModel.MenageType.SdeId);
             }
             //Si l'individu est le chef de Menage on saute la question RELATION CHEF MENAGE
-            if (individu.Q6LienDeParente == 1)
+            if (individu.Q3LienDeParente == 1)
             {
                 viewModelIndividu = new QuestionViewModel(TypeQuestion.Individu, true);
             }
@@ -120,9 +120,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             //individu.MenageId = model.MenageId;
             //individu.SdeId = model.SdeId;
             //individu.Qp1NoOrdre = Convert.ToByte(model.Qp1NoOrdre);
-            //if (model.Q6LienDeParente == 1)
+            //if (model.Q3LienDeParente == 1)
             //{
-            //    individu.Q6LienDeParente = 1;
+            //    individu.Q3LienDeParente = 1;
             //}
             TextBlock tHeader = new TextBlock();
             tHeader.Foreground = Brushes.Red;
@@ -478,9 +478,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
         {
             if (reponse.NomChamps == Constant.Q2Nom) { ind.Q2Nom = reponse.CodeReponse; }
             if (reponse.NomChamps == Constant.Q3Prenom) { ind.Q3Prenom = reponse.CodeReponse; }
-            if (reponse.NomChamps == Constant.Q6LienDeParente)
+            if (reponse.NomChamps == Constant.Q3LienDeParente)
             {
-                ind.Q6LienDeParente = Convert.ToByte(reponse.CodeReponse);
+                ind.Q3LienDeParente = Convert.ToByte(reponse.CodeReponse);
                 checkConstraint<IndividuCEModel>(this.individu);
             }
             if (reponse.NomChamps == Constant.Q4Sexe)
@@ -597,7 +597,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
         //            if (_ind.IndividuId == Convert.ToInt32(reponse.CodeReponse))
         //            {
         //                _eva.Qb1RepondantNoOrdre = _ind.Qp1NoOrdre.GetValueOrDefault();
-        //                _eva.Qb1RepondantRChefMenage = _ind.Q6LienDeParente.GetValueOrDefault();
+        //                _eva.Qb1RepondantRChefMenage = _ind.Q3LienDeParente.GetValueOrDefault();
         //                _eva.Qb1RepondantNiveauEtude = _ind.Qe4aNiveauEtude;
         //                _eva.Qb1RepondantSexe = _ind.Q4Sexe.GetValueOrDefault();
         //            }
@@ -715,12 +715,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             {
 
                 #region CONTRAINTE TESTANT L'AGE DU CHEF DE MENAGE QP5
-                if (individu.Q6LienDeParente.GetValueOrDefault() != 0 && individu.Q6LienDeParente.GetValueOrDefault() == 1)
+                if (individu.Q3LienDeParente.GetValueOrDefault() != 0 && individu.Q3LienDeParente.GetValueOrDefault() == 1)
                 {
                     if (individu.Q5bAge.GetValueOrDefault() != 0 && individu.Q5bAge.GetValueOrDefault() <= 15)
                     {
                         individu.Q5bAge = 0;
-                        individu.Q6LienDeParente = 0;
+                        individu.Q3LienDeParente = 0;
                         throw new MessageException("verifye laj moun lan, setifye si se li ki chef menaj lan.");
                     }
                 }
@@ -729,7 +729,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 #region CONTRAINTE CHEF MENAGE DE SON SEXE ET LES MEMBRES DE SA FAMILLE
 
                 #region NE PAS PERMETTRE D'AVOIR 2 CHEF DE MENAGE DANS UN MENAGE
-                if (this.individu.Q6LienDeParente.GetValueOrDefault() != 0 && this.individu.Q6LienDeParente.GetValueOrDefault() == 1)
+                if (this.individu.Q3LienDeParente.GetValueOrDefault() != 0 && this.individu.Q3LienDeParente.GetValueOrDefault() == 1)
                 {
                     MenageCEModel men = new MenageCEModel();
                     men.MenageId = this.individu.MenageId;
@@ -742,7 +742,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     {
                         foreach (IndividuCEModel ind in listOf)
                         {
-                            if (ind.Q6LienDeParente.GetValueOrDefault() == 1)
+                            if (ind.Q3LienDeParente.GetValueOrDefault() == 1)
                             {
                                 chefMenage = new IndividuCEModel();
                                 chefMenage = ind;
@@ -774,7 +774,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 #endregion
 
                 #region TEST SUR LA DIFFERENCE D'AGE DU CHEF DE FAMILLE ET SON ENFANT
-                if (this.individu.Q6LienDeParente.GetValueOrDefault() != 0 && this.individu.Q6LienDeParente.GetValueOrDefault() == 3)
+                if (this.individu.Q3LienDeParente.GetValueOrDefault() != 0 && this.individu.Q3LienDeParente.GetValueOrDefault() == 3)
                 {
                     MenageCEModel men = new MenageCEModel();
                     men.MenageId = this.individu.MenageId;
@@ -787,7 +787,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     {
                         foreach (IndividuCEModel ind in listOf)
                         {
-                            if (ind.Q6LienDeParente.GetValueOrDefault() == 1)
+                            if (ind.Q3LienDeParente.GetValueOrDefault() == 1)
                             {
                                 chefMenage = new IndividuCEModel();
                                 chefMenage = ind;
@@ -809,7 +809,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 if (age < 15)
                                 {
                                     individu.Q5bAge = 0;
-                                    individu.Q6LienDeParente = 0;
+                                    individu.Q3LienDeParente = 0;
                                     throw new MessageException(Constant.MSG_CHEF_MENAGE);
                                 }
                             }
@@ -820,7 +820,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     if ((chefMenage.Q5bAge.GetValueOrDefault() - individu.Q5bAge.GetValueOrDefault()) < 13)
                                     {
                                         individu.Q5bAge = 0;
-                                        individu.Q6LienDeParente = 0;
+                                        individu.Q3LienDeParente = 0;
                                         throw new MessageException(Constant.MSG_CHEF_MENAGE);
                                     }
                                 }
@@ -832,7 +832,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 #endregion
 
                 #region TEST SUR LA DIFFERENCE D'AGE DU CHEF DE FAMILLE ET SON PETIT ENFANT
-                if (this.individu.Q6LienDeParente.GetValueOrDefault() != 0 && this.individu.Q6LienDeParente.GetValueOrDefault() == 7)
+                if (this.individu.Q3LienDeParente.GetValueOrDefault() != 0 && this.individu.Q3LienDeParente.GetValueOrDefault() == 7)
                 {
                     MenageCEModel men = new MenageCEModel();
                     men.MenageId = this.individu.MenageId;
@@ -845,7 +845,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     {
                         foreach (IndividuCEModel ind in listOf)
                         {
-                            if (ind.Q6LienDeParente.GetValueOrDefault() == 1)
+                            if (ind.Q3LienDeParente.GetValueOrDefault() == 1)
                             {
                                 chefMenage = new IndividuCEModel();
                                 chefMenage = ind;
@@ -867,7 +867,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 if ((chefMenage.Q5bAge.GetValueOrDefault() - individu.Q5bAge.GetValueOrDefault()) < 32)
                                 {
                                     individu.Q5bAge = 0;
-                                    individu.Q6LienDeParente = 0;
+                                    individu.Q3LienDeParente = 0;
                                     throw new MessageException(Constant.MSG_CHEF_MENAGE);
                                 }
                             }
@@ -890,7 +890,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             //    if ((chefMenage.Q5bAge.GetValueOrDefault() - individu.Q5bAge.GetValueOrDefault()) < 30)
                             //    {
                             //        individu.Q5bAge = 0;
-                            //        individu.Q6LienDeParente = 0;
+                            //        individu.Q3LienDeParente = 0;
                             //        throw new MessageException("Pitit chèf menaj la dwe gen pou piti 30 ane.");
                             //    }
                             //}
@@ -901,7 +901,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             //        if ((chefMenage.Q5bAge.GetValueOrDefault() - individu.Q5bAge.GetValueOrDefault()) < 26)
                             //        {
                             //            individu.Q5bAge = 0;
-                            //            individu.Q6LienDeParente = 0;
+                            //            individu.Q3LienDeParente = 0;
                             //            throw new MessageException("Pitit chèf menaj la dwe gen pou piti 26 ane.");
                             //        }
                             //    }
@@ -914,7 +914,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 #endregion
 
                 #region TEST SUR LA DIFFERENCE D'AGE DU CHEF DE FAMILLE ET DE SES PARENTS
-                if (this.individu.Q6LienDeParente.GetValueOrDefault() != 0 && this.individu.Q6LienDeParente.GetValueOrDefault() == 6)
+                if (this.individu.Q3LienDeParente.GetValueOrDefault() != 0 && this.individu.Q3LienDeParente.GetValueOrDefault() == 6)
                 {
                     MenageCEModel men = new MenageCEModel();
                     men.MenageId = this.individu.MenageId;
@@ -927,7 +927,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     {
                         foreach (IndividuCEModel ind in listOf)
                         {
-                            if (ind.Q6LienDeParente.GetValueOrDefault() == 1)
+                            if (ind.Q3LienDeParente.GetValueOrDefault() == 1)
                             {
                                 chefMenage = new IndividuCEModel();
                                 chefMenage = ind;
@@ -948,13 +948,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     if (individu.Q4Sexe.GetValueOrDefault() == 1)
                                     {
                                         individu.Q5bAge = 0;
-                                        individu.Q6LienDeParente = 0;
+                                        individu.Q3LienDeParente = 0;
                                         throw new MessageException(Constant.MSG_CHEF_MENAGE);
                                     }
                                     else
                                     {
                                         individu.Q5bAge = 0;
-                                        individu.Q6LienDeParente = 0;
+                                        individu.Q3LienDeParente = 0;
                                         throw new MessageException(Constant.MSG_CHEF_MENAGE);
                                     }
                                 }
@@ -967,13 +967,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     if (individu.Q4Sexe.GetValueOrDefault() == 1)
                                     {
                                         individu.Q5bAge = 0;
-                                        individu.Q6LienDeParente = 0;
+                                        individu.Q3LienDeParente = 0;
                                         throw new MessageException(Constant.MSG_CHEF_MENAGE);
                                     }
                                     else
                                     {
                                         individu.Q5bAge = 0;
-                                        individu.Q6LienDeParente = 0;
+                                        individu.Q3LienDeParente = 0;
                                         throw new MessageException(Constant.MSG_CHEF_MENAGE);
                                     }
                                 }
@@ -999,7 +999,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     {
                         foreach (IndividuCEModel ind in listOf)
                         {
-                            if (ind.Q6LienDeParente.GetValueOrDefault() == 1)
+                            if (ind.Q3LienDeParente.GetValueOrDefault() == 1)
                             {
                                 chefMenage = new IndividuCEModel();
                                 chefMenage = ind;
@@ -1009,7 +1009,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         }
                         if (chefMenage != null)
                         {
-                            if (this.individu.Q6LienDeParente.GetValueOrDefault() == 2)
+                            if (this.individu.Q3LienDeParente.GetValueOrDefault() == 2)
                             {
                                 if (chefMenage.Q4Sexe.GetValueOrDefault() == this.individu.Q4Sexe.GetValueOrDefault())
                                 {
@@ -1038,7 +1038,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     {
                         foreach (IndividuCEModel ind in listOf)
                         {
-                            if (ind.Q6LienDeParente.GetValueOrDefault() == 1)
+                            if (ind.Q3LienDeParente.GetValueOrDefault() == 1)
                             {
                                 chefMenage = new IndividuCEModel();
                                 chefMenage = ind;
@@ -1048,7 +1048,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         }
                         if (chefMenage != null)
                         {
-                            if (this.individu.Q6LienDeParente.GetValueOrDefault() == 2)
+                            if (this.individu.Q3LienDeParente.GetValueOrDefault() == 2)
                             {
                                 if (chefMenage.Qsm1StatutMatrimonial.GetValueOrDefault() != this.individu.Qsm1StatutMatrimonial.GetValueOrDefault())
                                 {

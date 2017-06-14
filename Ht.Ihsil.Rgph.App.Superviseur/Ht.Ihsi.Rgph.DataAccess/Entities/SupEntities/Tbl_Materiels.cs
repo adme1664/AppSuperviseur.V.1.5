@@ -20,6 +20,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
         public string Model { get; set; }
         public string Version { get; set; }
         public Nullable<long> AgentId { get; set; }
+        public string DateAssignation { get; set; }
         public Nullable<long> IsConfigured { get; set; }
         public string LastSynchronisation { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Editors;
 using Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities;
+using Ht.Ihsi.Rgph.Logging.Logs;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
 using Ht.Ihsil.Rgph.App.Superviseur.services;
 using System;
@@ -2038,7 +2039,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ParentID = "1";
                 report.Indicateur = "Nombre de bâtiments recensés par l'agent recenseur";
                 report.Total = "" + sde.TotalBatRecense.GetValueOrDefault();
-                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalBatRecenseV.GetValueOrDefault(), sde.TotalBatRecense.GetValueOrDefault()) + "%";
+                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalBatRecense.GetValueOrDefault(), sde.TotalBatRecense.GetValueOrDefault()) + "%";
                 rapports.Add(report);
 
                 report = new RapportModel();
@@ -2057,7 +2058,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ParentID = "1";
                 report.Indicateur = "Nombre de ménages recensés par l'agent recenseur";
                 report.Total = "" + sde.TotalMenageRecense.GetValueOrDefault();
-                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalMenageRecenseV.GetValueOrDefault(), sde.TotalMenageRecense.GetValueOrDefault()) + "%";
+                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalMenageRecense.GetValueOrDefault(), sde.TotalMenageRecense.GetValueOrDefault()) + "%";
                 rapports.Add(report);
 
                 report = new RapportModel();
@@ -2080,7 +2081,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ParentID = "6";
                 report.Indicateur = "Nombre de bâtiments recensés par l'agent recenseur";
                 report.Total = "" + sde.TotalBatRecense.GetValueOrDefault();
-                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalBatRecenseV.GetValueOrDefault(), sde.TotalBatRecense.GetValueOrDefault()) + "%";
+                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalBatRecense.GetValueOrDefault(), sde.TotalBatRecense.GetValueOrDefault()) + "%";
                 rapports.Add(report);
                 //Rapport Logement Individuel
                 report = new RapportModel();
@@ -2090,58 +2091,58 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 rapports.Add(report);
 
 
-                report = new RapportModel();
-                report.ID = "9";
-                report.ParentID = "8";
-                report.Indicateur = "Distribution du nombre de logements individuels recensés\r\nselon l´occupation OCCUPE  et l´état d´avancement\r\nde la couverture de la SDE.";
-                report.Total = "" + sde.TotalLogeIOccupeRecense.GetValueOrDefault();
-                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIOccupeRecenseV.GetValueOrDefault(), sde.TotalLogeIOccupeRecense.GetValueOrDefault()) + "%";
-                rapports.Add(report);
+                //report = new RapportModel();
+                //report.ID = "9";
+                //report.ParentID = "8";
+                //report.Indicateur = "Distribution du nombre de logements individuels recensés\r\nselon l´occupation OCCUPE  et l´état d´avancement\r\nde la couverture de la SDE.";
+                //report.Total = "" + sde.TotalLogeIOccupeRecense.GetValueOrDefault();
+                //report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIOccupeRecenseV.GetValueOrDefault(), sde.TotalLogeIOccupeRecense.GetValueOrDefault()) + "%";
+                //rapports.Add(report);
 
-                report = new RapportModel();
-                report.ID = "10";
-                report.ParentID = "8";
-                report.Indicateur = "Distribution du nombre de logements individuels recensés\r\nselon l´occupation VIDE  et l´état d´avancement\r\nde la couverture de la SDE.";
-                report.Total = "" + sde.TotalLogeIVideRecense.GetValueOrDefault();
-                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIVideRecenseV.GetValueOrDefault(), sde.TotalLogeIVideRecense.GetValueOrDefault()) + "%";
-                rapports.Add(report);
+                //report = new RapportModel();
+                //report.ID = "10";
+                //report.ParentID = "8";
+                //report.Indicateur = "Distribution du nombre de logements individuels recensés\r\nselon l´occupation VIDE  et l´état d´avancement\r\nde la couverture de la SDE.";
+                //report.Total = "" + sde.TotalLogeIVideRecense.GetValueOrDefault();
+                //report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIVideRecenseV.GetValueOrDefault(), sde.TotalLogeIVideRecense.GetValueOrDefault()) + "%";
+                //rapports.Add(report);
 
-                report = new RapportModel();
-                report.ID = "11";
-                report.ParentID = "8";
-                report.Indicateur = "Distribution du nombre de logements individuels recensés\r\nselon l´occupation TEMPOREL  et l´état d´avancement\r\nde la couverture de la SDE.";
-                report.Total = "" + sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault();
-                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIUsageTemporelRecenseV.GetValueOrDefault(), sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault()) + "%";
-                rapports.Add(report);
-                //Logement Collectif
-                report = new RapportModel();
-                report.ID = "12";
-                report.ParentID = "0";
-                report.Type = "Logement Collectif";
-                rapports.Add(report);
+                //report = new RapportModel();
+                //report.ID = "11";
+                //report.ParentID = "8";
+                //report.Indicateur = "Distribution du nombre de logements individuels recensés\r\nselon l´occupation TEMPOREL  et l´état d´avancement\r\nde la couverture de la SDE.";
+                //report.Total = "" + sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault();
+                //report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIUsageTemporelRecenseV.GetValueOrDefault(), sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault()) + "%";
+                //rapports.Add(report);
+                ////Logement Collectif
+                //report = new RapportModel();
+                //report.ID = "12";
+                //report.ParentID = "0";
+                //report.Type = "Logement Collectif";
+                //rapports.Add(report);
 
-                report = new RapportModel();
-                report.ID = "13";
-                report.ParentID = "12";
-                report.Indicateur = "Distribution du nombre de logements collectifs recensés \r\nselon l´occupation OCCUPE  et l´état d´avancement de la couverture \r\n de la SDE.";
-                report.Total = "" + sde.TotalLogeIOccupeRecense.GetValueOrDefault();
-                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIOccupeRecenseV.GetValueOrDefault(), sde.TotalLogeIOccupeRecense.GetValueOrDefault()) + "%";
-                rapports.Add(report);
+                //report = new RapportModel();
+                //report.ID = "13";
+                //report.ParentID = "12";
+                //report.Indicateur = "Distribution du nombre de logements collectifs recensés \r\nselon l´occupation OCCUPE  et l´état d´avancement de la couverture \r\n de la SDE.";
+                //report.Total = "" + sde.TotalLogeIOccupeRecense.GetValueOrDefault();
+                //report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIOccupeRecenseV.GetValueOrDefault(), sde.TotalLogeIOccupeRecense.GetValueOrDefault()) + "%";
+                //rapports.Add(report);
 
-                report = new RapportModel();
-                report.ID = "14";
-                report.ParentID = "12";
-                report.Indicateur = "Distribution du nombre de logements collectifs recensés \r\nselon l´occupation VIDE  et l´état d´avancement de la couverture \r\n de la SDE.";
-                report.Total = "" + sde.TotalLogeIVideRecense.GetValueOrDefault();
-                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIVideRecenseV.GetValueOrDefault(), sde.TotalLogeIVideRecense.GetValueOrDefault()) + "%"; ;
-                rapports.Add(report);
+                //report = new RapportModel();
+                //report.ID = "14";
+                //report.ParentID = "12";
+                //report.Indicateur = "Distribution du nombre de logements collectifs recensés \r\nselon l´occupation VIDE  et l´état d´avancement de la couverture \r\n de la SDE.";
+                //report.Total = "" + sde.TotalLogeIVideRecense.GetValueOrDefault();
+                //report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIVideRecenseV.GetValueOrDefault(), sde.TotalLogeIVideRecense.GetValueOrDefault()) + "%"; ;
+                //rapports.Add(report);
 
-                report = new RapportModel();
-                report.ID = "15";
-                report.ParentID = "12";
-                report.Indicateur = "Distribution du nombre de logements collectifs recensés \r\nselon l´occupation TEMPOREL  et l´état d´avancement de la couverture \r\n de la SDE.";
-                report.Total = "" + sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault();
-                report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIUsageTemporelRecenseV.GetValueOrDefault(), sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault()) + " %";
+                //report = new RapportModel();
+                //report.ID = "15";
+                //report.ParentID = "12";
+                //report.Indicateur = "Distribution du nombre de logements collectifs recensés \r\nselon l´occupation TEMPOREL  et l´état d´avancement de la couverture \r\n de la SDE.";
+                //report.Total = "" + sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault();
+                //report.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeIUsageTemporelRecenseV.GetValueOrDefault(), sde.TotalLogeIUsageTemporelRecense.GetValueOrDefault()) + " %";
                 rapports.Add(report);
 
                 //Rapport personnes
@@ -2181,97 +2182,97 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     rapport.Type = "Indicateurs de Performances";
                     rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "2";
-                    rapport.ParentID = "1";
-                    rapport.Indicateur = "Nombre de bâtiments recensés par jour d´enquête";
-                    rapport.Total = "" + sde.TotalBatRecenseParJour.GetValueOrDefault();
-                    rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalBatRecenseParJourV.GetValueOrDefault(), sde.TotalBatRecenseParJour.GetValueOrDefault()) + "%";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "2";
+                    //rapport.ParentID = "1";
+                    //rapport.Indicateur = "Nombre de bâtiments recensés par jour d´enquête";
+                    //rapport.Total = "" + sde.TotalBatRecenseParJour.GetValueOrDefault();
+                    //rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalBatRecenseParJourV.GetValueOrDefault(), sde.TotalBatRecenseParJour.GetValueOrDefault()) + "%";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "3";
-                    rapport.ParentID = "1";
-                    rapport.Indicateur = "Nombre de logements recensés par jour d´enquête";
-                    rapport.Total = "" + sde.TotalLogeRecenseParJour.GetValueOrDefault();
-                    rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeRecenseParJourV.GetValueOrDefault(), sde.TotalLogeRecenseParJour.GetValueOrDefault()) + "%";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "3";
+                    //rapport.ParentID = "1";
+                    //rapport.Indicateur = "Nombre de logements recensés par jour d´enquête";
+                    //rapport.Total = "" + sde.TotalLogeRecenseParJour.GetValueOrDefault();
+                    //rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalLogeRecenseParJourV.GetValueOrDefault(), sde.TotalLogeRecenseParJour.GetValueOrDefault()) + "%";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "4";
-                    rapport.ParentID = "1";
-                    rapport.Indicateur = "Nombre de ménages interviewés par jour d´enquête";
-                    rapport.Total = "" + sde.TotalMenageRecenseParJour.GetValueOrDefault();
-                    rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalMenageRecenseParJourV.GetValueOrDefault(), sde.TotalMenageRecenseParJour.GetValueOrDefault()) + "%";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "4";
+                    //rapport.ParentID = "1";
+                    //rapport.Indicateur = "Nombre de ménages interviewés par jour d´enquête";
+                    //rapport.Total = "" + sde.TotalMenageRecenseParJour.GetValueOrDefault();
+                    //rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalMenageRecenseParJourV.GetValueOrDefault(), sde.TotalMenageRecenseParJour.GetValueOrDefault()) + "%";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "5";
-                    rapport.ParentID = "1";
-                    rapport.Indicateur = "Nombre de personnes comptées par jour d´enquête";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "5";
+                    //rapport.ParentID = "1";
+                    //rapport.Indicateur = "Nombre de personnes comptées par jour d´enquête";
+                    //rapports.Add(rapport);
 
-                    //Indicateurs demogra[hiques
-                    rapport = new RapportModel();
-                    rapport.ID = "6";
-                    rapport.ParentID = "0";
-                    rapport.Type = "Indicateurs  Démographiques";
-                    rapports.Add(rapport);
+                    ////Indicateurs demogra[hiques
+                    //rapport = new RapportModel();
+                    //rapport.ID = "6";
+                    //rapport.ParentID = "0";
+                    //rapport.Type = "Indicateurs  Démographiques";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "7";
-                    rapport.ParentID = "6";
-                    rapport.Indicateur = "Volume de population recensée ";
-                    rapport.Total = "" + sde.TotalIndRecense.GetValueOrDefault();
-                    rapport.Pourcentage = "N/A";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "7";
+                    //rapport.ParentID = "6";
+                    //rapport.Indicateur = "Volume de population recensée ";
+                    //rapport.Total = "" + sde.TotalIndRecense.GetValueOrDefault();
+                    //rapport.Pourcentage = "N/A";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "8";
-                    rapport.ParentID = "6";
-                    rapport.Indicateur = "Indice de masculinité";
-                    rapport.Total = "" + sde.IndiceMasculinite.GetValueOrDefault();
-                    rapport.Pourcentage = "N/A";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "8";
+                    //rapport.ParentID = "6";
+                    //rapport.Indicateur = "Indice de masculinité";
+                    //rapport.Total = "" + sde.IndiceMasculinite.GetValueOrDefault();
+                    //rapport.Pourcentage = "N/A";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "9";
-                    rapport.ParentID = "6";
-                    rapport.Indicateur = "Proportion (%) d´enfants de moins de 5 ans";
-                    rapport.Total = "" + sde.TotalEnfantDeMoinsDe5Ans.GetValueOrDefault();
-                    rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalEnfantDeMoinsDe5Ans.GetValueOrDefault(), sde.TotalIndRecense.GetValueOrDefault()) + "%";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "9";
+                    //rapport.ParentID = "6";
+                    //rapport.Indicateur = "Proportion (%) d´enfants de moins de 5 ans";
+                    //rapport.Total = "" + sde.TotalEnfantDeMoinsDe5Ans.GetValueOrDefault();
+                    //rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalEnfantDeMoinsDe5Ans.GetValueOrDefault(), sde.TotalIndRecense.GetValueOrDefault()) + "%";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "10";
-                    rapport.ParentID = "6";
-                    rapport.Indicateur = "Proportion (%)  de personnes de 18 ans et plus";
-                    rapport.Total = "" + sde.TotalIndividu18AnsEtPlus.GetValueOrDefault();
-                    rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalIndividu18AnsEtPlus.GetValueOrDefault(), sde.TotalIndRecense.GetValueOrDefault()) + "%";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "10";
+                    //rapport.ParentID = "6";
+                    //rapport.Indicateur = "Proportion (%)  de personnes de 18 ans et plus";
+                    //rapport.Total = "" + sde.TotalIndividu18AnsEtPlus.GetValueOrDefault();
+                    //rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalIndividu18AnsEtPlus.GetValueOrDefault(), sde.TotalIndRecense.GetValueOrDefault()) + "%";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "11";
-                    rapport.ParentID = "6";
-                    rapport.Indicateur = "Proportion (%)  de personnes de 10 ans et plus";
-                    rapport.Total = "" + sde.TotalIndividu10AnsEtPlus.GetValueOrDefault();
-                    rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalIndividu10AnsEtPlus.GetValueOrDefault(), sde.TotalIndRecense.GetValueOrDefault()) + "%";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "11";
+                    //rapport.ParentID = "6";
+                    //rapport.Indicateur = "Proportion (%)  de personnes de 10 ans et plus";
+                    //rapport.Total = "" + sde.TotalIndividu10AnsEtPlus.GetValueOrDefault();
+                    //rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalIndividu10AnsEtPlus.GetValueOrDefault(), sde.TotalIndRecense.GetValueOrDefault()) + "%";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "12";
-                    rapport.ParentID = "6";
-                    rapport.Indicateur = "Proportion (%)  de personnes de 65 ans plus";
-                    rapport.Total = "" + sde.TotalIndividu65AnsEtPlus.GetValueOrDefault();
-                    rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalIndividu65AnsEtPlus.GetValueOrDefault(), sde.TotalIndRecense.GetValueOrDefault()) + "%";
-                    rapports.Add(rapport);
+                    //rapport = new RapportModel();
+                    //rapport.ID = "12";
+                    //rapport.ParentID = "6";
+                    //rapport.Indicateur = "Proportion (%)  de personnes de 65 ans plus";
+                    //rapport.Total = "" + sde.TotalIndividu65AnsEtPlus.GetValueOrDefault();
+                    //rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalIndividu65AnsEtPlus.GetValueOrDefault(), sde.TotalIndRecense.GetValueOrDefault()) + "%";
+                    //rapports.Add(rapport);
 
-                    rapport = new RapportModel();
-                    rapport.ID = "13";
-                    rapport.ParentID = "6";
-                    rapport.Indicateur = "Proportion (%)  de ménages de grande taille (6 personnes et plus par exemple)";
-                    rapport.Total = "" + sde.TotalMenageDe6IndsEtPlus.GetValueOrDefault();
-                    rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalMenageDe6IndsEtPlus.GetValueOrDefault(), sde.TotalMenageRecense.GetValueOrDefault()) + "%";
+                    //rapport = new RapportModel();
+                    //rapport.ID = "13";
+                    //rapport.ParentID = "6";
+                    //rapport.Indicateur = "Proportion (%)  de ménages de grande taille (6 personnes et plus par exemple)";
+                    //rapport.Total = "" + sde.TotalMenageDe6IndsEtPlus.GetValueOrDefault();
+                    //rapport.Pourcentage = "" + Utilities.getPourcentage(sde.TotalMenageDe6IndsEtPlus.GetValueOrDefault(), sde.TotalMenageRecense.GetValueOrDefault()) + "%";
                     rapports.Add(rapport);
 
                     return rapports;
@@ -2314,7 +2315,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     listOfInCe = ce_service.searchAllIndividuCE(model);
                     foreach (IndividuCEModel ind in listOfInCe)
                     {
-                        if (ind.Q6LienDeParente == Constant.CHEF_MENAGE)
+                        if (ind.Q3LienDeParente == Constant.CHEF_MENAGE)
                         {
                             indCe = ind;
                         }
@@ -2613,6 +2614,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public static List<RapportComparaisonModel> getRprtComparaisonLogement(LogementCEModel model)
         {
+            Logger log = new Logger();                
             try
             {
                 List<RapportComparaisonModel> rapports = new List<RapportComparaisonModel>();
@@ -2652,7 +2654,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 parentReport = rpt;
                 //
                 //Quesiton LIN9
-                question = reader.getQuestionByNomChamps(Constant.Qlin6NombrePiece);
+                question = reader.getQuestionByNomChamps(Constant.Qlin6NombrePieceETChambreACoucher);
                 reponseAgent = log_mob.Qlin6NombrePiece.ToString();
                 reponseSup = log_ce.Qlin6NombrePiece.GetValueOrDefault().ToString();
                 rpt = getChildNodeForMainReportForChefMenage(parentReport, "LIN9- Nombre de Pieces", question.libelle, reponseAgent, reponseSup);
@@ -2693,9 +2695,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 //
                 return rapports;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Info("" + ex.Message);
             }
             return null;
             

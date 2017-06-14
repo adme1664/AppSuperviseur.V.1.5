@@ -45,6 +45,8 @@
                         <dxb:BarItemSeparator/>
                         <dxb:BarButtonItem x:Name="bbi_lojman_vid" Content="Lojman Individyel vid" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/logement.png" ItemClick="bbi_lojman_vid_ItemClick" />
                         <dxb:BarItemSeparator/>
+                        <dxb:BarButtonItem x:Name="bbi_lojman_okipe" Content="Lojman okipe yon lè konsa" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/logement.png" ItemClick="bbi_lojman_okipe_ItemClick" />
+                        <dxb:BarItemSeparator/>
                         <dxb:BarButtonItem x:Name="bbi_menaj" Content="Menaj" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/menage.png" ItemClick="bbi_menaj_ItemClick" />
                         <dxb:BarItemSeparator/>
                     </dxr:RibbonPageGroup>

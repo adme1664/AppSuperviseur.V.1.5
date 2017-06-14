@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RgphModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=D:\WORKSPACE\CSHARP\DESKSTOP_APPLICATION\AppSuperviseur.V.1.4\Ht.Ihsil.Rgph.App.Superviseur\Ht.Ihsi.Rgph.DataAccess\Data\rgph_sup-db.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RgphModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=D:\WORKSPACE\CSHARP\DESKSTOP_APPLICATION\AppSuperviseur.V.1.5\Ht.Ihsil.Rgph.App.Superviseur\Ht.Ihsi.Rgph.DataAccess\Data\rgph_sup-db.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Tbl_Agent">
           <Key>
             <PropertyRef Name="AgentId" />
@@ -99,8 +99,8 @@ avertissement 6002: La table/vue 'main.Tbl_Commune' n'a pas de clé primaire dé
           <Property Name="SdeId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Qd2NoOrdre" Type="integer" />
           <Property Name="Qd1Deces" Type="integer" />
-          <Property Name="Qd1NbreDecedeFille" Type="integer" />
-          <Property Name="Qd1NbreDecedeGarcon" Type="integer" />
+          <Property Name="Qd1aNbreDecesF" Type="integer" />
+          <Property Name="Qd1aNbreDecesG" Type="integer" />
           <Property Name="Statut" Type="integer" />
           <Property Name="IsValidated" Type="integer" />
           <Property Name="DateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
@@ -132,6 +132,26 @@ avertissement 6002: La table/vue 'main.Tbl_Departement' n'a pas de clé primaire
           <Property Name="Suivi" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Commentaire" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
+        <EntityType Name="Tbl_EmigreCE">
+          <Key>
+            <PropertyRef Name="EmigreId" />
+          </Key>
+          <Property Name="EmigreId" Type="integer" Nullable="false" />
+          <Property Name="MenageId" Type="integer" />
+          <Property Name="LogeId" Type="integer" />
+          <Property Name="BatimentId" Type="integer" />
+          <Property Name="SdeId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Qn1numeroOrdre" Type="integer" />
+          <Property Name="Qn1Emigration" Type="integer" />
+          <Property Name="Qn1NbreEmigreF" Type="integer" />
+          <Property Name="Qn1NbreEmigreG" Type="integer" />
+          <Property Name="Statut" Type="integer" />
+          <Property Name="IsValidated" Type="integer" />
+          <Property Name="DateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="DateFinCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="DureeSaisie" Type="integer" />
+          <Property Name="IsContreEnqueteMade" Type="integer" />
+        </EntityType>
         <EntityType Name="Tbl_IndividusCE">
           <Key>
             <PropertyRef Name="IndividuId" />
@@ -144,7 +164,8 @@ avertissement 6002: La table/vue 'main.Tbl_Departement' n'a pas de clé primaire
           <Property Name="Qp1NoOrdre" Type="integer" />
           <Property Name="Q2Nom" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Q3Prenom" Type="nvarchar" MaxLength="2147483647" />
-          <Property Name="Q6LienDeParente" Type="integer" />
+          <Property Name="Q3LienDeParente" Type="integer" />
+          <Property Name="Q3aRaisonChefMenage" Type="integer" />
           <Property Name="Q4Sexe" Type="integer" />
           <Property Name="Q5bAge" Type="integer" />
           <Property Name="Q7DateNaissanceJour" Type="integer" />
@@ -219,6 +240,7 @@ avertissement 6002: La table/vue 'main.Tbl_Departement' n'a pas de clé primaire
           <Property Name="Model" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Version" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="AgentId" Type="integer" />
+          <Property Name="DateAssignation" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="IsConfigured" Type="integer" />
           <Property Name="LastSynchronisation" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
@@ -263,6 +285,7 @@ avertissement 6002: La table/vue 'main.Tbl_Pays' n'a pas de clé primaire défin
           <Property Name="Domaine" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="CodeQuestion" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Nature" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="CreateDate" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Statut" Type="integer" />
         </EntityType>
         <!--Erreurs détectées durant la génération :
@@ -403,85 +426,13 @@ avertissement 6002: La table/vue 'main.Tbl_Reponses' n'a pas de clé primaire d�
           <Property Name="RaisonCouverture" Type="integer" />
           <Property Name="TotalBatCartographie" Type="integer" />
           <Property Name="TotalBatRecense" Type="integer" />
-          <Property Name="TotalBatRecenseV" Type="integer" />
           <Property Name="TotalLogeCRecense" Type="integer" />
-          <Property Name="TotalLogeCRecenseV" Type="integer" />
           <Property Name="TotalLogeIRecense" Type="integer" />
-          <Property Name="TotalLogeIRecenseV" Type="integer" />
-          <Property Name="TotalLogeIRecenseNV" Type="integer" />
-          <Property Name="TotalLogeCOccupeRecense" Type="integer" />
-          <Property Name="TotalLogeCOccupeRecenseV" Type="integer" />
-          <Property Name="TotalLogeCOccupeRecenseNV" Type="integer" />
-          <Property Name="TotalLogeCUsageTemporelRecense" Type="integer" />
-          <Property Name="TotalLogeCUsageTemporelRecenseV" Type="integer" />
-          <Property Name="TotalLogeCUsageTemporelRecenseNV" Type="integer" />
-          <Property Name="TotalLogeCVideRecense" Type="integer" />
-          <Property Name="TotalLogeCVideRecenseV" Type="integer" />
-          <Property Name="TotalLogeCVideRecenseNV" Type="integer" />
-          <Property Name="TotalLogeIOccupeRecense" Type="integer" />
-          <Property Name="TotalLogeIOccupeRecenseV" Type="integer" />
-          <Property Name="TotalLogeIOccupeRecenseNV" Type="integer" />
-          <Property Name="TotalLogeIUsageTemporelRecense" Type="integer" />
-          <Property Name="TotalLogeIUsageTemporelRecenseV" Type="integer" />
-          <Property Name="TotalLogeIUsageTemporelRecenseNV" Type="integer" />
-          <Property Name="TotalLogeIVideRecense" Type="integer" />
-          <Property Name="TotalLogeIVideRecenseV" Type="integer" />
-          <Property Name="TotalLogeIVideRecenseNV" Type="integer" />
           <Property Name="TotalMenageRecense" Type="integer" />
-          <Property Name="TotalMenageRecenseV" Type="integer" />
-          <Property Name="TotalMenageRecenseNV" Type="integer" />
           <Property Name="TotalMenageUnipersonnel" Type="integer" />
-          <Property Name="TotalMenageDe6IndsEtPlus" Type="integer" />
           <Property Name="TotalIndRecense" Type="integer" />
-          <Property Name="TotalIndRecenseV" Type="integer" />
-          <Property Name="TotalIndRecenseNV" Type="integer" />
-          <Property Name="TotalIndCRecense" Type="integer" />
-          <Property Name="TotalIndCRecenseV" Type="integer" />
-          <Property Name="TotalIndCRecenseNV" Type="integer" />
-          <Property Name="TotalIndIRecense    " Type="integer" />
-          <Property Name="TotalIndIRecenseV    " Type="integer" />
-          <Property Name="TotalIndIRecenseNV    " Type="integer" />
-          <Property Name="TotalIndFRecense" Type="integer" />
-          <Property Name="TotalIndFRecenseV" Type="integer" />
-          <Property Name="TotalIndFRecenseNV" Type="integer" />
-          <Property Name="TotalIndGRecense" Type="integer" />
-          <Property Name="TotalIndGRecenseV" Type="integer" />
-          <Property Name="TotalIndGRecenseNV" Type="integer" />
-          <Property Name="TotalIndCFRecense" Type="integer" />
-          <Property Name="TotalIndCFRecenseV" Type="integer" />
-          <Property Name="TotalIndCFRecenseNV" Type="integer" />
-          <Property Name="TotalIndCGRecense" Type="integer" />
-          <Property Name="TotalIndCGRecenseV" Type="integer" />
-          <Property Name="TotalIndCGRecenseNV" Type="integer" />
-          <Property Name="TotalIndIFRecense" Type="integer" />
-          <Property Name="TotalIndIFRecenseV" Type="integer" />
-          <Property Name="TotalIndIFRecenseNV" Type="integer" />
-          <Property Name="TotalIndIGRecense" Type="integer" />
-          <Property Name="TotalIndIGRecenseV" Type="integer" />
-          <Property Name="TotalIndIGRecenseNV" Type="integer" />
-          <Property Name="TotalEnfantDeMoinsDe5Ans" Type="integer" />
-          <Property Name="TotalIndividu18AnsEtPlus" Type="integer" />
-          <Property Name="TotalIndividu10AnsEtPlus" Type="integer" />
-          <Property Name="TotalIndividu65AnsEtPlus" Type="integer" />
-          <Property Name="IndiceMasculinite" Type="real" />
           <Property Name="TotalEmigreRecense" Type="integer" />
-          <Property Name="TotalEmigreFRecense" Type="integer" />
-          <Property Name="TotalEmigreGRecense" Type="integer" />
           <Property Name="TotalDecesRecense" Type="integer" />
-          <Property Name="TotalDecesFRecense" Type="integer" />
-          <Property Name="TotalDecesGRecense" Type="integer" />
-          <Property Name="TotalBatRecenseParJour" Type="integer" />
-          <Property Name="TotalLogeRecenseParJour" Type="integer" />
-          <Property Name="TotalMenageRecenseParJour" Type="integer" />
-          <Property Name="TotalIndRecenseParJour" Type="integer" />
-          <Property Name="TotalBatRecenseParJourV" Type="integer" />
-          <Property Name="TotalLogeRecenseParJourV" Type="integer" />
-          <Property Name="TotalMenageRecenseParJourV" Type="integer" />
-          <Property Name="TotalIndRecenseParJourV" Type="integer" />
-          <Property Name="TotalBatRecenseParJourNV" Type="integer" />
-          <Property Name="TotalLogeRecenseParJourNV" Type="integer" />
-          <Property Name="TotalMenageRecenseParJourNV" Type="integer" />
-          <Property Name="TotalIndRecenseParJourNV" Type="integer" />
         </EntityType>
         <EntityType Name="Tbl_Utilisateur">
           <Key>
@@ -520,6 +471,7 @@ avertissement 6002: La table/vue 'main.Tbl_VilleQuartierSectionCommunale' n'a pa
           <EntitySet Name="Tbl_ContreEnquete" EntityType="Self.Tbl_ContreEnquete" store:Type="Tables" />
           <EntitySet Name="Tbl_DecesCE" EntityType="Self.Tbl_DecesCE" store:Type="Tables" />
           <EntitySet Name="Tbl_DetailsRapport" EntityType="Self.Tbl_DetailsRapport" store:Type="Tables" />
+          <EntitySet Name="Tbl_EmigreCE" EntityType="Self.Tbl_EmigreCE" store:Type="Tables" />
           <EntitySet Name="Tbl_IndividusCE" EntityType="Self.Tbl_IndividusCE" store:Type="Tables" />
           <EntitySet Name="Tbl_LogementCE" EntityType="Self.Tbl_LogementCE" store:Type="Tables" />
           <EntitySet Name="Tbl_Materiels" EntityType="Self.Tbl_Materiels" store:Type="Tables" />
@@ -602,8 +554,7 @@ FROM [Tbl_Reponses] AS [Tbl_Reponses]</DefiningQuery>
 FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RgphModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -678,14 +629,14 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="SdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Qd2NoOrdre" Type="Int64" />
           <Property Name="Qd1Deces" Type="Int64" />
-          <Property Name="Qd1NbreDecedeFille" Type="Int64" />
-          <Property Name="Qd1NbreDecedeGarcon" Type="Int64" />
           <Property Name="Statut" Type="Int64" />
           <Property Name="IsValidated" Type="Int64" />
           <Property Name="DateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="DateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="DureeSaisie" Type="Int64" />
           <Property Name="IsContreEnqueteMade" Type="Int64" />
+          <Property Name="Qd1aNbreDecesF" Type="Int64" />
+          <Property Name="Qd1aNbreDecesG" Type="Int64" />
         </EntityType>
         <EntityType Name="Tbl_DetailsRapport">
           <Key>
@@ -714,7 +665,8 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="Qp1NoOrdre" Type="Int64" />
           <Property Name="Q2Nom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Q3Prenom" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
-          <Property Name="Q6LienDeParente" Type="Int64" />
+          <Property Name="Q3LienDeParente" Type="Int64" />
+          <Property Name="Q3aRaisonChefMenage" Type="Int64" />
           <Property Name="Q4Sexe" Type="Int64" />
           <Property Name="Q5bAge" Type="Int64" />
           <Property Name="Q7DateNaissanceJour" Type="Int64" />
@@ -789,6 +741,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="Model" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Version" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="AgentId" Type="Int64" />
+          <Property Name="DateAssignation" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="IsConfigured" Type="Int64" />
           <Property Name="LastSynchronisation" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -824,6 +777,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="Domaine" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="CodeQuestion" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Nature" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Statut" Type="Int64" />
         </EntityType>
         <EntityType Name="Tbl_RapportPersonnel">
@@ -919,85 +873,13 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="RaisonCouverture" Type="Int64" />
           <Property Name="TotalBatCartographie" Type="Int64" />
           <Property Name="TotalBatRecense" Type="Int64" />
-          <Property Name="TotalBatRecenseV" Type="Int64" />
           <Property Name="TotalLogeCRecense" Type="Int64" />
-          <Property Name="TotalLogeCRecenseV" Type="Int64" />
           <Property Name="TotalLogeIRecense" Type="Int64" />
-          <Property Name="TotalLogeIRecenseV" Type="Int64" />
-          <Property Name="TotalLogeIRecenseNV" Type="Int64" />
-          <Property Name="TotalLogeCOccupeRecense" Type="Int64" />
-          <Property Name="TotalLogeCOccupeRecenseV" Type="Int64" />
-          <Property Name="TotalLogeCOccupeRecenseNV" Type="Int64" />
-          <Property Name="TotalLogeCUsageTemporelRecense" Type="Int64" />
-          <Property Name="TotalLogeCUsageTemporelRecenseV" Type="Int64" />
-          <Property Name="TotalLogeCUsageTemporelRecenseNV" Type="Int64" />
-          <Property Name="TotalLogeCVideRecense" Type="Int64" />
-          <Property Name="TotalLogeCVideRecenseV" Type="Int64" />
-          <Property Name="TotalLogeCVideRecenseNV" Type="Int64" />
-          <Property Name="TotalLogeIOccupeRecense" Type="Int64" />
-          <Property Name="TotalLogeIOccupeRecenseV" Type="Int64" />
-          <Property Name="TotalLogeIOccupeRecenseNV" Type="Int64" />
-          <Property Name="TotalLogeIUsageTemporelRecense" Type="Int64" />
-          <Property Name="TotalLogeIUsageTemporelRecenseV" Type="Int64" />
-          <Property Name="TotalLogeIUsageTemporelRecenseNV" Type="Int64" />
-          <Property Name="TotalLogeIVideRecense" Type="Int64" />
-          <Property Name="TotalLogeIVideRecenseV" Type="Int64" />
-          <Property Name="TotalLogeIVideRecenseNV" Type="Int64" />
           <Property Name="TotalMenageRecense" Type="Int64" />
-          <Property Name="TotalMenageRecenseV" Type="Int64" />
-          <Property Name="TotalMenageRecenseNV" Type="Int64" />
           <Property Name="TotalMenageUnipersonnel" Type="Int64" />
-          <Property Name="TotalMenageDe6IndsEtPlus" Type="Int64" />
           <Property Name="TotalIndRecense" Type="Int64" />
-          <Property Name="TotalIndRecenseV" Type="Int64" />
-          <Property Name="TotalIndRecenseNV" Type="Int64" />
-          <Property Name="TotalIndCRecense" Type="Int64" />
-          <Property Name="TotalIndCRecenseV" Type="Int64" />
-          <Property Name="TotalIndCRecenseNV" Type="Int64" />
-          <Property Name="TotalIndIRecense____" Type="Int64" />
-          <Property Name="TotalIndIRecenseV____" Type="Int64" />
-          <Property Name="TotalIndIRecenseNV____" Type="Int64" />
-          <Property Name="TotalIndFRecense" Type="Int64" />
-          <Property Name="TotalIndFRecenseV" Type="Int64" />
-          <Property Name="TotalIndFRecenseNV" Type="Int64" />
-          <Property Name="TotalIndGRecense" Type="Int64" />
-          <Property Name="TotalIndGRecenseV" Type="Int64" />
-          <Property Name="TotalIndGRecenseNV" Type="Int64" />
-          <Property Name="TotalIndCFRecense" Type="Int64" />
-          <Property Name="TotalIndCFRecenseV" Type="Int64" />
-          <Property Name="TotalIndCFRecenseNV" Type="Int64" />
-          <Property Name="TotalIndCGRecense" Type="Int64" />
-          <Property Name="TotalIndCGRecenseV" Type="Int64" />
-          <Property Name="TotalIndCGRecenseNV" Type="Int64" />
-          <Property Name="TotalIndIFRecense" Type="Int64" />
-          <Property Name="TotalIndIFRecenseV" Type="Int64" />
-          <Property Name="TotalIndIFRecenseNV" Type="Int64" />
-          <Property Name="TotalIndIGRecense" Type="Int64" />
-          <Property Name="TotalIndIGRecenseV" Type="Int64" />
-          <Property Name="TotalIndIGRecenseNV" Type="Int64" />
-          <Property Name="TotalEnfantDeMoinsDe5Ans" Type="Int64" />
-          <Property Name="TotalIndividu18AnsEtPlus" Type="Int64" />
-          <Property Name="TotalIndividu10AnsEtPlus" Type="Int64" />
-          <Property Name="TotalIndividu65AnsEtPlus" Type="Int64" />
-          <Property Name="IndiceMasculinite" Type="Double" />
           <Property Name="TotalEmigreRecense" Type="Int64" />
-          <Property Name="TotalEmigreFRecense" Type="Int64" />
-          <Property Name="TotalEmigreGRecense" Type="Int64" />
           <Property Name="TotalDecesRecense" Type="Int64" />
-          <Property Name="TotalDecesFRecense" Type="Int64" />
-          <Property Name="TotalDecesGRecense" Type="Int64" />
-          <Property Name="TotalBatRecenseParJour" Type="Int64" />
-          <Property Name="TotalLogeRecenseParJour" Type="Int64" />
-          <Property Name="TotalMenageRecenseParJour" Type="Int64" />
-          <Property Name="TotalIndRecenseParJour" Type="Int64" />
-          <Property Name="TotalBatRecenseParJourV" Type="Int64" />
-          <Property Name="TotalLogeRecenseParJourV" Type="Int64" />
-          <Property Name="TotalMenageRecenseParJourV" Type="Int64" />
-          <Property Name="TotalIndRecenseParJourV" Type="Int64" />
-          <Property Name="TotalBatRecenseParJourNV" Type="Int64" />
-          <Property Name="TotalLogeRecenseParJourNV" Type="Int64" />
-          <Property Name="TotalMenageRecenseParJourNV" Type="Int64" />
-          <Property Name="TotalIndRecenseParJourNV" Type="Int64" />
         </EntityType>
         <EntityType Name="Tbl_Utilisateur">
           <Key>
@@ -1126,7 +1008,28 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <EntitySet Name="Tbl_Questions_Reponses" EntityType="Self.Tbl_Questions_Reponses" />
           <EntitySet Name="Tbl_Reponses" EntityType="Self.Tbl_Reponses" />
           <EntitySet Name="Tbl_VilleQuartierSectionCommunale" EntityType="Self.Tbl_VilleQuartierSectionCommunale" />
+          <EntitySet Name="Tbl_EmigreCE" EntityType="RgphModel.Tbl_EmigreCE" />
         </EntityContainer>
+        <EntityType Name="Tbl_EmigreCE">
+          <Key>
+            <PropertyRef Name="EmigreId" />
+          </Key>
+          <Property Name="EmigreId" Type="Int64" Nullable="false" />
+          <Property Name="MenageId" Type="Int64" />
+          <Property Name="LogeId" Type="Int64" />
+          <Property Name="BatimentId" Type="Int64" />
+          <Property Name="SdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Qn1numeroOrdre" Type="Int64" />
+          <Property Name="Qn1Emigration" Type="Int64" />
+          <Property Name="Qn1NbreEmigreF" Type="Int64" />
+          <Property Name="Qn1NbreEmigreG" Type="Int64" />
+          <Property Name="Statut" Type="Int64" />
+          <Property Name="IsValidated" Type="Int64" />
+          <Property Name="DateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="DateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="DureeSaisie" Type="Int64" />
+          <Property Name="IsContreEnqueteMade" Type="Int64" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1199,6 +1102,8 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <EntitySetMapping Name="Tbl_DecesCE">
             <EntityTypeMapping TypeName="RgphModel.Tbl_DecesCE">
               <MappingFragment StoreEntitySet="Tbl_DecesCE">
+                <ScalarProperty Name="Qd1aNbreDecesG" ColumnName="Qd1aNbreDecesG" />
+                <ScalarProperty Name="Qd1aNbreDecesF" ColumnName="Qd1aNbreDecesF" />
                 <ScalarProperty Name="DecesId" ColumnName="DecesId" />
                 <ScalarProperty Name="MenageId" ColumnName="MenageId" />
                 <ScalarProperty Name="LogeId" ColumnName="LogeId" />
@@ -1206,8 +1111,6 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
                 <ScalarProperty Name="SdeId" ColumnName="SdeId" />
                 <ScalarProperty Name="Qd2NoOrdre" ColumnName="Qd2NoOrdre" />
                 <ScalarProperty Name="Qd1Deces" ColumnName="Qd1Deces" />
-                <ScalarProperty Name="Qd1NbreDecedeFille" ColumnName="Qd1NbreDecedeFille" />
-                <ScalarProperty Name="Qd1NbreDecedeGarcon" ColumnName="Qd1NbreDecedeGarcon" />
                 <ScalarProperty Name="Statut" ColumnName="Statut" />
                 <ScalarProperty Name="IsValidated" ColumnName="IsValidated" />
                 <ScalarProperty Name="DateDebutCollecte" ColumnName="DateDebutCollecte" />
@@ -1244,7 +1147,8 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
                 <ScalarProperty Name="Qp1NoOrdre" ColumnName="Qp1NoOrdre" />
                 <ScalarProperty Name="Q2Nom" ColumnName="Q2Nom" />
                 <ScalarProperty Name="Q3Prenom" ColumnName="Q3Prenom" />
-                <ScalarProperty Name="Q6LienDeParente" ColumnName="Q6LienDeParente" />
+                <ScalarProperty Name="Q3LienDeParente" ColumnName="Q3LienDeParente" />
+                <ScalarProperty Name="Q3aRaisonChefMenage" ColumnName="Q3aRaisonChefMenage" />
                 <ScalarProperty Name="Q4Sexe" ColumnName="Q4Sexe" />
                 <ScalarProperty Name="Q5bAge" ColumnName="Q5bAge" />
                 <ScalarProperty Name="Q7DateNaissanceJour" ColumnName="Q7DateNaissanceJour" />
@@ -1321,6 +1225,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="DateAssignation" ColumnName="DateAssignation" />
                 <ScalarProperty Name="IsConfigured" ColumnName="IsConfigured" />
                 <ScalarProperty Name="LastSynchronisation" ColumnName="LastSynchronisation" />
               </MappingFragment>
@@ -1358,6 +1263,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
                 <ScalarProperty Name="Domaine" ColumnName="Domaine" />
                 <ScalarProperty Name="CodeQuestion" ColumnName="CodeQuestion" />
                 <ScalarProperty Name="Nature" ColumnName="Nature" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Statut" ColumnName="Statut" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1458,85 +1364,13 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
                 <ScalarProperty Name="RaisonCouverture" ColumnName="RaisonCouverture" />
                 <ScalarProperty Name="TotalBatCartographie" ColumnName="TotalBatCartographie" />
                 <ScalarProperty Name="TotalBatRecense" ColumnName="TotalBatRecense" />
-                <ScalarProperty Name="TotalBatRecenseV" ColumnName="TotalBatRecenseV" />
                 <ScalarProperty Name="TotalLogeCRecense" ColumnName="TotalLogeCRecense" />
-                <ScalarProperty Name="TotalLogeCRecenseV" ColumnName="TotalLogeCRecenseV" />
                 <ScalarProperty Name="TotalLogeIRecense" ColumnName="TotalLogeIRecense" />
-                <ScalarProperty Name="TotalLogeIRecenseV" ColumnName="TotalLogeIRecenseV" />
-                <ScalarProperty Name="TotalLogeIRecenseNV" ColumnName="TotalLogeIRecenseNV" />
-                <ScalarProperty Name="TotalLogeCOccupeRecense" ColumnName="TotalLogeCOccupeRecense" />
-                <ScalarProperty Name="TotalLogeCOccupeRecenseV" ColumnName="TotalLogeCOccupeRecenseV" />
-                <ScalarProperty Name="TotalLogeCOccupeRecenseNV" ColumnName="TotalLogeCOccupeRecenseNV" />
-                <ScalarProperty Name="TotalLogeCUsageTemporelRecense" ColumnName="TotalLogeCUsageTemporelRecense" />
-                <ScalarProperty Name="TotalLogeCUsageTemporelRecenseV" ColumnName="TotalLogeCUsageTemporelRecenseV" />
-                <ScalarProperty Name="TotalLogeCUsageTemporelRecenseNV" ColumnName="TotalLogeCUsageTemporelRecenseNV" />
-                <ScalarProperty Name="TotalLogeCVideRecense" ColumnName="TotalLogeCVideRecense" />
-                <ScalarProperty Name="TotalLogeCVideRecenseV" ColumnName="TotalLogeCVideRecenseV" />
-                <ScalarProperty Name="TotalLogeCVideRecenseNV" ColumnName="TotalLogeCVideRecenseNV" />
-                <ScalarProperty Name="TotalLogeIOccupeRecense" ColumnName="TotalLogeIOccupeRecense" />
-                <ScalarProperty Name="TotalLogeIOccupeRecenseV" ColumnName="TotalLogeIOccupeRecenseV" />
-                <ScalarProperty Name="TotalLogeIOccupeRecenseNV" ColumnName="TotalLogeIOccupeRecenseNV" />
-                <ScalarProperty Name="TotalLogeIUsageTemporelRecense" ColumnName="TotalLogeIUsageTemporelRecense" />
-                <ScalarProperty Name="TotalLogeIUsageTemporelRecenseV" ColumnName="TotalLogeIUsageTemporelRecenseV" />
-                <ScalarProperty Name="TotalLogeIUsageTemporelRecenseNV" ColumnName="TotalLogeIUsageTemporelRecenseNV" />
-                <ScalarProperty Name="TotalLogeIVideRecense" ColumnName="TotalLogeIVideRecense" />
-                <ScalarProperty Name="TotalLogeIVideRecenseV" ColumnName="TotalLogeIVideRecenseV" />
-                <ScalarProperty Name="TotalLogeIVideRecenseNV" ColumnName="TotalLogeIVideRecenseNV" />
                 <ScalarProperty Name="TotalMenageRecense" ColumnName="TotalMenageRecense" />
-                <ScalarProperty Name="TotalMenageRecenseV" ColumnName="TotalMenageRecenseV" />
-                <ScalarProperty Name="TotalMenageRecenseNV" ColumnName="TotalMenageRecenseNV" />
                 <ScalarProperty Name="TotalMenageUnipersonnel" ColumnName="TotalMenageUnipersonnel" />
-                <ScalarProperty Name="TotalMenageDe6IndsEtPlus" ColumnName="TotalMenageDe6IndsEtPlus" />
                 <ScalarProperty Name="TotalIndRecense" ColumnName="TotalIndRecense" />
-                <ScalarProperty Name="TotalIndRecenseV" ColumnName="TotalIndRecenseV" />
-                <ScalarProperty Name="TotalIndRecenseNV" ColumnName="TotalIndRecenseNV" />
-                <ScalarProperty Name="TotalIndCRecense" ColumnName="TotalIndCRecense" />
-                <ScalarProperty Name="TotalIndCRecenseV" ColumnName="TotalIndCRecenseV" />
-                <ScalarProperty Name="TotalIndCRecenseNV" ColumnName="TotalIndCRecenseNV" />
-                <ScalarProperty Name="TotalIndIRecense____" ColumnName="TotalIndIRecense    " />
-                <ScalarProperty Name="TotalIndIRecenseV____" ColumnName="TotalIndIRecenseV    " />
-                <ScalarProperty Name="TotalIndIRecenseNV____" ColumnName="TotalIndIRecenseNV    " />
-                <ScalarProperty Name="TotalIndFRecense" ColumnName="TotalIndFRecense" />
-                <ScalarProperty Name="TotalIndFRecenseV" ColumnName="TotalIndFRecenseV" />
-                <ScalarProperty Name="TotalIndFRecenseNV" ColumnName="TotalIndFRecenseNV" />
-                <ScalarProperty Name="TotalIndGRecense" ColumnName="TotalIndGRecense" />
-                <ScalarProperty Name="TotalIndGRecenseV" ColumnName="TotalIndGRecenseV" />
-                <ScalarProperty Name="TotalIndGRecenseNV" ColumnName="TotalIndGRecenseNV" />
-                <ScalarProperty Name="TotalIndCFRecense" ColumnName="TotalIndCFRecense" />
-                <ScalarProperty Name="TotalIndCFRecenseV" ColumnName="TotalIndCFRecenseV" />
-                <ScalarProperty Name="TotalIndCFRecenseNV" ColumnName="TotalIndCFRecenseNV" />
-                <ScalarProperty Name="TotalIndCGRecense" ColumnName="TotalIndCGRecense" />
-                <ScalarProperty Name="TotalIndCGRecenseV" ColumnName="TotalIndCGRecenseV" />
-                <ScalarProperty Name="TotalIndCGRecenseNV" ColumnName="TotalIndCGRecenseNV" />
-                <ScalarProperty Name="TotalIndIFRecense" ColumnName="TotalIndIFRecense" />
-                <ScalarProperty Name="TotalIndIFRecenseV" ColumnName="TotalIndIFRecenseV" />
-                <ScalarProperty Name="TotalIndIFRecenseNV" ColumnName="TotalIndIFRecenseNV" />
-                <ScalarProperty Name="TotalIndIGRecense" ColumnName="TotalIndIGRecense" />
-                <ScalarProperty Name="TotalIndIGRecenseV" ColumnName="TotalIndIGRecenseV" />
-                <ScalarProperty Name="TotalIndIGRecenseNV" ColumnName="TotalIndIGRecenseNV" />
-                <ScalarProperty Name="TotalEnfantDeMoinsDe5Ans" ColumnName="TotalEnfantDeMoinsDe5Ans" />
-                <ScalarProperty Name="TotalIndividu18AnsEtPlus" ColumnName="TotalIndividu18AnsEtPlus" />
-                <ScalarProperty Name="TotalIndividu10AnsEtPlus" ColumnName="TotalIndividu10AnsEtPlus" />
-                <ScalarProperty Name="TotalIndividu65AnsEtPlus" ColumnName="TotalIndividu65AnsEtPlus" />
-                <ScalarProperty Name="IndiceMasculinite" ColumnName="IndiceMasculinite" />
                 <ScalarProperty Name="TotalEmigreRecense" ColumnName="TotalEmigreRecense" />
-                <ScalarProperty Name="TotalEmigreFRecense" ColumnName="TotalEmigreFRecense" />
-                <ScalarProperty Name="TotalEmigreGRecense" ColumnName="TotalEmigreGRecense" />
                 <ScalarProperty Name="TotalDecesRecense" ColumnName="TotalDecesRecense" />
-                <ScalarProperty Name="TotalDecesFRecense" ColumnName="TotalDecesFRecense" />
-                <ScalarProperty Name="TotalDecesGRecense" ColumnName="TotalDecesGRecense" />
-                <ScalarProperty Name="TotalBatRecenseParJour" ColumnName="TotalBatRecenseParJour" />
-                <ScalarProperty Name="TotalLogeRecenseParJour" ColumnName="TotalLogeRecenseParJour" />
-                <ScalarProperty Name="TotalMenageRecenseParJour" ColumnName="TotalMenageRecenseParJour" />
-                <ScalarProperty Name="TotalIndRecenseParJour" ColumnName="TotalIndRecenseParJour" />
-                <ScalarProperty Name="TotalBatRecenseParJourV" ColumnName="TotalBatRecenseParJourV" />
-                <ScalarProperty Name="TotalLogeRecenseParJourV" ColumnName="TotalLogeRecenseParJourV" />
-                <ScalarProperty Name="TotalMenageRecenseParJourV" ColumnName="TotalMenageRecenseParJourV" />
-                <ScalarProperty Name="TotalIndRecenseParJourV" ColumnName="TotalIndRecenseParJourV" />
-                <ScalarProperty Name="TotalBatRecenseParJourNV" ColumnName="TotalBatRecenseParJourNV" />
-                <ScalarProperty Name="TotalLogeRecenseParJourNV" ColumnName="TotalLogeRecenseParJourNV" />
-                <ScalarProperty Name="TotalMenageRecenseParJourNV" ColumnName="TotalMenageRecenseParJourNV" />
-                <ScalarProperty Name="TotalIndRecenseParJourNV" ColumnName="TotalIndRecenseParJourNV" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1644,6 +1478,27 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
                 <ScalarProperty Name="VqseId" ColumnName="VqseId" />
                 <ScalarProperty Name="VqseNom" ColumnName="VqseNom" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_EmigreCE">
+            <EntityTypeMapping TypeName="RgphModel.Tbl_EmigreCE">
+              <MappingFragment StoreEntitySet="Tbl_EmigreCE">
+                <ScalarProperty Name="IsContreEnqueteMade" ColumnName="IsContreEnqueteMade" />
+                <ScalarProperty Name="DureeSaisie" ColumnName="DureeSaisie" />
+                <ScalarProperty Name="DateFinCollecte" ColumnName="DateFinCollecte" />
+                <ScalarProperty Name="DateDebutCollecte" ColumnName="DateDebutCollecte" />
+                <ScalarProperty Name="IsValidated" ColumnName="IsValidated" />
+                <ScalarProperty Name="Statut" ColumnName="Statut" />
+                <ScalarProperty Name="Qn1NbreEmigreG" ColumnName="Qn1NbreEmigreG" />
+                <ScalarProperty Name="Qn1NbreEmigreF" ColumnName="Qn1NbreEmigreF" />
+                <ScalarProperty Name="Qn1Emigration" ColumnName="Qn1Emigration" />
+                <ScalarProperty Name="Qn1numeroOrdre" ColumnName="Qn1numeroOrdre" />
+                <ScalarProperty Name="SdeId" ColumnName="SdeId" />
+                <ScalarProperty Name="BatimentId" ColumnName="BatimentId" />
+                <ScalarProperty Name="LogeId" ColumnName="LogeId" />
+                <ScalarProperty Name="MenageId" ColumnName="MenageId" />
+                <ScalarProperty Name="EmigreId" ColumnName="EmigreId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

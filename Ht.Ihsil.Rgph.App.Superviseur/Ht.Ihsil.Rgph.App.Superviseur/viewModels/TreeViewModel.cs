@@ -17,13 +17,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels
        public TreeViewModel(SdeModel[] models)
         {
             List<SdeViewModel> list = new List<SdeViewModel>();
-           foreach (SdeModel sde in models.ToList())
+            try
             {
-                SdeViewModel view = new SdeViewModel(sde);
-                view.IsLoading = false;
-                list.Add(view);
+                foreach (SdeModel sde in models.ToList())
+                {
+                    SdeViewModel view = new SdeViewModel(sde);
+                    view.IsLoading = false;
+                    list.Add(view);
+                }
+                _sdes = new ReadOnlyCollection<SdeViewModel>(list);
             }
-           _sdes =new ReadOnlyCollection<SdeViewModel>(list);
+            catch (Exception)
+            {
+
+            }
+          
         }
 
         public ReadOnlyCollection<SdeViewModel> Sdes

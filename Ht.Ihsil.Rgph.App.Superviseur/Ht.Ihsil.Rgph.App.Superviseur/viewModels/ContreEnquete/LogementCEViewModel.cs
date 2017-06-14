@@ -35,13 +35,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
                Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
                ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
            }
-           if (model.IsContreEnqueteMade.GetValueOrDefault() == 1 && model.IsValidated.GetValueOrDefault() == 0)
+           if (model.IsContreEnqueteMade.GetValueOrDefault() == 1 && model.IsValidated.GetValueOrDefault() == 1)
            {
                Status = true;
                Tip = Constant.GetStringValue(Constant.ToolTipMessage.Valide_deja);
                ImageSource = Constant.GetStringValue(Constant.ImagePath.Valide);
            }
-           if (model.IsContreEnqueteMade.GetValueOrDefault() == 1 && model.IsValidated.GetValueOrDefault() == 0)
+           if (model.IsContreEnqueteMade.GetValueOrDefault() == 0 && model.IsValidated.GetValueOrDefault() == 0)
            {
                Status = true;
                Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_Anket_Not_Made);
@@ -94,6 +94,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
                    details.BatimentId = ind.BatimentId;
                    details.LogementId = ind.LogeId;
                    details.Id = ind.IndividuId.ToString();
+                   details.Name = "Endividi-" + ind.Qp1NoOrdre;
                    details.Type = Constant.CODE_TYPE_ENVDIVIDI;
                    base.Children.Add(new MenageDetailsViewModel(details, this));
                }

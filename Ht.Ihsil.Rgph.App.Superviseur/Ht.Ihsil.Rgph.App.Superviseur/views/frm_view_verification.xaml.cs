@@ -47,11 +47,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             ObservableCollection<SdeModel> Sdes = new ObservableCollection<SdeModel>();
             mdfService = new MdfService();
             SdeModel[] arrayOfSdes = mdfService.getAllSde();
-            foreach(SdeModel sde in arrayOfSdes)
+            try
             {
-                Sdes.Add(sde);
+                foreach (SdeModel sde in arrayOfSdes)
+                {
+                    Sdes.Add(sde);
+                }
+                listBox_sde.ItemsSource = Sdes;
             }
-            listBox_sde.ItemsSource = Sdes;
+            catch (Exception)
+            {
+
+            }
+            
         }
         #endregion
 
@@ -60,7 +68,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         {
             try
             {
-                //wInd.Dispatcher.BeginInvoke((Action)(() => wInd.DeferedVisibility = true));
+                decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = true));
                 ListBox ltb = e.OriginalSource as ListBox;
                 if (chkDistrict.IsChecked == true)
                 {
@@ -72,10 +80,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 txt_title.Dispatcher.BeginInvoke((Action)(() => txt_title.Text = "VERIFICATION-SDE:" + sde.SdeId));
                 frm_verification viewVerification = new frm_verification(sde);
                 Utilities.showControl(viewVerification, grd_details);
+                decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
              }
             catch (Exception ex)
             {
                 log.Info("Erreur/frm_view_verification:" + ex.Message);
+                decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
             }
         }
 
@@ -83,7 +93,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         private void chkDistrict_Checked(object sender, RoutedEventArgs e)
         {
             //Load le splashloading
-            loadingDecorator.Dispatcher.BeginInvoke((Action)(() => loadingDecorator.IsSplashScreenShown = true));
+            decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = true));
             //Change le text displaying pour indiquer la selection
             txt_title.Dispatcher.BeginInvoke((Action)(() => txt_title.Text = "VERIFICATION-DISTRICT"));
             //Deselectionner un element de la listbox si il etait deja selectionne
@@ -92,7 +102,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             frm_verification viewVerification = new frm_verification(true);
             Utilities.showControl(viewVerification, grd_details);
             //
-            loadingDecorator.Dispatcher.BeginInvoke((Action)(() => loadingDecorator.IsSplashScreenShown = false));
+            decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
         }
         #endregion
     }

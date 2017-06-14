@@ -118,7 +118,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             BatimentVide = 1,
             LogementCollectif = 2,
             LogementInvididuelVide = 3,
-            LogementIndividuelMenage = 4
+            LogementIndividuelMenage = 4,
+            LogementOccupantAbsent=5
         }
 
         public enum StatutContreEnquete : int
@@ -235,7 +236,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string Qlin2StatutOccupation = "Qlin2StatutOccupation";
         public static string Qlin4TypeLogement = "Qlin4TypeLogement";
         public static string Qlin5MateriauSol = "Qlin5MateriauSol";
-        public static string Qlin6NombrePiece = "Qlin6NombrePiece";
+        public static string Qlin6NombrePieceETChambreACoucher = "Qlin6NombrePieceETChambreACoucher";
         public static string Qlin7NbreChambreACoucher = "Qlin7NbreChambreACoucher";
         public static string Qlin8NbreIndividuDepense = "Qlin8NbreIndividuDepense";
         public static string Qlin9NbreTotalMenage = "Qlin9NbreTotalMenage";
@@ -268,7 +269,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string Qp1NoOrdre = "Qp1NoOrdre";
         public static string Q2Nom = "Q2Nom";
         public static string Q3Prenom = "Q3Prenom";
-        public static string Q6LienDeParente = "Q6LienDeParente";
+        public static string Q3LienDeParente = "Q3LienDeParente";
+        public static string Q3aRaisonChefMenage = "Q3aRaisonChefMenage";
         public static string Q4Sexe = "Q4Sexe";
         public static string Q5bAge = "Q5bAge";
         public static string Qp7Nationalite = "Qp7Nationalite";

@@ -40,6 +40,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
         LogementCEModel logement = null;
         MenageCEModel menage = null;
         DecesCEModel deces = null;
+        EmigreCEModel emigre = null;
         ReponseSaisie reponseSaisie = null;
         ComboBox comboBox = null;
         TextEdit textbox = null;
@@ -164,9 +165,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 {
                     deces = contreEnqueteService.getDecesCEModel(Convert.ToInt32(detailsViewModel.MenageType.Id), detailsViewModel.MenageType.SdeId);
                 }
+                if (detailsViewModel.Type == (int)Constant.CODE_TYPE_EMIGRE)
+                {
+                    emigre = contreEnqueteService.getEmigreCEModel(Convert.ToInt32(detailsViewModel.MenageType.Id), detailsViewModel.MenageType.SdeId);
+                }
             }
-            QuestionViewModel viewModelDeces = new QuestionViewModel(TypeQuestion.Deces);
-            this.DataContext = viewModelDeces;
+            QuestionViewModel viewModelEmigre = new QuestionViewModel(TypeQuestion.Emigre);
+            this.DataContext = viewModelEmigre;
             log = new Logger();
             service = new QuestionReponseService();
             reponseSaisie = new ReponseSaisie();
@@ -176,13 +181,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             textbox = new TextEdit();
             TextBlock tHeader = new TextBlock();
             tHeader.Foreground = Brushes.Red;
-            tHeader.Text = "BATIMAN " + deces.BatimentId + "/ LOJMAN-" + deces.LogeId + "/MENAJ-" + deces.MenageId + "/DESE-" + deces.Qd2NoOrdre + "/SDE " + deces.SdeId;
+            tHeader.Text = "BATIMAN " + deces.BatimentId + "/ LOJMAN-" + deces.LogeId + "/MENAJ-" + deces.MenageId + "/Emigre-" + emigre.Qn1numeroOrdre + "/SDE " + deces.SdeId;
             tHeader.FontWeight = FontWeights.Bold;
             grp.Header = tHeader;
             listOfReponses = new List<ReponseModel>();
             listOfQuestions = new List<QuestionsModel>();
             listOfQuestionReponses = new List<QuestionReponseModel>();
-            questionEnCours = viewModelDeces.questionEnCours;
+            questionEnCours = viewModelEmigre.questionEnCours;
             listOfQuestions.Add(questionEnCours);
             dateStart = DateTime.Now;
             sw = new SqliteDataWriter();
@@ -1554,7 +1559,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
         }
         public LogementCEModel getLogementModel(ReponseSaisie reponse, LogementCEModel logement)
         {
-            if (reponse.NomChamps == Constant.Qlin6NombrePiece)
+            if (reponse.NomChamps == Constant.Qlin6NombrePieceETChambreACoucher)
             {
                 logement.Qlin6NombrePiece = Convert.ToByte(reponse.CodeReponse);
                 checkConstraint<LogementCEModel>(this.logement);
@@ -1570,7 +1575,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 logement.Qlin4TypeLogement = Convert.ToByte(reponse.CodeReponse);
             if (reponse.NomChamps == Constant.Qlin5MateriauSol)
                 logement.Qlin5MateriauSol = Convert.ToByte(reponse.CodeReponse);
-            if (reponse.NomChamps == Constant.Qlin6NombrePiece)
+            if (reponse.NomChamps == Constant.Qlin6NombrePieceETChambreACoucher)
             {
                 logement.Qlin6NombrePiece = Convert.ToByte(reponse.CodeReponse);
                 checkConstraint<LogementCEModel>(this.logement);
@@ -1611,11 +1616,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             }
             if (reponse.NomChamps == Constant.Qd1NbreDecedeFille)
             {
-                deces.Qd1NbreDecedeFille = Convert.ToByte(reponse.CodeReponse);
+                deces.Qd1aNbreDecesF = Convert.ToByte(reponse.CodeReponse);
             }
             if (reponse.NomChamps == Constant.Qd1NbreDecedeGarcon)
             {
-                deces.Qd1NbreDecedeGarcon = Convert.ToByte(reponse.CodeReponse);
+                deces.Qd1aNbreDecesG = Convert.ToByte(reponse.CodeReponse);
             }
             return deces;
         }

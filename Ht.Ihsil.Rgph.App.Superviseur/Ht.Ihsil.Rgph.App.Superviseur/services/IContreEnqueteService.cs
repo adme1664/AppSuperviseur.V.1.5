@@ -7,11 +7,11 @@ using Ht.Ihsil.Rgph.App.Superviseur.Models;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.services
 {
-   public  interface IContreEnqueteService
-   {
+    public interface IContreEnqueteService
+    {
         #region BATIMENT
-       List<BatimentModel> getBatimentVideInCE(string sdeId);
-       List<BatimentModel> searchBatimentByCE(int contreEnqueteId, string sdeId);
+        List<BatimentModel> getBatimentVideInCE(string sdeId);
+        List<BatimentModel> searchBatimentByCE(int contreEnqueteId, string sdeId);
         List<BatimentModel> getBatimentInCE(string sdeId);
         BatimentModel getBatimentWithLogementC();
         BatimentCEModel getBatiment(long batimentId, string sdeId);
@@ -24,15 +24,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         bool saveBatiment(BatimentCEModel bat);
         bool updateBatiment(BatimentCEModel bat);
         bool isBatimentExist(int batimentId, string sdeId);
-       #endregion
+        #endregion
 
         #region MENAGE
         bool saveMenageCE(MenageCEModel men);
         bool updateMenageCE(MenageCEModel men);
         List<MenageCEModel> searchAllMenageCE(LogementCEModel _log);
         List<MenageDetailsModel> searchAllInMenage(MenageCEModel _men, string type);
-        MenageCEModel getMenageById(long batimentId, long logId,string sdeId, long id);
-         #endregion
+        MenageCEModel getMenageById(long batimentId, long logId, string sdeId, long id);
+        #endregion
 
         #region LOGEMENT
         LogementModel getFirstLogementInd(BatimentModel _batiment, LogementTypeModel _logementType);
@@ -48,6 +48,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         bool updateDecesCE(DecesCEModel _dec);
         DecesCEModel getDecesCEModel(long decesId, string sdeId);
 
+        #endregion
+
+        #region EMIGRE
+        bool saveEmigre(EmigreCEModel _emigre);
+        bool updateEmigre(EmigreCEModel _emigre);
+        EmigreCEModel getEmigreCEModel(long emigreId, string sdeId);
+        EmigreCEModel getEmigreCEModel(long batimentId, long logId, long menageId, long emigreId, string sdeId);
         #endregion
 
         #region INDIVIDU
@@ -71,7 +78,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         List<ContreEnqueteModel> searchContreEnquete(int typeContreEnquete, string sdeId);
         List<ContreEnqueteModel> searchContreEnquete(string sdeId);
         ContreEnqueteModel getContreEnquete(long id, string sdeId);
-       
+
         #endregion
 
         #region GEOLOCALISATION
@@ -83,7 +90,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         DepartementModel getDepartement(string idDepartement);
         PaysModel getPays(string idPays);
         VqseModel getVqse(string vqseId);
-        #endregion      
+        #endregion
 
         #region RAPPORT PERSONNEL
         bool saveRptPersonnel(RapportPersonnelModel rpt);
@@ -110,7 +117,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         bool updateMenageInSqlite(MenageCEModel men);
         bool updateDecesInSqlite(DecesCEModel dec);
         bool updateIndividuInSqlite(IndividuCEModel ind);
-       #endregion
+        #endregion
 
         #region INDICATEUR SOCIO-DEMOGRAPHIQUE
         int getTotalPersonnesByMenage(MenageCEModel model);
@@ -128,7 +135,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         int getTotalPersonneFrequentantEcoleByMen(MenageCEModel model);
         int getTotalPersonneNiveauSecondairebyMen(MenageCEModel model);
         int getTotalFormationProByMen(MenageCEModel model);
-       #endregion
+        #endregion
 
-   }
+    }
 }

@@ -133,6 +133,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                 batUpdate.DateDebutCollecte = bat.DateDebutCollecte;
                 batUpdate.DateFinCollecte = bat.DateFinCollecte;
                 batUpdate.Qb4MateriauMur = bat.Qb4MateriauMur;
+                batUpdate.Qb6StatutOccupation = bat.Qb6StatutOccupation;
                 batUpdate.Qb5MateriauToit = bat.Qb5MateriauToit;
                 batUpdate.Qb7Utilisation1 = bat.Qb7Utilisation1;
                 batUpdate.Qb7Utilisation2 = bat.Qb7Utilisation2;
@@ -368,8 +369,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                     _dec.BatimentId = _deces.BatimentId;
                     _dec.SdeId = _deces.SdeId;
                     _dec.Qd2NoOrdre = _deces.Qd2NoOrdre;
-                    _dec.Qd1NbreDecedeFille = _deces.Qd1NbreDecedeFille;
-                    _dec.Qd1NbreDecedeGarcon = _deces.Qd1NbreDecedeGarcon;
+                    _dec.Qd1aNbreDecesF = _deces.Qd1aNbreDecesF;
+                    _dec.Qd1aNbreDecesG = _deces.Qd1aNbreDecesG;
                     _dec.DureeSaisie = _deces.DureeSaisie;
                     _dec.IsContreEnqueteMade = _deces.IsContreEnqueteMade;
                     _dec.IsValidated = _deces.IsValidated;
@@ -422,6 +423,66 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
 
         #endregion
 
+        #region EMIGRE
+        public bool saveEmigre(Tbl_EmigreCE _emigre)
+        {
+            try
+            {
+                repository.EmigreRepository.Insert(_emigre);
+                repository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error("Erreur/saveEmigre:" + ex.Message);
+                return false;
+            }
+        }
+
+        public bool updateEmigre(Tbl_EmigreCE _emigre)
+        {
+            try
+            {
+                Tbl_EmigreCE _em = getEmigreCEModel(_emigre.EmigreId, _emigre.SdeId);
+                _em.BatimentId = _emigre.BatimentId;
+                _em.LogeId = _emigre.LogeId;
+                _em.MenageId = _emigre.MenageId;
+                _em.EmigreId = _emigre.EmigreId;
+                _em.DateDebutCollecte = _emigre.DateDebutCollecte;
+                _em.DateFinCollecte = _emigre.DateFinCollecte;
+                _em.IsContreEnqueteMade = _emigre.IsContreEnqueteMade;
+                _em.IsValidated = _emigre.IsValidated;
+                _em.Qn1NbreEmigreF = _emigre.Qn1NbreEmigreF;
+                _em.Qn1Emigration = _emigre.Qn1Emigration;
+                _emigre.Qn1numeroOrdre = _emigre.Qn1numeroOrdre;
+                _em.SdeId = _emigre.SdeId;
+                repository.EmigreRepository.Update(_em);
+                repository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Error("Erreur/updateEmigre:" + ex.Message);
+                return false;
+            }
+        }
+
+        public Tbl_EmigreCE getEmigreCEModel(long emigreId, string sdeId)
+        {
+            return repository.EmigreRepository.Find(em => em.SdeId == sdeId && em.EmigreId == emigreId).FirstOrDefault();
+        }
+
+        public Tbl_EmigreCE getEmigreCEModel(long batimentId, long logId, long menageId, long emigreId, string sdeId)
+        {
+            return repository.EmigreRepository.Find(em => em.SdeId == sdeId && em.EmigreId == emigreId && em.LogeId==logId && em.BatimentId==batimentId && em.MenageId==menageId).FirstOrDefault();
+        }
+        public List<Tbl_EmigreCE> searchAllEmigres(long batimentId, long logId, long menageId, string sdeId)
+        {
+            return repository.EmigreRepository.Find(em => em.MenageId == menageId && em.BatimentId == batimentId && em.LogeId == logId && em.SdeId == sdeId).ToList();
+        }
+
+        #endregion
+
         #region INDIVIDU
         public bool saveIndividuCE(Tbl_IndividusCE _ind)
         {
@@ -462,7 +523,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                 {
                     //individu.Qp2Nom = _ind.Qp2Nom;
                     //individu.Qp2Prenom = _ind.Qp2Prenom;
-                    individu.Q6LienDeParente = _ind.Q6LienDeParente;
+                    individu.Q3LienDeParente = _ind.Q3LienDeParente;
+                    individu.Q3aRaisonChefMenage = _ind.Q3aRaisonChefMenage;
                     individu.Q5bAge = _ind.Q5bAge;
                     individu.Q4Sexe = _ind.Q4Sexe;
                     individu.Qp7Nationalite = _ind.Qp7Nationalite;
@@ -884,6 +946,12 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
             }
         }
         #endregion
+
+
+
+
+
+
        
     }
 }

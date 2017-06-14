@@ -82,20 +82,33 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_lojman_vid_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.LogementInvididuelVide);
             Utilities.showControl(frm_ce, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
 
         private void bbi_lojman_kolektif_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.LogementCollectif);
             Utilities.showControl(frm_ce, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
+        }
+        private void bbi_lojman_okipe_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            main_grid_1.IsSplashScreenShown = true;
+            frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.LogementOccupantAbsent);
+            Utilities.showControl(frm_ce, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
 
         private void bbi_menaj_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.LogementIndividuelMenage);
             Utilities.showControl(frm_ce, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
 
         private void rpc_sdes_Loaded(object sender, RoutedEventArgs e)
@@ -108,40 +121,52 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void rpc_rpt_tronc_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_rapports rapports = new frm_rapports();
             Utilities.showControl(rapports, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
 
         private void rpc_rpt_personnel_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_rpt_personnel rpt = new frm_rpt_personnel();
             Utilities.showControl(rpt, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
 
         private void bbi_avances_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_configurations conf = new frm_configurations();
             Utilities.showControl(conf, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
 
         private void rpc_rpt_deroulement_collecte_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_rpt_dereoulement_entete rpt = new frm_rpt_dereoulement_entete();
             Utilities.showControl(rpt, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
 
         private void bbi_verification_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_view_verification verification = new frm_view_verification();
             Utilities.showControl(verification, main_grid);
-            //frm_verification verification = new frm_verification();
-            //Utilities.showControl(verification, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
 
         private void bbi_retour_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_retours retours = new frm_retours();
             Utilities.showControl(retours, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
+
+        
     }
 }

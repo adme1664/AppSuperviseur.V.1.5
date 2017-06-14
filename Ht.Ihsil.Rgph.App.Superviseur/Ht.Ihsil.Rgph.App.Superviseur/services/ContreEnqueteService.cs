@@ -598,11 +598,41 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     }
                     return _details;
 
+                case "Emigre":
+                    List<MenageDetailsModel> _detailsEmigre = new List<MenageDetailsModel>();
+                    foreach (EmigreCEModel _em in ModelMapper.MapToListEmigreCEModel(daoCE.searchAllEmigres(_men.BatimentId,_men.LogeId,_men.MenageId,_men.SdeId)))
+                    {
+                        MenageDetailsModel det = new MenageDetailsModel();
+                        det.Id = _em.EmigreId.ToString();
+                        det.Name = "Emigre- " + _em.Qn1numeroOrdre;
+                        det.SdeId = _em.SdeId;
+                        det.Type = Constant.CODE_TYPE_DECES;
+                        if (_em.IsContreEnqueteMade == 1)
+                        {
+                            det.IsContreEnqueteMade = true;
+                        }
+                        else
+                        {
+                            det.IsContreEnqueteMade = false;
+                        
+                        }
+                        if (_em.IsValidated == 1)
+                        {
+                            det.Valide = true;
+                        }
+                        else
+                        {
+                            det.Valide = false;
+                        }
+                        _detailsEmigre.Add(det);
+                    }
+                    return _detailsEmigre;
+
                 case "Endividi":
                     List<MenageDetailsModel> _detailsInd = new List<MenageDetailsModel>();
                     foreach (IndividuCEModel _dec in searchAllIndividuCE(_men))
                     {
-                        if (_dec.Q6LienDeParente.GetValueOrDefault() == 1)
+                        if (_dec.Q3LienDeParente.GetValueOrDefault() == 1)
                         {
                             MenageDetailsModel det = new MenageDetailsModel();
                             det.Id = _dec.IndividuId.ToString();
@@ -701,7 +731,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             individu.MenageId = _ind.MenageId.GetValueOrDefault();
             individu.IndividuId = _ind.IndividuId;
             individu.SdeId = _ind.SdeId;
-            individu.Q6LienDeParente = Convert.ToByte(_ind.Q6LienDeParente.GetValueOrDefault());
+            individu.Q3LienDeParente = Convert.ToByte(_ind.Q3LienDeParente.GetValueOrDefault());
+            individu.Q3aRaisonChefMenage = Convert.ToByte(_ind.Q3aRaisonChefMenage.GetValueOrDefault());
             individu.Q5bAge = Convert.ToByte(_ind.Q5bAge.GetValueOrDefault());
             individu.Q2Nom = _ind.Q2Nom;
             individu.Q3Prenom = _ind.Q3Prenom;
@@ -1272,5 +1303,27 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             return new DetailsRapportModel();
         }
+
+        #region emigre
+        public bool saveEmigre(EmigreCEModel _emigre)
+        {
+            return daoCE.saveEmigre(ModelMapper.MapToTbl_EmigreCE(_emigre));
+        }
+
+        public bool updateEmigre(EmigreCEModel _emigre)
+        {
+            return daoCE.updateEmigre(ModelMapper.MapToTbl_EmigreCE(_emigre));
+        }
+
+        public EmigreCEModel getEmigreCEModel(long emigreId, string sdeId)
+        {
+            return ModelMapper.MapToEmigreCEModel(daoCE.getEmigreCEModel(emigreId, sdeId));
+        }
+
+        public EmigreCEModel getEmigreCEModel(long batimentId, long logId, long menageId, long emigreId, string sdeId)
+        {
+            return ModelMapper.MapToEmigreCEModel(daoCE.getEmigreCEModel(batimentId,logId,menageId,emigreId,sdeId));
+        }
+        #endregion
     }
 }

@@ -542,7 +542,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 //q6DateNaissanceJour=ind.Q7DateNaissanceJour,
                 //q6DateNaissanceMois=ind.Q7DateNaissanceMois,
                 q5bAge = Convert.ToByte(ind.Q5bAge.GetValueOrDefault()),
-                q6LienDeParente = Convert.ToByte(ind.Q6LienDeParente),
+                q6LienDeParente = Convert.ToByte(ind.Q3LienDeParente),
                 qp7Nationalite = Convert.ToByte(ind.Qp7Nationalite.GetValueOrDefault()),
                 qp7PaysNationalite = ind.Qp7PaysNationalite,
                 qp10LieuNaissance = Convert.ToByte(ind.Qp10LieuNaissance.GetValueOrDefault()),

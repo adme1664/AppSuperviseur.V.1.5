@@ -438,6 +438,7 @@
     <Compile Include="Models\DepartementModel.cs" />
     <Compile Include="Models\DetailsRapportDeroulement.cs" />
     <Compile Include="Models\DetailsRapportModel.cs" />
+    <Compile Include="Models\EmigreCEModel.cs" />
     <Compile Include="Models\Flag.cs" />
     <Compile Include="Models\ProblemeModel.cs" />
     <Compile Include="Models\QuestionModule.cs" />

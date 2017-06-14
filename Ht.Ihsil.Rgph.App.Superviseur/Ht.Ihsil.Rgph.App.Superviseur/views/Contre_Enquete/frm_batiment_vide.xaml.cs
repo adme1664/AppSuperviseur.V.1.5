@@ -54,6 +54,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 txt_title.Text = "BATIMAN KI GEN LOJMAN ENVIDIDYEL KI VID";
             if (typeContreEnquete == (int)Constant.TypeContrEnquete.LogementIndividuelMenage)
                 txt_title.Text = "BATIMAN KI GEN MENAJ";
+            if (typeContreEnquete == (int)Constant.TypeContrEnquete.LogementOccupantAbsent)
+                txt_title.Text = "BATIMAN KI GEN LOJMAN KI OKIPE YON LE KONSA";
             log = new Logger();
             contreEnqueteService = new ContreEnqueteService(Users.users.SupDatabasePath);
             service = new MdfService();
@@ -374,9 +376,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             {
                 MessageBox.Show("" + ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Info("Error:" + ex.Message);
             }
         }
         private void cm_valide_log_Click(object sender, RoutedEventArgs e)
@@ -463,7 +465,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
 
             }
         }
-
         private void cm_view_log_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -501,9 +502,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             {
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Info("Erreur:" + ex.Message);
             }
         }
 
@@ -855,7 +856,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 ind.IndividuId = model.IndividuId;
                                 ind.SdeId = model.SdeId;
                                 ind.Qp2APrenom = model.Q3Prenom;
-                                ind.Qp3LienDeParente = Convert.ToByte(model.Q6LienDeParente.GetValueOrDefault());
+                                ind.Qp3LienDeParente = Convert.ToByte(model.Q3LienDeParente.GetValueOrDefault());
                                 MenageCEModel menage = ModelMapper.MapToMenageCEModel(contreEnqueteService.daoCE.getMenageCE(model.BatimentId, model.LogeId, model.SdeId, model.MenageId));
                                 if (menage.IsContreEnqueteMade.GetValueOrDefault() == false)
                                 {

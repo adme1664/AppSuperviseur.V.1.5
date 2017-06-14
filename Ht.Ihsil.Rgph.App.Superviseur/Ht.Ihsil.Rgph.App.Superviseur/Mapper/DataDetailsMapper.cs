@@ -1,4 +1,5 @@
 ﻿using Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities;
+using Ht.Ihsi.Rgph.Logging.Logs;
 using Ht.Ihsi.Rgph.Ressources;
 //using Ht.Ihsi.Rgph.Utility.common;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
@@ -23,6 +24,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
 
         public static List<DataDetails> MapToCE<T>(T obj)
         {
+            Logger log = new Logger();
             IQuestionReponseService service = new QuestionReponseService();
             IContreEnqueteService service_ce = null;
             List<QuestionsModel> listQuestions = null;
@@ -176,9 +178,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     return responses;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Info("Erreur:=>" + ex.Message);
             }
             return null;
         }

@@ -82,19 +82,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
        {
            get { return menage.Type; }
        }
-       //public string Batiname
-       //{
-       //    get { return _parentView.BatimanName; }
-       //}
-       //public string LogementName
-       //{
-       //    get { return _parentView.LogementName; }
-       //}
-       //public string MenageName
-       //{
-       //    get { return _parentView.MenageName; }
-       //}
-    }
+  }
 
     
 

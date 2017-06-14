@@ -37,11 +37,11 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
         {
             context = new RgphContext();
         }
-        public MainRepository(string connectionString,bool typeDb)
+        public MainRepository(string connectionString, bool typeDb)
         {
             supContext = new GenericSupDatabaseContext(connectionString);
         }
-        
+
         #endregion
 
         #region SQLITE SUPERVISEUR TABLE VARIABLES
@@ -59,6 +59,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
         private GenericRepository<Tbl_LogementCE> logementCERepository;
         private GenericRepository<Tbl_MenageCE> menageRepository;
         private GenericRepository<Tbl_DecesCE> decesRepository;
+        private GenericRepository<Tbl_EmigreCE> emigreRepository;
         private GenericRepository<Tbl_IndividusCE> individuRepository;
         private GenericRepository<Tbl_Departement> departementRepository;
         private GenericRepository<Tbl_Commune> communeRepository;
@@ -83,7 +84,17 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
                 return this.problemeRepository;
             }
         }
-
+        public GenericRepository<Tbl_EmigreCE> EmigreRepository
+        {
+            get
+            {
+                if (this.emigreRepository == null)
+                {
+                    this.emigreRepository = new GenericRepository<Tbl_EmigreCE>(this.supContext);
+                }
+                return this.emigreRepository;
+            }
+        }
         public GenericRepository<Tbl_Retour> RetourRepository
         {
             get
@@ -571,7 +582,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
             }
 
         }
-        
+
         public GenericRepository<tbl_deces> MDecesRepository
         {
             get

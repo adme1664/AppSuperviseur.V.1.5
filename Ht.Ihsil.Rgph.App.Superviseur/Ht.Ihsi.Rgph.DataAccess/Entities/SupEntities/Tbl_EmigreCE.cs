@@ -12,22 +12,22 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_DecesCE
+    public partial class Tbl_EmigreCE
     {
-        public long DecesId { get; set; }
+        public long EmigreId { get; set; }
         public Nullable<long> MenageId { get; set; }
         public Nullable<long> LogeId { get; set; }
         public Nullable<long> BatimentId { get; set; }
         public string SdeId { get; set; }
-        public Nullable<long> Qd2NoOrdre { get; set; }
-        public Nullable<long> Qd1Deces { get; set; }
+        public Nullable<long> Qn1numeroOrdre { get; set; }
+        public Nullable<long> Qn1Emigration { get; set; }
+        public Nullable<long> Qn1NbreEmigreF { get; set; }
+        public Nullable<long> Qn1NbreEmigreG { get; set; }
         public Nullable<long> Statut { get; set; }
         public Nullable<long> IsValidated { get; set; }
         public string DateDebutCollecte { get; set; }
         public string DateFinCollecte { get; set; }
         public Nullable<long> DureeSaisie { get; set; }
         public Nullable<long> IsContreEnqueteMade { get; set; }
-        public Nullable<long> Qd1aNbreDecesF { get; set; }
-        public Nullable<long> Qd1aNbreDecesG { get; set; }
     }
 }

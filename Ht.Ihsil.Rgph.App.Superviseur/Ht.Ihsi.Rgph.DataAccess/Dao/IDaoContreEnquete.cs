@@ -43,6 +43,14 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         Tbl_DecesCE getDecesCEModel(long batimentId, long logId, long menageId,long decesId, string sdeId);
         #endregion
 
+        #region EMIGRE
+        bool saveEmigre(Tbl_EmigreCE _emigre);
+        bool updateEmigre(Tbl_EmigreCE _emigre);
+        List<Tbl_EmigreCE> searchAllEmigres(long batimentId, long logId, long menageId, string sdeId);
+        Tbl_EmigreCE getEmigreCEModel(long emigreId, string sdeId);
+        Tbl_EmigreCE getEmigreCEModel(long batimentId, long logId, long menageId, long emigreId, string sdeId);
+        #endregion
+
         #region MENAGE
         List<Tbl_MenageCE> searchAllMenageCE(long batimentId, long logeId, string sdeId);
         List<Tbl_IndividusCE> searchAllIndividuCE(long batimentId, long logeId, string sdeId, long menageId);

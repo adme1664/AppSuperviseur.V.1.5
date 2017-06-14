@@ -43,10 +43,12 @@
             </StackPanel>
         </Border>
         <Grid Grid.Column="1" HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Grid.RowSpan="4">
-            <dx:LoadingDecorator Name="loadingDecorator">
+            <!--<dx:LoadingDecorator Name="loadingDecorator">
 
-            </dx:LoadingDecorator>
+            </dx:LoadingDecorator>-->
             <Grid Name="grd_details" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <dx:LoadingDecorator Name="decorator" IsSplashScreenShown="false" SplashScreenLocation="CenterScreen">
+                </dx:LoadingDecorator>
                 <UserControl Background="LightGray"/>
                 <!--<dx:WaitIndicator DeferedVisibility="False" Content="Loading..." Name="wInd">
                     <dx:WaitIndicator.ContentTemplate>

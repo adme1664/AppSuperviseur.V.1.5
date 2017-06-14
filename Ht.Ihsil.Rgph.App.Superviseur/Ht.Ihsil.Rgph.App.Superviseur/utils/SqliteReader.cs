@@ -218,12 +218,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                var listOfBatiments = from bat in repository.MBatimentRepository.Find().ToList()
-                                      join lg in repository.MLogementRepository.Find().ToList()
-                                      on bat.batimentId equals lg.batimentId
-                                      where lg.qlin2StatutOccupation == Convert.ToInt32(3)
-                                      select bat;
-                return ModelMapper.MapToListBatimentModel(listOfBatiments.ToList());
+                List<BatimentModel> listOfBatiments = new List<BatimentModel>();
+                List<LogementModel> listOfLogements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(lg => lg.qlin2StatutOccupation == 3 || lg.qlin2StatutOccupation==4).ToList());
+                foreach (LogementModel logement in listOfLogements)
+                {
+                    BatimentModel bat = new BatimentModel();
+                    bat.BatimentId = logement.BatimentId;
+                    bat.SdeId = logement.SdeId;
+                    listOfBatiments.Add(bat);
+                }
+                return listOfBatiments;
             }
             catch (Exception ex)
             {
@@ -289,12 +293,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                var listOfBatiments = from bat in repository.MBatimentRepository.Find().ToList()
-                                      join lg in repository.MLogementRepository.Find().ToList()
-                                      on bat.batimentId equals lg.batimentId
-                                      where lg.qlCategLogement == 1
-                                      select bat;
-                return ModelMapper.MapToListBatimentModel(listOfBatiments.Distinct().ToList());
+                List<LogementModel> logements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == Constant.TYPE_LOJMAN_KOLEKTIF && l.qlcTotalIndividus!=0).ToList());
+                List<BatimentModel> listOfBatiments = new List<BatimentModel>();
+                foreach (LogementModel lg in logements)
+                {
+                    BatimentModel bati = new BatimentModel();
+                    bati.BatimentId = lg.BatimentId;
+                    bati.SdeId = lg.SdeId;
+                    listOfBatiments.Add(bati);
+                }
+                return listOfBatiments.Distinct().ToList();
             }
             catch (Exception ex)
             {
@@ -1481,7 +1489,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.batimentId == batimentId && l.qlCategLogement == Constant.TYPE_LOJMAN_KOLEKTIF).ToList());
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.batimentId == batimentId && l.qlCategLogement == Constant.TYPE_LOJMAN_KOLEKTIF && l.qlcTotalIndividus!=0).ToList());
             }
             catch (Exception ex)
             {
@@ -1565,40 +1573,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             {
                 sde.TotalBatRecense = getTotalBatiment();
                 sde.TotalDecesRecense = getTotalDeces();
-                sde.TotalDecesFRecense = getTotalDecesFemmes();
-                sde.TotalDecesGRecense = getTotalDecesHommes();
-                sde.TotalEmigreFRecense = getTotalEmigresFemmes();
-                sde.TotalEmigreGRecense = getTotalEmigresHommes();
                 sde.TotalEmigreRecense = getTotalEmigres();
-                sde.TotalIndFRecense = getTotalIndividusFemmes();
-                sde.TotalIndGRecense = getTotalIndividusHommes();
                 sde.TotalLogeCRecense = getTotalLogementCs();
                 sde.TotalLogeIRecense = getTotalLogementInds();
                 sde.TotalMenageRecense = getTotalMenages();
                 sde.TotalIndRecense = getTotalIndividus();
-                //sde.TotalBatRecenseNV = getTotalBatRecenseNV();
-                sde.TotalBatRecenseV = getTotalBatRecenseV();
-                sde.TotalEnfantDeMoinsDe5Ans = getTotalEnfantDeMoinsDe1Ans();
-                sde.TotalIndividu10AnsEtPlus = getTotalIndividu10AnsEtPlus();
-                sde.TotalIndividu18AnsEtPlus = getTotalIndividu18AnsEtPlus();
-                sde.TotalIndividu65AnsEtPlus = getTotalIndividu65AnsEtPlus();
-                //sde.TotalLogeCRecenseNV_ = getTotalLogeCRecenseNV();
-                sde.TotalLogeCRecenseV = getTotalLogeCRecenseV();
-                sde.TotalLogeIRecenseNV = getTotalLogeIRecenseNV();
-                sde.TotalLogeIRecenseV = getTotalLogeIRecenseV();
-                sde.TotalMenageRecenseV = getTotalMenageRecenseV();
-                sde.TotalMenageRecenseNV = getTotalMenageRecenseNV();
-                sde.TotalLogeIOccupeRecense = getTotalLogeIOccupeRecense();
-                sde.TotalLogeIOccupeRecenseNV = getTotalLogeIOccupeRecenseNV();
-                sde.TotalLogeIOccupeRecenseV = getTotalLogeIOccupeRecenseV();
-                sde.TotalLogeIUsageTemporelRecense = getTotalLogeIUsageTemporelRecense();
-                sde.TotalLogeIUsageTemporelRecenseNV = getTotalLogeIUsageTemporelRecenseNV();
-                sde.TotalLogeIUsageTemporelRecenseV = getTotalLogeIUsageTemporelRecenseV();
-                sde.TotalLogeIVideRecense = getTotalLogeIVideRecense();
-                sde.TotalLogeIVideRecenseV = getTotalLogeIVideRecenseV();
-                sde.TotalLogeIVideRecenseNV = getTotalLogeIVideRecenseNV();
-                sde.IndiceMasculinite = Convert.ToInt64(getIndiceMasculinite());
-            }
+               }
             catch (Exception)
             {
 

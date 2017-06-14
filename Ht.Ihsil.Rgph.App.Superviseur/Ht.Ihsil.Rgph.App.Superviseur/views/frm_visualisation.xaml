@@ -89,6 +89,15 @@
                                                         </Image>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
+                                                <MenuItem Header="Chèche batiman ki gen lojman ki okipe yon lè konsa" Name="cm_batiments_lojman_occupe_occasionnellement" FontSize="12" FontWeight="Bold" Click="cm_batiments_lojman_occupe_occasionnellement_Click">
+                                                    <MenuItem.Icon>
+                                                        <Image>
+                                                            <Image.Source>
+                                                                <BitmapImage UriSource="/images/vi1.png" />
+                                                            </Image.Source>
+                                                        </Image>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
                                                 <MenuItem Header="Chèche batiman ki gen menaj ki gen moun pou kont-ankèt" Name="cm_batiments_menaj" FontSize="12" FontWeight="Bold" Click="cm_batiments_menaj_Click">
                                                     <MenuItem.Icon>
                                                         <Image>

@@ -50,5 +50,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
         public virtual DbSet<Tbl_Questions_Reponses> Tbl_Questions_Reponses { get; set; }
         public virtual DbSet<Tbl_Reponses> Tbl_Reponses { get; set; }
         public virtual DbSet<Tbl_VilleQuartierSectionCommunale> Tbl_VilleQuartierSectionCommunale { get; set; }
+        public virtual DbSet<Tbl_EmigreCE> Tbl_EmigreCE { get; set; }
     }
 }

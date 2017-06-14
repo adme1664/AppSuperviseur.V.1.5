@@ -22,7 +22,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
         public Nullable<long> Qp1NoOrdre { get; set; }
         public string Q2Nom { get; set; }
         public string Q3Prenom { get; set; }
-        public Nullable<long> Q6LienDeParente { get; set; }
+        public Nullable<long> Q3LienDeParente { get; set; }
+        public Nullable<long> Q3aRaisonChefMenage { get; set; }
         public Nullable<long> Q4Sexe { get; set; }
         public Nullable<long> Q5bAge { get; set; }
         public Nullable<long> Q7DateNaissanceJour { get; set; }

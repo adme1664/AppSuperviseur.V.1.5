@@ -262,6 +262,9 @@
     <Compile Include="Entities\SupEntities\Tbl_DetailsRapport.cs">
       <DependentUpon>RgphSup.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\SupEntities\Tbl_EmigreCE.cs">
+      <DependentUpon>RgphSup.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\SupEntities\Tbl_IndividusCE.cs">
       <DependentUpon>RgphSup.tt</DependentUpon>
     </Compile>
@@ -327,10 +330,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Data\rgph_sup-db.sqlite" />
-    <EntityDeploy Include="Entities\SupEntities\RgphSup.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RgphSup.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <EntityDeploy Include="Entities\MobileEntities\MobileDataEntities.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MobileDataEntities.Designer.cs</LastGenOutput>
@@ -348,6 +347,10 @@
       <DependentUpon>MobileDataEntities.edmx</DependentUpon>
       <LastGenOutput>MobileDataEntities.cs</LastGenOutput>
     </None>
+    <EntityDeploy Include="Entities\SupEntities\RgphSup.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RgphSup.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <None Include="Entities\SupEntities\RgphSup.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>RgphSup.edmx</DependentUpon>
