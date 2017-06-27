@@ -20,6 +20,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
 
         static SqliteDataReaderService reader = new SqliteDataReaderService();
 
+
         #region VISUALISATION CONTRE-ENQUETE
 
         public static List<DataDetails> MapToCE<T>(T obj)
@@ -190,6 +191,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
 
         public static List<DataDetails> MapToMobile<T>(T obj, string sdeID)
         {
+            Logger log = new Logger();
             List<tbl_question_module> listOf = new List<tbl_question_module>();
             if (obj.ToString() == Constant.OBJET_MODEL_BATIMENT)
             {
@@ -245,13 +247,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                     {
                                         if (tcq.categorieQuestion != "" && tcq.detailsCategorie != "")
                                         {
-                                            if(obj.ToString()==Constant.OBJET_MODEL_INDIVIDU)
+                                            if (obj.ToString() == Constant.OBJET_MODEL_INDIVIDU)
                                             {
-                                                IndividuModel ind=obj as IndividuModel;
-                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}",ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), reponse, tcq.detailsCategorie));
+                                                IndividuModel ind = obj as IndividuModel;
+                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), reponse, tcq.detailsCategorie));
                                             }
                                             else
-                                            reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + "__________________:" + question.detailsQuestion), reponse, tcq.detailsCategorie));
+                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + "__________________:" + question.detailsQuestion), reponse, tcq.detailsCategorie));
                                         }
                                         else
                                         {
@@ -261,7 +263,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                                 reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), reponse, tcq.categorieQuestion));
                                             }
                                             else
-                                            reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + "__________________:" + question.detailsQuestion), reponse, tcq.categorieQuestion));
+                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + "__________________:" + question.detailsQuestion), reponse, tcq.categorieQuestion));
                                         }
                                     }
                                     else
@@ -274,7 +276,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                                 reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom)), reponse, tcq.detailsCategorie));
                                             }
                                             else
-                                            reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), reponse, tcq.detailsCategorie));
+                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), reponse, tcq.detailsCategorie));
                                         }
                                         else
                                         {
@@ -284,7 +286,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                                 reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom)), reponse, tcq.categorieQuestion));
                                             }
                                             else
-                                            reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), reponse, tcq.categorieQuestion));
+                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), reponse, tcq.categorieQuestion));
                                         }
                                     }
                                 }
@@ -309,7 +311,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                                     reponses.Add(detail);
                                                 }
                                                 else
-                                                reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + "__________________:" + question.detailsQuestion), pays, tcq.detailsCategorie));
+                                                    reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower() + "__________________:" + question.detailsQuestion), pays, tcq.detailsCategorie));
                                             }
                                             else
                                             {
@@ -320,12 +322,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                                     DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), pays, tcq.categorieQuestion);
                                                     reponses.Add(detail);
                                                 }
-                                             }
+                                            }
                                         }
-                                        
+
                                     }
                                 }
-                                
+
                             }
                             //
                             //
@@ -344,7 +346,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                             if (tcq.categorieQuestion != "" && tcq.detailsCategorie != "")
                                             {
                                                 string commune = reader.Sr.getCommune(obj.GetType().GetProperty(property.Name).GetValue(obj).ToString()).ComNom;
-                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}",ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), commune, tcq.detailsCategorie);
+                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower().Replace("{0}", ind.Qp2APrenom) + "__________________:" + question.detailsQuestion), commune, tcq.detailsCategorie);
                                                 reponses.Add(detail);
                                             }
                                             else
@@ -390,13 +392,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                             if (tcq.categorieQuestion != "" && tcq.detailsCategorie != "")
                                             {
                                                 string domaine = reader.Sr.getDomaine(obj.GetType().GetProperty(property.Name).GetValue(obj).ToString()).NomDomaine;
-                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), domaine,tcq.detailsCategorie);
+                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), domaine, tcq.detailsCategorie);
                                                 reponses.Add(detail);
                                             }
                                             else
                                             {
                                                 string domaine = reader.Sr.getDomaine(obj.GetType().GetProperty(property.Name).GetValue(obj).ToString()).NomDomaine;
-                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), domaine,tcq.categorieQuestion);
+                                                DataDetails detail = new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), domaine, tcq.categorieQuestion);
                                                 reponses.Add(detail);
                                             }
                                         }
@@ -407,8 +409,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                             }
                             //
                             //
-                           
-                            if (question.typeQuestion == (int)Constant.TypeQuestion.Saisie)
+
+                            if (question.typeQuestion == (int)Constant.TypeQuestion.Saisie || question.typeQuestion == 22 || question.typeQuestion == 13 || question.typeQuestion == 19)
                             {
                                 if (question.nomChamps == property.Name)
                                 {
@@ -430,11 +432,22 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                     {
                                         if (tcq.categorieQuestion != "" && tcq.detailsCategorie != "")
                                         {
-                                            reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), obj.GetType().GetProperty(property.Name).GetValue(obj).ToString(), tcq.detailsCategorie));
+                                            string reponse = "";
+                                            if (obj.GetType().GetProperty(property.Name).GetValue(obj) == null)
+                                                reponse = "";
+                                            else
+                                                reponse = obj.GetType().GetProperty(property.Name).GetValue(obj).ToString();
+
+                                            reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), reponse, tcq.detailsCategorie));
                                         }
                                         else
                                         {
-                                            reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), obj.GetType().GetProperty(property.Name).GetValue(obj).ToString(), tcq.categorieQuestion));
+                                            string reponse = "";
+                                            if (obj.GetType().GetProperty(property.Name).GetValue(obj).ToString() == null)
+                                                reponse = "";
+                                            else
+                                                reponse = obj.GetType().GetProperty(property.Name).GetValue(obj).ToString();
+                                            reponses.Add(new DataDetails(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(question.codeQuestion + "-" + question.libelle.ToLower()), reponse, tcq.categorieQuestion));
                                         }
                                     }
                                 }
@@ -443,9 +456,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Info("Erreur:" + ex.Message);
             }
             return reponses;
         }

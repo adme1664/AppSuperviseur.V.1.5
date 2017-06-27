@@ -10,11 +10,11 @@
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol" xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking" xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.Frm_view_transfert" 
              mc:Ignorable="d"
              HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-    <xctk:BusyIndicator IsBusy="False" BusyContent="Transfert en cours..." x:Name="busyIndicator" VerticalAlignment="Center" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Margin="0,0,0,0" >
-        <Grid x:Name="grid"  Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Height="860">
+    <xctk:BusyIndicator IsBusy="False" BusyContent="Transfert en cours..." x:Name="busyIndicator"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"  VerticalAlignment="Stretch">
+        <Grid x:Name="grid"  Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Image HorizontalAlignment="Left" Height="25" Margin="28,81,0,0"  VerticalAlignment="Top" Width="22" Source="/images/done.png" Visibility="Hidden" x:Name="img_done"/>
             <dx:DXTabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <dx:DXTabItem>
+                <!--<dx:DXTabItem>
                     <dx:DXTabItem.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Height="34">
@@ -81,7 +81,7 @@
                             </Grid>
                         </GroupBox>
                     </Grid>
-                </dx:DXTabItem>
+                </dx:DXTabItem>-->
                 <dx:DXTabItem>
                     <dx:DXTabItem.HeaderTemplate>
                         <DataTemplate>
@@ -91,7 +91,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </dx:DXTabItem.HeaderTemplate>
-                    <Grid Background="Transparent" Margin="0,2,0,-2">
+                    <Grid Background="Transparent">
                         <GroupBox Header="Transfert vers le serveur central" HorizontalAlignment="Left" Margin="10,22,0,0" VerticalAlignment="Top" Background="White" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9" Width="372" Height="177">
                             <Grid HorizontalAlignment="Left" Width="488">
                                 <Grid.ColumnDefinitions>
@@ -110,14 +110,6 @@
                                         </ListBox.ItemTemplate>
                                     </ListBox>
                                 </GroupBox>
-                                <!--<GroupBox Name="grp_TP" Header="Type de batiment" Margin="22,0,38,0" Grid.Column="1">
-                                    <StackPanel  Name="stck_sde">
-                                        <CheckBox Name="chck_BMR" Content="Batiment Mal rempli" Checked="chck_BMR_Checked"/>
-                                        <CheckBox Name="chck_BPF" Content="Batiment pas encore termine" Checked="chck_BPF_Checked"/>
-                                        <CheckBox Name="chck_BT" Content="Batiment termine" Checked="chck_BT_Checked"/>
-                                        <CheckBox Name="chck_TB" Content="Tous les batiments" Checked="chck_TB_Checked"/>
-                                    </StackPanel>
-                                </GroupBox>-->
                                 <GroupBox x:Name="grp_Actions" Header="Transferer" Grid.Column="1" HorizontalAlignment="Left" Width="94" Margin="23,0,0,0" Height="79" VerticalAlignment="Top">
                                     <Grid>
                                         <Button  VerticalAlignment="top" HorizontalAlignment="Left" Width="55" Height="20" Margin="6,11,0,0" x:Name="btn_transfertr_sc" Click="btn_transfertr_sc_Click" RenderTransformOrigin="0.5,0.5">
@@ -159,14 +151,24 @@
                                 </ProgressBar>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Sortie" HorizontalAlignment="Stretch" Margin="10,309,37,286" VerticalAlignment="Stretch" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9">
+                        <GroupBox Header="Sortie" HorizontalAlignment="Stretch" Margin="10,309,37,70" VerticalAlignment="Stretch" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9">
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-14,-2">
-                                <TextBox Visibility="Visible" AcceptsReturn="True" TextWrapping="Wrap"  x:Name="txt_sortie" Text="SDE:"  BorderThickness="0" RenderTransformOrigin="0.5,0.5" MaxHeight="460" Margin="0,0,30,0" Height="154" VerticalAlignment="Top"/>
+                                <TextBox Visibility="Visible" AcceptsReturn="True" TextWrapping="Wrap"  x:Name="txt_sortie" Text="SDE:"  BorderThickness="0"  VerticalAlignment="Stretch" Margin="0,0,10,0"/>
                             </Grid>
                         </GroupBox>
-                        <Button  HorizontalAlignment="Left" x:Name="btn_effacer" Margin="10,524,0,0" ToolTip="Effacer le contenu" VerticalAlignment="Top" Width="44" Height="28" Click="btn_effacer_Click">
+                        <Button  HorizontalAlignment="Left" x:Name="btn_effacer" Margin="16,728,0,0" ToolTip="Effacer le contenu" VerticalAlignment="Top" Width="44" Height="28" Click="btn_effacer_Click">
                             <Image Source="/images/delete-xxl.png" />
                         </Button>
+                        <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false">
+                            <dx:WaitIndicator.ContentTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Fè yon ti tann..." FontSize="20"/>
+                                        <TextBlock Text="{Binding}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </dx:WaitIndicator.ContentTemplate>
+                        </dx:WaitIndicator>
                     </Grid>
                 </dx:DXTabItem>
                 <dx:DXTabItem >
@@ -253,33 +255,7 @@
                         </Button>
                     </Grid>
                 </dx:DXTabItem>
-                <!--<dx:DXTabItem>
-                    <dx:DXTabItem.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Height="34">
-                                <TextBlock Text="Transfert des rapports" Width="150" Height="20" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9" Margin="0,7" />
-                                <Image Height="38" Width="100" Source="/images/hosting.png"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </dx:DXTabItem.HeaderTemplate>
-                    <Grid Name="LayoutRoot" Background="White">
-                        <lc:LayoutGroup Orientation="Horizontal">
-                            <lc:LayoutGroup View="Tabs">
-                                <lc:LayoutGroup Header="Transfert" Orientation="Vertical">
-                                    <lc:LayoutGroup Header="Sdes" Orientation="Vertical">
-                                        <lc:LayoutItem Label="Sdes">
-                                            <ListBox Name="lbOfSdes"/>
-                                        </lc:LayoutItem>
-                                        <lc:LayoutItem Label="Sdes">
-                                            <TextBox/>
-                                        </lc:LayoutItem>
-                                    </lc:LayoutGroup>
-                                </lc:LayoutGroup>
-                            </lc:LayoutGroup>
-                        </lc:LayoutGroup>
-                    </Grid>
-                </dx:DXTabItem>-->
-            </dx:DXTabControl>
+                </dx:DXTabControl>
 
         </Grid>
     </xctk:BusyIndicator>

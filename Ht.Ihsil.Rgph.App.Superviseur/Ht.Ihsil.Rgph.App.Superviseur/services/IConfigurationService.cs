@@ -33,6 +33,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         bool saveMateriels(Tbl_Materiels materiels);
         bool updateMateriels(Tbl_Materiels materiels);
         Tbl_Materiels getMateriels(string serial);
+        Tbl_Materiels getMaterielByAgent(int agentId);
+        bool deleteMateriel(int id);
+        List<Tbl_Materiels> SearchMateriels();
         bool isMaterielExist(string serial);
         bool isMaterielConfigure(string serial);
         #endregion

@@ -61,5 +61,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
         public string DateFinCollecte { get; set; }
         public Nullable<long> DureeSaisie { get; set; }
         public Nullable<long> IsContreEnqueteMade { get; set; }
+        public long Id { get; set; }
     }
 }

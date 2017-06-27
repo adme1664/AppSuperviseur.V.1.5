@@ -126,6 +126,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
             Tbl_BatimentCE batUpdate = getBatiment(bat.BatimentId,bat.SdeId);
             if (batUpdate != null)
             {
+                
                 batUpdate.SdeId = bat.SdeId;
                 batUpdate.Qb1Etat = bat.Qb1Etat;
                 batUpdate.Qb2Type = bat.Qb2Type;

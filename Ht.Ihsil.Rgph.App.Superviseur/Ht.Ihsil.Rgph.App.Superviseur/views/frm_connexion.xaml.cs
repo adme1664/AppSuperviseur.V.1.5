@@ -116,6 +116,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     try
                     {
+                        string[] tab = username.Split('.');
+                        username = tab[0] + "" + tab[1];
                         user = service.authenticateUserLocally(username, password);
 
                     }
@@ -170,6 +172,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
             
             return state;
+        }
+
+        private void chk_isAstic_Checked(object sender, RoutedEventArgs e)
+        {
+            if (chk_isAstic.IsChecked == true)
+            {
+                t_username.Mask = "006.0000";
+            }
+            else
+            {
+                t_username.Mask = "007.0000";
+            }
         }
     }
 }

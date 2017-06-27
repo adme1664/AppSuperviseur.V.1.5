@@ -1,4 +1,5 @@
 ﻿using Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities;
+using Ht.Ihsi.Rgph.DataAccess.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         bool saveMateriels(Tbl_Materiels materiels);
         bool updateMateriels(Tbl_Materiels materiels);
         Tbl_Materiels getMateriels(string serial);
+        List<Tbl_Materiels> searchMateriels();
         #endregion
 
         #region GESTION DES SDES
@@ -50,5 +52,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         List<Tbl_Probleme> searchAllProblemesBySdeId(string sdeID);
         Tbl_Probleme getProbleme(int problemeId);
         #endregion
+        MainRepository getRepository();
     }
 }

@@ -28,9 +28,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         {
             InitializeComponent();
             mdf_service = new MdfService();
-            List<SdeModel> listOfSde = mdf_service.getAllSde().ToList();
-            DataContext = this;
+            List<SdeModel> listOfSde = new List<SdeModel>();
+            try
+            {
+                listOfSde = mdf_service.getAllSde().ToList();
+                DataContext = this;
+
+            }
+            catch (Exception)
+            {
+            }
             lbSdes.ItemsSource = listOfSde;
+
         }
 
         private void lbSdes_SelectionChanged(object sender, SelectionChangedEventArgs e)

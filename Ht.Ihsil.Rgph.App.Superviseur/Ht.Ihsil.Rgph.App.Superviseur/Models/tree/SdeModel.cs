@@ -29,7 +29,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public Nullable<int> TotalEmigreGRecense { get; set; }
         public Nullable<int> TotalDecesRecense { get; set; }
         public Nullable<int> TotalDecesFRecense { get; set; }
-        public Nullable<int> TotalDecesGRecense { get; set; }        
+        public Nullable<int> TotalDecesGRecense { get; set; }
+        public String SdeName { get; set; }
         public SdeModel()
         {
 

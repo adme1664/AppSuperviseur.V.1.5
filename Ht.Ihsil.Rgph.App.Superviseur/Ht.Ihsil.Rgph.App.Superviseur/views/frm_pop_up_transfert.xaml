@@ -4,16 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:gif="http://wpfanimatedgif.codeplex.com"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Width="486.195" Height="200.415" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/Ht.Ihsil.Rgph.App.Superviseur;component/images/trans1.png" >
+             mc:Ignorable="d" Width="486.195" Height="219.415" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" Icon="/Ht.Ihsil.Rgph.App.Superviseur;component/images/trans1.png" Loaded="Window_Loaded" >
     <Grid>
-        <GroupBox Header="Transfè a ap fèt">
-            <Grid>
+        <GroupBox  Name="grpTransfert">
+            <Grid Margin="2,3,-2,-3">
                 <Image HorizontalAlignment="Left" Height="25" Margin="399,52,0,0" Name="img_finish"  VerticalAlignment="Top" Width="22" Source="/images/done.png" Visibility="Hidden"/>
                 <Image gif:ImageBehavior.AnimatedSource="/images/loading.gif"  HorizontalAlignment="Left" Height="53" x:Name="img_loading" Margin="394,39,0,0"  VerticalAlignment="Top" Width="56" Visibility="Hidden"/>
-                <ProgressBar Name="prgb_trans_pda" HorizontalAlignment="Left" Height="40" Margin="18,44,0,0" VerticalAlignment="Top" Width="368"/>
-                <Button Content="Demarrer" HorizontalAlignment="Left" Name="btn_start" Margin="160,91,0,0" VerticalAlignment="Top" Width="75" Click="btn_start_Click"/>
-                <Label  Name="lbl_trans" HorizontalAlignment="Left" Margin="18,18,0,0" VerticalAlignment="Top" Width="327"/>
-
+                <ProgressBar Name="prgb_trans_pda" HorizontalAlignment="Left" Height="40" Margin="18,44,0,0" VerticalAlignment="Top" Width="377"/>
+                <Button Content="Demarrer" HorizontalAlignment="Left" Name="btn_start" Margin="128,103,0,0" VerticalAlignment="Top" Width="75" Click="btn_start_Click" RenderTransformOrigin="1.52,0.409"/>
+                <Label  Name="lbl_trans" HorizontalAlignment="Left" Margin="18,18,0,0" VerticalAlignment="Top" Width="327"></Label>
+                <Button Name="btn_annuler" Content="Annuler" HorizontalAlignment="Left" Margin="226,103,0,0" VerticalAlignment="Top" Width="75" Click="btn_annuler_Click"/>
             </Grid>
         </GroupBox>
 

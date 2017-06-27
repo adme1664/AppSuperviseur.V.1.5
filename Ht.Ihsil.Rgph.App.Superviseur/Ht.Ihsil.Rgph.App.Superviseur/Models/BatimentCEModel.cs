@@ -8,6 +8,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
 {
     public class BatimentCEModel
     {
+        public string DeptId { get; set; }
+        public string ComId { get; set; }
+        public string District { get; set; }
+        public string Zone { get; set; }
+        public string VqseId { get; set; }
+        public long Id { get; set; }
         public long BatimentId { get; set; }
         public string SdeId { get; set; }
         public string Qhabitation { get; set; }

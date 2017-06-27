@@ -507,7 +507,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 log.Info("Erreur:" + ex.Message);
             }
         }
-
         private void cm_compare_log_Click(object sender, RoutedEventArgs e)
         {
             try

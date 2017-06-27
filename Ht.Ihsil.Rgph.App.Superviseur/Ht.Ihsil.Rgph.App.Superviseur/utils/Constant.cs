@@ -103,13 +103,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public enum TypeQuestion : int
         {
-            Choix = 1,
+            Choix = 17,
             Saisie = 2,
             Automatique = 3,
             Departement = 4,
-            Commune = 5,
+            Commune = 7,
             Vqse = 6,
-            Pays = 7,
+            Pays = 18,
             Grid = 8,
             Utilisation = 9
         }
@@ -119,7 +119,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             LogementCollectif = 2,
             LogementInvididuelVide = 3,
             LogementIndividuelMenage = 4,
-            LogementOccupantAbsent=5
+            LogementOccupantAbsent = 5
         }
 
         public enum StatutContreEnquete : int
@@ -749,6 +749,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string XML_ELEMENT_VARIABLE = "variable";
         public static string PA_KONNEN_KOMIN_OU_PEYI = "9999";
         public static string PA_KONNEN_SEKSYON_KOMINAL = "9999-99";
+        public static int TRANSFERT_MOBILE = 1;
+        public static int TRANSFERT_PC = 2;
 
         #region OTHERS STUFF
         public static List<KeyValue> ListOfRaisons()

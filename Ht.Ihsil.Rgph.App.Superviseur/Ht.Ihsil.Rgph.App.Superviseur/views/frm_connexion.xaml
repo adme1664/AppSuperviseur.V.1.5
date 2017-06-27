@@ -2,6 +2,7 @@
         x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_connexion"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:s="clr-namespace:System;assembly=mscorlib"
         Title="frm_connexion" Height="375.858" Width="389.346"  BorderBrush="Blue" BorderThickness="2.5" WindowStartupLocation="CenterScreen" AllowsTransparency="True" WindowStyle="None">
 
     <xctk:BusyIndicator IsBusy="False" BusyContent="Tentative de connexion avec le serveur" Name="busyIndicator" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,0" Height="371">
@@ -19,12 +20,13 @@
             </Grid.RowDefinitions>
             <Label x:Name="l_username" Content="Nom Utilisateur" HorizontalAlignment="Left" Margin="10,7,0,0" Grid.Row="1" VerticalAlignment="Top" Width="99" Height="26" FontWeight="Bold"/>
             <Label x:Name="l_password" Content="Mot de Passe" HorizontalAlignment="Left" Margin="10,8,0,0" Grid.Row="2" VerticalAlignment="Top" Height="26" Width="99" FontWeight="Bold"/>
-            <TextBox x:Name="t_username" Text="0070001" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="10,6,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" ToolTip="Nom Utilisateur"/>
+            <xctk:MaskedTextBox HorizontalAlignment="Left" Height="25" Margin="11,7,0,0" Name="t_username" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="179" Mask="007.0000" ValueDataType="{x:Type s:String}" Grid.Column="1" Grid.Row="1"  />
+            <!--<TextBox x:Name="t_username" Text="0070001" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="10,6,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" ToolTip="Nom Utilisateur"/>-->
             <PasswordBox x:Name="t_password" Password="passpass" Grid.Column="1" HorizontalAlignment="Left" Margin="10,8,0,0" Grid.Row="2" VerticalAlignment="Top" Width="181" Height="24" ToolTip="Mot de Passe"/>
             <Image  Name="img_logo"  HorizontalAlignment="Left" Height="127" Margin="130,18,0,0" VerticalAlignment="Top" Width="126" Source="/images/logo.png" RenderTransformOrigin="0.539,0.335" Grid.ColumnSpan="2"/>
             <Button x:Name="btn_annuler" Grid.ColumnSpan="2" Content="Annuler" HorizontalAlignment="Left" Margin="90,38,0,0" Grid.Row="4" VerticalAlignment="Top" Width="75" Height="20" ToolTip="Fermer" Click="btn_annuler_Click"/>
             <Button x:Name="btn_connexion" Content="Se Connecter" Grid.Column="1" Margin="59,38,52,0" Grid.Row="4" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.ActiveCaptionBrushKey}}" Click="btn_connexion_Click" Height="20"/>
-            <CheckBox x:Name="chk_isAstic" Content="Se Connecter en tant qu'Astic?" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="0.372,-0.244" Height="24" Width="181"/>
+            <CheckBox x:Name="chk_isAstic" Content="Se Connecter en tant qu'Astic?" Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="0.372,-0.244" Height="24" Width="181" Checked="chk_isAstic_Checked"/>
             <Label x:Name="lbl_error" Content="Label" HorizontalAlignment="Left" Margin="45,0,0,0" Grid.Row="4" VerticalAlignment="Top" Height="33" RenderTransformOrigin="0.237,0.045" FontStyle="Italic" Foreground="#FFF50606" Grid.ColumnSpan="2" Width="292" Visibility="Hidden"/>
         </Grid>
     </xctk:BusyIndicator>

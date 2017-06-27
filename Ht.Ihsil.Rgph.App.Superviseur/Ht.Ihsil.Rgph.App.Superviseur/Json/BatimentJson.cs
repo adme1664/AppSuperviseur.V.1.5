@@ -14,7 +14,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public string vqseId { get; set; }
         public string sdeId { get; set; }
         public short zone { get; set; }
-        public string disctrictId { get; set; }
+        public string districtId { get; set; }
         public string qhabitation { get; set; }
         public string qlocalite { get; set; }
         public string qadresse { get; set; }
@@ -43,7 +43,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public string latitude { get; set; }
         public string longitude { get; set; }
         public string codeAgentRecenceur { get; set; }
-
+        public long typeContreEnquete { get; set; }
+        public string  raison {get;set;}
+        public string dateDebut { get; set; }
+        public string dateFin { get; set; }
+        public string contreEnqueteStatut { get; set; }
         public List<LogementCJson> logementCs { get; set; }
         public List<LogementIsJson> logementIs { get; set; }
     }

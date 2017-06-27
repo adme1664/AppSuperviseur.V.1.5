@@ -1,62 +1,85 @@
-﻿<UserControl x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_view_agents"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_view_agents"
              mc:Ignorable="d"
              HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
-    <Grid x:Name="grid" Margin="22,0,0,0">
+    <Grid>
+        <dx:DXTabControl>
+            <dx:DXTabItem Header="Configuration Tablettes/ Transfert">
+                <Grid x:Name="grid">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="921"/>
+                        <ColumnDefinition Width="175*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="213"/>
+                        <RowDefinition Height="317*"/>
+                    </Grid.RowDefinitions>
+                    <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false" Margin="201,-7,-40,7" Grid.Column="0" Grid.ColumnSpan="2">
+                        <dx:WaitIndicator.ContentTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Fè yon ti tann..." FontSize="20"/>
+                                    <TextBlock Text="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </dx:WaitIndicator.ContentTemplate>
+                    </dx:WaitIndicator>
+                    <GroupBox Header="Liste des agents" HorizontalAlignment="Left" Margin="1,13,0,0" VerticalAlignment="Top" Height="179" Width="344" FontSize="14" Grid.Row="0" Grid.Column="0">
+                        <ListBox x:Name="lbAgents" SelectionChanged="lbAgents_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" Height="16" Source="/images/user.png" />
+                                        <TextBlock Text="{Binding AgentName}" Foreground="#FF4498FD" FontFamily="Candara" FontWeight="Bold" FontSize="13" FontStyle="Italic" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </GroupBox>
+                    <GroupBox Header="Sde d'affection" HorizontalAlignment="Left" Margin="351,16,0,0" VerticalAlignment="Top" Height="177" Width="383" Grid.Row="0" Grid.Column="0">
+                        <ListBox x:Name="lbSdes">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Width="16" Height="16" Source="/images/database.png" />
+                                        <TextBlock Text="{Binding SdeName}" Foreground="#FF4498FD" FontFamily="Candara" FontWeight="Bold" FontSize="13" FontStyle="Italic" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </GroupBox>
+                    <GroupBox Header="Actions" HorizontalAlignment="Left" Margin="746,17,0,0" VerticalAlignment="Top" Height="176" Width="167" Grid.Row="0" Grid.Column="0">
+                        <Grid>
+                            <Button x:Name="btn_synch" Content="Configurer la tablette"  Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" ToolTip="Synchroniser avec le serveur" Width="140" Height="40"  RenderTransformOrigin="0.5,-5.04" Click="btn_synch_Click" HorizontalAlignment="Left" Margin="0,73,-3,10"  />
+                            <Button x:Name="btn_save_tab" Content="Enregistrer la tablette" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="137" Height="43" ToolTip="Enregsitrer la tablette" Click="btn_save_tab_Click"  />
+                        </Grid>
 
-        <DataGrid HorizontalAlignment="Left" Name="dtg" AutoGenerateColumns="False" IsReadOnly="True"  VerticalAlignment="Top" VerticalContentAlignment="Top" HorizontalContentAlignment="Left"   FontFamily="Candara" FontSize="14" FontStyle="Italic" AlternatingRowBackground="#FFCEE3FD"  FontWeight="Bold" Margin="10,194,0,0" Width="730">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Code Utilisateur"   Width="120" Binding="{Binding Username}" FontWeight="Bold"/>
-                <DataGridTextColumn Header="Nom"   Width="180" Binding="{Binding Nom}"/>
-                <DataGridTextColumn Header="Prenom" Width="185" Binding="{Binding Prenom}"/>
-                <DataGridTextColumn Header="Sexe"   Width="80" Binding="{Binding Sexe}"/>
-                <DataGridTextColumn Header="Numero de Telephone"   Width="140" Binding="{Binding Telephone}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <dx:WaitIndicator Name="waitIndicator" DeferedVisibility="false" Margin="-148,22,677,105" RenderTransformOrigin="0.496,0.429">
-            <dx:WaitIndicator.ContentTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Fè yon ti tann..." FontSize="20"/>
-                        <TextBlock Text="{Binding}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </dx:WaitIndicator.ContentTemplate>
-        </dx:WaitIndicator>
-        <GroupBox Header="Liste des agents" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="179" Width="344" FontSize="14">
-            <ListBox Name="lbAgents" SelectionChanged="lbAgents_SelectionChanged">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="16" Height="16" Source="/images/user.png" />
-                            <TextBlock Text="{Binding Username}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </GroupBox>
-        <GroupBox Header="Sde d'affection" HorizontalAlignment="Left" Margin="374,12,0,0" VerticalAlignment="Top" Height="177" Width="366">
-            <ListBox Name="lbSdes">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="16" Height="16" Source="/images/database.png" />
-                            <TextBlock Text="{Binding SdeId}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </GroupBox>
-        <GroupBox Header="Actions" HorizontalAlignment="Left" Margin="745,12,0,0" VerticalAlignment="Top" Height="159" Width="161">
-            <Grid>
-                <Button x:Name="btn_synch" Content="Configurer la tablette"  Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" ToolTip="Synchroniser avec le serveur" Width="140" Height="40"  RenderTransformOrigin="0.5,-5.04" Click="btn_synch_Click" HorizontalAlignment="Left" Margin="0,73,-3,10"  />
-                <Button Name="btn_save_tab" Content="Enregistrer la tablette" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="137" Height="43" ToolTip="Enregsitrer la tablette" Click="btn_save_tab_Click"  />
-            </Grid>
+                    </GroupBox>
+                    <GroupBox Header="Liste des tablettes enregistrées"  Grid.Row="1" Grid.Column="0">
+                        <Grid>
+                            <dxg:GridControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Name="gridTablette" AutoGeneratingColumn="gridTablette_AutoGeneratingColumn">
+                                <dxg:GridControl.View>
+                                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" AlternateRowBackground="#FF94C1F7">
+                                        <dxg:TableView.RowCellMenuCustomizations>
+                                            <dxb:BarButtonItem Name="deleteDataItem" Content="Supprimer" Glyph="/Ht.Ihsil.Rgph.App.Superviseur;component/images/delete-xxl.png" SerializationName="deleteDataItem" ItemClick="deleteDataItem_ItemClick"  />
+                                        </dxg:TableView.RowCellMenuCustomizations>
+                                    </dxg:TableView>
+                                </dxg:GridControl.View>
+                            </dxg:GridControl>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="Tab">
 
-        </GroupBox>
+            </dx:DXTabItem>
+        </dx:DXTabControl>
     </Grid>
+
 </UserControl>

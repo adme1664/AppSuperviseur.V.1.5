@@ -106,6 +106,31 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return null;
 
         }
+        public static string getGeoInformationCommune(string sdeId)
+        {
+            try
+            {
+                SdeInformation sde = getSdeInformation(sdeId);
+                ContreEnqueteService service = new ContreEnqueteService();
+                if (sde.ComId.Length == 3)
+                {
+                    sde.ComId = "0" + sde.ComId;
+                }
+                if (sde.VqseId.Length == 6)
+                {
+                    sde.VqseId = "0" + sde.VqseId;
+                }
+                string comNom = service.getCommune(sde.ComId).ComNom;
+                string vqseNom = service.getVqse(sde.VqseId).VqseNom;
+                return "("+sdeId+")"+ "/Seksyon Kominal: " + vqseNom;
+            }
+            catch (Exception)
+            {
+
+            }
+            return null;
+
+        }
         public static void killProcess(Process[] procs)
         {
             if (procs.Length != 0)

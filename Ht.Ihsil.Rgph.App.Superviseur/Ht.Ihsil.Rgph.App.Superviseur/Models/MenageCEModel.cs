@@ -8,6 +8,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
 {
     public class MenageCEModel
     {
+        public long Id { get; set; }
         public long MenageId { get; set; }
         public long LogeId { get; set; }
         public long BatimentId { get; set; }

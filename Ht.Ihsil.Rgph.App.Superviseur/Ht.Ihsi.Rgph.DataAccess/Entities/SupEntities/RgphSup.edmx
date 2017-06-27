@@ -22,9 +22,15 @@
         </EntityType>
         <EntityType Name="Tbl_BatimentCE">
           <Key>
-            <PropertyRef Name="BatimentId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="BatimentId" Type="integer" Nullable="false" />
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BatimentId" Type="integer" />
+          <Property Name="DeptId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="ComId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="VqseId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="DistrictId" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Zone" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="SdeId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Qhabitation" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Qrec" Type="nvarchar" MaxLength="2147483647" />
@@ -90,9 +96,10 @@ avertissement 6002: La table/vue 'main.Tbl_Commune' n'a pas de clé primaire dé
         </EntityType>
         <EntityType Name="Tbl_DecesCE">
           <Key>
-            <PropertyRef Name="DecesId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="DecesId" Type="integer" Nullable="false" />
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DecesId" Type="integer" />
           <Property Name="MenageId" Type="integer" />
           <Property Name="LogeId" Type="integer" />
           <Property Name="BatimentId" Type="integer" />
@@ -134,9 +141,10 @@ avertissement 6002: La table/vue 'main.Tbl_Departement' n'a pas de clé primaire
         </EntityType>
         <EntityType Name="Tbl_EmigreCE">
           <Key>
-            <PropertyRef Name="EmigreId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="EmigreId" Type="integer" Nullable="false" />
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmigreId" Type="integer" />
           <Property Name="MenageId" Type="integer" />
           <Property Name="LogeId" Type="integer" />
           <Property Name="BatimentId" Type="integer" />
@@ -154,9 +162,10 @@ avertissement 6002: La table/vue 'main.Tbl_Departement' n'a pas de clé primaire
         </EntityType>
         <EntityType Name="Tbl_IndividusCE">
           <Key>
-            <PropertyRef Name="IndividuId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="IndividuId" Type="integer" Nullable="false" />
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IndividuId" Type="integer" />
           <Property Name="MenageId" Type="integer" />
           <Property Name="LogeId" Type="integer" />
           <Property Name="BatimentId" Type="integer" />
@@ -206,9 +215,10 @@ avertissement 6002: La table/vue 'main.Tbl_Departement' n'a pas de clé primaire
         </EntityType>
         <EntityType Name="Tbl_LogementCE">
           <Key>
-            <PropertyRef Name="LogeId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="LogeId" Type="integer" Nullable="false" />
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogeId" Type="integer" />
           <Property Name="BatimentId" Type="integer" />
           <Property Name="SdeId" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="QlCategLogement" Type="integer" />
@@ -246,9 +256,10 @@ avertissement 6002: La table/vue 'main.Tbl_Departement' n'a pas de clé primaire
         </EntityType>
         <EntityType Name="Tbl_MenageCE">
           <Key>
-            <PropertyRef Name="MenageId" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="MenageId" Type="integer" Nullable="false" />
+          <Property Name="Id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MenageId" Type="integer" />
           <Property Name="LogeId" Type="integer" />
           <Property Name="BatimentId" Type="integer" />
           <Property Name="SdeId" Type="nvarchar" MaxLength="2147483647" />
@@ -575,7 +586,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
         </EntityType>
         <EntityType Name="Tbl_BatimentCE">
           <Key>
-            <PropertyRef Name="BatimentId" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="BatimentId" Type="Int64" Nullable="false" />
           <Property Name="SdeId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
@@ -601,6 +612,12 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="DateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="DureeSaisie" Type="Int64" />
           <Property Name="IsContreEnqueteMade" Type="Int64" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeptId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="ComId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="VqseId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictId" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Zone" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tbl_ContreEnquete">
           <Key>
@@ -620,7 +637,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
         </EntityType>
         <EntityType Name="Tbl_DecesCE">
           <Key>
-            <PropertyRef Name="DecesId" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="DecesId" Type="Int64" Nullable="false" />
           <Property Name="MenageId" Type="Int64" />
@@ -637,6 +654,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="IsContreEnqueteMade" Type="Int64" />
           <Property Name="Qd1aNbreDecesF" Type="Int64" />
           <Property Name="Qd1aNbreDecesG" Type="Int64" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Tbl_DetailsRapport">
           <Key>
@@ -655,7 +673,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
         </EntityType>
         <EntityType Name="Tbl_IndividusCE">
           <Key>
-            <PropertyRef Name="IndividuId" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="IndividuId" Type="Int64" Nullable="false" />
           <Property Name="MenageId" Type="Int64" />
@@ -704,10 +722,11 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="DateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="DureeSaisie" Type="Int64" />
           <Property Name="IsContreEnqueteMade" Type="Int64" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Tbl_LogementCE">
           <Key>
-            <PropertyRef Name="LogeId" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="LogeId" Type="Int64" Nullable="false" />
           <Property Name="BatimentId" Type="Int64" />
@@ -730,6 +749,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="DateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="DureeSaisie" Type="Int64" />
           <Property Name="IsContreEnqueteMade" Type="Int64" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Tbl_Materiels">
           <Key>
@@ -747,7 +767,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
         </EntityType>
         <EntityType Name="Tbl_MenageCE">
           <Key>
-            <PropertyRef Name="MenageId" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="MenageId" Type="Int64" Nullable="false" />
           <Property Name="LogeId" Type="Int64" />
@@ -765,6 +785,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="DateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="DureeSaisie" Type="Int64" />
           <Property Name="IsContreEnqueteMade" Type="Int64" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Tbl_Probleme">
           <Key>
@@ -1012,7 +1033,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
         </EntityContainer>
         <EntityType Name="Tbl_EmigreCE">
           <Key>
-            <PropertyRef Name="EmigreId" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="EmigreId" Type="Int64" Nullable="false" />
           <Property Name="MenageId" Type="Int64" />
@@ -1029,6 +1050,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="DateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="DureeSaisie" Type="Int64" />
           <Property Name="IsContreEnqueteMade" Type="Int64" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1055,6 +1077,12 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <EntitySetMapping Name="Tbl_BatimentCE">
             <EntityTypeMapping TypeName="RgphModel.Tbl_BatimentCE">
               <MappingFragment StoreEntitySet="Tbl_BatimentCE">
+                <ScalarProperty Name="Zone" ColumnName="Zone" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+                <ScalarProperty Name="VqseId" ColumnName="VqseId" />
+                <ScalarProperty Name="ComId" ColumnName="ComId" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BatimentId" ColumnName="BatimentId" />
                 <ScalarProperty Name="SdeId" ColumnName="SdeId" />
                 <ScalarProperty Name="Qhabitation" ColumnName="Qhabitation" />
@@ -1102,6 +1130,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <EntitySetMapping Name="Tbl_DecesCE">
             <EntityTypeMapping TypeName="RgphModel.Tbl_DecesCE">
               <MappingFragment StoreEntitySet="Tbl_DecesCE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Qd1aNbreDecesG" ColumnName="Qd1aNbreDecesG" />
                 <ScalarProperty Name="Qd1aNbreDecesF" ColumnName="Qd1aNbreDecesF" />
                 <ScalarProperty Name="DecesId" ColumnName="DecesId" />
@@ -1139,6 +1168,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <EntitySetMapping Name="Tbl_IndividusCE">
             <EntityTypeMapping TypeName="RgphModel.Tbl_IndividusCE">
               <MappingFragment StoreEntitySet="Tbl_IndividusCE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IndividuId" ColumnName="IndividuId" />
                 <ScalarProperty Name="MenageId" ColumnName="MenageId" />
                 <ScalarProperty Name="LogeId" ColumnName="LogeId" />
@@ -1192,6 +1222,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <EntitySetMapping Name="Tbl_LogementCE">
             <EntityTypeMapping TypeName="RgphModel.Tbl_LogementCE">
               <MappingFragment StoreEntitySet="Tbl_LogementCE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LogeId" ColumnName="LogeId" />
                 <ScalarProperty Name="BatimentId" ColumnName="BatimentId" />
                 <ScalarProperty Name="SdeId" ColumnName="SdeId" />
@@ -1234,6 +1265,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <EntitySetMapping Name="Tbl_MenageCE">
             <EntityTypeMapping TypeName="RgphModel.Tbl_MenageCE">
               <MappingFragment StoreEntitySet="Tbl_MenageCE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="MenageId" ColumnName="MenageId" />
                 <ScalarProperty Name="LogeId" ColumnName="LogeId" />
                 <ScalarProperty Name="BatimentId" ColumnName="BatimentId" />
@@ -1484,6 +1516,7 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <EntitySetMapping Name="Tbl_EmigreCE">
             <EntityTypeMapping TypeName="RgphModel.Tbl_EmigreCE">
               <MappingFragment StoreEntitySet="Tbl_EmigreCE">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="IsContreEnqueteMade" ColumnName="IsContreEnqueteMade" />
                 <ScalarProperty Name="DureeSaisie" ColumnName="DureeSaisie" />
                 <ScalarProperty Name="DateFinCollecte" ColumnName="DateFinCollecte" />

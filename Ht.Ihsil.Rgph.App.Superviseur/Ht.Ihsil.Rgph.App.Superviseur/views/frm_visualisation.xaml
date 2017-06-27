@@ -217,7 +217,7 @@
                                 </StackPanel>
                             </Border>
                         </HierarchicalDataTemplate>
-                        <HierarchicalDataTemplate DataType="{x:Type loc:MenageTypeViewModel}" ItemsSource="{Binding Path=Children}" >
+                        <HierarchicalDataTemplate DataType="{x:Type loc:MenageTypeViewModel}" ItemsSource="{Binding Path=Children}">
                             <Border Width="100" BorderBrush="Black" BorderThickness="1"  Background="LightBlue" CornerRadius="2" Margin="1" >
                                 <StackPanel Orientation="Horizontal" >
                                    <Image Width="16" Height="16" Margin="3,0" Source="/images/home.png" />

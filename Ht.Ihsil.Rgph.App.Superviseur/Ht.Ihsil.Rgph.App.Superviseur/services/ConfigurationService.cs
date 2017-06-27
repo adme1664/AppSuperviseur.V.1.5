@@ -31,7 +31,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
          }
         #endregion
 
-        #region METHODS DEFINITIONS
+        #region SDE
         public Models.SdeModel getSdeDetails(string sdeId)
         {
             try
@@ -87,6 +87,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             return null;
 
         }
+        #endregion
+
+        #region AGENTS
 
         public void insertAgentSde(Models.AgentModel agent)
         {
@@ -138,6 +141,143 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
         }
 
+        public Models.SdeModel getSdeByAgent(long agentId)
+        {
+            try
+            {
+                return ModelMapper.MapToSdeModel1(daoSettings.getSdeByAgent(agentId));
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return null;
+        }
+
+
+        public List<Models.AgentModel> searchAllAgents()
+        {
+            try
+            {
+                List<Tbl_Agent> list = daoSettings.searchAllAgents();
+                List<AgentModel> listOfAgent = new List<AgentModel>();
+                if (list != null)
+                {
+                    foreach (Tbl_Agent agent in list)
+                    {
+                        AgentModel model = ModelMapper.MapToAgentModel(agent);
+                        listOfAgent.Add(model);
+                    }
+                }
+                return listOfAgent;
+            }
+            catch (Exception ex)
+            {
+                log.Info("getSdeByAgent/Error:" + ex.Message);
+            }
+            return null;
+
+        }
+        public List<AgentModel> searchAllAgentsToDisplay()
+        {
+            try
+            {
+                List<Tbl_Agent> list = daoSettings.searchAllAgents();
+                List<AgentModel> listOfAgent = new List<AgentModel>();
+                if (list != null)
+                {
+                    foreach (Tbl_Agent agent in list)
+                    {
+                        AgentModel model = ModelMapper.MapToAgentModel(agent);
+                        model.Username = "" + agent.Nom + " " + agent.Prenom + "(" + agent.CodeUtilisateur + ")";
+                        listOfAgent.Add(model);
+                    }
+                }
+                return listOfAgent;
+            }
+            catch (Exception ex)
+            {
+                log.Info("searchAllAgentsToDisplay/Error:" + ex.Message);
+            }
+            return null;
+        }
+
+        public bool savePersonne(tbl_personnel person)
+        {
+            try
+            {
+                if (person != null)
+                {
+                    sdw = new SqliteDataWriter(person.sdeId);
+                    return sdw.savePersonnel(person);
+
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return false;
+        }
+   
+        public bool ifPersonExist(tbl_personnel person)
+        {
+            try
+            {
+                sdw = new SqliteDataWriter(person.sdeId);
+                return sdw.ifPersonExist(person);
+            }
+            catch (Exception)
+            {
+
+            }
+            return false;
+        }
+
+
+        public bool isAgentExist(int agentId)
+        {
+            try
+            {
+                return daoSettings.isAgentGotDevice(agentId);
+            }
+            catch (Exception)
+            {
+
+            }
+            return false;
+
+        }
+        #endregion
+
+        #region MATERIELS
+        public Tbl_Materiels getMaterielByAgent(int agentId)
+        {
+            try
+            {
+                return daoSettings.getRepository().MaterielsRepository.Find(m => m.AgentId == agentId).FirstOrDefault();
+            }
+            catch (Exception )
+            {
+
+            }
+            return new Tbl_Materiels();
+        }
+
+        public bool deleteMateriel(int id)
+        {
+            try
+            {
+                daoSettings.getRepository().MaterielsRepository.Delete(id);
+                daoSettings.getRepository().Save();
+                return true;
+            }
+            catch (Exception)
+            {
+
+            }
+            return false;
+        }
         public bool saveMateriels(Tbl_Materiels materiels)
         {
             try
@@ -211,119 +351,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             return false;
         }
-
-
-        public Models.SdeModel getSdeByAgent(long agentId)
+        public List<Tbl_Materiels> SearchMateriels()
         {
             try
             {
-                return ModelMapper.MapToSdeModel1(daoSettings.getSdeByAgent(agentId));
-            }
-            catch (Exception ex)
-            {
-                
-            }
-            return null;
-        }
-
-
-        public List<Models.AgentModel> searchAllAgents()
-        {
-            try
-            {
-                List<Tbl_Agent> list = daoSettings.searchAllAgents();
-                List<AgentModel> listOfAgent = new List<AgentModel>();
-                if (list != null)
-                {
-                    foreach (Tbl_Agent agent in list)
-                    {
-                        AgentModel model = ModelMapper.MapToAgentModel(agent);
-                        listOfAgent.Add(model);
-                    }
-                }
-                return listOfAgent;
-            }
-            catch (Exception ex)
-            {
-                log.Info("getSdeByAgent/Error:" + ex.Message);
-            }
-            return null;
-            
-        }
-        public List<AgentModel> searchAllAgentsToDisplay()
-        {
-            try
-            {
-                List<Tbl_Agent> list = daoSettings.searchAllAgents();
-                List<AgentModel> listOfAgent = new List<AgentModel>();
-                if (list != null)
-                {
-                    foreach (Tbl_Agent agent in list)
-                    {
-                        AgentModel model = ModelMapper.MapToAgentModel(agent);
-                        model.Username = "" + agent.Nom + " " + agent.Prenom + "(" + agent.CodeUtilisateur + ")";
-                        listOfAgent.Add(model);
-                    }
-                }
-                return listOfAgent;
-            }
-            catch (Exception ex)
-            {
-                log.Info("searchAllAgentsToDisplay/Error:" + ex.Message);
-            }
-            return null;
-        }
-
-        public bool savePersonne(tbl_personnel person)
-        {
-            try
-            {
-                if (person != null)
-                {
-                    sdw = new SqliteDataWriter(person.sdeId);
-                    return sdw.savePersonnel(person);
-
-                }
+                return daoSettings.searchMateriels();
             }
             catch (Exception)
             {
 
             }
-            return false;
+            return new List<Tbl_Materiels>();
         }
         #endregion
-
-
-        public bool ifPersonExist(tbl_personnel person)
-        {
-            try
-            {
-                sdw = new SqliteDataWriter(person.sdeId);
-                return sdw.ifPersonExist(person);
-            }
-            catch (Exception)
-            {
-
-            }
-            return false;
-        }
-
-
-        public bool isAgentExist(int agentId)
-        {
-            try
-            {
-                 return daoSettings.isAgentGotDevice(agentId);
-            }
-            catch (Exception)
-            {
-
-            }
-            return false;
-           
-        }
-
-
 
         #region GESTION DES RETOURS
 
@@ -495,6 +535,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
         }
         #endregion
-     
+
+
+
+      
     }
 }

@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -36,20 +38,22 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         private DeviceManager device;
         BackgroundWorker bckw;
         SqliteDataReaderService service;
-        SqliteDataWriter sqliteWrite;
         ISqliteReader reader = null;
         IMdfService mdfService;
         Logger log;
         MainWindow1 main;
-        string sdeId;
-        SdeModel sdeCollecteData = null;
-        SdeModel sdeCEData = null;
-        TypeModel typeBatiment = null;
         ConfigurationService settings = null;
         ThreadStart ths = null;
         Thread t = null;
+        int typeTransfert = 0;
         bool copied = false;
-        public frm_pop_up_transfert()
+        private const int GWL_STYLE = -16;
+        private const int WS_SYSMENU = 0x80000;
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        public frm_pop_up_transfert(int type)
         {
             InitializeComponent();
             device = new DeviceManager();
@@ -57,6 +61,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             service = new SqliteDataReaderService();
             log = new Logger();
             mdfService = new MdfService();
+            typeTransfert = type;
+            if(typeTransfert==Constant.TRANSFERT_MOBILE)
+                grpTransfert.Dispatcher.BeginInvoke((Action)(() => grpTransfert.Header = "Transfè k ap fèt sou odinatè sipèvizè a."));
+            else
+            {
+                grpTransfert.Dispatcher.BeginInvoke((Action)(() => grpTransfert.Header = "Transfè k ap fèt sou tablèt ajan an. "));
+            }
             Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
         }
 
@@ -69,6 +80,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 if (device.IsConnected == true)
                 {
+                    lbl_trans.Dispatcher.BeginInvoke((Action)(() => lbl_trans.Content = "Tablèt la konekte."));
                     DeviceManager dev = null;
                     DeviceInformation info = null;
                     dev = new DeviceManager();
@@ -150,6 +162,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
                             img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                             btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
+                            btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
                         }
 
                     }
@@ -159,6 +172,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
                         img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                         btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
+                        btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
                     }
                 }
                 else
@@ -167,6 +181,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
                     img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                     btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
+                    btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
                 }
             }
             catch (Exception)
@@ -182,6 +197,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             string sdeId = null;
             if (device.IsConnected == true)
             {
+                lbl_trans.Dispatcher.BeginInvoke((Action)(() => lbl_trans.Content = "Tablèt la konekte."));
                 DeviceManager dev = null;
                 DeviceInformation info = null;
                 Tbl_Materiels mat = null;
@@ -253,6 +269,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                     btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
                     btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.Content = "Fermer"));
+                    btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
                 }
             }
             else
@@ -261,6 +278,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                 btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
                 btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.Content = "Fermer"));
+                btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
             }
         }
 
@@ -280,21 +298,57 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Visible));
                 img_finish.Dispatcher.BeginInvoke((Action)(() => img_finish.Visibility = Visibility.Hidden));
                 btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = false));
+                btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = false));
                 try
                 {
-                    ths = new ThreadStart(() => pushFile());
-                    t = new Thread(ths);
-                    t.Start();
+                    if (typeTransfert == Constant.TRANSFERT_PC)
+                    {
+                        ths = new ThreadStart(() => pushFile());
+                        t = new Thread(ths);
+                        t.Start();
+                    }
+                    else
+                    {
+                        ths = new ThreadStart(() => pullFile());
+                        t = new Thread(ths);
+                        t.Start();
+                    }
+                    
                 }
                 catch (Exception ex)
                 {
                     log.Info("ERREUR:<>===================<>" + ex.Message);
+                }
+                finally
+                {
+                    Process[] procs = Process.GetProcessesByName("adb");
+                    if (procs.Length != 0)
+                    {
+                        foreach (var proc in procs)
+                        {
+                            if (!proc.HasExited)
+                            {
+                                proc.Kill();
+                            }
+                        }
+                    }
                 }
             }
             else
             {
                 this.Close();
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var hwnd = new WindowInteropHelper(this).Handle;
+            SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+        }
+
+        private void btn_annuler_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

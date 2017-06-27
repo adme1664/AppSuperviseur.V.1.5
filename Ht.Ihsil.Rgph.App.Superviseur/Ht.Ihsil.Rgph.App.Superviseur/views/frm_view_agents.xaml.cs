@@ -45,6 +45,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             service = new ConfigurationService();
             DataContext = this;
             lbAgents.ItemsSource = service.searchAllAgents();
+            List<MaterielModel> listOf = ModelMapper.MapToList(service.SearchMateriels());
+            gridTablette.ItemsSource=listOf;
         }
 
         private void btn_synch_Click(object sender, RoutedEventArgs e)
@@ -110,6 +112,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 service.savePersonne(person);
                                 Tbl_Materiels mat = service.getMateriels(devInfo.Serial);
                                 mat.IsConfigured = 1;
+                                mat.LastSynchronisation = DateTime.Now.ToString();
                                 service.updateMateriels(mat);
                                 string sourceFileName = "";
                                 if (Directory.Exists(MAIN_DATABASE_PATH))
@@ -150,6 +153,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                     MessageBox.Show(Constant.MSG_TRANSFERT_TERMINE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                                 }
                                 MessageBox.Show("Tablet sa a byen konfigire.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                gridTablette.Dispatcher.BeginInvoke((Action)(() => gridTablette.ItemsSource = ModelMapper.MapToList(service.SearchMateriels())));
                                 //Arretez le processus ADB
                                 Utilities.killProcess(procs);
                                 //
@@ -195,9 +199,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 lbSdes.ItemsSource = sdes;
                 List<AgentModel> agents = new List<AgentModel>();
                 agents.Add(agent);
-                dtg.ItemsSource = agents;
+                List<MaterielModel> materielForAgent=new List<MaterielModel>();
+                MaterielModel materiel = ModelMapper.MapToMateriel(service.getMaterielByAgent(agent.AgentId));
+                if (materiel != null)
+                {
+                    materiel.Agent = agentModel.AgentName;
+                    materielForAgent.Add(materiel);
                 
-            }
+                }
+                gridTablette.ItemsSource = materielForAgent;
+             }
             catch (Exception)
             {
 
@@ -249,6 +260,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 mat.Model = devInfo.Model;
                                 mat.Serial = devInfo.Serial;
                                 mat.Version = devInfo.OsVersion;
+                                mat.DateAssignation = DateTime.Now.ToString();
                                 mat.LastSynchronisation = DateTime.Now.ToString();
                                 mat.IsConfigured = 0;
                                 mat.Imei = "N/A";
@@ -297,7 +309,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 {
                                     MessageBox.Show(Constant.MSG_FICHIER_PAS_COPIE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 }
-                                MessageBox.Show("Tablet sa byen anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("Tablèt sa byen anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                gridTablette.Dispatcher.BeginInvoke((Action)(() => gridTablette.ItemsSource = ModelMapper.MapToList(service.SearchMateriels())));
                                 //Arretez le processus ADB
                                 Utilities.killProcess(procs);
                                 //
@@ -321,6 +334,33 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
 
             }
+        }
+
+        private void gridTablette_AutoGeneratingColumn(object sender, DevExpress.Xpf.Grid.AutoGeneratingColumnEventArgs e)
+        {
+            if (e.Column.FieldName == "MaterielId")
+                e.Column.Visible = false;
+            if (e.Column.FieldName == "Imei")
+                e.Column.Visible = false;
+        }
+
+        private void deleteDataItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            MaterielModel row = (MaterielModel)gridTablette.GetRow(gridTablette.GetSelectedRowHandles()[0]);
+            if (row != null)
+            {
+                MessageBoxResult confirm = MessageBox.Show("Eske ou vle efase tablèt sa a?", Constant.WINDOW_TITLE, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    bool result = service.deleteMateriel(Convert.ToInt32(row.MaterielId));
+                    if (result == true)
+                    {
+                        MessageBox.Show("Tablèt sa efase.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                        gridTablette.ItemsSource = ModelMapper.MapToList(service.SearchMateriels());
+
+                    }
+                }
+             }
         }
     }
 }

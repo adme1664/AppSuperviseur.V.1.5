@@ -8,6 +8,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
 {
    public class EmigreCEModel
     {
+       public long Id { get; set; }
         public long EmigreId { get; set; }
         public Nullable<long> MenageId { get; set; }
         public Nullable<long> LogeId { get; set; }

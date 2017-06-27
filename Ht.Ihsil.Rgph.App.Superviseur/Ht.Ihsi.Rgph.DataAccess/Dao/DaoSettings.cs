@@ -423,5 +423,29 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
             }
         }
         #endregion
+
+        public MainRepository getRepository()
+        {
+            if (repository == null)
+            {
+                repository = new MainRepository();
+                log = new Logger();
+            }
+            return repository;
+        }
+
+
+        public List<Tbl_Materiels> searchMateriels()
+        {
+            try
+            {
+                return repository.MaterielsRepository.Find().ToList();
+            }
+            catch (Exception)
+            {
+
+            }
+            return new List<Tbl_Materiels>();
+        }
     }
 }

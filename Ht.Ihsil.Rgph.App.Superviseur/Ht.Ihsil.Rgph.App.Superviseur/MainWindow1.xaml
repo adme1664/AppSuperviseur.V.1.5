@@ -19,6 +19,9 @@
             <dxr:RibbonDefaultPageCategory Name="rpc_sdes" Color="White" Loaded="rpc_sdes_Loaded">
                 <dxr:RibbonPage Caption="SDES">
                     <dxr:RibbonPageGroup >
+                        <dxb:BarButtonItem x:Name="bbi_synchronisation"   Content="Synchronisation" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tb_pc.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_synchronisation_ItemClick"/>
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup >
                         <dxb:BarButtonItem x:Name="bbi_verification"   Content="Verification" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/vi1.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_verification_ItemClick" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup>
@@ -71,8 +74,8 @@
             <dxr:RibbonPageCategory x:Name="rpc_tab_bord" Color="White">
                 <dxr:RibbonPage Caption="CONFIGURATIONS">
                     <dxr:RibbonPageGroup ToolTip="Configurations">
-                        <dxb:BarButtonItem x:Name="bbi_sdes" Content="SDEs" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/map.png"  RibbonStyle="Large" ItemClick="bbi_sdes_ItemClick"/>
-                        <dxb:BarItemSeparator/>
+                        <!--<dxb:BarButtonItem x:Name="bbi_sdes" Content="SDEs" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/map.png"  RibbonStyle="Large" ItemClick="bbi_sdes_ItemClick"/>
+                        <dxb:BarItemSeparator/>-->
                         <dxb:BarButtonItem x:Name="bbi_agents" Content="Tablettes" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tab_settings.png" ItemClick="bbi_agents_ItemClick"/>
                         <dxb:BarItemSeparator/>
                         <dxb:BarButtonItem x:Name="bbi_avances" Content="Avancées" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/portable_setting.png" ItemClick="bbi_avances_ItemClick" />

@@ -19,6 +19,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public string qn2cAgeAuMomentDepart { get; set; }
         public short qn2dVivantToujours { get; set; }
         public short qn2eDernierPaysResidence { get; set; }
+        public short qn1Emigration { get; set; }
+        public short qn1NbreEmigreF { get; set; }
+        public short qn1NbreEmigreG { get; set; }
         public short statut { get; set; }
         public bool isFieldAllFilled { get; set; }
         public string dateDebutCollecte { get; set; }

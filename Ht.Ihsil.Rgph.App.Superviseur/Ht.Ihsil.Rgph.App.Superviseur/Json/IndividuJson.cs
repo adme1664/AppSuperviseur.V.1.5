@@ -17,6 +17,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public string qp2APrenom { get; set; }
         public string qp2BNom { get; set; }
         public short qp3LienDeParente { get; set; }
+        public short q3aRaisonChefMenage { get; set; }
         public short qp3HabiteDansMenage { get; set; }
         public short qp4Sexe { get; set; }
         public short qp5DateNaissanceJour { get; set; }

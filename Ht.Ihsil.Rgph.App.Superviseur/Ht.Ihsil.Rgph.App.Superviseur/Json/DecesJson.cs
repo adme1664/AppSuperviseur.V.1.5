@@ -18,6 +18,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public string qd2bAgeDecede { get; set; }
         public short qd2c1CirconstanceDeces { get; set; }
         public short qd2c2CauseDeces { get; set; }
+        public short qd1aNbreDecesF { get; set; }
+        public short qd1aNbreDecesG { get; set; }
         public short statut { get; set; }
         public bool isFieldAllFilled { get; set; }
         public string dateDebutCollecte { get; set; }

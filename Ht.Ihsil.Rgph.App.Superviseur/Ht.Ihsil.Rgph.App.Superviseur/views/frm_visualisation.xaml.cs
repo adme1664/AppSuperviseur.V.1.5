@@ -1223,7 +1223,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         private void cm_transfert_Click(object sender, RoutedEventArgs e)
         {
-            frm_pop_up_transfert popupTransfert = new frm_pop_up_transfert();
+            frm_pop_up_transfert popupTransfert = new frm_pop_up_transfert(Constant.TRANSFERT_PC);
             popupTransfert.Closing += popupTransfert_Closing;
             if (popupTransfert.ShowDialog() == true)
             {
@@ -1234,9 +1234,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         void popupTransfert_Closing(object sender, CancelEventArgs e)
         {
             
-        }
-
-       
+        }       
     }
 
 }

@@ -29,5 +29,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
         public Nullable<long> IsContreEnqueteMade { get; set; }
         public Nullable<long> Qd1aNbreDecesF { get; set; }
         public Nullable<long> Qd1aNbreDecesG { get; set; }
+        public long Id { get; set; }
     }
 }

@@ -167,6 +167,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             main_grid_1.IsSplashScreenShown = false;
         }
 
+        private void bbi_synchronisation_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            frm_pop_up_transfert popupTransfert = new frm_pop_up_transfert(Constant.TRANSFERT_MOBILE);
+            popupTransfert.Closing += popupTransfert_Closing;
+            if (popupTransfert.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        void popupTransfert_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            
+        }
+
         
     }
 }
