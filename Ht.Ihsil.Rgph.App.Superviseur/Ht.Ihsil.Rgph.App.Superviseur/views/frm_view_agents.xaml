@@ -20,7 +20,7 @@
                         <RowDefinition Height="213"/>
                         <RowDefinition Height="317*"/>
                     </Grid.RowDefinitions>
-                    <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false" Margin="201,-7,-40,7" Grid.Column="0" Grid.ColumnSpan="2">
+                    <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false" Margin="18,-7,12,7" Grid.Column="1">
                         <dx:WaitIndicator.ContentTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
@@ -54,10 +54,10 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </GroupBox>
-                    <GroupBox Header="Actions" HorizontalAlignment="Left" Margin="746,17,0,0" VerticalAlignment="Top" Height="176" Width="167" Grid.Row="0" Grid.Column="0">
+                    <GroupBox Header="Actions" HorizontalAlignment="Left" Margin="745,17,0,0" VerticalAlignment="Top" Height="176" Width="172" Grid.Row="0" Grid.Column="0">
                         <Grid>
-                            <Button x:Name="btn_synch" Content="Configurer la tablette"  Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" ToolTip="Synchroniser avec le serveur" Width="140" Height="40"  RenderTransformOrigin="0.5,-5.04" Click="btn_synch_Click" HorizontalAlignment="Left" Margin="0,73,-3,10"  />
-                            <Button x:Name="btn_save_tab" Content="Enregistrer la tablette" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="137" Height="43" ToolTip="Enregsitrer la tablette" Click="btn_save_tab_Click"  />
+                            <Button x:Name="btn_synch" Content="Configurer la tablette"  Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" ToolTip="Synchroniser avec le serveur" Width="136" Height="40"  RenderTransformOrigin="0.5,-5.04" Click="btn_synch_Click" HorizontalAlignment="Left" Margin="6,76,0,24"  />
+                            <Button x:Name="btn_save_tab" Content="Enregistrer la tablette" HorizontalAlignment="Left" Margin="5,11,0,0" VerticalAlignment="Top" Width="137" Height="43" ToolTip="Enregsitrer la tablette" Click="btn_save_tab_Click"  />
                         </Grid>
 
                     </GroupBox>

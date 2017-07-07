@@ -32,23 +32,24 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         private IUtilisateurService service;
         private bool state = false;
         private static string MAIN_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Data\Databases\";
-        
+
         Logger log;
         public frm_connexion()
         {
             InitializeComponent();
             Users.users = new Users();
-            Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory+@"Data\";
+            Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
             service = new UtilisateurService();
             log = new Logger();
         }
 
         private void btn_connexion_Click(object sender, RoutedEventArgs e)
         {
-            busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Tentative de connexion..."));
-            
+
+
             try
             {
+
                 initializeConnexion(t_username.Text, t_password.Password);
                 if (state == true)
                 {
@@ -65,7 +66,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         private void Image_MouseEnter(object sender, MouseEventArgs e)
         {
-            
+
         }
 
         private void btn_annuler_Click(object sender, RoutedEventArgs e)
@@ -79,14 +80,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 busyIndicator.BusyContent = message;
-               
+
             }, null);
         }
 
         //Pinger le serveur
 
         public bool pingTheServer(string adrIp)
-        { 
+        {
             try
             {
                 var ping = new Ping();
@@ -102,9 +103,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         public bool initializeConnexion(string username, string password)
         {
             bool pingStatus = true;
+            Dispatcher.Invoke(new Action(() =>
+            {
+                busyIndicator.IsBusy = true;
+                busyIndicator.BusyContent = "Tentative de connexion...";
+                img_loading.Visibility = Visibility.Visible;
+            }
+            ));
+
             if (username.Length == 0 || password.Length == 0)
             {
-                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Tentative de connexion..."));
                 busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
                 MessageBox.Show("Veuillez saisir un nom utilisateur et un mot de passe", "ERREUR/IHSI", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -119,21 +127,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         string[] tab = username.Split('.');
                         username = tab[0] + "" + tab[1];
                         user = service.authenticateUserLocally(username, password);
+                        img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
 
                     }
                     catch (Exception ex)
                     {
                         log.Info("Error:" + ex.Message);
+                        img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                     }
                 }
                 else
                 {
 
-                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Application non encore configuree. Connexion avec le serveur...")); 
+                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Application non encore configuree. Connexion avec le serveur..."));
                     pingStatus = pingTheServer(ConfigurationManager.AppSettings.Get("adrIpServer"));
                     if (pingStatus == false)
                     {
-                        MessageBox.Show("Serveur indisponible", "IHSI/ERREUR", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Serveur indisponible", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         return false;
                     }
 
@@ -147,7 +157,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
                     }
 
-                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion reussie")); 
+                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion reussie"));
                 }
                 if (Utils.IsNotNull(user))
                 {
@@ -161,16 +171,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
                 else
                 {
-                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Erreur de connexion.")); 
+                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Erreur de connexion."));
                     Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         busyIndicator.IsBusy = false;
                         lbl_error.Content = "Erreur- Nom Utilisateur ou mot de passe errone.";
                         lbl_error.Visibility = Visibility.Visible;
+                        img_loading.Visibility = Visibility.Hidden;
                     }, null);
                 }
             }
-            
+
             return state;
         }
 

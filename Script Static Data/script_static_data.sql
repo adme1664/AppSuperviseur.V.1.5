@@ -1,5 +1,5 @@
 INSERT INTO `Tbl_VilleQuartierSectionCommunale` (VqseId,VqseNom,ComId) VALUES ('0111-01','1ère Sect. Turgeau','0111'),
- ('0111-02','2ème Sect. Morne l''Hôpital','0111'),https://docs.google.com/spreadsheets/?authuser=0&usp=sheets_web
+ ('0111-02','2ème Sect. Morne l''Hôpital','0111')
  ('0111-03','3ème Sect. Martissant','0111'),
  ('0111-90','Ville de Port-au-Prince','0111'),
  ('0112-01','1ère Sect. St-Marti','0112'),
@@ -1781,5 +1781,35 @@ INSERT INTO Tbl_Reponses (CodeUniqueReponse,[CodeReponse] , [LibelleReponse]) VA
 
 INSERT INTO Tbl_Reponses (CodeUniqueReponse,[CodeReponse] , [LibelleReponse]) VALUES ('QF4-1', '1', '1.Wi');
 INSERT INTO Tbl_Reponses (CodeUniqueReponse,[CodeReponse] , [LibelleReponse]) VALUES ('QF4-2', '2', '2.Non');
+
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('1', 'B. – KARAKTERISTIK KAY LA');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('2', 'LIN.- KARAKTERISTIK LOJMAN ENDIVIDYÈL LA');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('3', 'MENAGE');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('4', 'N.- MIGRASYON');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('5', 'N.- MOUN MOURI');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('6', 'CP.KARAKTERISTIK MOUN NAN');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('7', 'EV. EVALYASYON TRAVAY LA');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('8', 'CP.KARAKTERISTIK MOUN NAN/POU TOUT MANM MENAJ LA');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('9', 'AKTIVITE AK FONKSYÒNMAN MOUN NAN/POU MOUN KI GEN 5 LANE OSWA PI PLIS');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('12', 'AKTIVITE AK FONKSYÒNMAN MOUN NAN/POU MOUN KI GEN 5 LANE OSWA PI PLIS/LIMITASYON NAN ZAFE WE');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('13', 'AKTIVITE AK FONKSYÒNMAN MOUN NAN/POU MOUN KI GEN 5 LANE OSWA PI PLIS/LIMITASYON NAN ZAFE TANDE');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('14', 'AKTIVITE AK FONKSYÒNMAN MOUN NAN/POU MOUN KI GEN 5 LANE OSWA PI PLIS/LIMITASYON NAN ZAFE MACHE (BOUJE)');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('15', 'AKTIVITE AK FONKSYÒNMAN MOUN NAN/POU MOUN KI GEN 5 LANE OSWA PI PLIS/LIMITASYON KOYITIV');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('16', 'AKTIVITE AK FONKSYÒNMAN MOUN NAN/POU MOUN KI GEN 5 LANE OSWA PI PLIS/PRAN SWEN PWOP TET OU OSWA OKIPE TET OU OUMENM');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('17', 'AKTIVITE AK FONKSYÒNMAN MOUN NAN/POU MOUN KI GEN 5 LANE OSWA PI PLIS/LIMITASYON KOMINIKATIF');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('18', 'EDIKASYON/POU MOUN KI GEN 3 LANE OSWA PLIS');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('19', 'AKTIVITE EKONOMIK');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('20', 'FEKONDITE');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('21', 'EV-A  ESTATI (INISYAL) KESYONÈ MENAJ LA ');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('22', 'EV-B  PWENSIPAL MOUN KI REPON N KESYON YO (REPONDAN)');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('23', 'Lis moun ki manm menaj la/ nan lojman kolektif la');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('24', 'Moun ki mouri ak motalite matenel');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('25', 'Edikasyon');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('26', 'Aktivite ak Fonksyonman');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('27', 'Aktivite ekonomik');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('28', 'Fekondite');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('29', 'EV-D  ENFOMASYON JENERAL SOU POPILASYON KI RESANSE ANDEDAN MENAJ LA / ANDEDAN LOJMAN KOLEKTIF LA');
+INSERT INTO Tbl_CategorieQuestion (CodeCategorie, CategorieQuestion  ) VALUES ('30', 'EV-E  ESTATI (FINAL) KESYONE A');
+
 
 

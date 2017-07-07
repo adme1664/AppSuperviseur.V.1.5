@@ -65,7 +65,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                         }
                         else
                         {
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestion.Choix)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestionMobile.Choix)
                             {
                                 if (question.NomChamps == property.Name)
                                 {
@@ -101,7 +101,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                     }
                                 }
                             }
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestion.Utilisation)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestionMobile.Utilisation)
                             {
                                 if (question.NomChamps == property.Name)
                                 {
@@ -113,7 +113,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                     }
                                 }
                             }
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestion.Saisie)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestionMobile.Saisie)
                             {
                                 if (question.NomChamps == property.Name)
                                 {
@@ -124,7 +124,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                     }
                                 }
                             }
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestion.Departement)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestionMobile.Departement)
                             {
                                 if (question.NomChamps == property.Name)
                                 {
@@ -136,7 +136,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                     }
                                 }
                             }
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestion.Commune)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestionMobile.Commune)
                             {
                                 if (question.NomChamps == property.Name)
                                 {
@@ -148,7 +148,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                     }
                                 }
                             }
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestion.Pays)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestionMobile.Pays)
                             {
                                 if (question.NomChamps == property.Name)
                                 {
@@ -160,7 +160,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                                     }
                                 }
                             }
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestion.Vqse)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)utils.Constant.TypeQuestionMobile.Vqse)
                             {
                                 if (question.NomChamps == property.Name)
                                 {
@@ -230,7 +230,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                             tbl_categorie_question tcq = reader.getCategorie(question.codeCategorie, sdeID);
                             string nomChamps = question.nomChamps.Remove(1).ToUpper() + question.nomChamps.Substring(1);
                             PropertyInfo property = obj.GetType().GetProperty(nomChamps);
-                            if (question.typeQuestion == (int)Constant.TypeQuestion.Choix || question.typeQuestion == 4)
+                            if (question.typeQuestion == (int)Constant.TypeQuestionMobile.Choix || question.typeQuestion == 4)
                             {
                                 if (question.nomChamps.Equals(property.Name, StringComparison.OrdinalIgnoreCase))
                                 {
@@ -410,7 +410,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                             //
                             //
 
-                            if (question.typeQuestion == (int)Constant.TypeQuestion.Saisie || question.typeQuestion == 22 || question.typeQuestion == 13 || question.typeQuestion == 19)
+                            if (question.typeQuestion == (int)Constant.TypeQuestionMobile.Saisie || question.typeQuestion == 22 || question.typeQuestion == 13 || question.typeQuestion == 19)
                             {
                                 if (question.nomChamps == property.Name)
                                 {

@@ -247,6 +247,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         {
             ComboBox cmb = sender as ComboBox;
             NameValue selectedName = (NameValue)cmb.SelectedItem;
+           
+            listOfBatiments = new List<BatimentModel>();
             if (selectedName != null)
             {
                 txtLibelle.Text = "";
@@ -419,6 +421,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         {
             ComboBox cmb = sender as ComboBox;
             NameValue objet = (NameValue)cmb.SelectedItem;
+            txtIndicateur.Text = "";
+            cmbDomaine.ItemsSource = new List<NameValue>();
+            cmbCodeQuestion.ItemsSource = new List<QuestionsModel>();
+            cmbBatiment.ItemsSource = new List<BatimentModel>();
+            txtNature.Text = "";
+            txtLibelle.Text = "";
+            cmbObjet.ItemsSource = new List<NameValue>();
+            listBCodeBatiment.Items.Clear();
+            btn_save.IsEnabled = false;
+
             if (objet != null)
             {
                 TypeDifficulte = objet;
@@ -431,6 +443,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     txtNature.IsEnabled = true;
                     cmbBatiment.IsEnabled = true;
                     listBCodeBatiment.IsEnabled = true;
+                    cmbObjet.ItemsSource = Utilities.getNameOfObjects();
                     cmbBatiment.ItemsSource = reader.GetAllBatimentModel();
                 }
                 else
@@ -443,6 +456,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     cmbBatiment.IsEnabled = true;
                     //btn_save.IsEnabled = true;
                     listBCodeBatiment.IsEnabled = true;
+                    cmbObjet.ItemsSource = Utilities.getNameOfObjects();
                     cmbBatiment.ItemsSource = reader.GetAllBatimentModel();
                 }
             }
@@ -660,6 +674,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             int nbreFemmeChefMenage = 0;
             int nbreMenageUniPersonnel = 0;
             int nbreMenage6Personnes = 0;
+            float tailleMoyenneMenage = 0;
 
 
             //if (sdeSelected == null)
@@ -679,6 +694,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     nbreEnfant10Ans = nbreEnfant10Ans + reader.getTotalIndividu10AnsEtPlus();
                     nbrePersonnes18Ans = nbrePersonnes18Ans + reader.getTotalIndividu18AnsEtPlus();
                     nbrePersonnes65Ans += reader.getTotalIndividu65AnsEtPlus();
+                    tailleMoyenneMenage += reader.tailleMoyenneMenage();
                     //
 
                     //
@@ -706,6 +722,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 nbreEnfant10Ans = nbreEnfant10Ans + reader.getTotalIndividu10AnsEtPlus();
                 nbrePersonnes18Ans = nbrePersonnes18Ans + reader.getTotalIndividu18AnsEtPlus();
                 nbrePersonnes65Ans += reader.getTotalIndividu65AnsEtPlus();
+                tailleMoyenneMenage += reader.tailleMoyenneMenage();
                 //
 
                 //
@@ -732,7 +749,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     barSeriesIndividus.Points.Add(new SeriesPoint("Nombre de personnes présentant au moins une limitation dans leurs activités. ", nbreLimitation))));
 
             barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() =>
-                    barSeriesTailleMenage.Points.Add(new SeriesPoint("Taille moyenne des ménages", 85))));
+                    barSeriesTailleMenage.Points.Add(new SeriesPoint("Taille moyenne des ménages", tailleMoyenneMenage))));
             barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() =>
                         barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages unipersonnels (1 personne au plus)", nbreMenageUniPersonnel))));
             barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() =>

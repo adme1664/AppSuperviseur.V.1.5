@@ -77,6 +77,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public static string OBJET_BATIMENT = "Batiment";
         public static string OBJET_LOGEMENT = "Logement";
+        public static string OBJET_LOGEMENT_COLLECTIF = "LogementCollectif";
         public static string OBJET_EMIGRE = "Emigre";
         public static string OBJET_MENAGE = "Menage";
         public static string OBJET_INDIVIDU = "Individu";
@@ -101,7 +102,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string MOURI = "MOURI";
         public static string CP1 = "CP1";
 
-        public enum TypeQuestion : int
+        public enum TypeQuestionMobile : int
         {
             Choix = 17,
             Saisie = 2,
@@ -113,6 +114,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             Grid = 8,
             Utilisation = 9
         }
+      
         public enum TypeContrEnquete : int
         {
             BatimentVide = 1,
@@ -236,7 +238,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string Qlin2StatutOccupation = "Qlin2StatutOccupation";
         public static string Qlin4TypeLogement = "Qlin4TypeLogement";
         public static string Qlin5MateriauSol = "Qlin5MateriauSol";
-        public static string Qlin6NombrePieceETChambreACoucher = "Qlin6NombrePieceETChambreACoucher";
+        public static string Qlin6NombrePieceETChambreACoucher = "Qlin6NombrePiece";
         public static string Qlin7NbreChambreACoucher = "Qlin7NbreChambreACoucher";
         public static string Qlin8NbreIndividuDepense = "Qlin8NbreIndividuDepense";
         public static string Qlin9NbreTotalMenage = "Qlin9NbreTotalMenage";

@@ -14,74 +14,7 @@
         <Grid x:Name="grid"  Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <Image HorizontalAlignment="Left" Height="25" Margin="28,81,0,0"  VerticalAlignment="Top" Width="22" Source="/images/done.png" Visibility="Hidden" x:Name="img_done"/>
             <dx:DXTabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <!--<dx:DXTabItem>
-                    <dx:DXTabItem.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Height="34">
-                                <TextBlock Text="Synchronisation" Width="95" Height="20" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9" Margin="0,7" />
-                                <Image Height="38" Width="100" Source="/images/tb_pc.png"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </dx:DXTabItem.HeaderTemplate>
-                    <Grid Background="Transparent">
-                        <GroupBox Header="Transfert tablette vers Pc Superviseur" HorizontalAlignment="left" VerticalContentAlignment="Top"  Margin="10,10,0,653"  Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="13" Foreground="#FF1433F9" Width="407">
-                            <Grid >
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="421*"/>
-                                    <ColumnDefinition Width="47*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image gif:ImageBehavior.AnimatedSource="/images/loading.gif"  HorizontalAlignment="Left" Height="53" x:Name="img_loading" Margin="10,50,0,0"  VerticalAlignment="Top" Width="56" Visibility="Hidden"/>
-                                <ProgressBar x:Name="prgb_trans_pda" HorizontalAlignment="Left" VerticalAlignment="Top"   RenderTransformOrigin="0.5,0.5" Margin="12,12,0,0" Width="297" Height="34" >
-                                    <ProgressBar.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform/>
-                                            <SkewTransform/>
-                                            <RotateTransform Angle="-0.02"/>
-                                            <TranslateTransform/>
-                                        </TransformGroup>
-                                    </ProgressBar.RenderTransform>
-                                </ProgressBar>
-                                <Label  x:Name="lbl_info_pda" HorizontalAlignment="Stretch" Margin="66,63,139,10" VerticalAlignment="Stretch" Height="30" Foreground="#FF9BBBFF" FontWeight="Bold" FontFamily="Candara"/>
 
-                                <Button x:Name="btn_transfert_pda" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="55" Margin="312,12,-1,0" FontFamily="Candara" FontStyle="Italic" FontWeight="Bold" FontSize="14" Click="Button_Click" Height="35" Grid.ColumnSpan="2">
-                                    <Image Source="/images/trans1.png" x:Name="img_pda" />
-                                </Button>
-                                <Image x:Name="img_finish" HorizontalAlignment="Left" Height="43" Margin="10,50,0,0" VerticalAlignment="Top" Width="56" Source="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/check.png" Visibility="Hidden"/>
-                                <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false" Margin="262,113,-242,-163" RenderTransformOrigin="0.496,0.429" Grid.ColumnSpan="2">
-                                    <dx:WaitIndicator.ContentTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="Fè yon ti tann..." FontSize="20"/>
-                                                <TextBlock Text="{Binding}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </dx:WaitIndicator.ContentTemplate>
-                                </dx:WaitIndicator>
-                            </Grid>
-
-                        </GroupBox>
-                        <GroupBox Header="Transfert Pc Superviseur/Tablette" HorizontalAlignment="Left" Margin="478,10,0,0" VerticalAlignment="Top" Height="129" Width="401" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="13" Foreground="#FF1433F9">
-                            <Grid>
-                                <Image gif:ImageBehavior.AnimatedSource="/images/loading.gif"  HorizontalAlignment="Left" Height="53" x:Name="img_loading_pc" Margin="10,50,0,0"  VerticalAlignment="Top" Width="56" Visibility="Hidden"/>
-
-                                <ProgressBar x:Name="prgb_trans_pc" HorizontalAlignment="Left" VerticalAlignment="Top"   RenderTransformOrigin="0.5,0.5" Margin="12,12,0,0" Width="297" Height="34" >
-                                    <ProgressBar.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform/>
-                                            <SkewTransform/>
-                                            <RotateTransform Angle="-0.02"/>
-                                            <TranslateTransform/>
-                                        </TransformGroup>
-                                    </ProgressBar.RenderTransform>
-                                </ProgressBar>
-                                <Button  x:Name="btn_pc_tab" HorizontalAlignment="Left" Margin="311,12,0,0" VerticalAlignment="Top" Width="51" Height="33" Click="btn_pc_tab_Click">
-                                    <Image Source="/images/trans1.png" x:Name="img_tb" />
-                                </Button>
-                                <Image x:Name="img_finish_pc" HorizontalAlignment="Left" Height="43" Margin="10,50,0,0" VerticalAlignment="Top" Width="56" Source="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/check.png" Visibility="Hidden"/>
-                            </Grid>
-                        </GroupBox>
-                    </Grid>
-                </dx:DXTabItem>-->
                 <dx:DXTabItem>
                     <dx:DXTabItem.HeaderTemplate>
                         <DataTemplate>
@@ -92,13 +25,19 @@
                         </DataTemplate>
                     </dx:DXTabItem.HeaderTemplate>
                     <Grid Background="Transparent">
-                        <GroupBox Header="Transfert vers le serveur central" HorizontalAlignment="Left" Margin="10,22,0,0" VerticalAlignment="Top" Background="White" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9" Width="372" Height="177">
-                            <Grid HorizontalAlignment="Left" Width="488">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="199*"/>
+                            <RowDefinition Height="94*"/>
+                            <RowDefinition Height="368*"/>
+                            <RowDefinition Height="91*"/>
+                        </Grid.RowDefinitions>
+                        <GroupBox Header="Transfert vers le serveur central" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Background="White" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9" Grid.Row="0">
+                            <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="220*"/>
                                     <ColumnDefinition Width="269*"/>
                                 </Grid.ColumnDefinitions>
-                                <GroupBox x:Name="grp_SDE" Header="Selectionner une SDE" Margin="2,0,18,0" Grid.Column="0">
+                                <GroupBox x:Name="grp_SDE" Header="Selectionner une SDE">
                                     <ListBox x:Name="lbSdes" SelectionChanged="lbSdes_SelectionChanged">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
@@ -135,7 +74,7 @@
                         </GroupBox>
 
 
-                        <GroupBox Header="Informations" HorizontalAlignment="Stretch" Margin="10,204,37,488" VerticalAlignment="Stretch" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="13" Foreground="#FF1433F9">
+                        <GroupBox Header="Informations" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="13" Foreground="#FF1433F9" Grid.Row="1">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                 <Label Content="Telecharger..." x:Name="lbl_telecharger" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Margin="27,10,0,0"/>
                                 <Label Content="Pourcentage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="185,9,0,0"/>
@@ -151,15 +90,15 @@
                                 </ProgressBar>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Sortie" HorizontalAlignment="Stretch" Margin="10,309,37,70" VerticalAlignment="Stretch" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9">
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-14,-2">
-                                <TextBox Visibility="Visible" AcceptsReturn="True" TextWrapping="Wrap"  x:Name="txt_sortie" Text="SDE:"  BorderThickness="0"  VerticalAlignment="Stretch" Margin="0,0,10,0"/>
+                        <GroupBox Header="Sortie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9" Grid.Row="2">
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <TextBox Visibility="Visible" AcceptsReturn="True" TextWrapping="Wrap"  x:Name="txt_sortie" Text="SDE:"  BorderThickness="0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,10,0"/>
                             </Grid>
                         </GroupBox>
-                        <Button  HorizontalAlignment="Left" x:Name="btn_effacer" Margin="16,728,0,0" ToolTip="Effacer le contenu" VerticalAlignment="Top" Width="44" Height="28" Click="btn_effacer_Click">
+                        <Button  HorizontalAlignment="Left" x:Name="btn_effacer"  ToolTip="Effacer le contenu" VerticalAlignment="Top" Width="44" Height="23" Click="btn_effacer_Click" Grid.Row="3" Margin="0,5,0,0">
                             <Image Source="/images/delete-xxl.png" />
                         </Button>
-                        <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false">
+                        <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false" Grid.RowSpan="4">
                             <dx:WaitIndicator.ContentTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">
@@ -171,91 +110,8 @@
                         </dx:WaitIndicator>
                     </Grid>
                 </dx:DXTabItem>
-                <dx:DXTabItem >
-                    <dx:DXTabItem.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Height="34">
-                                <TextBlock Text="Transfert des données de contre-enquete/Serveur centrale" Width="380" Height="20" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9" Margin="0,7" />
-                                <Image Height="38" Width="100" Source="/images/hosting.png"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </dx:DXTabItem.HeaderTemplate>
-                    <Grid Background="Transparent">
-                        <GroupBox Header="Transfert" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="233" Width="848" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="263*"/>
-                                    <ColumnDefinition Width="299*"/>
-                                    <ColumnDefinition Width="169*"/>
-                                    <ColumnDefinition Width="93*"/>
-                                </Grid.ColumnDefinitions>
-                                <GroupBox Header="SDEs" Grid.Column="0" HorizontalAlignment="Left" Margin="7,7,0,0" VerticalAlignment="Top" Height="177" Width="246" FontFamily="Candara" FontSize="14" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9">
-                                    <ListBox  x:Name="lbSdesCE" SelectionChanged="lbSdesCE_SelectionChanged">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Width="16" Height="16" Source="/images/database.png" />
-                                                    <TextBlock Text="{Binding SdeId}" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                </GroupBox>
-                                <GroupBox Grid.Column="1" Header="Type de Contre-Enquete" HorizontalAlignment="Left" Margin="7,7,0,0" VerticalAlignment="Top" Height="177" Width="288" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9">
-                                    <ListBox x:Name="lbx_type_CE" SelectionChanged="lbx_type_CE_SelectionChanged">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Width="16" Height="16" Source="/images/batiment.png" />
-                                                    <TextBlock Text="{Binding Name}" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                </GroupBox>
-                                <GroupBox Grid.Column="2" Header="Statut" HorizontalAlignment="Left" Margin="7,7,0,0" VerticalAlignment="Top" Height="177" Width="149" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9">
-                                    <StackPanel>
-                                        <CheckBox Content="Ki fèt" x:Name="chk_batiman_made" Checked="chk_batiman_made_Checked"/>
-                                        <CheckBox Content="Ki valide" x:Name="chk_batiman_valide" Checked="chk_batiman_valide_Checked"/>
-                                    </StackPanel>
-                                </GroupBox>
-                                <GroupBox Grid.Column="2" Header="Actions" HorizontalAlignment="Left" Margin="166,7,0,0" VerticalAlignment="Top" Width="93" Height="177" Grid.ColumnSpan="2">
-                                    <Grid HorizontalAlignment="Left" Width="93" Margin="-10,0,-14,0">
-                                        <Button Content="Transferer" x:Name="btn_trans_ce" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="83" Margin="3,7,0,0" Click="btn_trans_ce_Click"/>
-                                        <Image HorizontalAlignment="Left" Height="55" Margin="10,40,0,0" VerticalAlignment="Top" x:Name="img_ce" Width="56" gif:ImageBehavior.AnimatedSource="/images/loading.gif" Visibility="Hidden"/>
-                                    </Grid>
 
-                                </GroupBox>
-                            </Grid>
-
-                        </GroupBox>
-                        <GroupBox Header="Informations" HorizontalAlignment="Stretch" Margin="10,260,3,436" VerticalAlignment="Stretch" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9">
-                            <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                                <Label Content="Telecharger..." x:Name="lbl_telecharger1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Margin="27,10,0,0"/>
-                                <Label Content="Pourcentage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="185,9,0,0"/>
-                                <ProgressBar x:Name="prg_trans_sc_ce" HorizontalAlignment="Stretch" Height="26"  VerticalAlignment="Stretch" Margin="296,11,24,11" RenderTransformOrigin="0.5,0.5">
-                                    <ProgressBar.RenderTransform>
-                                        <TransformGroup>
-                                            <ScaleTransform/>
-                                            <SkewTransform/>
-                                            <RotateTransform Angle="0.076"/>
-                                            <TranslateTransform/>
-                                        </TransformGroup>
-                                    </ProgressBar.RenderTransform>
-                                </ProgressBar>
-                            </Grid>
-                        </GroupBox>
-                        <GroupBox Header="Sortie" HorizontalAlignment="Stretch" Margin="10,361,3,273" VerticalAlignment="Stretch" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9">
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-14,-6">
-                                <TextBox Visibility="Visible" AcceptsReturn="True" TextWrapping="Wrap"  x:Name="txt_sortie_ce" Text="SDE:"  BorderThickness="0" RenderTransformOrigin="0.5,0.5" MaxHeight="460" Margin="0,0,30,0" Height="120" VerticalAlignment="Top"/>
-                            </Grid>
-                        </GroupBox>
-                        <Button  HorizontalAlignment="Left" x:Name="btn_effacer_ce" Margin="10,535,0,0" ToolTip="Effacer le contenu" VerticalAlignment="Top" Width="44" Height="28" Click="btn_effacer_Click">
-                            <Image Source="/Ht.Ihsil.Rgph.App.Superviseur;component/images/delete-xxl.png" />
-                        </Button>
-                    </Grid>
-                </dx:DXTabItem>
-                </dx:DXTabControl>
+            </dx:DXTabControl>
 
         </Grid>
     </xctk:BusyIndicator>

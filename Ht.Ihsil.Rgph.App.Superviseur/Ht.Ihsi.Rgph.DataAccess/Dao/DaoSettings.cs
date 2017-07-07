@@ -208,9 +208,9 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
             {
                 return repository.SdeRepository.Find(s => s.AgentId == agentId).FirstOrDefault();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Info("Erreur:" + ex.Message);
             }
             return null;
         }

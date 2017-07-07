@@ -36,14 +36,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             log = new Logger();
             service = new SqliteDataReaderService(Utilities.getConnectionString(Users.users.DatabasePath, _sde.SdeId));
             Tbl_Sde ss = service.getSdeDetails(_sde.SdeId);
-            //pieSeriesEndividi.Points.Add(new SeriesPoint("Gason", ss.TotalIndGRecense.GetValueOrDefault()));
-            //pieSeriesEndividi.Points.Add(new SeriesPoint("Fi", ss.TotalIndFRecense.GetValueOrDefault()));
+            pieSeriesEndividi.Points.Add(new SeriesPoint("Gason", service.Sr.getTotalIndividusHommes()));
+            pieSeriesEndividi.Points.Add(new SeriesPoint("Fi", service.Sr.getTotalIndividusFemmes()));
 
-            //pieSeriesEmigre.Points.Add(new SeriesPoint("Gason", ss.TotalEmigreGRecense.GetValueOrDefault()));
-            //pieSeriesEmigre.Points.Add(new SeriesPoint("Fi", ss.TotalEmigreFRecense.GetValueOrDefault()));
+            pieSeriesEmigre.Points.Add(new SeriesPoint("Gason", service.Sr.getTotalEmigresHommes()));
+            pieSeriesEmigre.Points.Add(new SeriesPoint("Fi", service.Sr.getTotalEmigresFemmes()));
 
-            //pieSeriesDeces.Points.Add(new SeriesPoint("Gason", ss.TotalDecesGRecense.GetValueOrDefault()));
-            //pieSeriesDeces.Points.Add(new SeriesPoint("Fi", ss.TotalDecesFRecense.GetValueOrDefault()));
+            pieSeriesDeces.Points.Add(new SeriesPoint("Gason", service.Sr.getTotalDecesHommes()));
+            pieSeriesDeces.Points.Add(new SeriesPoint("Fi", service.Sr.getTotalDecesFemmes()));
 
             barSeriesDetails.Points.Add(new SeriesPoint("Batiman", ss.TotalBatRecense.GetValueOrDefault()));
             barSeriesDetails.Points.Add(new SeriesPoint("Lojman Envidiyel", ss.TotalLogeIRecense.GetValueOrDefault()));

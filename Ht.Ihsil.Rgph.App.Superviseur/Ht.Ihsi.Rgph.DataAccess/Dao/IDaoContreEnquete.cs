@@ -32,6 +32,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         bool isLogementExistInBatiment(int batimentId, string sdeId);
         bool isLogementCollectifExistInBatiment(int batimentId, string sdeId);
         List<Tbl_LogementCE> searchLogementbyBatiment(int batimentId, string sdeId);
+        List<Tbl_LogementCE> searchLogByBatimentAndTypeLog(long batimentId, string sdeId,long typeLogement);
         List<Tbl_LogementCE> searchLogement(string sdeId);
         Tbl_LogementCE getLogementCE(int batimentId, string sdeId, int logId);
         #endregion

@@ -137,13 +137,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             questionEnCours = viewModelIndividu.questionEnCours;
             Module = questionEnCours.CodeCategorie;
             string entete = service.getCategorieQuestion(Module).CategorieQuestion;
-            if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestion.Saisie)
+            if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestionMobile.Saisie)
             {
                 txt_first.Visibility = Visibility.Visible;
             }
             else
             {
-                if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestion.Choix)
+                if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestionMobile.Choix)
                 {
                     cmb_first.Visibility = Visibility.Visible;
                 }
@@ -190,13 +190,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             questionEnCours = viewEvaluationModel.questionEnCours;
             Module = questionEnCours.CodeCategorie;
             string entete = service.getCategorieQuestion(Module).CategorieQuestion;
-            if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestion.Saisie)
+            if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestionMobile.Saisie)
             {
                 txt_first.Visibility = Visibility.Visible;
             }
             else
             {
-                if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestion.Choix)
+                if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestionMobile.Choix)
                 {
                     cmb_first.Visibility = Visibility.Visible;
                 }
@@ -274,10 +274,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             {
                 ReponseModel reponse = (sender as ComboBox).SelectedItem as ReponseModel;
                 //On ne prend pas le module si question de Type pays/communne/ departement/vsqe
-                if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Commune ||
-                    questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Departement ||
-                    questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Pays ||
-                    questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Vqse
+                if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Commune ||
+                    questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Departement ||
+                    questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Pays ||
+                    questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Vqse
                     //questionEnCours.NomChamps == Constant.QbPrincipalRepondant || questionEnCours.NomChamps == Constant.Qc3EconomiqueNoOrdre ||
                     //questionEnCours.NomChamps == Constant.Qc3EducationNoOrdre || questionEnCours.NomChamps == Constant.Qc3FeconditeNoOrdre ||
                     //questionEnCours.NomChamps == Constant.Qc3FonctionnementNoOrdre || questionEnCours.NomChamps == Constant.Qc3MembreMenageNoOrdre ||
@@ -1510,10 +1510,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 {
                     if (reponse.CodeQuestion != null)
                     {
-                        if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Commune ||
-                                questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Departement ||
-                                questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Pays ||
-                                questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Vqse
+                        if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Commune ||
+                                questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Departement ||
+                                questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Pays ||
+                                questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Vqse
                             )
                         {
                             lastQuestion.CodeQuestion = reponse.CodeQuestion;
@@ -1578,7 +1578,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     int taille = mainGrid.Children.Count;
                                     mainGrid.Children.RemoveRange(index + 1, taille);
                                     questionCours = service.getQuestion(qrCurrent.CodeQuestion);
-                                    if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix)
+                                    if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)
                                     {
                                         comboBox = control as ComboBox;
                                         thick = comboBox.Margin;
@@ -1618,11 +1618,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         {
                             listOfQuestions.Add(question);// on l'ajoute a nouveau
                             //On charge les modalites de reponses s'il y en a
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Commune ||
-                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Departement ||
-                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Pays ||
-                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Vqse ||
-                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Commune ||
+                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Departement ||
+                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Pays ||
+                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Vqse ||
+                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix
                             )
                             {
                                 listOfAnswer = setAnswers(question);
@@ -1636,11 +1636,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             //Si la question en cours est de Type choix(Commune, pays, departement, section communale et des modalites),
                             //on initiale le control avec un combox
                             questionCours = question;
-                            if (questionCours.TypeQuestion == (int)utils.Constant.TypeQuestion.Choix ||
-                                questionCours.TypeQuestion == (int)utils.Constant.TypeQuestion.Pays ||
-                                questionCours.TypeQuestion == (int)utils.Constant.TypeQuestion.Commune ||
-                                questionCours.TypeQuestion == (int)utils.Constant.TypeQuestion.Departement ||
-                                questionCours.TypeQuestion == (int)utils.Constant.TypeQuestion.Vqse)
+                            if (questionCours.TypeQuestion == (int)utils.Constant.TypeQuestionMobile.Choix ||
+                                questionCours.TypeQuestion == (int)utils.Constant.TypeQuestionMobile.Pays ||
+                                questionCours.TypeQuestion == (int)utils.Constant.TypeQuestionMobile.Commune ||
+                                questionCours.TypeQuestion == (int)utils.Constant.TypeQuestionMobile.Departement ||
+                                questionCours.TypeQuestion == (int)utils.Constant.TypeQuestionMobile.Vqse)
                             {
                                 comboBox = (ComboBox)control;
                                 thick = comboBox.Margin;
@@ -1648,7 +1648,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             //Si c'est une question de saisie libre, on initialise le control a une textbox
                             else
                             {
-                                if (questionCours.TypeQuestion == (int)utils.Constant.TypeQuestion.Saisie)
+                                if (questionCours.TypeQuestion == (int)utils.Constant.TypeQuestionMobile.Saisie)
                                 {
                                     textbox = (TextEdit)control;
                                     thick = textbox.Margin;
@@ -1705,7 +1705,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             //Si la question suivante est "FIN", on met fin au questionnaire et on ajoute le bouton enregistrer
                             if (qrCurrent.QSuivant == "FIN")
                             {
-                                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix)
+                                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)
                                 {
                                     comboBox = control as ComboBox;
                                 }
@@ -1832,7 +1832,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     tb.FontWeight = FontWeights.Bold;
                     grd.Children.Add(tb);
                     thick = Utilities.getThickness(thickSet);
-                    if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix)
+                    if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)
                     {
                         if (isCategorie == true)
                         {
@@ -1887,7 +1887,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
 
                     else
                     {
-                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Saisie)
+                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Saisie)
                         {
 
                             if (question.ContrainteQuestion.GetValueOrDefault() == (int)Constant.Contrainte.Numerique)
@@ -2001,7 +2001,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         }
 
                         #region TYPE QUESTION CHOIX
-                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix)
+                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)
                         {
                             if (isCategorie == true)
                             {
@@ -2062,7 +2062,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         {
                             #region TYPE QUESTION SAISIE
 
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Saisie)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Saisie)
                             {
                                 if (question.ContrainteQuestion.GetValueOrDefault() == (int)Constant.Contrainte.Numerique)
                                 {
@@ -2121,10 +2121,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             #endregion
 
                             #region TYPE QUESTION PAYS/DEPARTEMENT/COMMUNNE/SECTION/COMMUNALE
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Commune ||
-                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Departement ||
-                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Pays ||
-                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Vqse)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Commune ||
+                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Departement ||
+                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Pays ||
+                                question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Vqse)
                             {
                                 ComboBox cmb = new ComboBox();
                                 cmb.Margin = Utilities.getThickness(thick);
@@ -2146,7 +2146,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
 
                             else
                             {
-                                if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Automatique)
+                                if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Automatique)
                                 {
                                     if (question.NomObjet == "Evaluation")
                                     {
@@ -2198,8 +2198,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 tabIndex += 1;
                 if (tabIndex == tabControlLength)
                 {
-                    if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix ||
-                        questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Automatique)
+                    if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix ||
+                        questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Automatique)
                     {
                         ReponseModel reponse = mainReponse;
 
@@ -2214,7 +2214,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     }
                     else
                     {
-                        if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Saisie)
+                        if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Saisie)
                         {
                             textbox.Margin = thick;
                             ReponseModel rep = new ReponseModel();
@@ -2292,7 +2292,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             {
                 DateTime dayEnd = DateTime.Now;
                 //Si la derniere question est de Type choix on recupere la reponse dans un combobox
-                if (questionEnCours.TypeQuestion.GetValueOrDefault() == Convert.ToInt32(Constant.TypeQuestion.Choix))
+                if (questionEnCours.TypeQuestion.GetValueOrDefault() == Convert.ToInt32(Constant.TypeQuestionMobile.Choix))
                 {
                     ReponseModel reponse = comboBox.SelectedItem as ReponseModel;
                     //On teste si on n'a pas selectionne une reponse
@@ -2464,19 +2464,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
         //Recupere le code du departement ou de la commune/ section communale ou le pays
         public void setGeoInformation(QuestionsModel question, ReponseModel reponse)
         {
-            if (question.TypeQuestion == (int)Constant.TypeQuestion.Pays)
+            if (question.TypeQuestion == (int)Constant.TypeQuestionMobile.Pays)
             {
                 Pays = reponse.CodeUniqueReponse;
             }
-            if (question.TypeQuestion == (int)Constant.TypeQuestion.Departement)
+            if (question.TypeQuestion == (int)Constant.TypeQuestionMobile.Departement)
             {
                 Departement = reponse.CodeUniqueReponse;
             }
-            if (question.TypeQuestion == (int)Constant.TypeQuestion.Commune)
+            if (question.TypeQuestion == (int)Constant.TypeQuestionMobile.Commune)
             {
                 Commune = reponse.CodeUniqueReponse;
             }
-            if (question.TypeQuestion == (int)Constant.TypeQuestion.Vqse)
+            if (question.TypeQuestion == (int)Constant.TypeQuestionMobile.Vqse)
             {
                 Vqse = reponse.CodeUniqueReponse;
             }
@@ -2486,7 +2486,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
         {
             List<ReponseModel> listOfAnswers = new List<ReponseModel>();
 
-            if (question.TypeQuestion == (int)Constant.TypeQuestion.Pays)
+            if (question.TypeQuestion == (int)Constant.TypeQuestionMobile.Pays)
             {
                 List<PaysModel> listOfPays = contreEnqueteService.searchAllPays();
                 foreach (PaysModel pays in listOfPays)
@@ -2502,7 +2502,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             else
             {
                 //On cherche les departements si la question est de Departement, on le charge dans les combox
-                if (question.TypeQuestion == (int)Constant.TypeQuestion.Departement)
+                if (question.TypeQuestion == (int)Constant.TypeQuestionMobile.Departement)
                 {
                     listOfAnswers = new List<ReponseModel>();
                     List<DepartementModel> listOfDept = contreEnqueteService.searchAllDepartement();
@@ -2519,7 +2519,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 else
                 {
                     //On cherche les communes si la question est de Commune, on le charge dans les combox
-                    if (question.TypeQuestion == (int)Constant.TypeQuestion.Commune)
+                    if (question.TypeQuestion == (int)Constant.TypeQuestionMobile.Commune)
                     {
                         listOfAnswers = new List<ReponseModel>();
                         List<CommuneModel> listOfCom = contreEnqueteService.searchAllCommuneByDept(Departement);
@@ -2536,7 +2536,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     else
                     {
                         //On cherche les sections communales si la question est de Vqse, on le charge dans les combox
-                        if (question.TypeQuestion == (int)Constant.TypeQuestion.Vqse)
+                        if (question.TypeQuestion == (int)Constant.TypeQuestionMobile.Vqse)
                         {
                             listOfAnswers = new List<ReponseModel>();
                             List<VqseModel> listOfVqse = contreEnqueteService.searchAllVqsebyCom(Commune);

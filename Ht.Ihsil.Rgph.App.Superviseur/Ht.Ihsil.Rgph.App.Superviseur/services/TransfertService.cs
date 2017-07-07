@@ -80,7 +80,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
            }
           return false;
        }
-       public bool publishContreEntreData(BatimentData data)
+       public bool publishContreEntreData(string data)
        {
            try
            {
@@ -89,8 +89,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                    log.Info("PING THE SERVER================<>RESPONSE:" + true);
                    if (data != null)
                    {
-                       string strXml = XmlUtils.GetXMLFromObject(data);
-                       mqttClient.Publish(Constant.TOPIC_CONTRE_ENQUETE_DATA, Encoding.UTF8.GetBytes(strXml), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+                       mqttClient.Publish(Constant.TOPIC_CONTRE_ENQUETE_DATA, Encoding.UTF8.GetBytes(data), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
                        return true;
                    }
                }

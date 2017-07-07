@@ -96,8 +96,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             {
                 logViewModel = viewModel;
                 logement = viewModel.Logement;
+                
             }
-            QuestionViewModel viewModelLogement = new QuestionViewModel(TypeQuestion.Logement);
+            QuestionViewModel viewModelLogement = new QuestionViewModel(TypeQuestion.Logement,logement);
             this.DataContext = viewModelLogement;
             log = new Logger();
             service = new QuestionReponseService();
@@ -329,7 +330,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 {
                                     try
                                     {
-                                        if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestion.Choix)
+                                        if (questionEnCours.TypeQuestion == (int)Constant.TypeQuestionMobile.Choix)
                                         {
                                             setQuestionAndControls(questionEnCours, rep, comboBox);
                                         }
@@ -429,16 +430,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 }
                 bool isCategorie = false;
                 //if (reponse.CodeUniqueReponse == null || reponse.CodeUniqueReponse == "")//Si la reponse vient d'une Question Saisie on lui l'attribue le code de la question
-                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Saisie)
+                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Saisie)
                 {
                     lastQuestion.CodeUniqueReponse = reponse.CodeUniqueReponse;
                     lastQuestion.CodeQuestion = reponse.CodeQuestion;
                 }
-                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Utilisation)
+                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Utilisation)
                 {
                     lastQuestion.CodeQuestion = reponse.CodeQuestion;
                 }
-                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix)//Si elle vient d'une question de choix, on prend le code unique
+                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)//Si elle vient d'une question de choix, on prend le code unique
                 {
                     if (questionCours.NomChamps == Constant.Qb7GrandeUtilisation2)
                     {
@@ -516,7 +517,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     int taille = main_grid.Children.Count;
                                     main_grid.Children.RemoveRange(index + 1, taille);
                                     questionCours = service.getQuestion(qrCurrent.CodeQuestion);
-                                    if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix)
+                                    if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)
                                     {
                                         comboBox = control as ComboBox;
                                         thick = comboBox.Margin;
@@ -581,7 +582,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         {
                             List<ReponseModel> listOfAnswer = new List<ReponseModel>();
                             listOfQuestions.Add(question);
-                            if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Utilisation)
+                            if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Utilisation)
                             {
                                 question.QPrecedent = reponse.CodeUniqueReponse;
                                 listOfAnswer = setAnswers(question);
@@ -647,7 +648,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             int index = main_grid.Children.IndexOf(control);
                             int taille = main_grid.Children.Count;
                             main_grid.Children.RemoveRange(index + 1, taille);
-                            if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix || questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Utilisation)
+                            if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix || questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Utilisation)
                             {
                                 comboBox = control as ComboBox;
                                 thick = comboBox.Margin;
@@ -698,7 +699,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             listOfQuestionReponses.Add(qrCurrent);
                             if (qrCurrent.QSuivant == "FIN")
                             {
-                                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix)
+                                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)
                                 {
                                     comboBox = control as ComboBox;
                                 }
@@ -706,7 +707,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 {
                                     textbox = control as TextEdit;
                                 }
-                                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Grid)
+                                if (questionCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Grid)
                                 {
 
                                 }
@@ -731,7 +732,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     {
                                         listOfQuestions.Add(question);
                                         listOfReponses.Add(reponse);
-                                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Utilisation)
+                                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Utilisation)
                                         {
                                             question.QPrecedent = reponse.CodeUniqueReponse;
                                             listOfAnswer = setAnswers(question);
@@ -813,7 +814,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 {
                                     List<ReponseModel> listOfAnswer = new List<ReponseModel>();
                                     listOfQuestions.Add(question);
-                                    if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Utilisation)
+                                    if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Utilisation)
                                     {
                                         question.QPrecedent = reponse.CodeUniqueReponse;
                                         listOfAnswer = setAnswers(question);
@@ -983,7 +984,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     tb.FontWeight = FontWeights.Bold;
                     main_grid.Children.Add(tb);
                     thick = Utilities.getThickness(thickSet);
-                    if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix || question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Utilisation)
+                    if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix || question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Utilisation)
                     {
                         if (isCategorie == true)
                         {
@@ -1038,7 +1039,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
 
                     else
                     {
-                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Saisie)
+                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Saisie)
                         {
                             if (question.ContrainteQuestion.GetValueOrDefault() == (int)Constant.Contrainte.Numerique)
                             {
@@ -1069,7 +1070,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 questionEnCours = question;
                             }
                         }
-                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Grid)
+                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Grid)
                         {
                             DataGrid dtg = new DataGrid();
                             dtg.Margin = Utilities.getThickness(thick);
@@ -1122,7 +1123,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     tb.FontWeight = FontWeights.Bold;
                     main_grid.Children.Add(tb);
                     thick = Utilities.getThickness(thickSet);
-                    if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix || question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Utilisation)
+                    if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix || question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Utilisation)
                     {
                         if (isCategorie == true)
                         {
@@ -1178,7 +1179,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     }
                     else
                     {
-                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Saisie)
+                        if (question.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Saisie)
                         {
                             if (question.ContrainteQuestion.GetValueOrDefault() == (int)Constant.Contrainte.Numerique)
                             {
@@ -1228,7 +1229,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             {
                 DateTime dateEnd = DateTime.Now;
                 #region SI LA DERNIERE QUESTION EST DE TYPE CHOIX
-                if (questionEnCours.TypeQuestion.GetValueOrDefault() == Convert.ToInt32(Constant.TypeQuestion.Choix))
+                if (questionEnCours.TypeQuestion.GetValueOrDefault() == Convert.ToInt32(Constant.TypeQuestionMobile.Choix))
                 {
                     ReponseModel reponse = comboBox.SelectedItem as ReponseModel;
                     if (reponse.CodeReponse == "")

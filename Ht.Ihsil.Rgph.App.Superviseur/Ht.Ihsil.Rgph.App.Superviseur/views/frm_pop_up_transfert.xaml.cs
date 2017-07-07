@@ -41,7 +41,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         ISqliteReader reader = null;
         IMdfService mdfService;
         Logger log;
-        MainWindow1 main;
         ConfigurationService settings = null;
         ThreadStart ths = null;
         Thread t = null;
@@ -188,6 +187,24 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
 
             }
+            finally
+            {
+                Process[] procs = Process.GetProcessesByName("adb");
+                if (procs.Length != 0)
+                {
+                    foreach (var proc in procs)
+                    {
+                        if (!proc.HasExited)
+                        {
+                            proc.Kill();
+                        }
+                    }
+                }
+                prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
+                img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
+                btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
+                btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
+            }
 
         }
 
@@ -332,11 +349,26 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             }
                         }
                     }
+                    img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
+                    btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
+                    btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.Content = "Fermer"));
+                    btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
                 }
             }
             else
             {
                 this.Close();
+                Process[] procs = Process.GetProcessesByName("adb");
+                if (procs.Length != 0)
+                {
+                    foreach (var proc in procs)
+                    {
+                        if (!proc.HasExited)
+                        {
+                            proc.Kill();
+                        }
+                    }
+                }
             }
         }
 
@@ -349,6 +381,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         private void btn_annuler_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+            Process[] procs = Process.GetProcessesByName("adb");
+            if (procs.Length != 0)
+            {
+                foreach (var proc in procs)
+                {
+                    if (!proc.HasExited)
+                    {
+                        proc.Kill();
+                    }
+                }
+            }
         }
     }
 }

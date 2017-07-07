@@ -227,15 +227,36 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 process.Start();
                 reader = process.StandardOutput;
                 string message = reader.ReadToEnd();
-                string[] files = Directory.GetFiles(path);
-                if (files.Length != 0)
+                if (Directory.GetDirectories(path).Length != 0)
                 {
-                    log.Info("FILE COPIED:" + message);
-                    pulled = true;
+                    string pathCopied="";
+                    string[] folder = (Directory.GetDirectories(path));
+                    if (folder.Length != 0)
+                    {
+                        foreach (string fol in folder)
+                        {
+                            pathCopied = System.IO.Path.GetFullPath(fol);
+                            break;
+                        }
+                        string[] fichiers = Directory.GetFiles(pathCopied);
+                        if (fichiers.Length != 0)
+                            pulled = true;
+                        else
+                            pulled = false;
+                    }
                 }
                 else
                 {
-                    pulled = false;
+                    string[] files = Directory.GetFiles(path);
+                    if (files.Length != 0)
+                    {
+                        log.Info("FILE COPIED:" + message);
+                        pulled = true;
+                    }
+                    else
+                    {
+                        pulled = false;
+                    }
                 }
                 procs = Process.GetProcessesByName("adb");
                 foreach (var proc in procs)

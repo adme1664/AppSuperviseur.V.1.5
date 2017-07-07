@@ -129,6 +129,58 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
             log = new Logger();
             setQuestion(typeQuestion);
         }
+        public QuestionViewModel(string typeQuestion,LogementCEModel logement)
+        {
+            service = new QuestionReponseService();
+            log = new Logger();
+            setQuestion(typeQuestion,logement);
+        }
+        public void setQuestion(string typeQuestion, LogementCEModel logement)
+        {
+            ObservableCollection<ReponseModel> list = new ObservableCollection<ReponseModel>();
+            listOfQuestion = service.searchQuestion(typeQuestion);
+            if (Utils.IsNotNull(listOfQuestion))
+            {
+                QuestionsModel q1 = new QuestionsModel();
+                if (logement.QlCategLogement == Constant.TYPE_LOJMAN_KOLEKTIF)
+                {
+                    q1 = listOfQuestion.Find(q => q.CodeQuestion == "LC1");
+                }
+                else
+                {
+                    q1 = listOfQuestion.Find(q => q.CodeQuestion == "LIN2");
+                }
+                CategorieQuestionModel cat = service.getCategorieQuestion(q1.CodeCategorie);
+                if (Utils.IsNotNull(cat))
+                {
+                    Header = cat.CategorieQuestion;
+                }
+                questionEnCours = q1;
+                Libelle = q1.Libelle;
+                VisibledLabel = false;
+                if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)
+                {
+
+                    List<QuestionReponseModel> listQR = service.searchQuestionReponse(q1.CodeQuestion);
+                    if (Utils.IsNotNull(listQR))
+                    {
+
+                        foreach (QuestionReponseModel qr in listQR)
+                        {
+                            ReponseModel rep = service.getReponse(qr.CodeUniqueReponse);
+                            list.Add(rep);
+                        }
+                    }
+                    ListOfB1 = list;
+                }
+                else
+                {
+
+                }
+                 position++;
+
+            }
+        }
         public void setQuestion(string typeQuestion, bool isChefMenage)
         {
             ObservableCollection<ReponseModel> list = new ObservableCollection<ReponseModel>();
@@ -162,7 +214,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
                 questionEnCours = q1;
                 Libelle = q1.Libelle;
                 VisibledLabel = false;
-                if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix)
+                if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)
                 {
                     
                     List<QuestionReponseModel> listQR = service.searchQuestionReponse(q1.CodeQuestion);
@@ -186,7 +238,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
 
             }
         }
-
         public void setQuestion(string typeQuestion)
         {
             ObservableCollection<ReponseModel> list = new ObservableCollection<ReponseModel>();
@@ -201,7 +252,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
                 }
                 if (typeQuestion == "Logement")
                 {
-                    q1 = listOfQuestion.Find(q => q.CodeQuestion == "LJ"); 
+                    q1 = listOfQuestion.Find(q => q.CodeQuestion == "QTypeL"); 
+                }
+                if (typeQuestion == "LogementCollectif")
+                {
+                    q1 = listOfQuestion.Find(q => q.CodeQuestion == "LC1");
                 }
                 if (typeQuestion == "Menage")
                 {
@@ -223,7 +278,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
                 questionEnCours = q1;
                 Libelle = q1.Libelle;
                 VisibledLabel = false;
-                if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestion.Choix)
+                if (questionEnCours.TypeQuestion.GetValueOrDefault() == (int)Constant.TypeQuestionMobile.Choix)
                 {
 
                     List<QuestionReponseModel> listQR = service.searchQuestionReponse(q1.CodeQuestion);

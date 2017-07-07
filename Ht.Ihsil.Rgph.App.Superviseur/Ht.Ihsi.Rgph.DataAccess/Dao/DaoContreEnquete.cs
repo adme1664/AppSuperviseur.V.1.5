@@ -176,6 +176,19 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         #endregion
 
         #region LOGEMENT
+
+        public List<Tbl_LogementCE> searchLogByBatimentAndTypeLog(long batimentId, string sdeId, long categorieLogement)
+        {
+            try
+            {
+                return repository.LogementCERepository.Find(b => b.BatimentId == batimentId && b.SdeId == sdeId && b.QlCategLogement == categorieLogement).ToList();
+            }
+            catch (Exception)
+            {
+
+            }
+            return new List<Tbl_LogementCE>();
+        }
         public bool saveLogement(Tbl_LogementCE _log)
         {
             try
@@ -953,6 +966,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
 
 
 
-       
+
+
+
     }
 }

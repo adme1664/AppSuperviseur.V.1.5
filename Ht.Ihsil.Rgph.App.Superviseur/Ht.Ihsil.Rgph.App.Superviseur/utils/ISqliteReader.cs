@@ -167,6 +167,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region DEMOGRAPHIQUE
+        float tailleMoyenneMenage();
         float getIndiceMasculinite();
         int getTotalEnfantDeMoinsDe1Ans();
         int getTotalIndividu18AnsEtPlus();

@@ -9,7 +9,7 @@
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
              x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_verification" 
-             mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
+             mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" >
 
     <UserControl.Resources>
         <Style TargetType="dxg:GridColumn">
@@ -208,9 +208,9 @@
                     <dx:DXTabItem Header="Ajout" Name="tabAjout">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="53*"/>
-                                <RowDefinition Height="441*"/>
-                                <RowDefinition Height="307*"/>
+                                <RowDefinition Height="71*"/>
+                                <RowDefinition Height="254*"/>
+                                <RowDefinition Height="0*"/>
                             </Grid.RowDefinitions>
                             <GroupBox Header="Difficultés rencontrées" Grid.Row="1">
                                 <Grid>
@@ -220,19 +220,19 @@
                                     <Label Content="Libelle:" HorizontalAlignment="Left" Margin="3,144,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.353,-1.273" Foreground="#FFFD0B0B" FontWeight="Bold" FontStyle="Italic"/>
                                     <Label Content="Module" HorizontalAlignment="Left" Margin="3,47,0,0" VerticalAlignment="Top"/>
                                     <ComboBox HorizontalAlignment="Left" Margin="140,45,0,0" VerticalAlignment="Top" Width="166" Name="cmbObjet" SelectionChanged="cmbObjet_SelectionChanged" DisplayMemberPath="Name" IsEnabled="False"/>
-                                    <Label Content="Description du probleme" HorizontalAlignment="Left" Margin="3,214,0,0" VerticalAlignment="Top"/>
-                                    <TextBox HorizontalAlignment="Left" Margin="140,216,0,0" TextWrapping="Wrap" Text="" Name="txtNature" AcceptsReturn="True" Width="166" Height="147" VerticalAlignment="Top" IsEnabled="False" />
+                                    <Label Content="Description du probleme" HorizontalAlignment="Left" Margin="5,198,0,0"  VerticalAlignment="Top"/>
+                                    <TextBox HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="141,200,0,5" TextWrapping="Wrap" Text="" Name="txtNature" AcceptsReturn="True" Width="166" Height="100" IsEnabled="False" />
                                     <Label Content="Choisir le(s) code(s) questionnaire(s)" HorizontalAlignment="Left" Margin="3,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.357,-0.045"/>
                                     <ComboBox HorizontalAlignment="Left" Margin="237,10,0,0" VerticalAlignment="Top" Width="68" Name="cmbBatiment" DisplayMemberPath="BatimentId" SelectionChanged="cmbBatiment_SelectionChanged" IsEnabled="False"/>
                                     <Label Content="Liste des codes à problème" Margin="312,8,314,0" VerticalAlignment="Top" Height="32"/>
-                                    <ListBox Margin="466,15,186,157" Name="listBCodeBatiment" HorizontalAlignment="Left" VerticalAlignment="Top" DisplayMemberPath="BatimentName" IsEnabled="False" Height="233" Width="150"/>
-                                    <Button Content="Sauvegarder" HorizontalAlignment="Left" Margin="317,220,0,0" VerticalAlignment="Top" Width="116" Name="btn_save" Height="26" Click="btn_save_Click" IsEnabled="False" />
+                                    <ListBox Margin="466,15,0,0" Name="listBCodeBatiment" HorizontalAlignment="Left" VerticalAlignment="Top" DisplayMemberPath="BatimentName" IsEnabled="False" Height="209" Width="150"/>
+                                    <Button Content="Sauvegarder" HorizontalAlignment="Left" Margin="317,200,0,0" VerticalAlignment="Top" Width="116" Name="btn_save" Height="26" Click="btn_save_Click" IsEnabled="False" />
                                     <Label Content="Domaine" HorizontalAlignment="Left"  Margin="3,81,0,0" VerticalAlignment="Top"/>
                                     <ComboBox HorizontalAlignment="Left"  Margin="140,76,0,0" VerticalAlignment="Top" Width="166" DisplayMemberPath="Value" Name="cmbDomaine" IsEnabled="False" SelectionChanged="cmbDomaine_SelectionChanged"  />
                                 </Grid>
                             </GroupBox>
-                            <Label Content="Type de difficultés" HorizontalAlignment="Left" Margin="4,16,0,0" VerticalAlignment="Top" Height="22" Width="96"/>
-                            <ComboBox HorizontalAlignment="Left" Margin="152,16,0,0" VerticalAlignment="Top" Width="166" Name="cmbTypeProbleme" DisplayMemberPath="Value" SelectionChanged="cmbTypeProbleme_SelectionChanged" Height="22"/>
+                            <Label Content="Type de difficultés" HorizontalAlignment="Left" Margin="4,8,0,0" VerticalAlignment="Top" Height="22" Width="96" Grid.Row="0"/>
+                            <ComboBox HorizontalAlignment="Left" Margin="152,8,0,0" VerticalAlignment="Top" Width="166" Name="cmbTypeProbleme" DisplayMemberPath="Value" SelectionChanged="cmbTypeProbleme_SelectionChanged" Height="22" Grid.Row="0"/>
                             <TextBlock HorizontalAlignment="Left" Margin="333,15,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="372" x:Name="txtIndicateur" Foreground="#FF0F79E4"/>
 
 
@@ -265,7 +265,7 @@
                                     </dxg:TreeListView>
                                 </dxg:TreeListControl.View>
                                 <dxg:TreeListControl.Columns>
-                            </dxg:TreeListControl.Columns>
+                                </dxg:TreeListControl.Columns>
                             </dxg:TreeListControl>
                         </GroupBox>
                     </dx:DXTabItem>
@@ -572,7 +572,7 @@
 
                                                     </dxc:BarFullStackedSeries2D.PointOptions>
                                                 </dxc:BarFullStackedSeries2D>
-                                                
+
                                             </dxc:XYDiagram2D.Series>
                                         </dxc:XYDiagram2D>
                                     </dxc:ChartControl.Diagram>
@@ -590,7 +590,7 @@ en fonction du nombre total de problèmes spécifié par groupe
                                 </dxc:ChartControl>
                             </Grid>
                             <!--<dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_totale_variable" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">-->
-                                <!--<dxg:TreeListControl.View >
+                            <!--<dxg:TreeListControl.View >
                                     <dxg:TreeListView  AllowPerPixelScrolling="True" ShowTotalSummary="True" Name="treeListView_par_variable" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"  AllowScrollAnimation="True" AutoWidth="True" />
                                 </dxg:TreeListControl.View>
                                 <dxg:TreeListControl.Columns>
@@ -620,17 +620,17 @@ en fonction du nombre total de problèmes spécifié par groupe
                                                     <dxc:BarFullStackedSeries2D.Label>
                                                         <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}"
                                                      Visible="True" />
-                                                        
+
                                                     </dxc:BarFullStackedSeries2D.Label>
-                                                  
+
                                                     <dxc:BarFullStackedSeries2D.PointOptions>
                                                         <dxc:PointOptions >
                                                             <dxc:PointOptions.ValueNumericOptions>
                                                                 <dxc:NumericOptions Format="Percent" Precision="0" />
                                                             </dxc:PointOptions.ValueNumericOptions>
-                                                            
+
                                                         </dxc:PointOptions>
-                                                        
+
                                                     </dxc:BarFullStackedSeries2D.PointOptions>
                                                 </dxc:BarFullStackedSeries2D>
                                                 <dxc:BarFullStackedSeries2D Name="partiellementPreCodifieAutre" DisplayName="Partiellement Pré-Codifié (Autre)">
@@ -647,7 +647,7 @@ en fonction du nombre total de problèmes spécifié par groupe
                                                         <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}" Visible="True" />
                                                     </dxc:BarFullStackedSeries2D.Label>
                                                     <dxc:BarFullStackedSeries2D.PointOptions>
-                                                        
+
                                                         <dxc:PointOptions>
                                                             <dxc:PointOptions.ValueNumericOptions>
                                                                 <dxc:NumericOptions Format="Percent" Precision="0"  />
@@ -732,7 +732,7 @@ en fonction du nombre total de problèmes spécifié par groupe
                                         <dxc:Title Dock="Top" HorizontalAlignment="Center" FontSize="16">Distribution des individus avec variables à codifier selon le degré de pré-codification</dxc:Title>
                                         <dxc:Title Dock="Bottom" HorizontalAlignment="Right" FontSize="12" Foreground="Silver" Margin="0,10,0,0">IHSI</dxc:Title>
                                     </dxc:ChartControl.Titles>
-                                    
+
                                 </dxc:ChartControl>
                             </Grid>
                         </GroupBox>

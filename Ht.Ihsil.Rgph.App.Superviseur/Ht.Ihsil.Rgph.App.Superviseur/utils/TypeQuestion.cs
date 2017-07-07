@@ -16,6 +16,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             get { return Constant.OBJET_LOGEMENT; }
         }
+        public static string LogementCollectif
+        {
+            get { return Constant.OBJET_LOGEMENT; }
+        }
         public static string Emigre
         {
             get { return Constant.OBJET_EMIGRE; }

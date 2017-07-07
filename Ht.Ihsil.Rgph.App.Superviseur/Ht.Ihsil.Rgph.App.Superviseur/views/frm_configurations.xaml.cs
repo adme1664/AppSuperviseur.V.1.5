@@ -49,7 +49,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             file = basePath + "configuration.xml";
             configuration = new XmlUtils(file);
             txt_adr_server.Text = configuration.getAdrServer();
-            lbl_variable.Text = pathDefaultConfigurationFile + @"\adb";
+            Users.users.AppExecutionPath = AppDomain.CurrentDomain.BaseDirectory;
+            lbl_variable.Text = Users.users.AppExecutionPath + @"\adb";
         }
         private void btn_save_adr_Click(object sender, RoutedEventArgs e)
         {

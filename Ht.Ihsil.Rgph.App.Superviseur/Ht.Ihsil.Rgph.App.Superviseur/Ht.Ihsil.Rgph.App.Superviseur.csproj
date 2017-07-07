@@ -52,6 +52,9 @@
   <PropertyGroup>
     <StartupObject>Ht.Ihsil.Rgph.App.Superviseur.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>images\favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AndroidLib, Version=1.6.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -443,6 +446,7 @@
     <Compile Include="Models\MaterielModel.cs" />
     <Compile Include="Models\ProblemeModel.cs" />
     <Compile Include="Models\QuestionModule.cs" />
+    <Compile Include="Models\TextModel.cs" />
     <Compile Include="Models\VerificationFlag.cs" />
     <Compile Include="Models\RapportArModel.cs" />
     <Compile Include="Models\RetourModel.cs" />
@@ -940,6 +944,8 @@
     <Resource Include="images\verification.png" />
     <Resource Include="images\formulaire_retour.png" />
     <Resource Include="images\menu-image.png" />
+    <Resource Include="images\arrow.png" />
+    <Resource Include="images\signout.png" />
     <Content Include="lib\net35\Microsoft.SharePoint.Client.dll" />
     <Content Include="lib\net35\Microsoft.SharePoint.Client.Runtime.dll" />
     <Resource Include="images\database_converted.png" />

@@ -288,7 +288,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return new BatimentJson();
         }
-        public LogementCJson MapToCLJson(LogementCEModel logement)
+        public static LogementCJson MapToCLJson(LogementCEModel logement)
         {
             LogementCJson logementJson = new LogementCJson();
             if (logement != null)
@@ -316,7 +316,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return new LogementCJson();
         }
-        public LogementIsJson MapToILJson(LogementCEModel logement)
+        public static LogementIsJson MapToILJson(LogementCEModel logement)
         {
             if (logement != null)
             {
@@ -352,7 +352,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return new LogementIsJson();
         }
-        public MenageJson MapToJson(MenageCEModel menage)
+        public static MenageJson MapToJson(MenageCEModel menage)
         {
             if (menage != null)
             {
@@ -383,7 +383,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return new MenageJson();
         }
-        public DecesJson MapToJson(DecesCEModel deces)
+        public static DecesJson MapToJson(DecesCEModel deces)
         {
             if (deces != null)
             {
@@ -411,7 +411,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return new DecesJson();
         }
-        public EmigreJson MapToJson(EmigreCEModel emigre)
+        public static EmigreJson MapToJson(EmigreCEModel emigre)
         {
             if (emigre != null)
             {
@@ -438,7 +438,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return new EmigreJson();
         }
-        public IndividuJson MapToJson(IndividuCEModel individu)
+        public static IndividuJson MapToJson(IndividuCEModel individu)
         {
             if (individu != null)
             {
@@ -1817,6 +1817,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             return batToSave;
         }
 
+        public static List<BatimentCEModel> MapToListBatimentCEModel(List<Tbl_BatimentCE> batiments)
+        {
+            List<BatimentCEModel> bats = new List<BatimentCEModel>();
+            if (batiments.Count != 0)
+            {
+                foreach (Tbl_BatimentCE bat in batiments)
+                {
+                    BatimentCEModel bati = MapToBatimentCEModel(bat);
+                    bats.Add(bati);
+                }
+            }
+            return bats;
+        }
+
         public static LogementCEModel MapToLogementCEModel(Tbl_LogementCE log)
         {
             LogementCEModel logement = new LogementCEModel();
@@ -1879,39 +1893,47 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         public static MenageCEModel MapToMenageCEModel(Tbl_MenageCE _men)
         {
             MenageCEModel menage = new MenageCEModel();
-            menage.Id = _men.Id;
-            menage.MenageId = _men.MenageId;
-            menage.LogeId = _men.LogeId.GetValueOrDefault();
-            menage.BatimentId = _men.BatimentId.GetValueOrDefault();
-            menage.SdeId = _men.SdeId;
-            menage.Qm1NoOrdre = Convert.ToByte(_men.Qm1NoOrdre.GetValueOrDefault());
-            menage.Qm2ModeJouissance = Convert.ToByte(_men.Qm2ModeJouissance.GetValueOrDefault());
-            menage.Qm5SrcEnergieCuisson1 = Convert.ToByte(_men.Qm5SrcEnergieCuisson1.GetValueOrDefault());
-            menage.Qm5SrcEnergieCuisson2 = Convert.ToByte(_men.Qm5SrcEnergieCuisson2.GetValueOrDefault());
-            menage.Qm8EndroitBesoinPhysiologique = Convert.ToByte(_men.Qm8EndroitBesoinPhysiologique.GetValueOrDefault());
-            menage.Qm11TotalIndividuVivant = Convert.ToByte(_men.Qm11TotalIndividuVivant.GetValueOrDefault());
-            menage.DureeSaisie = Convert.ToInt32(_men.DureeSaisie.GetValueOrDefault());
-            menage.IsContreEnqueteMade = Convert.ToBoolean(_men.IsContreEnqueteMade.GetValueOrDefault());
-            menage.IsValidated = Convert.ToBoolean(_men.IsValidated.GetValueOrDefault());
+            if (_men != null)
+            {
+                menage.Id = _men.Id;
+                menage.MenageId = _men.MenageId;
+                menage.LogeId = _men.LogeId.GetValueOrDefault();
+                menage.BatimentId = _men.BatimentId.GetValueOrDefault();
+                menage.SdeId = _men.SdeId;
+                menage.Qm1NoOrdre = Convert.ToByte(_men.Qm1NoOrdre.GetValueOrDefault());
+                menage.Qm2ModeJouissance = Convert.ToByte(_men.Qm2ModeJouissance.GetValueOrDefault());
+                menage.Qm5SrcEnergieCuisson1 = Convert.ToByte(_men.Qm5SrcEnergieCuisson1.GetValueOrDefault());
+                menage.Qm5SrcEnergieCuisson2 = Convert.ToByte(_men.Qm5SrcEnergieCuisson2.GetValueOrDefault());
+                menage.Qm8EndroitBesoinPhysiologique = Convert.ToByte(_men.Qm8EndroitBesoinPhysiologique.GetValueOrDefault());
+                menage.Qm11TotalIndividuVivant = Convert.ToByte(_men.Qm11TotalIndividuVivant.GetValueOrDefault());
+                menage.DureeSaisie = Convert.ToInt32(_men.DureeSaisie.GetValueOrDefault());
+                menage.IsContreEnqueteMade = Convert.ToBoolean(_men.IsContreEnqueteMade.GetValueOrDefault());
+                menage.IsValidated = Convert.ToBoolean(_men.IsValidated.GetValueOrDefault());
+            }
+            
             return menage;
         }
         public static Tbl_MenageCE MapToTbl_MenageCE(MenageCEModel _men)
         {
             Tbl_MenageCE menage = new Tbl_MenageCE();
-            menage.Id = _men.Id;
-            menage.MenageId = _men.MenageId;
-            menage.LogeId = _men.LogeId;
-            menage.BatimentId = _men.BatimentId;
-            menage.SdeId = _men.SdeId;
-            menage.Qm1NoOrdre = Convert.ToByte(_men.Qm1NoOrdre.GetValueOrDefault());
-            menage.Qm2ModeJouissance = Convert.ToByte(_men.Qm2ModeJouissance.GetValueOrDefault());
-            menage.Qm5SrcEnergieCuisson1 = Convert.ToByte(_men.Qm5SrcEnergieCuisson1.GetValueOrDefault());
-            menage.Qm5SrcEnergieCuisson2 = Convert.ToByte(_men.Qm5SrcEnergieCuisson2.GetValueOrDefault());
-            menage.Qm8EndroitBesoinPhysiologique = Convert.ToByte(_men.Qm8EndroitBesoinPhysiologique.GetValueOrDefault());
-            menage.Qm11TotalIndividuVivant = Convert.ToByte(_men.Qm11TotalIndividuVivant.GetValueOrDefault());
-            menage.DureeSaisie = Convert.ToInt32(_men.DureeSaisie.GetValueOrDefault());
-            menage.IsContreEnqueteMade = Convert.ToInt32(_men.IsContreEnqueteMade.GetValueOrDefault());
-            menage.IsValidated = Convert.ToInt32(_men.IsValidated.GetValueOrDefault());
+            if (_men != null)
+            {
+                menage.Id = _men.Id;
+                menage.MenageId = _men.MenageId;
+                menage.LogeId = _men.LogeId;
+                menage.BatimentId = _men.BatimentId;
+                menage.SdeId = _men.SdeId;
+                menage.Qm1NoOrdre = Convert.ToByte(_men.Qm1NoOrdre.GetValueOrDefault());
+                menage.Qm2ModeJouissance = Convert.ToByte(_men.Qm2ModeJouissance.GetValueOrDefault());
+                menage.Qm5SrcEnergieCuisson1 = Convert.ToByte(_men.Qm5SrcEnergieCuisson1.GetValueOrDefault());
+                menage.Qm5SrcEnergieCuisson2 = Convert.ToByte(_men.Qm5SrcEnergieCuisson2.GetValueOrDefault());
+                menage.Qm8EndroitBesoinPhysiologique = Convert.ToByte(_men.Qm8EndroitBesoinPhysiologique.GetValueOrDefault());
+                menage.Qm11TotalIndividuVivant = Convert.ToByte(_men.Qm11TotalIndividuVivant.GetValueOrDefault());
+                menage.DureeSaisie = Convert.ToInt32(_men.DureeSaisie.GetValueOrDefault());
+                menage.IsContreEnqueteMade = Convert.ToInt32(_men.IsContreEnqueteMade.GetValueOrDefault());
+                menage.IsValidated = Convert.ToInt32(_men.IsValidated.GetValueOrDefault());
+            }
+            
             return menage;
         }
         public static List<MenageCEModel> MapToListMenageCEModel(List<Tbl_MenageCE> listOfMenages)
@@ -1929,102 +1951,110 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         public static IndividuCEModel MapToIndividuCEModel(Tbl_IndividusCE _ind)
         {
             IndividuCEModel individu = new IndividuCEModel();
-            individu.Id = _ind.Id;
-            individu.BatimentId = _ind.BatimentId.GetValueOrDefault();
-            individu.LogeId = _ind.LogeId.GetValueOrDefault();
-            individu.MenageId = _ind.MenageId.GetValueOrDefault();
-            individu.IndividuId = _ind.IndividuId;
-            individu.SdeId = _ind.SdeId;
-            individu.Qp1NoOrdre = _ind.Qp1NoOrdre;
-            individu.Q3LienDeParente = Convert.ToByte(_ind.Q3LienDeParente.GetValueOrDefault());
-            individu.Q3aRaisonChefMenage = Convert.ToByte(_ind.Q3aRaisonChefMenage.GetValueOrDefault());
-            individu.Q5bAge = Convert.ToByte(_ind.Q5bAge.GetValueOrDefault());
-            individu.Q2Nom = _ind.Q2Nom;
-            individu.Q3Prenom = _ind.Q3Prenom;
-            individu.Q4Sexe = Convert.ToByte(_ind.Q4Sexe.GetValueOrDefault());
-            individu.Qp7Nationalite = Convert.ToByte(_ind.Qp7Nationalite.GetValueOrDefault());
-            individu.Qp7PaysNationalite = _ind.Qp7PaysNationalite;
-            individu.Q7DateNaissanceJour = Convert.ToByte(_ind.Q7DateNaissanceJour.GetValueOrDefault());
-            individu.Q7DateNaissanceMois = Convert.ToByte(_ind.Q7DateNaissanceMois.GetValueOrDefault());
-            individu.Q7DateNaissanceAnnee = Convert.ToInt32(_ind.Q7DateNaissanceAnnee.GetValueOrDefault());
-            individu.Qp10LieuNaissance = Convert.ToByte(_ind.Qp10LieuNaissance.GetValueOrDefault());
-            individu.Qp10CommuneNaissance = _ind.Qp10CommuneNaissance;
-            individu.Qp10LieuNaissanceVqse = _ind.Qp10LieuNaissanceVqse;
-            individu.Qp10PaysNaissance = _ind.Qp10PaysNaissance;
-            individu.Qp11PeriodeResidence = Convert.ToByte(_ind.Qp11PeriodeResidence.GetValueOrDefault());
-            individu.Qe2FreqentationScolaireOuUniv = Convert.ToByte(_ind.Qe2FreqentationScolaireOuUniv.GetValueOrDefault());
-            individu.Qe4aNiveauEtude = Convert.ToByte(_ind.Qe4aNiveauEtude.GetValueOrDefault());
-            individu.Qe4bDerniereClasseOUAneEtude = Convert.ToByte(_ind.Qe4bDerniereClasseOUAneEtude.GetValueOrDefault());
-            individu.Qsm1StatutMatrimonial = Convert.ToByte(_ind.Qsm1StatutMatrimonial.GetValueOrDefault());
-            individu.Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(_ind.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault());
-            individu.Qa2ActAvoirDemele1 = Convert.ToByte(_ind.Qa2ActAvoirDemele1.GetValueOrDefault());
-            individu.Qa2ActDomestique2 = Convert.ToByte(_ind.Qa2ActDomestique2.GetValueOrDefault());
-            individu.Qa2ActCultivateur3 = Convert.ToByte(_ind.Qa2ActCultivateur3.GetValueOrDefault());
-            individu.Qa2ActAiderParent4 = Convert.ToByte(_ind.Qa2ActAiderParent4.GetValueOrDefault());
-            individu.Qa2ActAutre5 = Convert.ToByte(_ind.Qa2ActAutre5.GetValueOrDefault());
-            individu.Qa8EntreprendreDemarcheTravail = Convert.ToByte(_ind.Qa8EntreprendreDemarcheTravail.GetValueOrDefault());
-            individu.Qf1aNbreEnfantNeVivantM = Convert.ToByte(_ind.Qf1aNbreEnfantNeVivantM.GetValueOrDefault());
-            individu.Qf2bNbreEnfantNeVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantNeVivantF.GetValueOrDefault());
-            individu.Qf2aNbreEnfantVivantM = Convert.ToByte(_ind.Qf2aNbreEnfantVivantM.GetValueOrDefault());
-            individu.Qf2bNbreEnfantVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantVivantF.GetValueOrDefault());
-            individu.Qf3DernierEnfantJour = Convert.ToByte(_ind.Qf3DernierEnfantJour.GetValueOrDefault());
-            individu.Qf3DernierEnfantMois = Convert.ToByte(_ind.Qf3DernierEnfantMois.GetValueOrDefault());
-            individu.Qf3DernierEnfantAnnee = Convert.ToInt32(_ind.Qf3DernierEnfantAnnee.GetValueOrDefault());
-            individu.Qf4DENeVivantVit = Convert.ToByte(_ind.Qf4DENeVivantVit.GetValueOrDefault());
-            individu.DureeSaisie = Convert.ToInt32(_ind.DureeSaisie.GetValueOrDefault());
-            individu.IsContreEnqueteMade = _ind.IsContreEnqueteMade.GetValueOrDefault();
-            individu.IsValidated = _ind.IsValidated.GetValueOrDefault();
+            if (_ind != null)
+            {
+                individu.Id = _ind.Id;
+                individu.BatimentId = _ind.BatimentId.GetValueOrDefault();
+                individu.LogeId = _ind.LogeId.GetValueOrDefault();
+                individu.MenageId = _ind.MenageId.GetValueOrDefault();
+                individu.IndividuId = _ind.IndividuId;
+                individu.SdeId = _ind.SdeId;
+                individu.Qp1NoOrdre = _ind.Qp1NoOrdre;
+                individu.Q3LienDeParente = Convert.ToByte(_ind.Q3LienDeParente.GetValueOrDefault());
+                individu.Q3aRaisonChefMenage = Convert.ToByte(_ind.Q3aRaisonChefMenage.GetValueOrDefault());
+                individu.Q5bAge = Convert.ToByte(_ind.Q5bAge.GetValueOrDefault());
+                individu.Q2Nom = _ind.Q2Nom;
+                individu.Q3Prenom = _ind.Q3Prenom;
+                individu.Q4Sexe = Convert.ToByte(_ind.Q4Sexe.GetValueOrDefault());
+                individu.Qp7Nationalite = Convert.ToByte(_ind.Qp7Nationalite.GetValueOrDefault());
+                individu.Qp7PaysNationalite = _ind.Qp7PaysNationalite;
+                individu.Q7DateNaissanceJour = Convert.ToByte(_ind.Q7DateNaissanceJour.GetValueOrDefault());
+                individu.Q7DateNaissanceMois = Convert.ToByte(_ind.Q7DateNaissanceMois.GetValueOrDefault());
+                individu.Q7DateNaissanceAnnee = Convert.ToInt32(_ind.Q7DateNaissanceAnnee.GetValueOrDefault());
+                individu.Qp10LieuNaissance = Convert.ToByte(_ind.Qp10LieuNaissance.GetValueOrDefault());
+                individu.Qp10CommuneNaissance = _ind.Qp10CommuneNaissance;
+                individu.Qp10LieuNaissanceVqse = _ind.Qp10LieuNaissanceVqse;
+                individu.Qp10PaysNaissance = _ind.Qp10PaysNaissance;
+                individu.Qp11PeriodeResidence = Convert.ToByte(_ind.Qp11PeriodeResidence.GetValueOrDefault());
+                individu.Qe2FreqentationScolaireOuUniv = Convert.ToByte(_ind.Qe2FreqentationScolaireOuUniv.GetValueOrDefault());
+                individu.Qe4aNiveauEtude = Convert.ToByte(_ind.Qe4aNiveauEtude.GetValueOrDefault());
+                individu.Qe4bDerniereClasseOUAneEtude = Convert.ToByte(_ind.Qe4bDerniereClasseOUAneEtude.GetValueOrDefault());
+                individu.Qsm1StatutMatrimonial = Convert.ToByte(_ind.Qsm1StatutMatrimonial.GetValueOrDefault());
+                individu.Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(_ind.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault());
+                individu.Qa2ActAvoirDemele1 = Convert.ToByte(_ind.Qa2ActAvoirDemele1.GetValueOrDefault());
+                individu.Qa2ActDomestique2 = Convert.ToByte(_ind.Qa2ActDomestique2.GetValueOrDefault());
+                individu.Qa2ActCultivateur3 = Convert.ToByte(_ind.Qa2ActCultivateur3.GetValueOrDefault());
+                individu.Qa2ActAiderParent4 = Convert.ToByte(_ind.Qa2ActAiderParent4.GetValueOrDefault());
+                individu.Qa2ActAutre5 = Convert.ToByte(_ind.Qa2ActAutre5.GetValueOrDefault());
+                individu.Qa8EntreprendreDemarcheTravail = Convert.ToByte(_ind.Qa8EntreprendreDemarcheTravail.GetValueOrDefault());
+                individu.Qf1aNbreEnfantNeVivantM = Convert.ToByte(_ind.Qf1aNbreEnfantNeVivantM.GetValueOrDefault());
+                individu.Qf2bNbreEnfantNeVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantNeVivantF.GetValueOrDefault());
+                individu.Qf2aNbreEnfantVivantM = Convert.ToByte(_ind.Qf2aNbreEnfantVivantM.GetValueOrDefault());
+                individu.Qf2bNbreEnfantVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantVivantF.GetValueOrDefault());
+                individu.Qf3DernierEnfantJour = Convert.ToByte(_ind.Qf3DernierEnfantJour.GetValueOrDefault());
+                individu.Qf3DernierEnfantMois = Convert.ToByte(_ind.Qf3DernierEnfantMois.GetValueOrDefault());
+                individu.Qf3DernierEnfantAnnee = Convert.ToInt32(_ind.Qf3DernierEnfantAnnee.GetValueOrDefault());
+                individu.Qf4DENeVivantVit = Convert.ToByte(_ind.Qf4DENeVivantVit.GetValueOrDefault());
+                individu.DureeSaisie = Convert.ToInt32(_ind.DureeSaisie.GetValueOrDefault());
+                individu.IsContreEnqueteMade = _ind.IsContreEnqueteMade.GetValueOrDefault();
+                individu.IsValidated = _ind.IsValidated.GetValueOrDefault();
+            }
+            
             return individu;
         }
 
         public static Tbl_IndividusCE MapToTbl_IndividuCE(IndividuCEModel _ind)
         {
             Tbl_IndividusCE individu = new Tbl_IndividusCE();
-            individu.Id = _ind.Id;
-            individu.BatimentId = _ind.BatimentId;
-            individu.LogeId = _ind.LogeId;
-            individu.MenageId = _ind.MenageId;
-            individu.Qp1NoOrdre = _ind.Qp1NoOrdre;
-            individu.SdeId = _ind.SdeId;
-            individu.IndividuId = _ind.IndividuId;
-            individu.Q3LienDeParente = Convert.ToByte(_ind.Q3LienDeParente.GetValueOrDefault());
-            individu.Q3aRaisonChefMenage = Convert.ToByte(_ind.Q3aRaisonChefMenage.GetValueOrDefault());
-            individu.Q5bAge = Convert.ToByte(_ind.Q5bAge.GetValueOrDefault());
-            individu.Q2Nom = _ind.Q2Nom;
-            individu.Q3Prenom = _ind.Q3Prenom;
-            individu.Q4Sexe = Convert.ToByte(_ind.Q4Sexe.GetValueOrDefault());
-            individu.Qp7Nationalite = Convert.ToByte(_ind.Qp7Nationalite.GetValueOrDefault());
-            individu.Qp7PaysNationalite = _ind.Qp7PaysNationalite;
-            individu.Q7DateNaissanceJour = Convert.ToByte(_ind.Q7DateNaissanceJour.GetValueOrDefault());
-            individu.Q7DateNaissanceMois = Convert.ToByte(_ind.Q7DateNaissanceMois.GetValueOrDefault());
-            individu.Q7DateNaissanceAnnee = Convert.ToInt32(_ind.Q7DateNaissanceAnnee.GetValueOrDefault());
-            individu.Qp10LieuNaissance = Convert.ToByte(_ind.Qp10LieuNaissance.GetValueOrDefault());
-            individu.Qp10CommuneNaissance = _ind.Qp10CommuneNaissance;
-            individu.Qp10LieuNaissanceVqse = _ind.Qp10LieuNaissanceVqse;
-            individu.Qp10PaysNaissance = _ind.Qp10PaysNaissance;
-            individu.Qp11PeriodeResidence = Convert.ToByte(_ind.Qp11PeriodeResidence.GetValueOrDefault());
-            individu.Qe2FreqentationScolaireOuUniv = Convert.ToByte(_ind.Qe2FreqentationScolaireOuUniv.GetValueOrDefault());
-            individu.Qe4aNiveauEtude = Convert.ToByte(_ind.Qe4aNiveauEtude.GetValueOrDefault());
-            individu.Qe4bDerniereClasseOUAneEtude = Convert.ToByte(_ind.Qe4bDerniereClasseOUAneEtude.GetValueOrDefault());
-            individu.Qsm1StatutMatrimonial = Convert.ToByte(_ind.Qsm1StatutMatrimonial.GetValueOrDefault());
-            individu.Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(_ind.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault());
-            individu.Qa2ActAvoirDemele1 = Convert.ToByte(_ind.Qa2ActAvoirDemele1.GetValueOrDefault());
-            individu.Qa2ActDomestique2 = Convert.ToByte(_ind.Qa2ActDomestique2.GetValueOrDefault());
-            individu.Qa2ActCultivateur3 = Convert.ToByte(_ind.Qa2ActCultivateur3.GetValueOrDefault());
-            individu.Qa2ActAiderParent4 = Convert.ToByte(_ind.Qa2ActAiderParent4.GetValueOrDefault());
-            individu.Qa2ActAutre5 = Convert.ToByte(_ind.Qa2ActAutre5.GetValueOrDefault());
-            individu.Qa8EntreprendreDemarcheTravail = Convert.ToByte(_ind.Qa8EntreprendreDemarcheTravail.GetValueOrDefault());
-            individu.Qf1aNbreEnfantNeVivantM = Convert.ToByte(_ind.Qf1aNbreEnfantNeVivantM.GetValueOrDefault());
-            individu.Qf2bNbreEnfantNeVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantNeVivantF.GetValueOrDefault());
-            individu.Qf2aNbreEnfantVivantM = Convert.ToByte(_ind.Qf2aNbreEnfantVivantM.GetValueOrDefault());
-            individu.Qf2bNbreEnfantVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantVivantF.GetValueOrDefault());
-            individu.Qf3DernierEnfantJour = Convert.ToByte(_ind.Qf3DernierEnfantJour.GetValueOrDefault());
-            individu.Qf3DernierEnfantMois = Convert.ToByte(_ind.Qf3DernierEnfantMois.GetValueOrDefault());
-            individu.Qf3DernierEnfantAnnee = Convert.ToInt32(_ind.Qf3DernierEnfantAnnee.GetValueOrDefault());
-            individu.Qf4DENeVivantVit = Convert.ToByte(_ind.Qf4DENeVivantVit.GetValueOrDefault());
-            individu.DureeSaisie = Convert.ToInt32(_ind.DureeSaisie.GetValueOrDefault());
-            individu.IsContreEnqueteMade = _ind.IsContreEnqueteMade.GetValueOrDefault();
-            individu.IsValidated = _ind.IsValidated.GetValueOrDefault();
+            if (_ind != null)
+            {
+                individu.Id = _ind.Id;
+                individu.BatimentId = _ind.BatimentId;
+                individu.LogeId = _ind.LogeId;
+                individu.MenageId = _ind.MenageId;
+                individu.Qp1NoOrdre = _ind.Qp1NoOrdre;
+                individu.SdeId = _ind.SdeId;
+                individu.IndividuId = _ind.IndividuId;
+                individu.Q3LienDeParente = Convert.ToByte(_ind.Q3LienDeParente.GetValueOrDefault());
+                individu.Q3aRaisonChefMenage = Convert.ToByte(_ind.Q3aRaisonChefMenage.GetValueOrDefault());
+                individu.Q5bAge = Convert.ToByte(_ind.Q5bAge.GetValueOrDefault());
+                individu.Q2Nom = _ind.Q2Nom;
+                individu.Q3Prenom = _ind.Q3Prenom;
+                individu.Q4Sexe = Convert.ToByte(_ind.Q4Sexe.GetValueOrDefault());
+                individu.Qp7Nationalite = Convert.ToByte(_ind.Qp7Nationalite.GetValueOrDefault());
+                individu.Qp7PaysNationalite = _ind.Qp7PaysNationalite;
+                individu.Q7DateNaissanceJour = Convert.ToByte(_ind.Q7DateNaissanceJour.GetValueOrDefault());
+                individu.Q7DateNaissanceMois = Convert.ToByte(_ind.Q7DateNaissanceMois.GetValueOrDefault());
+                individu.Q7DateNaissanceAnnee = Convert.ToInt32(_ind.Q7DateNaissanceAnnee.GetValueOrDefault());
+                individu.Qp10LieuNaissance = Convert.ToByte(_ind.Qp10LieuNaissance.GetValueOrDefault());
+                individu.Qp10CommuneNaissance = _ind.Qp10CommuneNaissance;
+                individu.Qp10LieuNaissanceVqse = _ind.Qp10LieuNaissanceVqse;
+                individu.Qp10PaysNaissance = _ind.Qp10PaysNaissance;
+                individu.Qp11PeriodeResidence = Convert.ToByte(_ind.Qp11PeriodeResidence.GetValueOrDefault());
+                individu.Qe2FreqentationScolaireOuUniv = Convert.ToByte(_ind.Qe2FreqentationScolaireOuUniv.GetValueOrDefault());
+                individu.Qe4aNiveauEtude = Convert.ToByte(_ind.Qe4aNiveauEtude.GetValueOrDefault());
+                individu.Qe4bDerniereClasseOUAneEtude = Convert.ToByte(_ind.Qe4bDerniereClasseOUAneEtude.GetValueOrDefault());
+                individu.Qsm1StatutMatrimonial = Convert.ToByte(_ind.Qsm1StatutMatrimonial.GetValueOrDefault());
+                individu.Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(_ind.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault());
+                individu.Qa2ActAvoirDemele1 = Convert.ToByte(_ind.Qa2ActAvoirDemele1.GetValueOrDefault());
+                individu.Qa2ActDomestique2 = Convert.ToByte(_ind.Qa2ActDomestique2.GetValueOrDefault());
+                individu.Qa2ActCultivateur3 = Convert.ToByte(_ind.Qa2ActCultivateur3.GetValueOrDefault());
+                individu.Qa2ActAiderParent4 = Convert.ToByte(_ind.Qa2ActAiderParent4.GetValueOrDefault());
+                individu.Qa2ActAutre5 = Convert.ToByte(_ind.Qa2ActAutre5.GetValueOrDefault());
+                individu.Qa8EntreprendreDemarcheTravail = Convert.ToByte(_ind.Qa8EntreprendreDemarcheTravail.GetValueOrDefault());
+                individu.Qf1aNbreEnfantNeVivantM = Convert.ToByte(_ind.Qf1aNbreEnfantNeVivantM.GetValueOrDefault());
+                individu.Qf2bNbreEnfantNeVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantNeVivantF.GetValueOrDefault());
+                individu.Qf2aNbreEnfantVivantM = Convert.ToByte(_ind.Qf2aNbreEnfantVivantM.GetValueOrDefault());
+                individu.Qf2bNbreEnfantVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantVivantF.GetValueOrDefault());
+                individu.Qf3DernierEnfantJour = Convert.ToByte(_ind.Qf3DernierEnfantJour.GetValueOrDefault());
+                individu.Qf3DernierEnfantMois = Convert.ToByte(_ind.Qf3DernierEnfantMois.GetValueOrDefault());
+                individu.Qf3DernierEnfantAnnee = Convert.ToInt32(_ind.Qf3DernierEnfantAnnee.GetValueOrDefault());
+                individu.Qf4DENeVivantVit = Convert.ToByte(_ind.Qf4DENeVivantVit.GetValueOrDefault());
+                individu.DureeSaisie = Convert.ToInt32(_ind.DureeSaisie.GetValueOrDefault());
+                individu.IsContreEnqueteMade = _ind.IsContreEnqueteMade.GetValueOrDefault();
+                individu.IsValidated = _ind.IsValidated.GetValueOrDefault();
+            }
+            
             return individu;
         }
 
@@ -2042,37 +2072,45 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         public static DecesCEModel MapToDecesCEModel(Tbl_DecesCE _deces)
         {
             DecesCEModel _dec = new DecesCEModel();
-            _dec.Id = _deces.Id;
-            _dec.MenageId = _deces.MenageId.GetValueOrDefault();
-            _dec.LogeId = _deces.LogeId.GetValueOrDefault();
-            _dec.BatimentId = _deces.BatimentId.GetValueOrDefault();
-            _dec.SdeId = _deces.SdeId;
-            _dec.DecesId = _deces.DecesId;
-            _dec.Qd2NoOrdre = Convert.ToByte(_deces.Qd2NoOrdre.GetValueOrDefault());
-            _dec.Qd1Deces = Convert.ToByte(_deces.Qd1Deces.GetValueOrDefault());
-            _dec.Qd1aNbreDecesF = Convert.ToByte(_deces.Qd1aNbreDecesF.GetValueOrDefault());
-            _dec.Qd1aNbreDecesG = Convert.ToByte(_deces.Qd1aNbreDecesG.GetValueOrDefault());
-            _dec.DureeSaisie = Convert.ToByte(_deces.DureeSaisie.GetValueOrDefault());
-            _dec.IsContreEnqueteMade = _deces.IsContreEnqueteMade.GetValueOrDefault();
-            _dec.IsValidated = _deces.IsValidated.GetValueOrDefault();
+            if (_deces != null)
+            {
+                _dec.Id = _deces.Id;
+                _dec.MenageId = _deces.MenageId.GetValueOrDefault();
+                _dec.LogeId = _deces.LogeId.GetValueOrDefault();
+                _dec.BatimentId = _deces.BatimentId.GetValueOrDefault();
+                _dec.SdeId = _deces.SdeId;
+                _dec.DecesId = _deces.DecesId;
+                _dec.Qd2NoOrdre = Convert.ToByte(_deces.Qd2NoOrdre.GetValueOrDefault());
+                _dec.Qd1Deces = Convert.ToByte(_deces.Qd1Deces.GetValueOrDefault());
+                _dec.Qd1aNbreDecesF = Convert.ToByte(_deces.Qd1aNbreDecesF.GetValueOrDefault());
+                _dec.Qd1aNbreDecesG = Convert.ToByte(_deces.Qd1aNbreDecesG.GetValueOrDefault());
+                _dec.DureeSaisie = Convert.ToByte(_deces.DureeSaisie.GetValueOrDefault());
+                _dec.IsContreEnqueteMade = _deces.IsContreEnqueteMade.GetValueOrDefault();
+                _dec.IsValidated = _deces.IsValidated.GetValueOrDefault();
+            }
+           
             return _dec;
         }
         public static Tbl_DecesCE MapToTbl_DecesCE(DecesCEModel _deces)
         {
             Tbl_DecesCE _dec = new Tbl_DecesCE();
-            _dec.Id = _deces.Id;
-            _dec.MenageId = _deces.MenageId;
-            _dec.LogeId = _deces.LogeId;
-            _dec.BatimentId = _deces.BatimentId;
-            _dec.SdeId = _deces.SdeId;
-            _dec.DecesId = _deces.DecesId;
-            _dec.Qd2NoOrdre = Convert.ToByte(_deces.Qd2NoOrdre.GetValueOrDefault());
-            _dec.Qd1Deces = Convert.ToByte(_deces.Qd1Deces.GetValueOrDefault());
-            _dec.Qd1aNbreDecesF = Convert.ToByte(_deces.Qd1aNbreDecesF.GetValueOrDefault());
-            _dec.Qd1aNbreDecesG = Convert.ToByte(_deces.Qd1aNbreDecesG.GetValueOrDefault());
-            _dec.DureeSaisie = Convert.ToByte(_deces.DureeSaisie.GetValueOrDefault());
-            _dec.IsContreEnqueteMade = _deces.IsContreEnqueteMade.GetValueOrDefault();
-            _dec.IsValidated = _deces.IsValidated.GetValueOrDefault();
+            if (_deces!=null)
+            {
+                _dec.Id = _deces.Id;
+                _dec.MenageId = _deces.MenageId;
+                _dec.LogeId = _deces.LogeId;
+                _dec.BatimentId = _deces.BatimentId;
+                _dec.SdeId = _deces.SdeId;
+                _dec.DecesId = _deces.DecesId;
+                _dec.Qd2NoOrdre = Convert.ToByte(_deces.Qd2NoOrdre.GetValueOrDefault());
+                _dec.Qd1Deces = Convert.ToByte(_deces.Qd1Deces.GetValueOrDefault());
+                _dec.Qd1aNbreDecesF = Convert.ToByte(_deces.Qd1aNbreDecesF.GetValueOrDefault());
+                _dec.Qd1aNbreDecesG = Convert.ToByte(_deces.Qd1aNbreDecesG.GetValueOrDefault());
+                _dec.DureeSaisie = Convert.ToByte(_deces.DureeSaisie.GetValueOrDefault());
+                _dec.IsContreEnqueteMade = _deces.IsContreEnqueteMade.GetValueOrDefault();
+                _dec.IsValidated = _deces.IsValidated.GetValueOrDefault();
+            }
+            
             return _dec;
         }
         public static List<DecesCEModel> MapToListDecesCEModel(List<Tbl_DecesCE> listOfDeces)

@@ -55,7 +55,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         MainWindow1 main;
         string sdeId;
         SdeModel sdeCollecteData = null;
-        SdeModel sdeCEData = null;
         TypeModel typeBatiment = null;
         ConfigurationService settings = null;
         ThreadStart ths = null;
@@ -65,29 +64,34 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         public Frm_view_transfert(MainWindow1 main)
         {
             InitializeComponent();
-            device = new DeviceManager();
-            bckw = new BackgroundWorker();
-            service = new SqliteDataReaderService();
-            log = new Logger();
-            this.main = main;
-            mdfService = new MdfService();
-            xmlConfiguration = new XmlUtils(CONFIGURATION_PATH + "configuration.xml");
-            List<SdeModel> listOfSde = mdfService.getAllSde().ToList();
-            Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
-            DataContext = this;
-            btn_effacer.IsEnabled = false;
-            lbSdesCE.ItemsSource = listOfSde;
-            lbSdes.ItemsSource = listOfSde;
+            try
+            {
+                device = new DeviceManager();
+                bckw = new BackgroundWorker();
+                service = new SqliteDataReaderService();
+                log = new Logger();
+                this.main = main;
+                mdfService = new MdfService();
+                xmlConfiguration = new XmlUtils(CONFIGURATION_PATH + "configuration.xml");
+                List<SdeModel> listOfSde = mdfService.getAllSde().ToList();
+                Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
+                DataContext = this;
+                btn_effacer.IsEnabled = false;
+                lbSdes.ItemsSource = listOfSde;
 
-            //Type de batiments
-            List<TypeModel> listOfTB = new List<TypeModel>();
-            listOfTB.Add(new TypeModel(" Batiman ki vid", "1"));
-            listOfTB.Add(new TypeModel(" Batiman ki gen lojman lolektif", "2"));
-            listOfTB.Add(new TypeModel(" Batiman ki gen lojman vid", "3"));
-            listOfTB.Add(new TypeModel(" Batiman ki gen lojman endividyel", "4"));
-            lbx_type_CE.ItemsSource = listOfTB;
-            Users.users = new Users();
-            Users.users.DatabasePath = MAIN_DATABASE_PATH;
+                //Type de batiments
+                List<TypeModel> listOfTB = new List<TypeModel>();
+                listOfTB.Add(new TypeModel(" Batiman ki vid", "1"));
+                listOfTB.Add(new TypeModel(" Batiman ki gen lojman lolektif", "2"));
+                listOfTB.Add(new TypeModel(" Batiman ki gen lojman vid", "3"));
+                listOfTB.Add(new TypeModel(" Batiman ki gen lojman endividyel", "4"));
+                Users.users = new Users();
+                Users.users.DatabasePath = MAIN_DATABASE_PATH;
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         public void changeStatus(string msg, int value)
@@ -143,8 +147,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         }
 
 
-        //public void pullFile()
-        //{
+        public void pullFile()
+        {
 
         //    string sdeId = null;
         //    Tbl_Materiels mat = null;
@@ -376,7 +380,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         //        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
         //        img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
         //    }
-        //}
+        }
 
 
         private void btn_pc_tab_Click(object sender, RoutedEventArgs e)
@@ -446,6 +450,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 img_loading_ser.Visibility = Visibility.Visible;
                 btn_effacer.IsEnabled = false;
+                busyIndicator.IsBusy = true;
 
             }));
             txt_sortie.Text = "" + Environment.NewLine;
@@ -489,7 +494,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 #region ENVOI DES BATIMENTS
                 if (batimentsJsons.Count > 0)
                 {
-
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        busyIndicator.BusyContent = "Transfert des batiments mobiles";
+                    }));
                     sqliteWrite = new SqliteDataWriter();
                     foreach (BatimentJson bat in batimentsJsons)
                     {
@@ -589,6 +597,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 List<RapportPersonnelJson> rapportPersonnels = ModelMapper.MapToListJson(contreEnqueteService.searchRptPersonnel());
                 if (rapportPersonnels != null)
                 {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        busyIndicator.BusyContent = "Transfert des rapports personnels";
+                    }));
                     DataJson data = new DataJson();
                     data.deptId = "01";
                     data.username = "user";
@@ -648,6 +660,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 List<ProblemeJson> problemes = ModelMapper.MapToListJson(settings.searchAllProblemesBySdeId(sdeId));
                 if (problemes != null)
                 {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        busyIndicator.BusyContent = "Transfert des difficultes rencontres";
+                    }));
                     DataJson data = new DataJson();
                     data.deptId = "01";
                     data.username = "user";
@@ -725,10 +741,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
                 #endregion
 
-                #region RAPPORT PROBLEME
+                #region RAPPORT DEROULEMENTS
                 List<RapportDeroulementJson> rapportsDeroulements = ModelMapper.MapToListJson(contreEnqueteService.searchRptDeroulment());
                 if (rapportsDeroulements != null)
                 {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        busyIndicator.BusyContent = "Transfert des rapports sur le deroulement de la collecte";
+                    }));
                     DataJson data = new DataJson();
                     data.deptId = "01";
                     data.username = "user";
@@ -816,6 +836,95 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
                 #endregion
 
+                #region CONTRE ENQUETE
+                List<BatimentJson> batimentsCEJsons = contreEnqueteService.getAllBatimentCEInJson(sdeId);
+                if (batimentsCEJsons.Count != 0)
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        busyIndicator.BusyContent = "Transfert des contre enquete";
+                    }));
+                    foreach (BatimentJson batiment in batimentsCEJsons)
+                    {
+                        if (batiment.isSynchroToCentrale == false)
+                        {
+                            DataJson dataJson = new DataJson();
+                            dataJson.username = "Adme Jean Jeff";
+                            dataJson.deptId = "01";
+                            batiment.dateEnvoi = DateTime.Now.ToShortDateString();
+                            dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(batiment)));
+                            string dJson = JsonConvert.SerializeObject(dataJson);
+                            if (transfert.publishContreEntreData(dJson))
+                            {
+                                Dispatcher.Invoke(new Action(() =>
+                                {
+                                    txt_sortie.Text += "<>===================== Batiment:" + batiment.batimentId + " transféré avec succes" + Environment.NewLine;
+                                    txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                                    txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                                    txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                                    prg_trans_sc.Value += percent;
+                                    busyIndicator.IsBusy = false;
+                                }), System.Windows.Threading.DispatcherPriority.Background);
+                            }
+                            else
+                            {
+                                Dispatcher.Invoke(new Action(() =>
+                                {
+                                    txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                                    txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                                    txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                                    txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                                    prg_trans_sc.Value += percent;
+                                    busyIndicator.IsBusy = false;
+                                }), System.Windows.Threading.DispatcherPriority.Background);
+                            }
+                        }
+                        else
+                        {
+                            Dispatcher.Invoke(new Action(() =>
+                            {
+                                txt_sortie.Text += "<>=========Batiment deja transfere=========<>" + Environment.NewLine;
+                                txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                                txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                                prg_trans_sc.Value += percent;
+                            }), System.Windows.Threading.DispatcherPriority.Background);
+                        }
+
+                    }
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        lbl_sde.Content = "Transfert " + sdeId;
+                        lbl_statut_transfert.Content = "Termine";
+                        lbl_statut_transfert.Foreground = (Brush)bc.ConvertFrom("#FF26BD64");
+                        img_loading_ser.Visibility = Visibility.Hidden;
+                        btn_transfertr_sc.IsEnabled = true;
+                        btn_effacer.IsEnabled = true;
+                        busyIndicator.IsBusy = false;
+                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                    }));
+                }
+                else
+                {
+                    MessageBox.Show("Pa gen batiman.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        lbl_sde.Content = "";
+                        lbl_statut_transfert.Content = "";
+                        prg_trans_sc.Value = 0;
+                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                        img_loading_ser.Visibility = Visibility.Hidden;
+                        btn_transfertr_sc.IsEnabled = true;
+                    }));
+                }
+
+                #endregion
+
             }
             else
             {
@@ -850,135 +959,5 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             btn_effacer.IsEnabled = false;
             prg_trans_sc.Value = 0;
         }
-        private void lbSdesCE_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                ListBox ltb = e.OriginalSource as ListBox;
-                sdeCEData = ltb.SelectedItems.OfType<SdeModel>().FirstOrDefault();
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
-        private void lbx_type_CE_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                if (sdeCEData != null)
-                {
-                    ListBox ltb = e.OriginalSource as ListBox;
-                    typeBatiment = ltb.SelectedItems.OfType<TypeModel>().FirstOrDefault();
-                }
-                else
-                {
-                    lbx_type_CE.SelectedItem = null;
-                    MessageBox.Show("Ou dwe chwazi yon SDE.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
-        private void btn_trans_ce_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (typeBatiment != null)
-                {
-                    BrushConverter bc = new BrushConverter();
-                    img_ce.Dispatcher.BeginInvoke((Action)(() => img_ce.Visibility = Visibility.Visible));
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        img_ce.Visibility = Visibility.Visible;
-                        //tbc_visualisation.IsEnabled = false;
-                        //tbc_contre_enquete.IsEnabled = false;
-                        //dashboard.IsEnabled = false;
-                        btn_effacer_ce.IsEnabled = false;
-                    }));
-                    txt_sortie_ce.Text = "" + Environment.NewLine;
-                    //waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = true));
-                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = true));
-                    writeInBusyTool("Transfert contre-enquete en cours.");
-                    List<ContreEnqueteType> listOfCE = mdfService.getContreEnquete(sdeCEData.SdeId, Convert.ToInt32(typeBatiment.Type));
-                    TransfertService transfert = new TransfertService();
-
-                    if (listOfCE.Count > 0)
-                    {
-                        float percent = calculPercent(listOfCE.Count);
-                        foreach (ContreEnqueteType cet in listOfCE)
-                        {
-                            BatimentData batimentData = new BatimentData();
-                            batimentData.contreEnquete = cet;
-                            batimentData.dataType = 1;
-                            BatimentType data = mdfService.getBatimentDataForCE(cet.batimentId, cet.sdeId);
-                            batimentData.data = data;
-                            if (transfert.publishContreEntreData(batimentData))
-                            {
-                                Dispatcher.Invoke(new Action(() =>
-                                {
-                                    txt_sortie_ce.Text += "<>===================== Kont anket sou batiman :" + cet.batimentId + " transfere avek sikse" + Environment.NewLine;
-                                    txt_sortie_ce.CaretIndex = txt_sortie.Text.Length;
-                                    var rect = txt_sortie_ce.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                                    txt_sortie_ce.ScrollToHorizontalOffset(rect.Right);
-                                    txt_sortie_ce.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                                    prg_trans_sc_ce.Value += percent;
-
-                                }), System.Windows.Threading.DispatcherPriority.Background);
-                            }
-                            else
-                            {
-                                Dispatcher.Invoke(new Action(() =>
-                                {
-                                    txt_sortie_ce.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
-                                    txt_sortie_ce.CaretIndex = txt_sortie_ce.Text.Length;
-                                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie_ce.CaretIndex);
-                                    txt_sortie_ce.ScrollToHorizontalOffset(rect.Right);
-                                    txt_sortie_ce.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                                    prg_trans_sc_ce.Value += percent;
-
-                                }), System.Windows.Threading.DispatcherPriority.Background);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ou poko fè kont-ankèt sou batiman ki gen lojman kolektif", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Chwazi ki tip kont-ankèt wap transfere a.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                    btn_effacer.Dispatcher.BeginInvoke((Action)(() => btn_effacer.IsEnabled = false));
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Le serveur est indisponible.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            finally
-            {
-                waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
-                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
-                prg_trans_sc_ce.Value = 0;
-                img_ce.Dispatcher.BeginInvoke((Action)(() => img_ce.Visibility = Visibility.Hidden));
-            }
-        }
-
-        private void chk_batiman_made_Checked(object sender, RoutedEventArgs e)
-        {
-            chk_batiman_valide.IsChecked = false;
-        }
-
-        private void chk_batiman_valide_Checked(object sender, RoutedEventArgs e)
-        {
-            chk_batiman_made.IsChecked = false;
-        }
-
-
     }
 }

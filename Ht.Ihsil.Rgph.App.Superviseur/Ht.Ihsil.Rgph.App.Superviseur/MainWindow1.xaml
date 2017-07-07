@@ -5,14 +5,15 @@
         xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
         xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-        Title="IHSI-RGPH-SUPERVISION V.1.4" Height="450" Width="725" Icon="images/favicon.ico" WindowState="Maximized">
+        Title="IHSI-RGPH-SUPERVISION V.1.4" Height="450" Width="725" Icon="images/favicon.ico" WindowState="Maximized" Closing="DXRibbonWindow_Closing" IsAeroMode="False" WindowStyle="SingleBorderWindow">
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <dxr:RibbonControl Grid.Row="0" RibbonStyle="Office2010" Background="#FF0F99F9" ShowApplicationButton="False" ToolbarShowMode="Hide">
+        <dxr:RibbonControl Grid.Row="0" RibbonStyle="Office2010" Background="#FF0F99F9" ShowApplicationButton="False" ToolbarShowMode="Hide" Grid.ColumnSpan="1" Height="141">
             <dxr:RibbonControl.ToolbarItems>
                 <dxb:BarButtonItemLink BarItemName="newItem"/>
             </dxr:RibbonControl.ToolbarItems>
@@ -82,15 +83,43 @@
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
+            <dxr:RibbonControl.PageHeaderItems>
+                
+                <dxb:BarStaticItem Name="stConnexion" Content="{Binding}" ToolTip="Se Connecter" Cursor="Hand">
+                    <dxb:BarStaticItem.ContentTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Username }" >
+                            <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="TextBlock.TextDecorations" Value="Underline"/>
+                                                <Setter Property="Foreground" Value="#FF44B2FF" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </DataTemplate>
+                    </dxb:BarStaticItem.ContentTemplate>
+                </dxb:BarStaticItem>
+                <dxb:BarSubItem Name="bsiIsConnecter" AllowGlyphTheming="False" BarItemDisplayMode="Content" GlyphAlignment="Top" MergeType="MergeItems" />
+                <dxb:BarButtonItem Name="biConnexion" Content="Connexion" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/individu1.png" RibbonStyle="Default" Glyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/user.png" />
+                
+                
+            </dxr:RibbonControl.PageHeaderItems>
+            
         </dxr:RibbonControl>
-        <dxr:RibbonStatusBarControl Grid.Row="2">
+        <dxr:RibbonStatusBarControl Grid.Row="2" Grid.ColumnSpan="3" Height="22">
 
         </dxr:RibbonStatusBarControl>
-        <Grid  Name="main_grid" HorizontalAlignment="Stretch" Grid.Row="1">
+        <Grid  Name="main_grid" HorizontalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="3">
             <dx:LoadingDecorator Name="main_grid_1" IsSplashScreenShown="false" SplashScreenLocation="CenterScreen">
             </dx:LoadingDecorator>
         </Grid>
-        <Label Content="Utilisateur connecté:" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Foreground="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}"/>
-        <TextBlock HorizontalAlignment="Left" Name="txt_connecteduser" Margin="145,3,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="508" Foreground="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" FontStyle="Italic"/>
+        <Label Content="Utilisateur connecté:" HorizontalAlignment="Left" Margin="20,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="117" Foreground="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" Height="22"/>
+        <TextBlock HorizontalAlignment="Left" Name="txt_connecteduser" Margin="145,3,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="406" Foreground="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" FontStyle="Italic" Height="16" Grid.ColumnSpan="2"/>
+        
+
     </Grid>
 </dxr:DXRibbonWindow>

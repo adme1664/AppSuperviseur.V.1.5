@@ -15,6 +15,8 @@ using Ht.Ihsil.Rgph.App.Superviseur.views;
 using Ht.Ihsil.Rgph.App.Superviseur.utils;
 using Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
+using System.Diagnostics;
+using DevExpress.Xpf.Bars;
 
 
 namespace Ht.Ihsil.Rgph.App.Superviseur
@@ -27,6 +29,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
         public MainWindow1()
         {
             InitializeComponent();
+            TextModel model=null;
             if (Users.users.Profile == "7")
             {
                 bbi_avances.IsVisible = false;
@@ -41,7 +44,43 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                 rpc_rapports.IsEnabled = false;
                 rpc_sdes.IsEnabled = false;
                 txt_connecteduser.Text = "" + Users.users.Nom + " " + Users.users.Prenom + " (ASTIC)";
+             }
+            model = new TextModel();
+            model.Username = "" + Users.users.Nom + " " + Users.users.Prenom;
+            model.Deconnexion = "Deconnexion";
+            stConnexion.ToolTip = model.Username + " s'est connecté";
+            stConnexion.DataContext = model;
+            biConnexion.ToolTip = model.Username + " s'est connecté";
+
+
+            BarButtonItem btnConnexion = new BarButtonItem();
+            btnConnexion.Content = "Deconnexion";
+            btnConnexion.Glyph = new BitmapImage(new Uri(@"/images/signout.png", UriKind.RelativeOrAbsolute));
+            btnConnexion.ItemClick += btnConnexion_ItemClick;
+
+            BarButtonItem btnInfo = new BarButtonItem();
+            btnInfo.Glyph = new BitmapImage(new Uri(@"/images/user.png", UriKind.RelativeOrAbsolute));
+            btnInfo.Content =  Users.users.Nom + " " + Users.users.Prenom + " (Superviseur)";
+            bsiIsConnecter.Items.Add(btnInfo);
+            bsiIsConnecter.Items.Add(btnConnexion);
+           
+            
+        }
+
+        void btnConnexion_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MessageBoxResult confirm = MessageBox.Show("Eske ou vle dekonekte?", Constant.WINDOW_TITLE, MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (confirm == MessageBoxResult.Yes)
+            {
+                Process[] procs = Process.GetProcessesByName("adb");
+                Utilities.killProcess(procs);
+                
+                frm_connexion connexion = new frm_connexion();
+                connexion.Show();
+                this.Close();
+                
             }
+            
         }
 
         private void bbi_sdes_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
@@ -182,6 +221,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             
         }
 
+        private void DXRibbonWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Process[] procs = Process.GetProcessesByName("adb");
+            if (procs.Length != 0)
+            {
+                foreach (var proc in procs)
+                {
+                    if (!proc.HasExited)
+                    {
+                        proc.Kill();
+                    }
+                }
+            }
+        }
         
     }
 }

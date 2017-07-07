@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
+using Ht.Ihsil.Rgph.App.Superviseur.Json;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.services
 {
@@ -78,6 +79,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         List<ContreEnqueteModel> searchContreEnquete(int typeContreEnquete, string sdeId);
         List<ContreEnqueteModel> searchContreEnquete(string sdeId);
         ContreEnqueteModel getContreEnquete(long id, string sdeId);
+        List<BatimentJson> getAllBatimentCEInJson(string sdeId);
 
         #endregion
 

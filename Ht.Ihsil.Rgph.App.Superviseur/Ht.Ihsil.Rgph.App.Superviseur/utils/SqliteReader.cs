@@ -2523,6 +2523,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region INDICATEURS SOCIO-DEMOGRAPHIQUES PAR MENAGES
+        public float tailleMoyenneMenage()
+        {
+            try
+            {
+                return GetAllIndividus().Count / GetAllMenages().Count;
+            }
+            catch (Exception)
+            {
+
+            }
+            return 0;
+         }
         public int getTotalPersonnesByMenage(long menageId)
         {
             List<IndividuModel> listOf = GetIndividuByMenage(menageId);
@@ -2955,5 +2967,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
 
 
+
+
+        
     }
 }
