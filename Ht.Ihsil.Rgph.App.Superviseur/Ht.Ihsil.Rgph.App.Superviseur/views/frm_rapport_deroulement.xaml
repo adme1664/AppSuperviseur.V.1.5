@@ -11,7 +11,12 @@
              mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Grid>
         <Grid>
-            <GroupBox Header="Rapport de deroulement de la collecte" HorizontalAlignment="Stretch" Margin="2,17,0,0" VerticalAlignment="Top" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120*"/>
+                <RowDefinition Height="177*"/>
+                <RowDefinition Height="29*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Rapport de deroulement de la collecte" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="0" >
                 <Grid Margin="0,0,0,6">
                     <Label Content="Domaine" HorizontalAlignment="Left" Margin="11,28,0,0" VerticalAlignment="Top" Width="51"/>
                     <ComboBox HorizontalAlignment="Left" Margin="72,28,0,0" VerticalAlignment="Top" Width="150" Name="cmbDomaine" ItemsSource="{Binding ListOfDomaine}" DisplayMemberPath="Value" SelectionChanged="cmbDomaine_SelectionChanged"/>
@@ -30,9 +35,9 @@
                     <Button Content="Ajouter" Name="btnAjouter" HorizontalAlignment="Left" Margin="763,114,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.813,-0.545" Height="33" Click="btnAjouter_Click"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Details" HorizontalAlignment="Stretch" Margin="6,237,-1,0"  VerticalAlignment="Stretch">
+            <GroupBox Header="Details" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="1">
                 <Grid >
-                    <dxg:GridControl  Name="grid_rapport" ItemsSource="{Binding Rapports}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row" AutoGeneratingColumn="grid_rapport_AutoGeneratingColumn" Margin="0,0,0,28">
+                    <dxg:GridControl  Name="grid_rapport" ItemsSource="{Binding Rapports}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row" AutoGeneratingColumn="grid_rapport_AutoGeneratingColumn">
                         <dxg:GridControl.Columns>
                             <dxg:GridColumn FieldName="Num" Header="#" AllowEditing="False">
                             </dxg:GridColumn>
@@ -66,7 +71,7 @@
                     </dxg:GridControl>
                 </Grid>
             </GroupBox>
-            <Button x:Name="btnSauvegarder" Content="Sauvegarder"  HorizontalAlignment="Right" Margin="0,532,797,0" Width="123" Click="Button_Click" Height="33" VerticalAlignment="Top"/>
+            <Button x:Name="btnSauvegarder" Content="Sauvegarder"  HorizontalAlignment="Right" Margin="0,13,887,0" Width="123" Click="Button_Click" Height="33" VerticalAlignment="Top" Grid.Row="2"/>
         </Grid>
 
     </Grid>

@@ -383,6 +383,22 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             return false;
         }
+        public bool updateRetour(RetourModel retour)
+        {
+            try
+            {
+                return daoSettings.updateRetour(ModelMapper.MapToTbl_Retour(retour));
+            }
+            catch (MessageException ex)
+            {
+                throw new MessageException(ex.Message);
+            }
+            catch (Exception)
+            {
+
+            }
+            return false;
+        }
 
         public List<RetourModel> searchAllRetours()
         {
@@ -538,6 +554,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
 
 
 
-      
+
+
+
+       
     }
 }

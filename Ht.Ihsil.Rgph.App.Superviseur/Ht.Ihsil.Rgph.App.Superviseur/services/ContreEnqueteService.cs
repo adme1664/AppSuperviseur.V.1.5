@@ -194,12 +194,27 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         else
                         {
                             Random random = new Random();
-                            List<BatimentModel> l = new List<BatimentModel>();
-                            for (int i = 0; i <= 2; i++)
+                            List<BatimentModel> listOfBatiments = new List<BatimentModel>();
+                            for (int i = 0; i <= listB.Count(); i++)
                             {
-                                l.Add(listB.ElementAt(random.Next(1, listB.Count())));
+                                BatimentModel bat = listB.ElementAt(random.Next(1, listB.Count()));
+                                if (listOfBatiments.Count > 0)
+                                {
+                                    foreach (BatimentModel b in listOfBatiments)
+                                    {
+                                        if (Utilities.isBatimentExistInList(listOfBatiments, bat) == false)
+                                            listOfBatiments.Add(bat);
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    listOfBatiments.Add(bat);
+                                }
+                                if (listOfBatiments.Count == 3)
+                                    break;
                             }
-                            return l;
+                            return listOfBatiments;
                         }
                         
                     }
@@ -343,39 +358,35 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             List<BatimentModel> listOfBat = readerService.getAllLogementIndividuelVide();
             if (Utils.IsNotNull(listOfBat))
             {
+                Random random = new Random();
                 List<BatimentModel> listBatLogVide = new List<BatimentModel>();
-               
-                    foreach (BatimentModel batiment in listOfBat)
+                if (listOfBat.Count <= 1)
+                {
+                    return listOfBat;
+                }
+                for (int i = 0; i <= listOfBat.Count; i++)
+                {
+                    BatimentModel bat = listOfBat.ElementAt(random.Next(1, listOfBat.Count()));
+                    if (listBatLogVide.Count > 0)
                     {
-                        if (listBatLogVide.Count() < 3)
+                        foreach (BatimentModel batiment in listBatLogVide)
                         {
-                            if (batiment.Logement.Count() > 1)
+                            if (Utilities.isBatimentExistInList(listBatLogVide, bat))
                             {
-                                LogementModel _log = new LogementModel();
-                                _log = batiment.Logement.ElementAt(0);
-                                batiment.Logement = new List<LogementModel>();
-                                batiment.Logement.Add(_log);
-                                listBatLogVide.Add(batiment);
-
-                            }
-                            else
-                            {
-                                if (batiment.Logement.Count() == 1)
-                                    listBatLogVide.Add(batiment);
-
-                            }
-                        }
-                        else
-                        {
-                            if (listBatLogVide.Count() == 3)
-                            {
+                                listBatLogVide.Add(bat);
                                 break;
                             }
                         }
-                       
                     }
-               
-                return listBatLogVide;    
+                    else
+                    {
+                        listBatLogVide.Add(bat);
+                    }
+                    if (listBatLogVide.Count == 3)
+                        break;
+                }
+
+                   return listBatLogVide;    
             }
             return null;
             
@@ -482,7 +493,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                 {
                     BatimentJson batiment = ModelMapper.MapToJson(batimentModel);
                     //Recherche du type de contreenquete
-                    ContreEnqueteModel contreEnquete = ModelMapper.MapToContreEnqueteModel(daoCE.getContreEnquete(Convert.ToInt32(batiment.batimentId), batiment.sdeId));
+                    ContreEnqueteModel contreEnquete = ModelMapper.MapToContreEnqueteModel(daoCE.getContreEnquete(Convert.ToInt32(batiment.batimentId), sdeId));
                     if (contreEnquete != null)
                     {
                         batiment.typeContreEnquete = contreEnquete.TypeContreEnquete.GetValueOrDefault();
@@ -496,7 +507,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         if (batiment.typeContreEnquete == (long)Constant.TypeContrEnquete.LogementCollectif)
                         {
                             List<LogementCJson> logementsCollectifs = new List<LogementCJson>();
-                            List<LogementCEModel> logCES = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), batiment.sdeId,Constant.TYPE_LOJMAN_KOLEKTIF));
+                            List<LogementCEModel> logCES = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), sdeId,Constant.TYPE_LOJMAN_KOLEKTIF));
                             foreach (LogementCEModel logmnt in logCES)
                             {
                                 LogementCJson logjson = ModelMapper.MapToCLJson(logmnt);
@@ -520,7 +531,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         if (batiment.typeContreEnquete == (long)Constant.TypeContrEnquete.LogementInvididuelVide)
                         {
                             List<LogementIsJson> logementsIndividuels = new List<LogementIsJson>();
-                            List<LogementCEModel> logIs = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), batiment.sdeId, Constant.TYPE_LOJMAN_ENDIVIDYEL));
+                            List<LogementCEModel> logIs = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), sdeId, Constant.TYPE_LOJMAN_ENDIVIDYEL));
                             foreach (LogementCEModel logmntI in logIs)
                             {
                                 if (logmntI.Qlin9NbreTotalMenage.GetValueOrDefault() == 0)
@@ -537,7 +548,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         if (batiment.typeContreEnquete == (long)Constant.TypeContrEnquete.LogementInvididuelVide)
                         {
                             List<LogementIsJson> logementsIndividuels = new List<LogementIsJson>();
-                            List<LogementCEModel> logIs = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), batiment.sdeId, Constant.TYPE_LOJMAN_ENDIVIDYEL));
+                            List<LogementCEModel> logIs = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), sdeId, Constant.TYPE_LOJMAN_ENDIVIDYEL));
                             foreach (LogementCEModel logmntI in logIs)
                             {
                                 if (logmntI.Qlin2StatutOccupation.GetValueOrDefault() != 3)
@@ -554,20 +565,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         if (batiment.typeContreEnquete == (long)Constant.TypeContrEnquete.LogementIndividuelMenage)
                         {
                             List<LogementIsJson> logementsIndividuels = new List<LogementIsJson>();
-                            List<LogementCEModel> logIs = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), batiment.sdeId, Constant.TYPE_LOJMAN_ENDIVIDYEL));
+                            List<LogementCEModel> logIs = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), sdeId, Constant.TYPE_LOJMAN_ENDIVIDYEL));
                             foreach (LogementCEModel logmntI in logIs)
                             {
                                 if (logmntI.Qlin9NbreTotalMenage.GetValueOrDefault() != 0)
                                 {
                                     LogementIsJson logJson = ModelMapper.MapToILJson(logmntI);
                                     List<MenageJson> menagesJsons = new List<MenageJson>();
-                                    List<MenageCEModel> menages = ModelMapper.MapToListMenageCEModel(daoCE.searchAllMenageCE(logmntI.LogeId, logmntI.BatimentId, logmntI.SdeId));
+                                    List<MenageCEModel> menages = ModelMapper.MapToListMenageCEModel(daoCE.searchAllMenageCE(logmntI.LogeId, logmntI.BatimentId, sdeId));
                                     foreach (MenageCEModel menage in menages)
                                     {
                                         MenageJson menageJson = ModelMapper.MapToJson(menage);
                                         //Ajout des deces
                                         List<DecesJson> decesJsons = new List<DecesJson>();
-                                        List<DecesCEModel> deces = ModelMapper.MapToListDecesCEModel(daoCE.searchAllDecesCE(menage.BatimentId, menage.LogeId, menage.SdeId, menage.MenageId));
+                                        List<DecesCEModel> deces = ModelMapper.MapToListDecesCEModel(daoCE.searchAllDecesCE(menage.BatimentId, menage.LogeId, sdeId, menage.MenageId));
                                         foreach (DecesCEModel dec in deces)
                                         {
                                             DecesJson decesJson = ModelMapper.MapToJson(dec);
@@ -578,7 +589,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
 
                                         //Ajout des individus
                                         List<IndividuJson> individusJsons = new List<IndividuJson>();
-                                        List<IndividuCEModel> individus = ModelMapper.MapToListIndividuCEModel(daoCE.searchAllIndividuCE(menage.BatimentId, menage.LogeId, menage.SdeId, menage.MenageId));
+                                        List<IndividuCEModel> individus = ModelMapper.MapToListIndividuCEModel(daoCE.searchAllIndividuCE(menage.BatimentId, menage.LogeId, sdeId, menage.MenageId));
                                         foreach (IndividuCEModel ind in individus)
                                         {
                                             IndividuJson indJson = ModelMapper.MapToJson(ind);
@@ -604,7 +615,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             catch (Exception ex)
             {
-
+                log.Info("Error:" + ex.Message);
             }
             return new List<Json.BatimentJson>();
         }

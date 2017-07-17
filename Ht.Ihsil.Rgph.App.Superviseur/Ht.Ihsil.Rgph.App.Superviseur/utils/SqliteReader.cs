@@ -364,6 +364,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             List<BatimentType> result = new List<BatimentType>();
             try
             {
+
                 List<BatimentModel> batiments = ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.statut == (int)Constant.StatutModule.MalRempli).ToList());
                 foreach (BatimentModel bat in batiments)
                 {

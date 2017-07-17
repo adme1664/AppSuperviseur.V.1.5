@@ -455,11 +455,35 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                         }
                     }
                 }
+                if (obj.ToString() == Constant.OBJET_MODEL_BATIMENT)
+                {
+                    tbl_categorie_question tcq = reader.getCategorie("LOC", sdeID);
+                    BatimentModel bat = obj as BatimentModel;
+                    reader = new SqliteDataReaderService(Utilities.getConnectionString(Users.users.DatabasePath, sdeID));
+                    SdeInformation sdeInformation = Utilities.getSdeInformation(Utilities.getSdeFormatSent(sdeID));
+                    string comId = reader.Sr.getCommune(sdeInformation.ComId).ComNom;
+                    string deptId = reader.Sr.getDepartement(sdeInformation.DeptId).DeptNom;
+                    string vqse = reader.Sr.getVqse(sdeInformation.VqseId).VqseNom;
+                    if (sdeInformation != null)
+                    {
+                        reponses.Add(new DataDetails("Depatman:", deptId, tcq.detailsCategorie));
+                        reponses.Add(new DataDetails("Komin:", comId, tcq.detailsCategorie));
+                        reponses.Add(new DataDetails("Seksyon Kominal:", vqse, tcq.detailsCategorie));
+                        reponses.Add(new DataDetails("Distri:", bat.DistrictId, tcq.detailsCategorie));
+                        reponses.Add(new DataDetails("Bitasyon:", bat.Qhabitation, tcq.detailsCategorie));
+                        reponses.Add(new DataDetails("Lokalite:", bat.Qlocalite, tcq.detailsCategorie));
+                        reponses.Add(new DataDetails("Adrès:", bat.Qadresse, tcq.detailsCategorie));
+
+                    }
+
+
+                }
             }
             catch (Exception ex)
             {
                 log.Info("Erreur:" + ex.Message);
             }
+            
             return reponses;
         }
         #endregion

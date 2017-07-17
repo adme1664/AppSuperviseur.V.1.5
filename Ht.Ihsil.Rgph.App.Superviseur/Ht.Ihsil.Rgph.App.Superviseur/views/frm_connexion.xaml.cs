@@ -196,5 +196,29 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 t_username.Mask = "007.0000";
             }
         }
+
+        private void t_password_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                try
+                {
+
+                    initializeConnexion(t_username.Text, t_password.Password);
+                    if (state == true)
+                    {
+                        MainWindow1 m = new MainWindow1();
+                        this.Close();
+                        m.ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Info("Error:" + ex.Message);
+                }
+            }
+        }
+
+
     }
 }

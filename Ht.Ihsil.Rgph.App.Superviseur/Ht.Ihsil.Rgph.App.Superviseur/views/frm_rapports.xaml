@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_rapports" 
-             mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Height="816.418">
+             mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="53*"/>
             <RowDefinition Height="151*"/>
         </Grid.RowDefinitions>
-        <TabControl HorizontalAlignment="Stretch" Grid.Row="1" Margin="0,4,0,0" x:Name="tab_control">
+        <TabControl HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,4,0,0" x:Name="tab_control">
             <TabItem x:Name="tb_ind_gestion">
                 <TabItem.HeaderTemplate>
                     <DataTemplate>
@@ -31,7 +31,7 @@
                                 <dxg:TreeListColumn FieldName="Column2"/>-->
                             </dxg:TreeListControl.Columns>
                         </dxg:TreeListControl>
-                    </GroupBox>    
+                    </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tb_autres_performance">
@@ -58,8 +58,9 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Grid HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="635" Grid.Row="0" Margin="10,0,0,0">
-            <GroupBox Header="Sdes" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="188" Width="220" FontWeight="Bold" FontStyle="Italic" FontSize="13">
+        <Grid  Grid.Row="0" Margin="10,0,0,0">
+            
+            <GroupBox Header="Sdes" HorizontalAlignment="Left"  VerticalAlignment="Stretch"  FontWeight="Bold" FontStyle="Italic" FontSize="13"  Margin="0,15,0,13" Width="153">
                 <ListBox x:Name="lbSdes" SelectionChanged="lbSdes_SelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
@@ -71,16 +72,12 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </GroupBox>
-            <GroupBox Header="Informations" HorizontalAlignment="Left" Margin="255,0,0,0" VerticalAlignment="Top" Height="187" Width="370">
+            <GroupBox Header="Informations" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   Margin="173,15,22,13" >
                 <Grid>
-                    <Label Content="Localidation de la SDE:" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Width="154"/>
-                    <Label Content="Agent:" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="154"/>
-                    <Label Content="Date de debut de la Collecte:" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" Width="154"/>
-                    <Label Content="Date de la derniere actualisation:" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="154"/>
-                    <Label Content="Croix-des-Bouquets/Varreux" x:Name="lbl_sde" HorizontalAlignment="Left" Margin="178,19,0,0" VerticalAlignment="Top" Width="173" FontWeight="Bold" FontStyle="Italic" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Background="#FFC9E7F5"/>
-                    <Label Content="Adme Jean Jeff" x:Name="lbl_agent" HorizontalAlignment="Left" Margin="178,46,-5,0" VerticalAlignment="Top" Width="173" FontWeight="Bold" FontStyle="Italic" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                    <Label Content="6/2/2016" x:Name="lbl_date_debut" HorizontalAlignment="Left" Margin="178,73,-5,0" VerticalAlignment="Top" Width="173" FontWeight="Bold" FontStyle="Italic" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                    <Label Content="6/3/2016" x:Name="lbl_date_actualisation" HorizontalAlignment="Left" Margin="178,100,-5,0" VerticalAlignment="Top" Width="173" FontWeight="Bold" FontStyle="Italic" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                    <Label Content="Localisation de la SDE:"  HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Width="154"/>
+                    <Label Content="Agent:"  HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top" Width="154"/>
+                    <TextBlock  x:Name="lbl_localisation" HorizontalAlignment="Stretch" Margin="145,19,33,0" VerticalAlignment="Top"  FontWeight="Bold" FontStyle="Italic" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                    <TextBlock  x:Name="lbl_agent" HorizontalAlignment="Stretch" Margin="145,46,28,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" Foreground="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
                 </Grid>
             </GroupBox>
         </Grid>

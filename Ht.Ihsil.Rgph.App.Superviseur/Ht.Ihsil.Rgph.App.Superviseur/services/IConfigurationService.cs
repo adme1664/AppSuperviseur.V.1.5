@@ -43,7 +43,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         #region GESTION DES RETOURS
         bool saveRetour(RetourModel retour);
         List<RetourModel> searchAllRetours();
-
+        bool updateRetour(RetourModel retour);
         List<RetourModel> searchAllRetourBySde(string sdeId);
         RetourModel getRetour(long id);
         #endregion

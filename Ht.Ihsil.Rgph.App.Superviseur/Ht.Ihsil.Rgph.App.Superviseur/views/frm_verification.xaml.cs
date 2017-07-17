@@ -42,8 +42,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         bool isTabCouvertureLoad = false;
         bool tabCodificationFocus = false;
         bool tabFlagCounterFocus = false;
-        //bool isTabSocioLoad = false;
-        //bool isTabPerformanceLoad = false;
+        ProblemeModel problemeRowToUpdate = null;
         #endregion
 
         #region CONSTRCUTORS
@@ -63,7 +62,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             dtg_non_reponse_partielle.ItemsSource = verificationsNonReponsePartielle;
 
             List<VerificationFlag> verficationFlags = Utilities.getVerificationNonReponseParVariable(MAIN_DATABASE_PATH, sde.SdeId);
-            //dtg_non_reponse_totale_variable.ItemsSource = verficationFlags;
             #endregion
 
             #region Ajout des images dans les nodes
@@ -241,6 +239,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 btn_save.IsEnabled = false;
                 tabNotesAlreadyOpen = true;
             }
+          
         }
 
         private void cmbObjet_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -395,12 +394,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         }
                         else
                         {
+                            probleme.ProblemeId = problemeRowToUpdate.ProblemeId;
                             result = configuration.updateProbleme(probleme);
                         }
                     }
                     if (result == true)
                     {
                         MessageBox.Show("Anregistreman an fet ak siksè.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                        tabAjout.Header = "Sauvegarder";
                         blankAndDisabedComponents();
                     }
                     else
@@ -441,7 +442,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     cmbObjet.IsEnabled = true;
                     cmbCodeQuestion.IsEnabled = true;
                     txtNature.IsEnabled = true;
-                    cmbBatiment.IsEnabled = true;
+                    if (tabAjout.Header.ToString() == "Modifier")
+                    {
+                        cmbBatiment.IsEnabled = false;
+                        btn_save.IsEnabled = true;
+                    }
+                    else
+                    {
+                        cmbBatiment.IsEnabled = true;
+                        btn_save.IsEnabled = true;
+                    }
+
                     listBCodeBatiment.IsEnabled = true;
                     cmbObjet.ItemsSource = Utilities.getNameOfObjects();
                     cmbBatiment.ItemsSource = reader.GetAllBatimentModel();
@@ -453,7 +464,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     cmbObjet.IsEnabled = true;
                     cmbCodeQuestion.IsEnabled = true;
                     txtNature.IsEnabled = true;
-                    cmbBatiment.IsEnabled = true;
+                    if (tabAjout.Header.ToString() == "Modifier")
+                    {
+                        cmbBatiment.IsEnabled = false;
+                        btn_save.IsEnabled = true;
+                    }
+                    else
+                    {
+                        cmbBatiment.IsEnabled = true;
+                        btn_save.IsEnabled = true;
+                    }
+                        
                     //btn_save.IsEnabled = true;
                     listBCodeBatiment.IsEnabled = true;
                     cmbObjet.ItemsSource = Utilities.getNameOfObjects();
@@ -475,6 +496,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     cmbCodeQuestion.ItemsSource = listOfQuestions;
                 }
             }
+        }
+
+        private void tabAjout_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(tabAjout.Header.ToString()=="Modifier")
+                cmbBatiment.IsEnabled = false;
         }
         #endregion
 
@@ -499,17 +526,25 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         private void updateRowItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
-            ProblemeModel row = (ProblemeModel)grdDifficulties.GetRow(grdDifficulties.GetSelectedRowHandles()[0]);
-            if (row != null)
+            problemeRowToUpdate = (ProblemeModel)grdDifficulties.GetRow(grdDifficulties.GetSelectedRowHandles()[0]);
+            List<BatimentModel> listOfBat = reader.GetAllBatimentModel();
+            
+            if (problemeRowToUpdate != null)
             {
                 tabAjout.Header = "Modifier";
                 tabControlNotes.SelectedItem = tabAjout;
+                tabAjout.Focus();
                 cmbObjet.IsEnabled = true;
                 btn_save.Content = "Modifier";
+                cmbBatiment.IsEnabled = false;
                 btn_save.IsEnabled = true;
+
+                //Ajout des autres informations necessaires
+                cmbTypeProbleme.ItemsSource = Constant.ListOfDifficultes();
+                cmbObjet.ItemsSource = Utilities.getNameOfObjects();
                 //
                 //Selection dy type de difficulte rencontree 
-                if (row.Domaine != null)
+                if (problemeRowToUpdate.Domaine != null)
                 {
                     foreach (NameValue type in cmbTypeProbleme.Items)
                     {
@@ -537,9 +572,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 //Selectionne l'objet a modfiee
                 foreach (NameValue val in cmbObjet.Items)
                 {
-                    if (row.Objet == val.Name)
+                    if (problemeRowToUpdate.Objet == val.Name)
                     {
                         cmbObjet.SelectedItem = val;
+                        cmbDomaine.ItemsSource = Constant.searchSectionByObjet(val.Name);
                         break;
                     }
 
@@ -547,9 +583,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 //Selection du domaine
                 foreach (NameValue domaine in cmbDomaine.Items)
                 {
-                    if (row.Domaine == domaine.Value)
+                    if (problemeRowToUpdate.Domaine == domaine.Value)
                     {
                         cmbDomaine.SelectedItem = domaine;
+                        List<QuestionsModel> listOfQuestions = ModelMapper.MapToListQuestionModel(reader.searchQuestionByCategorie(domaine.Name));
+                        //
+                        if (listOfQuestions != null)
+                        {
+                            cmbCodeQuestion.ItemsSource = listOfQuestions;
+                        }
+                        break;
                     }
                 }
 
@@ -557,7 +600,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 //Selectionne la question a modifiee
                 foreach (QuestionsModel question in cmbCodeQuestion.Items)
                 {
-                    if (question.CodeQuestion == row.CodeQuestion)
+                    if (question.CodeQuestion == problemeRowToUpdate.CodeQuestion)
                     {
                         cmbCodeQuestion.SelectedItem = question;
                         //Set le libelle de la question
@@ -569,31 +612,27 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
                 //
                 //Set la nature de la difficultee rencontree
-                if (row.Nature != null)
+                if (problemeRowToUpdate.Nature != null)
                 {
-                    txtNature.Text = row.Nature;
+                    txtNature.Text = problemeRowToUpdate.Nature;
                 }
                 //
                 //Set les codes des batiments selectionnes
-                if (row.BatimentId != null)
+                if (problemeRowToUpdate.BatimentId != null)
                 {
                     listOfBatiments = new List<BatimentModel>();
-                    foreach (BatimentModel batiment in cmbBatiment.Items)
+                    foreach (BatimentModel batiment in listOfBat)
                     {
-                        if (batiment.BatimentId == row.BatimentId)
+                        if (batiment.BatimentId == problemeRowToUpdate.BatimentId)
                         {
                             listOfBatiments.Add(batiment);
                             listBCodeBatiment.Items.Add(batiment);
-                            //List<BatimentModel> listOf=new List<BatimentModel>();
-                            //listOf.Add(batiment);
-                            //listBCodeBatiment.ItemsSource = listOf;
-                        }
+                         }
                     }
                 }
-
-
             }
         }
+
 
         private void deleteDataItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
@@ -775,48 +814,48 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             IConfigurationService configuration = new ConfigurationService();
             List<CouvertureModel> couvertures = new List<CouvertureModel>();
 
-            #region CONSTRUCTION DE LA GRAPHE
-            //Test pour verifier si la table st deja telechargee
-            if (isTabCouvertureLoad == false)
-            {
-                //Test pour voir si le calcul doit se faire pour tout le district ou pr une SDE
-                if (IsAllDistrict == true)
+                #region CONSTRUCTION DE LA GRAPHE
+                //Test pour verifier si la table st deja telechargee
+                if (isTabCouvertureLoad == false)
                 {
-                    foreach (SdeModel sde in configuration.searchAllSdes())
+                    //Test pour voir si le calcul doit se faire pour tout le district ou pr une SDE
+                    if (IsAllDistrict == true)
                     {
-                        reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
+                        foreach (SdeModel sde in configuration.searchAllSdes())
+                        {
+                            reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
+
+                            //Indicateurs de couverture
+                            nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
+                            nbreLogementInd = nbreLogementInd + reader.getTotalLogementInds();
+                            nbreMenage = nbreMenage + reader.getTotalMenages();
+                            nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
+                            nbreActualisation = nbreActualisation + sde.TotalBatCartographie.GetValueOrDefault();
+                            //
+                        }
+                    }
+                    else
+                    {
+                        reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
 
                         //Indicateurs de couverture
                         nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
                         nbreLogementInd = nbreLogementInd + reader.getTotalLogementInds();
                         nbreMenage = nbreMenage + reader.getTotalMenages();
                         nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
-                        nbreActualisation = nbreActualisation + sde.TotalBatCartographie.GetValueOrDefault();
+                        nbreActualisation += nbreActualisation + sdeSelected.TotalBatCartographie.GetValueOrDefault();
                         //
                     }
-                }
-                else
-                {
-                    reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
-
-                    //Indicateurs de couverture
-                    nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
-                    nbreLogementInd = nbreLogementInd + reader.getTotalLogementInds();
-                    nbreMenage = nbreMenage + reader.getTotalMenages();
-                    nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
-                    nbreActualisation += nbreActualisation + sdeSelected.TotalBatCartographie.GetValueOrDefault();
-                    //
-                }
-                //On cree les graphes
-                barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
-                        barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Batiments", nbreBatiment))));
-                barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
-                   barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Logements Individuels", nbreLogementInd))));
-                barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
-                   barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Menages", nbreMenage))));
-                barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
-                   barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Personnes", nbrePersonnes))));
-            #endregion
+                    //On cree les graphes
+                    barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
+                            barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Batiments", nbreBatiment))));
+                    barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
+                       barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Logements Individuels", nbreLogementInd))));
+                    barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
+                       barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Menages", nbreMenage))));
+                    barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
+                       barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Personnes", nbrePersonnes))));
+                #endregion
 
                 #region CONSTRUCTION DU TABLEAU
                 CouvertureModel model1 = new CouvertureModel();
@@ -915,7 +954,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 list.Add(new KeyValue(nbreParJourMenage, "Nombre de menages par jour de recensement"));
                 list.Add(new KeyValue(nbreParJourPersonnes, "Nombre d'individus par jour de recensement"));
                 dataGridIndPerformance.ItemsSource = list;
-            }
+                table_view.Dispatcher.BeginInvoke((Action)(() => table_view.BestFitColumns()));
+             }
         }
 
         private void tabPagePerformance_GotFocus(object sender, RoutedEventArgs e)
@@ -942,35 +982,67 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             initializeChartControls();
             try
             {
-                reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
-                int nbreTotal = reader.GetAllIndividus().Count;
-                Codification _aCodifier = reader.getInformationForCodification();
+                IConfigurationService configuration = new ConfigurationService();
+                int nbreTotal = 0;
+                Codification _aCodifierTotal = new Codification();
+                if (IsAllDistrict == true)
+                {
+                    foreach (SdeModel sde in configuration.searchAllSdes())
+                    {
+                        reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
+                        nbreTotal += nbreTotal + reader.GetAllIndividus().Count();
+                        Codification _aCodifier=reader.getInformationForCodification();
+                        _aCodifierTotal.A5Autre += _aCodifier.A5Autre;
+                        _aCodifierTotal.A5Codifie += _aCodifier.A5Codifie;
+                        _aCodifierTotal.A5NeSaitPas += _aCodifier.A5NeSaitPas;
+                        _aCodifierTotal.A7Autre += _aCodifier.A7Autre;
+                        _aCodifierTotal.A7Codifie += _aCodifier.A7Codifie;
+                        _aCodifierTotal.A7NeSaitPas += _aCodifier.A7NeSaitPas;
+                        _aCodifierTotal.P10_1 += _aCodifier.P10_1;
+                        _aCodifierTotal.P10_2 += _aCodifier.P10_2;
+                        _aCodifierTotal.P10_3 += _aCodifier.P10_3;
+                        _aCodifierTotal.P10_4 += _aCodifier.P10_4;
+                        _aCodifierTotal.P12_1 += _aCodifier.P12_1;
+                        _aCodifierTotal.P12_2 += _aCodifier.P12_2;
+                        _aCodifierTotal.P12_3 += _aCodifier.P12_3;
+                        _aCodifierTotal.P12_4 += _aCodifier.P12_4;
+                        
+                   }
+                }
+                else
+                {
+                    reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
+                    nbreTotal = reader.GetAllIndividus().Count;
+                    _aCodifierTotal = reader.getInformationForCodification();
+                }
+                
+                 
                 entierementPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
-                            entierementPreCodifie.Points.Add(new SeriesPoint("P10/Lieu de naissance", Utilities.getPourcentage(_aCodifier.P10_1, nbreTotal)))));
+                            entierementPreCodifie.Points.Add(new SeriesPoint("P10/Lieu de naissance", Utilities.getPourcentage(_aCodifierTotal.P10_1, nbreTotal)))));
                 entierementPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
-                            entierementPreCodifie.Points.Add(new SeriesPoint("P12/Lieu de residence", Utilities.getPourcentage(_aCodifier.P12_1, nbreTotal)))));
+                            entierementPreCodifie.Points.Add(new SeriesPoint("P12/Lieu de residence", Utilities.getPourcentage(_aCodifierTotal.P12_1, nbreTotal)))));
                 entierementPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
-                            entierementPreCodifie.Points.Add(new SeriesPoint("A5/Branche d'activite", Utilities.getPourcentage(_aCodifier.A5Codifie, nbreTotal)))));
+                            entierementPreCodifie.Points.Add(new SeriesPoint("A5/Branche d'activite", Utilities.getPourcentage(_aCodifierTotal.A5Codifie, nbreTotal)))));
                 entierementPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
-                            entierementPreCodifie.Points.Add(new SeriesPoint("A7/Occupation", Utilities.getPourcentage(_aCodifier.A7Codifie, nbreTotal)))));
+                            entierementPreCodifie.Points.Add(new SeriesPoint("A7/Occupation", Utilities.getPourcentage(_aCodifierTotal.A7Codifie, nbreTotal)))));
 
                 partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() =>
-                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("P10/Lieu de naissance", Utilities.getPourcentage(_aCodifier.sommeP10PartiellementCodifie(), nbreTotal)))));
+                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("P10/Lieu de naissance", Utilities.getPourcentage(_aCodifierTotal.sommeP10PartiellementCodifie(), nbreTotal)))));
                 partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() =>
-                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("P12/Lieu de residence", Utilities.getPourcentage(_aCodifier.sommeP12PartiellementCodifie(), nbreTotal)))));
+                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("P12/Lieu de residence", Utilities.getPourcentage(_aCodifierTotal.sommeP12PartiellementCodifie(), nbreTotal)))));
                 partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() =>
-                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("A5/Branche d'activite", Utilities.getPourcentage(_aCodifier.A5Autre, nbreTotal)))));
+                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("A5/Branche d'activite", Utilities.getPourcentage(_aCodifierTotal.A5Autre, nbreTotal)))));
                 partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() =>
-                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("A7/Occupation", Utilities.getPourcentage(_aCodifier.A7Autre, nbreTotal)))));
+                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("A7/Occupation", Utilities.getPourcentage(_aCodifierTotal.A7Autre, nbreTotal)))));
 
                 pasDuToutPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
-                            pasDuToutPreCodifie.Points.Add(new SeriesPoint("P10/Lieu de naissance", Utilities.getPourcentage(_aCodifier.P10_4, nbreTotal)))));
+                            pasDuToutPreCodifie.Points.Add(new SeriesPoint("P10/Lieu de naissance", Utilities.getPourcentage(_aCodifierTotal.P10_4, nbreTotal)))));
                 pasDuToutPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
-                            pasDuToutPreCodifie.Points.Add(new SeriesPoint("P12/Lieu de residence",Utilities.getPourcentage(_aCodifier.P12_4, nbreTotal) ))));
+                            pasDuToutPreCodifie.Points.Add(new SeriesPoint("P12/Lieu de residence", Utilities.getPourcentage(_aCodifierTotal.P12_4, nbreTotal)))));
                 pasDuToutPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
-                            pasDuToutPreCodifie.Points.Add(new SeriesPoint("A5/Branche d'activite", Utilities.getPourcentage(_aCodifier.A5NeSaitPas, nbreTotal)))));
+                            pasDuToutPreCodifie.Points.Add(new SeriesPoint("A5/Branche d'activite", Utilities.getPourcentage(_aCodifierTotal.A5NeSaitPas, nbreTotal)))));
                 pasDuToutPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
-                            pasDuToutPreCodifie.Points.Add(new SeriesPoint("A7/Occupation",Utilities.getPourcentage( _aCodifier.A7NeSaitPas, nbreTotal)))));
+                            pasDuToutPreCodifie.Points.Add(new SeriesPoint("A7/Occupation", Utilities.getPourcentage(_aCodifierTotal.A7NeSaitPas, nbreTotal)))));
             }
             catch (Exception ex)
             {
@@ -984,87 +1056,146 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             initializeChartControls();
             try
             {
-                reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
-                int nbreTotal = reader.GetAllIndividus().Count;
-                Flag flagPopulationTotale = reader.CountTotalFlag();
-                Flag flagAgeDateNaissance = reader.Count2FlagAgeDateNaissance();
-                Flag flagFecondite = reader.CountFlagFecondite();
-                Flag flagEmploi = reader.CountFlagEmploi();
+                IConfigurationService configuration = new ConfigurationService();
+                int nbreTotal = 0;
+                Flag flagPopulationParDistrict = new Flag();
+                Flag flagAgeDateNaissanceParDistrict = new Flag();
+                Flag flagFeconditeParDistrict = new Flag();
+                Flag flagEmploiParDistrict = new Flag();
+                if (IsAllDistrict == true)
+                {
+                    foreach (SdeModel sde in configuration.searchAllSdes())
+                    {
+                        reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
+                        nbreTotal += reader.GetAllIndividus().Count;
+                        Flag flagPopulation = reader.CountTotalFlag();
+                        Flag flagAgeDateNaissance = reader.Count2FlagAgeDateNaissance();
+                        Flag flagFecondite = reader.CountFlagFecondite();
+                        Flag flagEmploi = reader.CountFlagEmploi();
+                        flagPopulationParDistrict.Flag0 += flagPopulation.Flag0;
+                        flagPopulationParDistrict.Flag1 += flagPopulation.Flag1;
+                        flagPopulationParDistrict.Flag2 += flagPopulation.Flag2;
+                        flagPopulationParDistrict.Flag3 += flagPopulation.Flag3;
+                        flagPopulationParDistrict.Flag4 += flagPopulation.Flag4;
+                        flagPopulationParDistrict.Flag5 += flagPopulation.Flag5;
+                        flagPopulationParDistrict.Flag6 += flagPopulation.Flag6;
+                        flagPopulationParDistrict.Flag7 += flagPopulation.Flag7;
+                        flagPopulationParDistrict.Flag8 += flagPopulation.Flag8;
+                        flagPopulationParDistrict.Flag9 += flagPopulation.Flag9;
+                        flagPopulationParDistrict.Flag10 += flagPopulation.Flag10;
+                        flagPopulationParDistrict.Flag11 += flagPopulation.Flag11;
+                        flagPopulationParDistrict.Flag12 += flagPopulation.Flag12;
+
+                        flagAgeDateNaissanceParDistrict.Flag0 += flagAgeDateNaissance.Flag0;
+                        flagAgeDateNaissanceParDistrict.Flag1 += flagAgeDateNaissance.Flag1;
+                        flagAgeDateNaissanceParDistrict.Flag2 += flagAgeDateNaissance.Flag2;
+                        flagAgeDateNaissanceParDistrict.Flag3 += flagAgeDateNaissance.Flag3;
+                        flagAgeDateNaissanceParDistrict.Flag4 += flagAgeDateNaissance.Flag4;
+                        flagAgeDateNaissanceParDistrict.Flag5 += flagAgeDateNaissance.Flag5;
+                        flagAgeDateNaissanceParDistrict.Flag6 += flagAgeDateNaissance.Flag6;
+
+                        flagFeconditeParDistrict.Flag0 += flagFecondite.Flag0;
+                        flagFeconditeParDistrict.Flag1 += flagFecondite.Flag1;
+                        flagFeconditeParDistrict.Flag2 += flagFecondite.Flag2;
+                        flagFeconditeParDistrict.Flag3 += flagFecondite.Flag3;
+                        flagFeconditeParDistrict.Flag4 += flagFecondite.Flag4;
+                        flagFeconditeParDistrict.Flag5 += flagFecondite.Flag5;
+                        flagFeconditeParDistrict.Flag6 += flagFecondite.Flag6;
+
+
+                        flagEmploiParDistrict.Flag0 += flagEmploi.Flag0;
+                        flagEmploiParDistrict.Flag1 += flagEmploi.Flag1;
+                        flagEmploiParDistrict.Flag2 += flagEmploi.Flag2;
+                        flagEmploiParDistrict.Flag3 += flagEmploi.Flag3;
+                        flagEmploiParDistrict.Flag4 += flagEmploi.Flag4;
+                        flagEmploiParDistrict.Flag5 += flagEmploi.Flag5;
+                        flagEmploiParDistrict.Flag6 += flagEmploi.Flag6;
+                    }
+                }
+                else
+                {
+                    reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
+                    nbreTotal = reader.GetAllIndividus().Count;
+                    flagPopulationParDistrict = reader.CountTotalFlag();
+                    flagAgeDateNaissanceParDistrict = reader.Count2FlagAgeDateNaissance();
+                    flagFeconditeParDistrict = reader.CountFlagFecondite();
+                    flagEmploiParDistrict = reader.CountFlagEmploi();
+                }
 
                 chartFlag0.Dispatcher.BeginInvoke((Action)(() =>
-                            chartFlag0.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag0, nbreTotal)))));
+                            chartFlag0.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag0, nbreTotal)))));
                 chartFlag0.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag0.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissance.Flag0, nbreTotal)))));
+                             chartFlag0.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissanceParDistrict.Flag0, nbreTotal)))));
                 chartFlag0.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag0.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFecondite.Flag0, nbreTotal)))));
+                             chartFlag0.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFeconditeParDistrict.Flag0, nbreTotal)))));
                 chartFlag0.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag0.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploi.Flag0, nbreTotal)))));
+                             chartFlag0.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploiParDistrict.Flag0, nbreTotal)))));
 
                 chartFlag1.Dispatcher.BeginInvoke((Action)(() =>
-                            chartFlag1.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag1, nbreTotal)))));
+                            chartFlag1.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag1, nbreTotal)))));
                 chartFlag1.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag1.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissance.Flag1, nbreTotal)))));
+                             chartFlag1.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissanceParDistrict.Flag1, nbreTotal)))));
                 chartFlag1.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag1.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFecondite.Flag1, nbreTotal)))));
+                             chartFlag1.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFeconditeParDistrict.Flag1, nbreTotal)))));
                 chartFlag1.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag1.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploi.Flag1, nbreTotal)))));
+                             chartFlag1.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploiParDistrict.Flag1, nbreTotal)))));
 
                 chartFlag2.Dispatcher.BeginInvoke((Action)(() =>
-                            chartFlag2.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag2, nbreTotal)))));
+                            chartFlag2.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag2, nbreTotal)))));
                 chartFlag2.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag2.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissance.Flag2, nbreTotal)))));
+                             chartFlag2.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissanceParDistrict.Flag2, nbreTotal)))));
                 chartFlag2.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag2.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFecondite.Flag2, nbreTotal)))));
+                             chartFlag2.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFeconditeParDistrict.Flag2, nbreTotal)))));
                 chartFlag2.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag2.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploi.Flag2, nbreTotal)))));
+                             chartFlag2.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploiParDistrict.Flag2, nbreTotal)))));
 
                 chartFlag3.Dispatcher.BeginInvoke((Action)(() =>
-                            chartFlag3.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag3, nbreTotal)))));
+                            chartFlag3.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag3, nbreTotal)))));
                 chartFlag3.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag3.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissance.Flag3, nbreTotal)))));
+                             chartFlag3.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissanceParDistrict.Flag3, nbreTotal)))));
                 chartFlag3.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag3.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFecondite.Flag3, nbreTotal)))));
+                             chartFlag3.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFeconditeParDistrict.Flag3, nbreTotal)))));
                 chartFlag3.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag3.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploi.Flag3, nbreTotal)))));
+                             chartFlag3.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploiParDistrict.Flag3, nbreTotal)))));
 
                 chartFlag4.Dispatcher.BeginInvoke((Action)(() =>
-                            chartFlag4.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag4, nbreTotal)))));
+                            chartFlag4.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag4, nbreTotal)))));
                 chartFlag4.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag4.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissance.Flag4, nbreTotal)))));
+                             chartFlag4.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissanceParDistrict.Flag4, nbreTotal)))));
                 chartFlag4.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag4.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFecondite.Flag4, nbreTotal)))));
+                             chartFlag4.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFeconditeParDistrict.Flag4, nbreTotal)))));
                 chartFlag4.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag4.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploi.Flag4, nbreTotal)))));
+                             chartFlag4.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploiParDistrict.Flag4, nbreTotal)))));
 
                 chartFlag5.Dispatcher.BeginInvoke((Action)(() =>
-                            chartFlag5.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag5, nbreTotal)))));
+                            chartFlag5.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag5, nbreTotal)))));
                 chartFlag5.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag5.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissance.Flag5, nbreTotal)))));
+                             chartFlag5.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissanceParDistrict.Flag5, nbreTotal)))));
                 chartFlag5.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag5.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFecondite.Flag5, nbreTotal)))));
+                             chartFlag5.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFeconditeParDistrict.Flag5, nbreTotal)))));
                 chartFlag5.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag5.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploi.Flag5, nbreTotal)))));
+                             chartFlag5.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploiParDistrict.Flag5, nbreTotal)))));
 
                 chartFlag6.Dispatcher.BeginInvoke((Action)(() =>
-                            chartFlag6.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag6, nbreTotal)))));
+                            chartFlag6.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag6, nbreTotal)))));
                 chartFlag6.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag6.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissance.Flag6, nbreTotal)))));
+                             chartFlag6.Points.Add(new SeriesPoint("Population Totale (2 Flags au total)", Utilities.getPourcentage(flagAgeDateNaissanceParDistrict.Flag6, nbreTotal)))));
                 chartFlag6.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag6.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFecondite.Flag6, nbreTotal)))));
+                             chartFlag6.Points.Add(new SeriesPoint("Femmes de 13 ans et plus", Utilities.getPourcentage(flagFeconditeParDistrict.Flag6, nbreTotal)))));
                 chartFlag6.Dispatcher.BeginInvoke((Action)(() =>
-                             chartFlag6.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploi.Flag6, nbreTotal)))));
+                             chartFlag6.Points.Add(new SeriesPoint("Population de 10 ans et plus avec un emploi", Utilities.getPourcentage(flagEmploiParDistrict.Flag6, nbreTotal)))));
                 chartFlag7.Dispatcher.BeginInvoke((Action)(() =>
-                           chartFlag7.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag7, nbreTotal)))));
+                           chartFlag7.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag7, nbreTotal)))));
                 chartFlag8.Dispatcher.BeginInvoke((Action)(() =>
-                           chartFlag8.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag8, nbreTotal)))));
+                           chartFlag8.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag8, nbreTotal)))));
                 chartFlag9.Dispatcher.BeginInvoke((Action)(() =>
-                           chartFlag9.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag9, nbreTotal)))));
+                           chartFlag9.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag9, nbreTotal)))));
                 chartFlag10.Dispatcher.BeginInvoke((Action)(() =>
-                           chartFlag10.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag10, nbreTotal)))));
+                           chartFlag10.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag10, nbreTotal)))));
                 chartFlag11.Dispatcher.BeginInvoke((Action)(() =>
-                           chartFlag11.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag11, nbreTotal)))));
+                           chartFlag11.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag11, nbreTotal)))));
                 chartFlag12.Dispatcher.BeginInvoke((Action)(() =>
-                           chartFlag12.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationTotale.Flag12, nbreTotal)))));
+                           chartFlag12.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag12, nbreTotal)))));
                 
             }
             catch (Exception ex)
@@ -1072,5 +1203,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 MessageBox.Show("" + ex.Message);
             }
         }
+
+      
     }
 }

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:gif="http://wpfanimatedgif.codeplex.com"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" Width="486.195" Height="219.415" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" Icon="/Ht.Ihsil.Rgph.App.Superviseur;component/images/trans1.png" Loaded="Window_Loaded" >
+             mc:Ignorable="d" Width="486.195" Height="219.415" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" Icon="/Ht.Ihsil.Rgph.App.Superviseur;component/images/trans1.png" Loaded="Window_Loaded" Title="Transfè" >
     <Grid>
         <GroupBox  Name="grpTransfert">
             <Grid Margin="2,3,-2,-3">

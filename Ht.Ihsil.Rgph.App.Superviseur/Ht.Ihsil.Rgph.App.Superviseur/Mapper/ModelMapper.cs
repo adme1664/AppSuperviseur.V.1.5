@@ -85,6 +85,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 model.SdeId = sde.SdeId;
                 model.CodeDistrict = sde.CodeDistrict;
                 model.NoOrdre = sde.NoOrdre;
+                model.AgentId = Convert.ToInt32(sde.AgentId.GetValueOrDefault());
                 model.StatutContreEnquete = Convert.ToInt32(sde.StatutContreEnquete.GetValueOrDefault());
                 model.StatutCollecte = Convert.ToInt32(sde.StatutCollecte.GetValueOrDefault());
                 model.RaisonCouverture = Convert.ToInt32(sde.RaisonCouverture.GetValueOrDefault());
@@ -277,7 +278,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 //batimentJson.dateEnvoi = DateTime.ParseExact(batiment.DateEnvoi, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
                 batimentJson.isValidated = Convert.ToBoolean(batiment.IsValidated);
                 batimentJson.isSynchroToCentrale = Convert.ToBoolean(batiment.IsSynchroToCentrale);
-                batimentJson.dateDebutCollecte = DateTime.ParseExact(batiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                if (batimentJson.dateFinCollecte != null)
+                {
+                    batimentJson.dateDebutCollecte = DateTime.ParseExact(batiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
+                
+                }
                 if (batiment.DateFinCollecte != null)
                 {
                     batimentJson.dateFinCollecte = DateTime.ParseExact(batiment.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToUniversalTime().ToString();
@@ -1708,20 +1713,22 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         #region Contre Enquete
         public static ContreEnqueteModel MapToContreEnqueteModel(Tbl_ContreEnquete ce)
         {
-            return new ContreEnqueteModel
+            ContreEnqueteModel contreenquete = new ContreEnqueteModel();
+            if (ce != null)
             {
-                ContreEnqueteId = ce.ContreEnqueteId,
-                BatimentId = ce.BatimentId,
-                SdeId = ce.SdeId,
-                CodeDistrict = ce.CodeDistrict,
-                NomSuperviseur = ce.NomSuperviseur,
-                PrenomSuperviseur = ce.PrenomSuperviseur,
-                Raison = Convert.ToByte(ce.Raison.GetValueOrDefault()),
-                Statut = Convert.ToByte(ce.Statut.GetValueOrDefault()),
-                DateDebut = ce.DateDebut,
-                DateFin = ce.DateFin,
-                ContreEnqueteName = "Kont-ankèt-" + ce.ContreEnqueteId
-            };
+                 contreenquete.ContreEnqueteId = ce.ContreEnqueteId;
+                contreenquete.BatimentId = ce.BatimentId;
+                contreenquete.SdeId = ce.SdeId;
+                contreenquete.CodeDistrict = ce.CodeDistrict;
+                contreenquete.NomSuperviseur = ce.NomSuperviseur;
+                contreenquete.PrenomSuperviseur = ce.PrenomSuperviseur;
+                contreenquete.Raison = Convert.ToByte(ce.Raison.GetValueOrDefault());
+                contreenquete.Statut = Convert.ToByte(ce.Statut.GetValueOrDefault());
+                contreenquete.DateDebut = ce.DateDebut;
+                contreenquete.TypeContreEnquete = Convert.ToByte(ce.TypeContreEnquete.GetValueOrDefault());
+                contreenquete.DateFin = ce.DateFin;
+            }
+            return contreenquete;
         }
         public static Tbl_ContreEnquete MapToTblContreEnquete(ContreEnqueteModel model)
         {
@@ -1763,8 +1770,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             {
                 batModel.Id = bat.Id;
                 batModel.SdeId = bat.SdeId;
+                batModel.DeptId = bat.DeptId;
+                batModel.ComId = bat.ComId;
+                batModel.VqseId = bat.VqseId;
+                batModel.District = bat.DistrictId;
                 batModel.Qrec = bat.Qrec;
                 batModel.Qrgph = bat.Qrgph;
+                batModel.Qadresse = bat.Qadresse;
                 batModel.Qlocalite = bat.Qlocalite;
                 batModel.Qhabitation = bat.Qhabitation;
                 batModel.Qb1Etat = Convert.ToByte(bat.Qb1Etat.GetValueOrDefault());
@@ -1794,8 +1806,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             batToSave.Id = bat.Id;
             batToSave.BatimentId = bat.BatimentId;
             batToSave.SdeId = bat.SdeId;
+            batToSave.DeptId = bat.DeptId;
+            batToSave.ComId = bat.ComId;
+            batToSave.VqseId = bat.VqseId;
+            batToSave.DistrictId = bat.District;
             batToSave.Qrec = bat.Qrec;
             batToSave.Qrgph = bat.Qrgph;
+            batToSave.Qadresse = bat.Qadresse;
             batToSave.Qlocalite = bat.Qlocalite;
             batToSave.Qhabitation = bat.Qhabitation;
             batToSave.Qb1Etat = bat.Qb1Etat;

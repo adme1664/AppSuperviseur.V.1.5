@@ -22,6 +22,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
     public partial class frm_raison_popup : Window
     {
         public string Raison { get; set; }
+        public bool IsValidate { get; set; }
         public frm_raison_popup()
         {
             InitializeComponent();
@@ -33,6 +34,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             if (txtRaison.Text != null)
             {
                 Raison = txtRaison.Text;
+                IsValidate = true;
                 this.Close();
             }
             else

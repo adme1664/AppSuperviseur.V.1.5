@@ -9,7 +9,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
     public class RapportModel
     {
         private string _indicateur;
-        private string _iD;
+        private int _iD;
         private string _type;
 
         public string Type
@@ -18,14 +18,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
             set { _type = value; }
         }
 
-        public string ID
+        public int ID
         {
             get { return _iD; }
             set { _iD = value; }
         }
-        private string _parentID;
+        private int _parentID;
 
-        public string ParentID
+        public int ParentID
         {
             get { return _parentID; }
             set { _parentID = value; }

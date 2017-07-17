@@ -33,8 +33,8 @@
                         <dxg:GridColumn FieldName="Statut" Header="Statut" AllowEditing="False"/>
                     </dxg:GridControl.Columns>
                     <dxg:GridControl.View>
-                        <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
-                    </dxg:GridControl.View>
+                        <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" ShowGroupPanel="False"/>
+                   </dxg:GridControl.View>
                 </dxg:GridControl>
 
             </Grid>

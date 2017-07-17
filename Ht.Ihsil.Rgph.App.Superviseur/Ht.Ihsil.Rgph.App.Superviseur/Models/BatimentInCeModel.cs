@@ -22,6 +22,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
             get { return sdeId; }
             set { sdeId = value; }
         }
+
+        public string DepId { get; set; }
+        public string ComId { get; set; }
+        public string VqseId { get; set; }
+        public string DistrictId { get; set; }
+        public string Localite { get; set; }
+        public string Habitation { get; set; }
+
+
         private string rec;
 
         public string Rec

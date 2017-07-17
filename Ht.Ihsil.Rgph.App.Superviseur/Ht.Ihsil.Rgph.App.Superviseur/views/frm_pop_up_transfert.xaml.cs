@@ -75,8 +75,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
             string sdeId = null;
             Tbl_Materiels mat = null;
+            img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Visible));
+            btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = false));
+            btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = false));
             try
             {
+
                 if (device.IsConnected == true)
                 {
                     lbl_trans.Dispatcher.BeginInvoke((Action)(() => lbl_trans.Content = "Tablèt la konekte."));
@@ -139,7 +143,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 }
                                 break;
                             }
-                            prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 90));
+                            prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 100));
+                            img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
+                            img_finish.Dispatcher.BeginInvoke((Action)(() => img_finish.Visibility = Visibility.Visible));
                             MessageBox.Show(Constant.MSG_TRANSFERT_TERMINE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                             reader = new SqliteReader(Utilities.getConnectionString(Users.users.DatabasePath, sdeId));
                             Tbl_Sde sde = new Tbl_Sde();
@@ -147,21 +153,37 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             sde.SdeId = sdeId;
                             sde.AgentId = mat.AgentId;
                             settings.updateSdeDetails(sde);
+                            //
+                            //Mise a jour sur les retours s'il sont effectues
+                            List<BatimentModel> listOfBatiments = reader.GetAllBatimentModel();
+                            List<RetourModel> listOfRetours = settings.searchAllRetourBySde(sdeId);
+                            foreach (BatimentModel batiment in listOfBatiments)
+                            {
+                                foreach (RetourModel ret in listOfRetours)
+                                {
+                                    if (batiment.BatimentId == ret.BatimentId)
+                                    {
+                                        if (batiment.IsFieldAllFilled == true)
+                                        {
+                                            ret.Statut = Constant.STATUT_EFFECTUE;
+                                            ret.DateRetour = batiment.DateFinCollecte;
+                                            settings.updateRetour(ret);
+                                        }
+                                    }
+                                }
+                            }
+
+                            //
+
                             prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 100));
                             lbl_trans.Dispatcher.BeginInvoke((Action)(() => lbl_trans.Content = "Transfè a fini. "));
-                            img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                            img_finish.Dispatcher.BeginInvoke((Action)(() => img_finish.Visibility = Visibility.Visible));
-                            btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
-                            btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.Content = "Fermer"));
-                            this.Close();
+                            this.Dispatcher.BeginInvoke((Action)(() =>  this.Close()));
                          }
                         else
                         {
                             MessageBox.Show(Constant.MSG_FICHIER_PAS_COPIE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
-                            img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                            btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
-                            btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
+                            this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
                         }
 
                     }
@@ -169,18 +191,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     {
                         MessageBox.Show(Constant.MSG_TABLET_PAS_CONFIGURE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
-                        img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                        btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
-                        btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
+                        this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
                     }
                 }
                 else
                 {
                     MessageBox.Show(Constant.MSG_TABLET_PAS_CONNECTE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
-                    img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                    btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
-                    btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
+                    this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
                 }
             }
             catch (Exception)
@@ -201,17 +219,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     }
                 }
                 prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
-                img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
-                btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
+                this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
             }
 
         }
 
         public void pushFile()
         {
-
             string sdeId = null;
+            img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Visible));
+            btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = false));
+            btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = false));
             if (device.IsConnected == true)
             {
                 lbl_trans.Dispatcher.BeginInvoke((Action)(() => lbl_trans.Content = "Tablèt la konekte."));
@@ -274,28 +292,24 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 100));
                         MessageBox.Show(Constant.MSG_TRANSFERT_TERMINE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                         lbl_trans.Dispatcher.BeginInvoke((Action)(() => lbl_trans.Content = "Transfè a fini. "));
-                        img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                        img_finish.Dispatcher.BeginInvoke((Action)(() => img_finish.Visibility = Visibility.Visible));
-                        btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
-                        btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.Content = "Fermer"));
+                        this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
+                        //img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
+                        //img_finish.Dispatcher.BeginInvoke((Action)(() => img_finish.Visibility = Visibility.Visible));
+                        //btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
+                        //btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.Content = "Fermer"));
                      }
                 }
                 else
                 {
                     MessageBox.Show(Constant.MSG_TABLET_PAS_CONFIGURE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                    btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
-                    btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.Content = "Fermer"));
-                    btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
+                    this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
                 }
             }
             else
             {
                 MessageBox.Show(Constant.MSG_TABLET_PAS_CONNECTE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
-                btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.Content = "Fermer"));
-                btn_annuler.Dispatcher.BeginInvoke((Action)(() => btn_annuler.IsEnabled = true));
+                this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
             }
         }
 

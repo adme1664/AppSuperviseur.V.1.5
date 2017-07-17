@@ -29,9 +29,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
         public MainWindow1()
         {
             InitializeComponent();
-            TextModel model=null;
+            TextModel model = null;
             if (Users.users.Profile == "7")
             {
+                page_configuration.IsEnabled = false;
                 bbi_avances.IsVisible = false;
                 bbi_agents.IsVisible = false;
                 txt_connecteduser.Text = "" + Users.users.Nom + " " + Users.users.Prenom + " (Superviseur)";
@@ -40,11 +41,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             {
                 rpc_transfert.IsEnabled = false;
                 rpc_rpt_personnel.IsEnabled = false;
-                rpc_C_ENQUETE.IsEnabled = false;
+                rpc_contreenquete.IsEnabled = false;
                 rpc_rapports.IsEnabled = false;
                 rpc_sdes.IsEnabled = false;
                 txt_connecteduser.Text = "" + Users.users.Nom + " " + Users.users.Prenom + " (ASTIC)";
-             }
+            }
             model = new TextModel();
             model.Username = "" + Users.users.Nom + " " + Users.users.Prenom;
             model.Deconnexion = "Deconnexion";
@@ -60,11 +61,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
             BarButtonItem btnInfo = new BarButtonItem();
             btnInfo.Glyph = new BitmapImage(new Uri(@"/images/user.png", UriKind.RelativeOrAbsolute));
-            btnInfo.Content =  Users.users.Nom + " " + Users.users.Prenom + " (Superviseur)";
+            btnInfo.Content = Users.users.Nom + " " + Users.users.Prenom + " (Superviseur)";
             bsiIsConnecter.Items.Add(btnInfo);
             bsiIsConnecter.Items.Add(btnConnexion);
-           
-            
+
+
         }
 
         void btnConnexion_ItemClick(object sender, ItemClickEventArgs e)
@@ -74,15 +75,65 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             {
                 Process[] procs = Process.GetProcessesByName("adb");
                 Utilities.killProcess(procs);
-                
+
                 frm_connexion connexion = new frm_connexion();
                 connexion.Show();
                 this.Close();
-                
+
+            }
+
+        }
+        private void main_ribbon_SelectedPageChanged(object sender, RibbonPropertyChangedEventArgs e)
+        {
+            if (main_ribbon.SelectedPage == page_SDE)
+            {
+                if (Users.users.Profile == "7")
+                {
+                    main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
+                    frm_view_verification verification = new frm_view_verification();
+                    Utilities.showControl(verification, main_grid);
+                    main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = false));
+                }
+            }
+            if (main_ribbon.SelectedPage == page_transfret)
+            {
+                if (Users.users.Profile == "7")
+                {
+                    main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
+                    Frm_view_transfert frm_transfert = new Frm_view_transfert(this);
+                    Utilities.showControl(frm_transfert, main_grid);
+                    main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = false));
+                }
+            }
+            if (main_ribbon.SelectedPage == page_contreneuqete)
+            {
+                if (Users.users.Profile == "7")
+                {
+                    main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
+                    frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.BatimentVide);
+                    Utilities.showControl(frm_ce, main_grid);
+                    main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = false));
+                }
+            }
+            if (main_ribbon.SelectedPage == page_rapports)
+            {
+                if (Users.users.Profile == "7")
+                {
+                    main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
+                    frm_rapports rapports = new frm_rapports();
+                    Utilities.showControl(rapports, main_grid);
+                    main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = false));
+                }
+            }
+            if (main_ribbon.SelectedPage == page_configuration)
+            {
+                if (Users.users.Profile == "7")
+                {
+                    main_grid.Dispatcher.BeginInvoke((Action)(() => main_grid.Children.Clear()));
+                }
             }
             
         }
-
         private void bbi_sdes_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             frm_view_sdes frm_sde = new frm_view_sdes();
@@ -91,23 +142,26 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_agents_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_view_agents frm_agents = new frm_view_agents();
             Utilities.showControl(frm_agents, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }
 
         private void bbi_visualisation_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            main_grid_1.IsSplashScreenShown = true;
             frm_visualisation frm_visualisation = new frm_visualisation();
             Utilities.showControl(frm_visualisation, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
+            bbi_visualisation.Focus();
         }
 
         private void bbi_transfert_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             main_grid_1.IsSplashScreenShown = true;
             Frm_view_transfert frm_transfert = new Frm_view_transfert(this);
-            main_grid_1.Child = frm_transfert;
-            main_grid.Children.Clear();
-            main_grid.Children.Add(main_grid_1);
+            Utilities.showControl(frm_transfert, main_grid);
             main_grid_1.IsSplashScreenShown = false;
         }
 
@@ -218,7 +272,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         void popupTransfert_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
+
         }
 
         private void DXRibbonWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -235,6 +289,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                 }
             }
         }
-        
+
+     
+
     }
 }

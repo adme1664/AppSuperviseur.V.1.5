@@ -30,9 +30,9 @@
                                         <RowDefinition Height="9*"/>
                                         <RowDefinition Height="56*"/>
                                     </Grid.RowDefinitions>
-                                    <dxg:GridControl  AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Grid.Row="0" Name="dataGridCouverture" SelectionMode="Row">
+                                    <dxg:GridControl  AutoGenerateColumns="AddNew"  EnableSmartColumnsGeneration="True" Grid.Row="0" Name="dataGridCouverture" SelectionMode="Row">
                                         <dxg:GridControl.View>
-                                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" NavigationStyle="Row"/>
+                                            <dxg:TableView Name="table_couverture"  AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" NavigationStyle="Row"/>
                                         </dxg:GridControl.View>
                                     </dxg:GridControl>
 
@@ -193,7 +193,7 @@
                                             <dxg:GridColumn FieldName="Cle" SortOrder="Ascending" SortIndex="0" Header="Nombre/Jour"/>
                                         </dxg:GridControl.Columns>
                                         <dxg:GridControl.View>
-                                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True"/>
+                                            <dxg:TableView  Name="table_view" AllowPerPixelScrolling="True" ShowTotalSummary="True" />
                                         </dxg:GridControl.View>
                                     </dxg:GridControl>
 
@@ -205,7 +205,7 @@
             </dx:DXTabItem>
             <dx:DXTabItem Header="Gestion des notes" Name="tabGestionNotes" GotFocus="tabGestionNotes_GotFocus">
                 <dx:DXTabControl Name="tabControlNotes">
-                    <dx:DXTabItem Header="Ajout" Name="tabAjout">
+                    <dx:DXTabItem Header="Ajout" Name="tabAjout" GotFocus="tabAjout_GotFocus">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="71*"/>
@@ -599,7 +599,6 @@ en fonction du nombre total de problèmes spécifié par groupe
                             </dxg:TreeListControl>-->
                         </GroupBox>
                     </dx:DXTabItem>
-                    <dx:DXTabItem Header="Contrôles de cohérence"></dx:DXTabItem>
                     <dx:DXTabItem Header="Vérification de la codification" Name="tabCodification" GotFocus="tabCodification_GotFocus">
                         <GroupBox Header="Codification">
                             <Grid>

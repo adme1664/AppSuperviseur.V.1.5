@@ -47,6 +47,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         ISqliteDataWriter sw;
         TreeViewItem getTreeviewItem;
         string raison = "";
+        bool isButtonValidateClick = false;
         #endregion
 
         #region PROPERTIES
@@ -134,6 +135,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                                 batModel.Rec = _bat.Qrec;
                                                 batModel.Rgph = _bat.Qrgph;
                                                 batModel.SdeId = _bat.SdeId;
+                                                batModel.Adresse = _bat.Qadresse;
+                                                batModel.Localite = _bat.Qlocalite;
+                                                batModel.Habitation = _bat.Qhabitation;
+                                                batModel.DistrictId = _bat.District;
                                                 List<IndividuCEModel> individus = ModelMapper.MapToListIndividuCEModel(service_ce.daoCE.searchAllIndividuCE(_bat.BatimentId, _log.LogeId, _bat.SdeId, _men.MenageId));
                                                 foreach (IndividuCEModel _ind in individus)
                                                 {
@@ -153,6 +158,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                             batModel.Rec = _bat.Qrec;
                                             batModel.Rgph = _bat.Qrgph;
                                             batModel.SdeId = _bat.SdeId;
+                                            batModel.Adresse = _bat.Qadresse;
+                                            batModel.Localite = _bat.Qlocalite;
+                                            batModel.Habitation = _bat.Qhabitation;
+                                            batModel.DistrictId = _bat.District;
                                             frm_view_ce view = new frm_view_ce(batModel);
                                             Utilities.showControl(view, grd_details);
                                         }
@@ -164,6 +173,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                     batModel.Rec = _bat.Qrec;
                                     batModel.Rgph = _bat.Qrgph;
                                     batModel.SdeId = _bat.SdeId;
+                                    batModel.Adresse = _bat.Qadresse;
+                                    batModel.Localite = _bat.Qlocalite;
+                                    batModel.Habitation = _bat.Qhabitation;
+                                    batModel.DistrictId = _bat.District;
                                     frm_view_ce view = new frm_view_ce(batModel);
                                     Utilities.showControl(view, grd_details);
                                 }
@@ -308,6 +321,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 bat.Qrec = batItem.Qrec;
                                 bat.Qrgph = batItem.Qrgph;
                                 bat.Qhabitation = batItem.Qhabitation;
+                                bat.DeptId = batItem.DeptId;
+                                bat.District = batItem.DistrictId;
+                                bat.ComId = batItem.ComId;
+                                bat.VqseId = batItem.VqseId;
+                                bat.Qhabitation = batItem.Qhabitation;
+                                bat.Qlocalite = batItem.Qlocalite;
+                                bat.Qadresse = batItem.Qadresse;
                                 service_ce.saveBatiment(bat);
                             }
                             MessageBox.Show("Batiman yo anrejistre avek siksè.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
@@ -396,6 +416,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 b.Qadresse = batiment.Qadresse;
                                 b.Qhabitation = batiment.Qhabitation;
                                 b.Qlocalite = batiment.Qlocalite;
+                                b.DeptId = batiment.DeptId;
+                                b.District = batiment.DistrictId;
+                                b.ComId = batiment.ComId;
+                                b.VqseId = batiment.VqseId;
                                 service_ce.saveBatiment(b);
                                 if (batiment.Logement.Count() != 0)
                                 {
@@ -498,57 +522,71 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     bool resultat = false;
                     try
                     {
-                        foreach (BatimentModel batiment in listOfBat)
+                        if (listOfBat.Count < 3)
                         {
-                            if (Convert.ToInt32(batiment.BatimentId) != 0)
+                            MessageBox.Show("Ou pa gen kantite batiman pou fè kont-ankèt sa a.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                            resultat = false;
+                        }
+                        else
+                        {
+                            foreach (BatimentModel batiment in listOfBat)
                             {
-                                if (service_ce.isBatimentExist(Convert.ToInt32(batiment.BatimentId), batiment.SdeId) == false)
+                                if (Convert.ToInt32(batiment.BatimentId) != 0)
                                 {
-                                    BatimentCEModel b = new BatimentCEModel();
-                                    ContreEnqueteModel ce = new ContreEnqueteModel();
-                                    ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                    ce.SdeId = batiment.SdeId;
-                                    ce.NomSuperviseur = Users.users.Nom;
-                                    ce.PrenomSuperviseur = Users.users.Prenom;
-                                    ce.ModelTirage = 1;
-                                    ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementInvididuelVide);
-                                    ce.DateDebut = DateTime.Now.ToString();
-                                    ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
-                                    service_ce.saveContreEnquete(ce);
-                                    b.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                    b.SdeId = batiment.SdeId;
-                                    b.Qrgph = batiment.Qrgph;
-                                    b.Qrec = batiment.Qrec;
-                                    b.Qadresse = batiment.Qadresse;
-                                    b.Qhabitation = batiment.Qhabitation;
-                                    b.Qlocalite = batiment.Qlocalite;
-                                    service_ce.saveBatiment(b);
-                                    if (batiment.Logement.Count() != 0)
+                                    if (service_ce.isBatimentExist(Convert.ToInt32(batiment.BatimentId), batiment.SdeId) == false)
                                     {
-                                        foreach (LogementModel logement in batiment.Logement)
+                                        BatimentCEModel b = new BatimentCEModel();
+                                        ContreEnqueteModel ce = new ContreEnqueteModel();
+                                        ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                        ce.SdeId = batiment.SdeId;
+                                        ce.NomSuperviseur = Users.users.Nom;
+                                        ce.PrenomSuperviseur = Users.users.Prenom;
+                                        ce.ModelTirage = 1;
+                                        ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementInvididuelVide);
+                                        ce.DateDebut = DateTime.Now.ToString();
+                                        ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
+                                        service_ce.saveContreEnquete(ce);
+                                        b.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                        b.SdeId = batiment.SdeId;
+                                        b.Qrgph = batiment.Qrgph;
+                                        b.Qrec = batiment.Qrec;
+                                        b.Qhabitation = batiment.Qhabitation;
+                                        b.Qlocalite = batiment.Qlocalite;
+                                        b.DeptId = batiment.DeptId;
+                                        b.District = batiment.DistrictId;
+                                        b.ComId = batiment.ComId;
+                                        b.VqseId = batiment.VqseId;
+                                        service_ce.saveBatiment(b);
+                                        if (batiment.Logement.Count() != 0)
                                         {
-                                            LogementCEModel log = new LogementCEModel();
-                                            log.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                            log.SdeId = batiment.SdeId;
-                                            log.LogeId = logement.LogeId;
-                                            log.QlCategLogement = Convert.ToByte(logement.QlCategLogement);
-                                            log.Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
-                                            log.Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre.ToString());
-                                            service_ce.saveLogementCE(log);
+                                            foreach (LogementModel logement in batiment.Logement)
+                                            {
+                                                LogementCEModel log = new LogementCEModel();
+                                                log.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                                log.SdeId = batiment.SdeId;
+                                                log.LogeId = logement.LogeId;
+                                                log.QlCategLogement = Convert.ToByte(logement.QlCategLogement);
+                                                log.Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
+                                                log.Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre.ToString());
+                                                service_ce.saveLogementCE(log);
+                                            }
                                         }
                                     }
+                                    else
+                                    {
+                                        MessageBox.Show("Ou gentan chwazi batiman sa yo deja.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                                        resultat = false;
+                                        break;
+                                    }
                                 }
-                                else
-                                {
-                                    MessageBox.Show("Ou gentan chwazi batiman sa yo deja.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
-                                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
-                                    resultat = false;
-                                    break;
-                                }
+                                resultat = true;
                             }
-                            resultat = true;
                         }
+                        
 
                     }
                     catch (MessageException ex)
@@ -607,7 +645,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Rechèch la ap fèt"));
                     service_ce = new ContreEnqueteService(_sde.SdeName);
-                    listOfBat = service_ce.readerService.getAllBatimentWithLogementOccupantAbsent();
+                    listOfBat = service_ce.readerService.get3BatimentWithLogementOccupantAbsent();
                 }
                 if (args.ProgressPercentage == 30)
                 {
@@ -639,9 +677,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                     b.SdeId = batiment.SdeId;
                                     b.Qrgph = batiment.Qrgph;
                                     b.Qrec = batiment.Qrec;
-                                    b.Qadresse = batiment.Qadresse;
                                     b.Qhabitation = batiment.Qhabitation;
                                     b.Qlocalite = batiment.Qlocalite;
+                                    b.DeptId = batiment.DeptId;
+                                    b.District = batiment.DistrictId;
+                                    b.ComId = batiment.ComId;
+                                    b.VqseId = batiment.VqseId;
                                     service_ce.saveBatiment(b);
                                     if (batiment.Logement.Count() != 0)
                                     {
@@ -904,34 +945,39 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 if (this.GetTreeviewItem != null)
                 {
-                    BatimentViewModel batVM = GetTreeviewItem.DataContext as BatimentViewModel;
-                    BatimentModel batiment = new BatimentModel();
-                    batiment.BatimentId = batVM.Batiment.BatimentId;
-                    batiment.SdeId = batVM.SdeName;
-                    batiment.Statut = (int)Constant.StatutModule.MalRempli;
-                    batiment.IsValidated = Convert.ToBoolean(Constant.STATUS_NOT_VALIDATED_0);
-                    batiment.IsFieldAllFilled = false;
-                    //On charge le popup
                     showDialogForRaison();
-                    //
-                    bool result = sw.changeStatus<BatimentModel>(batiment, batiment.SdeId);
-                    if (result == true)
+                    if (raison != null && isButtonValidateClick==true)
                     {
-                        //On garde une historique du retour;
-                        confService = new ConfigurationService();
-                        RetourModel retour = new RetourModel();
-                        retour.BatimentId = batiment.BatimentId;
-                        retour.SdeId = batiment.SdeId;
-                        retour.DateRetour = DateTime.Now.ToString();
-                        retour.Raison = raison;
-                        retour.Statut = Constant.STATUT_NON_EFFECTUE;
-                        bool save = confService.saveRetour(retour);
+                        BatimentViewModel batVM = GetTreeviewItem.DataContext as BatimentViewModel;
+                        BatimentModel batiment = new BatimentModel();
+                        batiment.BatimentId = batVM.Batiment.BatimentId;
+                        batiment.SdeId = batVM.SdeName;
+                        batiment.Statut = (int)Constant.StatutModule.MalRempli;
+                        batiment.IsValidated = Convert.ToBoolean(Constant.STATUS_NOT_VALIDATED_0);
+                        batiment.IsFieldAllFilled = false;
+                        //On charge le popup
+
                         //
-                        MessageBox.Show(Constant.MSG_MODULE_KI_MAL_RANPLI, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                        batVM.Status = true;
-                        batVM.ImageSource = Constant.GetStringValue(Constant.ImagePath.MalRempli);
-                        batVM.Tip = Constant.GetStringValue(Constant.ToolTipMessage.MalRempli);
+                        bool result = sw.changeStatus<BatimentModel>(batiment, batiment.SdeId);
+                        if (result == true)
+                        {
+                            //On garde une historique du retour;
+                            confService = new ConfigurationService();
+                            RetourModel retour = new RetourModel();
+                            retour.BatimentId = batiment.BatimentId;
+                            retour.SdeId = batiment.SdeId;
+                            retour.DateRetour = DateTime.Now.ToString();
+                            retour.Raison = raison;
+                            retour.Statut = Constant.STATUT_NON_EFFECTUE;
+                            bool save = confService.saveRetour(retour);
+                            //
+                            MessageBox.Show(Constant.MSG_MODULE_KI_MAL_RANPLI, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            batVM.Status = true;
+                            batVM.ImageSource = Constant.GetStringValue(Constant.ImagePath.MalRempli);
+                            batVM.Tip = Constant.GetStringValue(Constant.ToolTipMessage.MalRempli);
+                        }
                     }
+                    
                 }
                 else
                 {
@@ -1216,8 +1262,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             if (popup.ShowDialog() == true)
             {
                 raison = popup.Raison;
+                isButtonValidateClick = popup.IsValidate;
             }
             raison = popup.Raison;
+            isButtonValidateClick = popup.IsValidate;
             //
         }
 

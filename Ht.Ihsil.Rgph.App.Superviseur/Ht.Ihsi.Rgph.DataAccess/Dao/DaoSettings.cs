@@ -265,6 +265,29 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
             }
         }
 
+        public bool updateRetour(Tbl_Retour retour)
+        {
+            string methodName = "updateRetour";
+            try
+            {
+                if (retour != null)
+                {
+                    Tbl_Retour retourToUpdate = getRetour(retour.RetourId);
+                    retourToUpdate.BatimentId = retour.BatimentId;
+                    retourToUpdate.Statut = retour.Statut;
+                    retourToUpdate.DateRetourEffectue = retour.DateRetourEffectue;
+                    repository.RetourRepository.Update(retourToUpdate);
+                    repository.Save();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Info("==================<> Erreur:DaoSettings/"+methodName+":" + ex.Message);
+            }
+            return false;
+        }
+
         public List<Tbl_Retour> searchAllRetours()
         {
             try
@@ -330,7 +353,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         {
             try
             {
-                Tbl_Probleme probToUpdate = getProblemeByCodeQuestionAndBatiment(probleme.CodeQuestion, probleme.BatimentId.GetValueOrDefault());
+                Tbl_Probleme probToUpdate = getProbleme(Convert.ToInt32(probleme.ProblemeId));
                 bool result = false;
                 if (probToUpdate != null)
                 {
@@ -447,5 +470,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
             }
             return new List<Tbl_Materiels>();
         }
+
+
+     
     }
 }

@@ -13,12 +13,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <dxr:RibbonControl Grid.Row="0" RibbonStyle="Office2010" Background="#FF0F99F9" ShowApplicationButton="False" ToolbarShowMode="Hide" Grid.ColumnSpan="1" Height="141">
+        <dxr:RibbonControl Grid.Row="0" RibbonStyle="Office2010" Background="#FF0F99F9" ShowApplicationButton="False" ToolbarShowMode="Hide" Grid.ColumnSpan="1" Height="141" Name="main_ribbon" SelectedPageChanged="main_ribbon_SelectedPageChanged" >
             <dxr:RibbonControl.ToolbarItems>
                 <dxb:BarButtonItemLink BarItemName="newItem"/>
             </dxr:RibbonControl.ToolbarItems>
             <dxr:RibbonDefaultPageCategory Name="rpc_sdes" Color="White" Loaded="rpc_sdes_Loaded">
-                <dxr:RibbonPage Caption="SDES">
+                <dxr:RibbonPage Caption="SDES" Name="page_SDE">
                     <dxr:RibbonPageGroup >
                         <dxb:BarButtonItem x:Name="bbi_synchronisation"   Content="Synchronisation" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tb_pc.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_synchronisation_ItemClick"/>
                     </dxr:RibbonPageGroup>
@@ -34,14 +34,14 @@
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
             <dxr:RibbonPageCategory Name="rpc_transfert" Color="White">
-                <dxr:RibbonPage Caption="TRANSFERTS">
+                <dxr:RibbonPage Caption="TRANSFERTS" Name="page_transfret">
                     <dxr:RibbonPageGroup>
                         <dxb:BarButtonItem x:Name="bbi_transfert" Content="Transfert de données" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/trans.png" RibbonStyle="Large" ItemClick="bbi_transfert_ItemClick" />
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
-            <dxr:RibbonPageCategory Name="rpc_C_ENQUETE" Color="White">
-                <dxr:RibbonPage Caption="CONTRE-ENQUETE">
+            <dxr:RibbonPageCategory  Color="White" Name="rpc_contreenquete">
+                <dxr:RibbonPage Caption="CONTRE-ENQUETE" Name="page_contreneuqete">
                     <dxr:RibbonPageGroup Caption="Fe yon kont anket sou.">
                         <dxb:BarButtonItem x:Name="bbi_batiman_vid" Content="Batiman vid" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/batiment.png" ItemClick="bbi_batiman_vid_ItemClick" />
                         <dxb:BarItemSeparator/>
@@ -60,7 +60,7 @@
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
             <dxr:RibbonPageCategory Name="rpc_rapports" Color="White">
-                <dxr:RibbonPage Caption="RAPPORTS">
+                <dxr:RibbonPage Caption="RAPPORTS" Name="page_rapports">
                     <dxr:RibbonPageGroup>
                         <dxb:BarButtonItem Name="rpc_rpt_tronc" Content="Rapport de Tronc Commun" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/report3.png"  RibbonStyle="Large" ItemClick="rpc_rpt_tronc_ItemClick"/>
                     </dxr:RibbonPageGroup>
@@ -73,7 +73,7 @@
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
             <dxr:RibbonPageCategory x:Name="rpc_tab_bord" Color="White">
-                <dxr:RibbonPage Caption="CONFIGURATIONS">
+                <dxr:RibbonPage Caption="CONFIGURATIONS" Name="page_configuration">
                     <dxr:RibbonPageGroup ToolTip="Configurations">
                         <!--<dxb:BarButtonItem x:Name="bbi_sdes" Content="SDEs" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/map.png"  RibbonStyle="Large" ItemClick="bbi_sdes_ItemClick"/>
                         <dxb:BarItemSeparator/>-->

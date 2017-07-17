@@ -85,7 +85,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 listOfTB.Add(new TypeModel(" Batiman ki gen lojman lolektif", "2"));
                 listOfTB.Add(new TypeModel(" Batiman ki gen lojman vid", "3"));
                 listOfTB.Add(new TypeModel(" Batiman ki gen lojman endividyel", "4"));
-                Users.users = new Users();
+                //Users.users = new Users();
                 Users.users.DatabasePath = MAIN_DATABASE_PATH;
             }
             catch (Exception)
@@ -113,7 +113,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         }
         public void changeControlStatus(bool status)
         {
-            main.rpc_C_ENQUETE.Dispatcher.BeginInvoke((Action)(() => main.rpc_C_ENQUETE.IsEnabled = status));
+            main.rpc_contreenquete.Dispatcher.BeginInvoke((Action)(() => main.rpc_contreenquete.IsEnabled = status));
             main.rpc_rapports.Dispatcher.BeginInvoke((Action)(() => main.rpc_rapports.IsEnabled = status));
             main.rpc_sdes.Dispatcher.BeginInvoke((Action)(() => main.rpc_sdes.IsEnabled = status));
             main.rpc_tab_bord.Dispatcher.BeginInvoke((Action)(() => main.rpc_tab_bord.IsEnabled = status));
@@ -858,7 +858,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             {
                                 Dispatcher.Invoke(new Action(() =>
                                 {
-                                    txt_sortie.Text += "<>===================== Batiment:" + batiment.batimentId + " transféré avec succes" + Environment.NewLine;
+                                    txt_sortie.Text += "<>===================== Batiman kont-ankèt:" + batiment.batimentId + " transféré avec succes" + Environment.NewLine;
                                     txt_sortie.CaretIndex = txt_sortie.Text.Length;
                                     var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
                                     txt_sortie.ScrollToHorizontalOffset(rect.Right);
@@ -910,7 +910,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
                 else
                 {
-                    MessageBox.Show("Pa gen batiman.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Pa gen batiman ki nan kont-anket.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                     Dispatcher.Invoke(new Action(() =>
                     {
                         lbl_sde.Content = "";

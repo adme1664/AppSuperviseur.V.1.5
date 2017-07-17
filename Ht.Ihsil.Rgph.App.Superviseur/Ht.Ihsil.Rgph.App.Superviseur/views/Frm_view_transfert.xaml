@@ -28,16 +28,16 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="199*"/>
                             <RowDefinition Height="94*"/>
-                            <RowDefinition Height="368*"/>
+                            <RowDefinition Height="400*"/>
                             <RowDefinition Height="91*"/>
                         </Grid.RowDefinitions>
-                        <GroupBox Header="Transfert vers le serveur central" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Background="White" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9" Grid.Row="0">
+                        <GroupBox Header="Transfert vers le serveur central" HorizontalAlignment="Left"  Background="White" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9" Grid.Row="0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="220*"/>
-                                    <ColumnDefinition Width="269*"/>
+                                    <ColumnDefinition Width="35*"/>
+                                    <ColumnDefinition Width="78*"/>
                                 </Grid.ColumnDefinitions>
-                                <GroupBox x:Name="grp_SDE" Header="Selectionner une SDE">
+                                <GroupBox x:Name="grp_SDE" Header="Selectionner une SDE"  HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="130" >
                                     <ListBox x:Name="lbSdes" SelectionChanged="lbSdes_SelectionChanged">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
@@ -49,7 +49,7 @@
                                         </ListBox.ItemTemplate>
                                     </ListBox>
                                 </GroupBox>
-                                <GroupBox x:Name="grp_Actions" Header="Transferer" Grid.Column="1" HorizontalAlignment="Left" Width="94" Margin="23,0,0,0" Height="79" VerticalAlignment="Top">
+                                <GroupBox x:Name="grp_Actions" Header="Transferer" Grid.Column="1" HorizontalAlignment="Left" Width="94" Margin="6,-3,0,0" Height="79" VerticalAlignment="Top">
                                     <Grid>
                                         <Button  VerticalAlignment="top" HorizontalAlignment="Left" Width="55" Height="20" Margin="6,11,0,0" x:Name="btn_transfertr_sc" Click="btn_transfertr_sc_Click" RenderTransformOrigin="0.5,0.5">
                                             <Button.RenderTransform>
@@ -74,7 +74,7 @@
                         </GroupBox>
 
 
-                        <GroupBox Header="Informations" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="13" Foreground="#FF1433F9" Grid.Row="1">
+                        <GroupBox Header="Informations"  Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="13" Foreground="#FF1433F9" Grid.Row="1">
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                 <Label Content="Telecharger..." x:Name="lbl_telecharger" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Margin="27,10,0,0"/>
                                 <Label Content="Pourcentage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="185,9,0,0"/>

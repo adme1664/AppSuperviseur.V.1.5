@@ -270,7 +270,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 if (!Directory.Exists(TEMP_DATABASE_PATH))
                                 {
                                     Directory.CreateDirectory(TEMP_DATABASE_PATH);
-                                    MessageBox.Show("Folder Created:Path" + TEMP_DATABASE_PATH);
                                 }
                                 copied = device.pullFile(TEMP_DATABASE_PATH);
                                 //Arretez le processus ADB
@@ -287,8 +286,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                     //
                                     if (Directory.GetDirectories(TEMP_DATABASE_PATH).Length != 0)
                                     {
-                                        MessageBox.Show("Folder found inside");
-                                        TEMP_DATABASE_PATH = TEMP_DATABASE_PATH + @"\\rgph_db";
+                                       TEMP_DATABASE_PATH = TEMP_DATABASE_PATH + @"\\rgph_db";
                                     }
 
                                     //
@@ -302,7 +300,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                         if (!Directory.Exists(MAIN_DATABASE_PATH))
                                         {
                                             Directory.CreateDirectory(MAIN_DATABASE_PATH);
-                                            MessageBox.Show("Folder Created:Path" + MAIN_DATABASE_PATH);
                                         }
                                         destFileName = System.IO.Path.Combine(MAIN_DATABASE_PATH, sdeModel.SdeId + ".SQLITE");
                                         if (!System.IO.File.Exists(destFileName))
@@ -335,7 +332,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 else
                 {
                     MessageBox.Show(Constant.MSG_TABLET_PAS_CONNECTE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                    MessageBox.Show("" + procs[0].ProcessName);
+                   
                     //Arretez le processus ADB
                     Utilities.killProcess(procs);
                     //

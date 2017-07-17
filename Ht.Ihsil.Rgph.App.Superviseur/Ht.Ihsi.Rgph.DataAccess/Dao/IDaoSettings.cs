@@ -37,10 +37,12 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
 
         #region GESTION DES RETOURS
         bool saveRetour(Tbl_Retour retour);
+        bool updateRetour(Tbl_Retour retour);
         List<Tbl_Retour> searchAllRetours();
 
         List<Tbl_Retour> searchAllRetourBySde(string sdeId);
         Tbl_Retour getRetour(long id);
+
         #endregion
 
         #region GESTION DES PROBLEMES POUR LA VERIFICATION

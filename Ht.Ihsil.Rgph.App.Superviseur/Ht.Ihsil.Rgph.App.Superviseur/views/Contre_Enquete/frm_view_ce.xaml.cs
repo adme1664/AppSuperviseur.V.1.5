@@ -1,4 +1,5 @@
-﻿using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
+﻿using Ht.Ihsil.Rgph.App.Superviseur.entites;
+using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
 using Ht.Ihsil.Rgph.App.Superviseur.services;
 using Ht.Ihsil.Rgph.App.Superviseur.utils;
@@ -281,26 +282,34 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 }
             }
         }
+
+        //Pour les batiments qui sont selectionnes dans les contre-enquetes. On affiche une partie des informations necessaires pour le superviseur
         public frm_view_ce(BatimentInCeModel bat)
         {
+            SqliteDataReaderService reader = new SqliteDataReaderService(Utilities.getConnectionString(Users.users.DatabasePath, bat.SdeId));
             InitializeComponent();
             string libelle = "SDE:"+bat.SdeId+" Batiment:"+bat.BatimentId;
             List<DataDetails> reponses = null;
             if (bat != null)
             {
                 reponses = new List<DataDetails>();
-                DataDetails d1 = new DataDetails("Nimewo Batiman", bat.BatimentId);
-                reponses.Add(d1);
-                DataDetails d2 = new DataDetails("SDE", bat.SdeId);
-                reponses.Add(d2);
-                DataDetails d3 = new DataDetails("Nimewo REC", bat.Rec);
-                reponses.Add(d3);
-                DataDetails d4 = new DataDetails("Nimewo RGPH", bat.Rgph);
-                reponses.Add(d4);
-                DataDetails d5 = new DataDetails("Adrès", bat.Adresse);
-                reponses.Add(d5);
-                DataDetails d6 = new DataDetails("Non Chèf Menaj la", bat.NomChefMenage);
-                reponses.Add(d6);
+
+                reader = new SqliteDataReaderService(Utilities.getConnectionString(Users.users.DatabasePath, bat.SdeId));
+                SdeInformation sdeInformation = Utilities.getSdeInformation(Utilities.getSdeFormatSent(bat.SdeId));
+                string comId = reader.Sr.getCommune(sdeInformation.ComId).ComNom;
+                string deptId = reader.Sr.getDepartement(sdeInformation.DeptId).DeptNom;
+                string vqse = reader.Sr.getVqse(sdeInformation.VqseId).VqseNom;
+                if (sdeInformation != null)
+                {
+                    reponses.Add(new DataDetails("Depatman:", deptId));
+                    reponses.Add(new DataDetails("Komin:", comId));
+                    reponses.Add(new DataDetails("Seksyon Kominal:", vqse));
+                    reponses.Add(new DataDetails("Distri:", bat.DistrictId));
+                    reponses.Add(new DataDetails("Bitasyon:", bat.Habitation));
+                    reponses.Add(new DataDetails("Lokalite:", bat.Localite));
+                    reponses.Add(new DataDetails("Adrès:", bat.Adresse));
+
+                }
             }
             TabItem item = new TabItem();
             item.HorizontalAlignment = HorizontalAlignment.Stretch;
