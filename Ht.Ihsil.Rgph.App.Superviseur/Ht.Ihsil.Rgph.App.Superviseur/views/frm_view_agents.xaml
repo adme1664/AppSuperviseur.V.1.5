@@ -63,9 +63,9 @@
                     </GroupBox>
                     <GroupBox Header="Liste des tablettes enregistrées"  Grid.Row="1" Grid.Column="0">
                         <Grid>
-                            <dxg:GridControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" Name="gridTablette" AutoGeneratingColumn="gridTablette_AutoGeneratingColumn">
+                            <dxg:GridControl AutoGenerateColumns="AddNew" SelectionMode="Row" EnableSmartColumnsGeneration="True" Name="gridTablette" AutoGeneratingColumn="gridTablette_AutoGeneratingColumn">
                                 <dxg:GridControl.View>
-                                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" AlternateRowBackground="#FF94C1F7">
+                                    <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" AlternateRowBackground="#FF94C1F7" ShowGroupPanel="False">
                                         <dxg:TableView.RowCellMenuCustomizations>
                                             <dxb:BarButtonItem Name="deleteDataItem" Content="Supprimer" Glyph="/Ht.Ihsil.Rgph.App.Superviseur;component/images/delete-xxl.png" SerializationName="deleteDataItem" ItemClick="deleteDataItem_ItemClick"  />
                                         </dxg:TableView.RowCellMenuCustomizations>
@@ -75,10 +75,7 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="Tab">
-
-            </dx:DXTabItem>
+            </dx:DXTabItem>          
         </dx:DXTabControl>
     </Grid>
 

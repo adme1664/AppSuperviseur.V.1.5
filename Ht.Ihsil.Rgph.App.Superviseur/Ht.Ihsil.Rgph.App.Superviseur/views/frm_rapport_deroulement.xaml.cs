@@ -120,6 +120,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 rapport.DateRapport = DateTime.Now.ToString();
                 long rapportId = service.saveRptDeroulement(rapport);
+                bool resultat = false;
                 if (rapportId != 0)
                 {
                     for (int i = 0; i < grid_rapport.VisibleRowCount; i++)
@@ -128,9 +129,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         DetailsRapportModel modelForSaving = new DetailsRapportModel();
                         modelForSaving = ModelMapper.MapToDetailsRapportModel(row);
                         modelForSaving.RapportId = rapportId;
-                        bool result = service.saveDetailsDeroulement(modelForSaving);
-                        log.Info("Enregistrer:" + result);
+                        resultat = service.saveDetailsDeroulement(modelForSaving);
+                        log.Info("Enregistrer:" + resultat);
                     }
+                    if (resultat == true)
+                        MessageBox.Show(Constant.MSG_RAPO_SAVE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             else
@@ -138,34 +141,37 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 List<DetailsRapportModel> listOfDetails = service.searchDetailsReport(rapport);
                 if (listOfDetails != null)
                 {
-                    foreach (DetailsRapportModel dt in listOfDetails)
+                    for (int i = 0; i < grid_rapport.VisibleRowCount; i++)
                     {
-                        for (int i = 0; i < grid_rapport.VisibleRowCount; i++)
+                        DetailsRapportDeroulement row = (DetailsRapportDeroulement)grid_rapport.GetRow(i);
+                        DetailsRapportModel modelForUpdating = new DetailsRapportModel();
+                        modelForUpdating = ModelMapper.MapToDetailsRapportModel(row);
+                        modelForUpdating.RapportId = rapport.RapportId;
+                        DetailsRapportModel dt = new DetailsRapportModel();
+                        if (modelForUpdating.DetailsRapportId != 0)
                         {
-                            DetailsRapportDeroulement row = (DetailsRapportDeroulement)grid_rapport.GetRow(i);
-                            DetailsRapportModel modelForUpdating = new DetailsRapportModel();
-                            modelForUpdating = ModelMapper.MapToDetailsRapportModel(row);
-                            modelForUpdating.RapportId = rapport.RapportId;
-                            if (modelForUpdating.DetailsRapportId!=0)
-                            {
-                                dt.Commentaire = modelForUpdating.Commentaire;
-                                dt.Domaine = modelForUpdating.Domaine;
-                                dt.Solution = modelForUpdating.Solution;
-                                dt.SousDomaine = modelForUpdating.SousDomaine;
-                                dt.Suggestions = modelForUpdating.Suggestions;
-                                dt.Suivi = modelForUpdating.Suivi;
-                                dt.Precisions = modelForUpdating.Precisions;
-                                dt.Probleme = modelForUpdating.Probleme;
-                                bool result = service.updateDetailsDeroulement(dt);
-                                log.Info("Result updating============================<>" + result);
-                            }
-                            else
-                            {
-                                bool result1 = service.saveDetailsDeroulement(modelForUpdating);
-                                log.Info("Result updating============================<>" + result1);
-                            }
+                            dt.Commentaire = modelForUpdating.Commentaire;
+                            dt.Domaine = modelForUpdating.Domaine;
+                            dt.Solution = modelForUpdating.Solution;
+                            dt.SousDomaine = modelForUpdating.SousDomaine;
+                            dt.Suggestions = modelForUpdating.Suggestions;
+                            dt.Suivi = modelForUpdating.Suivi;
+                            dt.Precisions = modelForUpdating.Precisions;
+                            dt.Probleme = modelForUpdating.Probleme;
+                            dt.RapportId = modelForUpdating.RapportId;
+                            dt.DetailsRapportId = modelForUpdating.DetailsRapportId;
+                            bool result = service.updateDetailsDeroulement(dt);
+                            log.Info("Result updating============================<>" + result);
+                            //if(result==true)
+                            //    MessageBox.Show(Constant.MSG_RAPO_UPDATE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            bool result1 = service.saveDetailsDeroulement(modelForUpdating);
+                            log.Info("Result updating============================<>" + result1);
                         }
                     }
+
                 }
             }
 
@@ -304,11 +310,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 int i = Rapports.Count;
                 DetailsRapportDeroulement rprt = new DetailsRapportDeroulement(i + 1, domaine, sousDomaine, probleme, solution, txtPrecision.Text, txtSuggestion.Text, suivi, "Aucun");
-                if (btnAjouter.Content == "Modifier")
+                if (btnAjouter.Content.ToString() == "Modifier")
                 {
                     foreach (DetailsRapportDeroulement dt in Rapports)
                     {
-                        if (dtModel.DetailsRapportId==dt.DetailsRapportId)
+                        if (dtModel.DetailsRapportId == dt.DetailsRapportId)
                         {
                             rprt.Num = dt.Num;
                             rprt.DetailsRapportId = dt.DetailsRapportId;
@@ -327,7 +333,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         }
                     }
                 }
-
                 else
                 {
                     Rapports.Add(rprt);
@@ -346,7 +351,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         }
 
-
         private void TableView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
         {
             if (e.NewRow != null)
@@ -357,6 +361,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 int i = 0;
                 txtPrecision.Text = rpt.Precisions;
                 txtSuggestion.Text = rpt.Suggestions;
+                btnAjouter.Content = "Modifier";
                 foreach (KeyValue key in cmbDomaine.Items)
                 {
                     if (key.Key == rpt.Domaine.Key)
@@ -381,6 +386,46 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         {
             btnAjouter.Content = "Modifier";
             MessageBox.Show("" + dtModel.Domaine.Value);
+        }
+
+        private void deleteDataItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
+        {
+            DetailsRapportDeroulement row = (DetailsRapportDeroulement)grid_rapport.GetRow(grid_rapport.GetSelectedRowHandles()[0]);
+            if (row != null)
+            {
+                MessageBoxResult confirm = MessageBox.Show("Eske ou vle efase rapo sa a?", Constant.WINDOW_TITLE, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    bool result = service.deleteDetailsDeroulement(Convert.ToInt32(row.DetailsRapportId));
+                    if (result == true)
+                    {
+                        MessageBox.Show("Rapo sa efase.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                        Rapports = new ObservableCollection<DetailsRapportDeroulement>();
+                        List<DetailsRapportModel> details = service.searchDetailsReport(rapport);
+                        int i = 0;
+                        foreach (DetailsRapportModel dt in details)
+                        {
+                            i++;
+                            DetailsRapportDeroulement rowAdd = new DetailsRapportDeroulement();
+                            rowAdd.Commentaire = dt.Commentaire;
+                            rowAdd.Domaine = xmlReader.getDomaine(Convert.ToInt32(dt.Domaine));
+                            rowAdd.SousDomaine = xmlReader.getSousDomaine(Convert.ToInt32(dt.Domaine), Convert.ToInt32(dt.SousDomaine));
+                            rowAdd.Solution = xmlReader.getSolution(Convert.ToInt32(dt.Domaine), Convert.ToInt32(dt.SousDomaine), Convert.ToInt32(dt.Solution));
+                            rowAdd.Probleme = xmlReader.getProbleme(Convert.ToInt32(dt.Domaine), Convert.ToInt32(dt.SousDomaine), Convert.ToInt32(dt.Probleme));
+                            rowAdd.Precisions = dt.Precisions;
+                            rowAdd.Suggestions = dt.Suggestions;
+                            rowAdd.Suivi = xmlReader.getSuivi(Convert.ToInt32(dt.Suivi));
+                            rowAdd.RapportId = dt.RapportId;
+                            rowAdd.DetailsRapportId = dt.DetailsRapportId;
+                            rowAdd.Num = i;
+                            Rapports.Add(rowAdd);
+                        }
+                        
+                        grid_rapport.ItemsSource = Rapports;
+
+                    }
+                }
+            }
         }
 
     }

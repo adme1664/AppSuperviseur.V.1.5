@@ -132,6 +132,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     dtg1.Margin = new Thickness(10, 24, 10, 10);
                     dtg1.HorizontalAlignment = HorizontalAlignment.Stretch;
                     dtg1.VerticalAlignment = VerticalAlignment.Stretch;
+                    dtg1.IsReadOnly = true;
+                    dtg1.CanUserAddRows = false;
                     dtg1.ItemsSource = listPerkategori;
                     dtg1.AutoGeneratingColumn += dtg1_AutoGeneratingColumn;
                     cgrd.Children.Add(dtg1);
@@ -273,6 +275,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     dtg1.Margin = new Thickness(10, 24, 10, 10);
                     dtg1.HorizontalAlignment = HorizontalAlignment.Stretch;
                     dtg1.VerticalAlignment = VerticalAlignment.Stretch;
+                    dtg1.IsReadOnly = true;
+                    dtg1.CanUserAddRows = false;
                     dtg1.ItemsSource = listPerkategori;
                     dtg1.AutoGeneratingColumn += dtg1_AutoGeneratingColumn;
                     cgrd.Children.Add(dtg1);

@@ -122,6 +122,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             {
                                 Directory.CreateDirectory(db_backup);
                             }
+                            //
+                            if (Directory.GetDirectories(TEMP_DATABASE_PATH).Length != 0)
+                            {
+                                TEMP_DATABASE_PATH = TEMP_DATABASE_PATH + @"\\rgph_db";
+                            }
+
+                            //
                             string[] files = Directory.GetFiles(TEMP_DATABASE_PATH);
                             foreach (string f in files)
                             {

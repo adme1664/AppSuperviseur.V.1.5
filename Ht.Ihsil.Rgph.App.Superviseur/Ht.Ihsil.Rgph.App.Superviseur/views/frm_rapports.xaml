@@ -24,7 +24,7 @@
                     <GroupBox Header="Rapports" >
                         <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_rapports">
                             <dxg:TreeListControl.View>
-                                <dxg:TreeListView AllowPerPixelScrolling="True" ShowTotalSummary="True" Name="treeListView1" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"  AllowScrollAnimation="True" AutoWidth="True" />
+                                <dxg:TreeListView AllowPerPixelScrolling="True" AllowEditing="False"  ShowTotalSummary="True" Name="treeListView1" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1"   AllowScrollAnimation="True" AutoWidth="True" />
                             </dxg:TreeListControl.View>
                             <dxg:TreeListControl.Columns>
                                 <!--<dxg:TreeListColumn FieldName="Column1"/>

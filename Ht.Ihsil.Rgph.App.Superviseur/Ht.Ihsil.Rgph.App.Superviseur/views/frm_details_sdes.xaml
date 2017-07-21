@@ -15,7 +15,6 @@
             <Grid HorizontalAlignment="Left" Height="319" Margin="12,41,0,0" VerticalAlignment="Top" Width="994">
                 <GroupBox Header="Endividi" HorizontalAlignment="Left" Margin="2,38,0,0" VerticalAlignment="Top" Height="271" Width="406">
                     <Grid>
-
                         <dxc:ChartControl HorizontalAlignment="Left" VerticalAlignment="Top">
                             <dxc:ChartControl.Legend>
                                 <dxc:Legend/>
@@ -40,10 +39,8 @@
                                         </dxc:PieSeries2D>
                                     </dxc:SimpleDiagram2D.Series>
                                 </dxc:SimpleDiagram2D>
-                            </dxc:ChartControl.Diagram>
-                           
+                            </dxc:ChartControl.Diagram>                         
                         </dxc:ChartControl>
-
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="Emigre" HorizontalAlignment="Left" Margin="413,38,0,0" VerticalAlignment="Top" Height="271" Width="405">

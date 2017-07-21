@@ -7,6 +7,7 @@
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
              xmlns:local="clr-namespace:Ht.Ihsil.Rgph.App.Superviseur.views"
             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+            xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
              x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_rapport_deroulement" 
              mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Grid>
@@ -66,7 +67,11 @@
                             </dxg:GridColumn>
                         </dxg:GridControl.Columns>
                         <dxg:GridControl.View>
-                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="False" NewItemRowPosition="Top" ShowGroupPanel="False" AutoWidth="True" FocusedRowChanged="TableView_FocusedRowChanged" RowDoubleClick="TableView_RowDoubleClick"/>
+                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="False" NewItemRowPosition="Top" ShowGroupPanel="False" AutoWidth="True" FocusedRowChanged="TableView_FocusedRowChanged" RowDoubleClick="TableView_RowDoubleClick">
+                                <dxg:TableView.RowCellMenuCustomizations>
+                                    <dxb:BarButtonItem Name="deleteDataItem" Content="Supprimer" Glyph="/Ht.Ihsil.Rgph.App.Superviseur;component/images/delete-xxl.png" SerializationName="deleteDataItem" ItemClick="deleteDataItem_ItemClick" />
+                                </dxg:TableView.RowCellMenuCustomizations>
+                            </dxg:TableView>
                         </dxg:GridControl.View>
                     </dxg:GridControl>
                 </Grid>

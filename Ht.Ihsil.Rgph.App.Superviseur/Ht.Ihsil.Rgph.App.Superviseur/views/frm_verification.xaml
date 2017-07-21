@@ -32,7 +32,7 @@
                                     </Grid.RowDefinitions>
                                     <dxg:GridControl  AutoGenerateColumns="AddNew"  EnableSmartColumnsGeneration="True" Grid.Row="0" Name="dataGridCouverture" SelectionMode="Row">
                                         <dxg:GridControl.View>
-                                            <dxg:TableView Name="table_couverture"  AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" NavigationStyle="Row"/>
+                                            <dxg:TableView Name="table_couverture"  AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" NavigationStyle="Row" ShowGroupPanel="False"/>
                                         </dxg:GridControl.View>
                                     </dxg:GridControl>
 
@@ -190,10 +190,10 @@
                                     <dxg:GridControl  Name="dataGridIndPerformance">
                                         <dxg:GridControl.Columns>
                                             <dxg:GridColumn FieldName="Value" Header="Indicateur de performance" />
-                                            <dxg:GridColumn FieldName="Cle" SortOrder="Ascending" SortIndex="0" Header="Nombre/Jour"/>
+                                            <dxg:GridColumn FieldName="Cle" SortOrder="Ascending" SortIndex="0" Header="Nombre/Jour" Fixed="Left"/>
                                         </dxg:GridControl.Columns>
                                         <dxg:GridControl.View>
-                                            <dxg:TableView  Name="table_view" AllowPerPixelScrolling="True" ShowTotalSummary="True" />
+                                            <dxg:TableView  Name="table_view" AllowPerPixelScrolling="True" ShowTotalSummary="True" ShowGroupPanel="False" />
                                         </dxg:GridControl.View>
                                     </dxg:GridControl>
 

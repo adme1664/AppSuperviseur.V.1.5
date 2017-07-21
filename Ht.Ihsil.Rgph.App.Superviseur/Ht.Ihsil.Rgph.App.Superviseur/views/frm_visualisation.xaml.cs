@@ -389,7 +389,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     if (args.ProgressPercentage == 20)
                     {
                         service_ce = new ContreEnqueteService(_sde.SdeName);
-                        service=new SqliteDataReaderService(Utilities.getConnectionString(MAIN_DATABASE_PATH,_sde.SdeName));
+                        service = new SqliteDataReaderService(Utilities.getConnectionString(MAIN_DATABASE_PATH, _sde.SdeName));
                         batiment = service_ce.getBatimentWithLogementC();
                     }
                     if (args.ProgressPercentage == 30)
@@ -439,18 +439,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                             List<IndividuModel> listOfInds = service.Sr.GetIndividuByLoge(logement.LogeId);
                                             if (listOfInds.Count != 0)
                                             {
-                                                foreach(IndividuModel ind in listOfInds)
+                                                foreach (IndividuModel ind in listOfInds)
                                                 {
-                                                    IndividuCEModel indCe=new IndividuCEModel();
-                                                    indCe.BatimentId=ind.BatimentId;
-                                                    indCe.MenageId=ind.MenageId;
-                                                    indCe.LogeId=ind.LogeId;
-                                                    indCe.SdeId=ind.SdeId;
+                                                    IndividuCEModel indCe = new IndividuCEModel();
+                                                    indCe.BatimentId = ind.BatimentId;
+                                                    indCe.MenageId = ind.MenageId;
+                                                    indCe.LogeId = ind.LogeId;
+                                                    indCe.SdeId = ind.SdeId;
                                                     indCe.IndividuId = ind.IndividuId;
-                                                    indCe.Qp1NoOrdre=ind.Q1NoOrdre;
-                                                    indCe.Q2Nom=ind.Qp2BNom;
-                                                    indCe.Q3Prenom=ind.Qp2APrenom;
-                                                    indCe.Q3LienDeParente=ind.Qp3LienDeParente;
+                                                    indCe.Qp1NoOrdre = ind.Q1NoOrdre;
+                                                    indCe.Q2Nom = ind.Qp2BNom;
+                                                    indCe.Q3Prenom = ind.Qp2APrenom;
+                                                    indCe.Q3LienDeParente = ind.Qp3LienDeParente;
                                                     service_ce.saveIndividuCE(indCe);
                                                 }
                                             }
@@ -586,7 +586,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 resultat = true;
                             }
                         }
-                        
+
 
                     }
                     catch (MessageException ex)
@@ -946,7 +946,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 if (this.GetTreeviewItem != null)
                 {
                     showDialogForRaison();
-                    if (raison != null && isButtonValidateClick==true)
+                    if (raison != null && isButtonValidateClick == true)
                     {
                         BatimentViewModel batVM = GetTreeviewItem.DataContext as BatimentViewModel;
                         BatimentModel batiment = new BatimentModel();
@@ -977,7 +977,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             batVM.Tip = Constant.GetStringValue(Constant.ToolTipMessage.MalRempli);
                         }
                     }
-                    
+
                 }
                 else
                 {
@@ -988,9 +988,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 MessageBox.Show(ex.Message, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1005,35 +1005,40 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 if (this.GetTreeviewItem != null)
                 {
-                    LogementViewModel logVM = GetTreeviewItem.DataContext as LogementViewModel;
-                    LogementModel lgmntModel = new LogementModel();
-                    lgmntModel.LogeId = logVM.LogementId;
-                    lgmntModel.BatimentId = logVM.BatimentId;
-                    lgmntModel.SdeId = logVM.NumSde;
-                    lgmntModel.Statut = (int)Constant.StatutModule.MalRempli;
-                    lgmntModel.IsFieldAllFilled = false;
                     //On charge le popup
                     showDialogForRaison();
                     //
-                    bool result = sw.changeStatus<LogementModel>(lgmntModel, lgmntModel.SdeId);
-                    if (result == true)
+                    if (raison != null && isButtonValidateClick == true)
                     {
-                        //On garde une historique du retour;
-                        confService = new ConfigurationService();
-                        RetourModel retour = new RetourModel();
-                        retour.BatimentId = lgmntModel.BatimentId;
-                        retour.LogementId = lgmntModel.LogeId;
-                        retour.SdeId = lgmntModel.SdeId;
-                        retour.DateRetour = DateTime.Now.ToString();
-                        retour.Raison = raison;
-                        retour.Statut = Constant.STATUT_NON_EFFECTUE;
-                        bool save = confService.saveRetour(retour);
-                        //
-                        MessageBox.Show(Constant.MSG_MODULE_KI_MAL_RANPLI, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                        logVM.Status = true;
-                        logVM.Tip = Constant.GetStringValue(Constant.ToolTipMessage.MalRempli);
-                        logVM.ImageSource = Constant.GetStringValue(Constant.ImagePath.MalRempli);
+                        LogementViewModel logVM = GetTreeviewItem.DataContext as LogementViewModel;
+                        LogementModel lgmntModel = new LogementModel();
+                        lgmntModel.LogeId = logVM.LogementId;
+                        lgmntModel.BatimentId = logVM.BatimentId;
+                        lgmntModel.SdeId = logVM.NumSde;
+                        lgmntModel.Statut = (int)Constant.StatutModule.MalRempli;
+                        lgmntModel.IsFieldAllFilled = false;
+
+                        bool result = sw.changeStatus<LogementModel>(lgmntModel, lgmntModel.SdeId);
+                        if (result == true)
+                        {
+                            //On garde une historique du retour;
+                            confService = new ConfigurationService();
+                            RetourModel retour = new RetourModel();
+                            retour.BatimentId = lgmntModel.BatimentId;
+                            retour.LogementId = lgmntModel.LogeId;
+                            retour.SdeId = lgmntModel.SdeId;
+                            retour.DateRetour = DateTime.Now.ToString();
+                            retour.Raison = raison;
+                            retour.Statut = Constant.STATUT_NON_EFFECTUE;
+                            bool save = confService.saveRetour(retour);
+                            //
+                            MessageBox.Show(Constant.MSG_MODULE_KI_MAL_RANPLI, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            logVM.Status = true;
+                            logVM.Tip = Constant.GetStringValue(Constant.ToolTipMessage.MalRempli);
+                            logVM.ImageSource = Constant.GetStringValue(Constant.ImagePath.MalRempli);
+                        }
                     }
+
                 }
                 else
                 {
@@ -1044,9 +1049,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 MessageBox.Show(ex.Message, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1056,37 +1061,42 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 if (this.GetTreeviewItem != null)
                 {
-                    MenageViewModel _menage = this.GetTreeviewItem.DataContext as MenageViewModel;
-                    MenageModel menageModel = new MenageModel();
-                    menageModel.MenageId = _menage.MenageId;
-                    menageModel.SdeId = _menage.NumSde;
-                    menageModel.LogeId = _menage.LogementId;
-                    menageModel.BatimentId = _menage.BatimentId;
-                    menageModel.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
-                    menageModel.IsFieldAllFilled = false;
                     //On charge le popup pour dire pour quelle raison on veut faire le retour
                     showDialogForRaison();
                     //
-                    bool result = sw.changeStatus<MenageModel>(menageModel, menageModel.SdeId);
-                    if (result == true)
+                    if (raison != null && isButtonValidateClick == true)
                     {
-                        //On garde une historique du retour;
-                        confService = new ConfigurationService();
-                        RetourModel retour = new RetourModel();
-                        retour.BatimentId = menageModel.BatimentId;
-                        retour.LogementId = menageModel.LogeId;
-                        retour.MenageId = menageModel.MenageId;
-                        retour.SdeId = menageModel.SdeId;
-                        retour.DateRetour = DateTime.Now.ToString();
-                        retour.Raison = raison;
-                        retour.Statut = Constant.STATUT_NON_EFFECTUE;
-                        bool save = confService.saveRetour(retour);
-                        //
-                        MessageBox.Show(Constant.MSG_MODULE_KI_MAL_RANPLI, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                        _menage.Status = true;
-                        _menage.Tip = Constant.GetStringValue(Constant.ToolTipMessage.MalRempli);
-                        _menage.ImageSource = Constant.GetStringValue(Constant.ImagePath.MalRempli);
+                        MenageViewModel _menage = this.GetTreeviewItem.DataContext as MenageViewModel;
+                        MenageModel menageModel = new MenageModel();
+                        menageModel.MenageId = _menage.MenageId;
+                        menageModel.SdeId = _menage.NumSde;
+                        menageModel.LogeId = _menage.LogementId;
+                        menageModel.BatimentId = _menage.BatimentId;
+                        menageModel.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
+                        menageModel.IsFieldAllFilled = false;
+
+                        bool result = sw.changeStatus<MenageModel>(menageModel, menageModel.SdeId);
+                        if (result == true)
+                        {
+                            //On garde une historique du retour;
+                            confService = new ConfigurationService();
+                            RetourModel retour = new RetourModel();
+                            retour.BatimentId = menageModel.BatimentId;
+                            retour.LogementId = menageModel.LogeId;
+                            retour.MenageId = menageModel.MenageId;
+                            retour.SdeId = menageModel.SdeId;
+                            retour.DateRetour = DateTime.Now.ToString();
+                            retour.Raison = raison;
+                            retour.Statut = Constant.STATUT_NON_EFFECTUE;
+                            bool save = confService.saveRetour(retour);
+                            //
+                            MessageBox.Show(Constant.MSG_MODULE_KI_MAL_RANPLI, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            _menage.Status = true;
+                            _menage.Tip = Constant.GetStringValue(Constant.ToolTipMessage.MalRempli);
+                            _menage.ImageSource = Constant.GetStringValue(Constant.ImagePath.MalRempli);
+                        }
                     }
+
                 }
                 else
                 {
@@ -1109,99 +1119,100 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 if (this.GetTreeviewItem != null)
                 {
-                    bool result = false;
-                    MenageDetailsViewModel menageDetails = this.GetTreeviewItem.DataContext as MenageDetailsViewModel;
-                    if (menageDetails.Type == Constant.CODE_TYPE_DECES)
+                    //On charge le popup pour dire pour quelle raison on veut faire le retour
+                    showDialogForRaison();
+                    //
+                    if (raison != null && isButtonValidateClick == true)
                     {
-                        DecesModel model = new DecesModel();
-                        model.DecesId = Convert.ToInt32(menageDetails.MenageDetailsId);
-                        model.BatimentId = menageDetails.Menage.BatimentId;
-                        model.MenageId = menageDetails.Menage.MenageId;
-                        model.LogeId = menageDetails.Menage.LogementId;
-                        model.SdeId = menageDetails.Menage.SdeId;
-                        model.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
-                        model.IsFieldAllFilled = false;
-                        //On charge le popup pour dire pour quelle raison on veut faire le retour
-                        showDialogForRaison();
-                        //
-                        result = sw.changeStatus<DecesModel>(model, model.SdeId);
-                        //On garde une historique du retour;
-                        confService = new ConfigurationService();
-                        RetourModel retour = new RetourModel();
-                        retour.BatimentId = model.BatimentId;
-                        retour.LogementId = model.LogeId;
-                        retour.MenageId = model.MenageId;
-                        retour.IndividuId = model.DecesId;
-                        retour.SdeId = model.SdeId;
-                        retour.DateRetour = DateTime.Now.ToString();
-                        retour.Raison = raison;
-                        retour.Statut = Constant.STATUT_NON_EFFECTUE;
-                        bool save = confService.saveRetour(retour);
-                        //
+                        bool result = false;
+                        MenageDetailsViewModel menageDetails = this.GetTreeviewItem.DataContext as MenageDetailsViewModel;
+                        if (menageDetails.Type == Constant.CODE_TYPE_DECES)
+                        {
+                            DecesModel model = new DecesModel();
+                            model.DecesId = Convert.ToInt32(menageDetails.MenageDetailsId);
+                            model.BatimentId = menageDetails.Menage.BatimentId;
+                            model.MenageId = menageDetails.Menage.MenageId;
+                            model.LogeId = menageDetails.Menage.LogementId;
+                            model.SdeId = menageDetails.Menage.SdeId;
+                            model.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
+                            model.IsFieldAllFilled = false;
+                            
+                            result = sw.changeStatus<DecesModel>(model, model.SdeId);
+                            //On garde une historique du retour;
+                            confService = new ConfigurationService();
+                            RetourModel retour = new RetourModel();
+                            retour.BatimentId = model.BatimentId;
+                            retour.LogementId = model.LogeId;
+                            retour.MenageId = model.MenageId;
+                            retour.IndividuId = model.DecesId;
+                            retour.SdeId = model.SdeId;
+                            retour.DateRetour = DateTime.Now.ToString();
+                            retour.Raison = raison;
+                            retour.Statut = Constant.STATUT_NON_EFFECTUE;
+                            bool save = confService.saveRetour(retour);
+                            //
+                        }
+                        if (menageDetails.Type == Constant.CODE_TYPE_EMIGRE)
+                        {
+                            EmigreModel model = new EmigreModel();
+                            model.EmigreId = Convert.ToInt32(menageDetails.MenageDetailsId);
+                            model.BatimentId = menageDetails.Menage.BatimentId;
+                            model.MenageId = menageDetails.Menage.MenageId;
+                            model.LogeId = menageDetails.Menage.LogementId;
+                            model.SdeId = menageDetails.Menage.SdeId;
+                            model.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
+                            model.IsFieldAllFilled = false;
+                           
+                            result = sw.changeStatus<EmigreModel>(model, model.SdeId);
+                            //On garde une historique du retour;
+                            confService = new ConfigurationService();
+                            RetourModel retour = new RetourModel();
+                            retour.BatimentId = model.BatimentId;
+                            retour.LogementId = model.LogeId;
+                            retour.MenageId = model.MenageId;
+                            retour.IndividuId = model.EmigreId;
+                            retour.SdeId = model.SdeId;
+                            retour.DateRetour = DateTime.Now.ToString();
+                            retour.Raison = raison;
+                            retour.Statut = Constant.STATUT_NON_EFFECTUE;
+                            bool save = confService.saveRetour(retour);
+                            //
+                        }
+                        if (menageDetails.Type == Constant.CODE_TYPE_ENVDIVIDI)
+                        {
+                            IndividuModel model = new IndividuModel();
+                            model.IndividuId = Convert.ToInt32(menageDetails.MenageDetailsId);
+                            model.BatimentId = menageDetails.Menage.BatimentId;
+                            model.MenageId = menageDetails.Menage.MenageId;
+                            model.LogeId = menageDetails.Menage.LogementId;
+                            model.SdeId = menageDetails.Menage.SdeId;
+                            model.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
+                            model.IsFieldAllFilled = false;
+
+                            result = sw.changeStatus<IndividuModel>(model, model.SdeId);
+                            //On garde une historique du retour;
+                            confService = new ConfigurationService();
+                            RetourModel retour = new RetourModel();
+                            retour.BatimentId = model.BatimentId;
+                            retour.LogementId = model.LogeId;
+                            retour.MenageId = model.MenageId;
+                            retour.IndividuId = model.IndividuId;
+                            retour.SdeId = model.SdeId;
+                            retour.DateRetour = DateTime.Now.ToString();
+                            retour.Raison = raison;
+                            retour.Statut = Constant.STATUT_NON_EFFECTUE;
+                            bool save = confService.saveRetour(retour);
+                            //
+                        }
+                        if (result == true)
+                        {
+                            MessageBox.Show(Constant.MSG_MODULE_KI_MAL_RANPLI, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            menageDetails.Status = true;
+                            menageDetails.Tip = Constant.GetStringValue(Constant.ToolTipMessage.MalRempli);
+                            menageDetails.ImageSource = Constant.GetStringValue(Constant.ImagePath.MalRempli);
+                        }
                     }
-                    if (menageDetails.Type == Constant.CODE_TYPE_EMIGRE)
-                    {
-                        EmigreModel model = new EmigreModel();
-                        model.EmigreId = Convert.ToInt32(menageDetails.MenageDetailsId);
-                        model.BatimentId = menageDetails.Menage.BatimentId;
-                        model.MenageId = menageDetails.Menage.MenageId;
-                        model.LogeId = menageDetails.Menage.LogementId;
-                        model.SdeId = menageDetails.Menage.SdeId;
-                        model.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
-                        model.IsFieldAllFilled = false;
-                        //On charge le popup pour dire pour quelle raison on veut faire le retour
-                        showDialogForRaison();
-                        //
-                        result = sw.changeStatus<EmigreModel>(model, model.SdeId);
-                        //On garde une historique du retour;
-                        confService = new ConfigurationService();
-                        RetourModel retour = new RetourModel();
-                        retour.BatimentId = model.BatimentId;
-                        retour.LogementId = model.LogeId;
-                        retour.MenageId = model.MenageId;
-                        retour.IndividuId = model.EmigreId;
-                        retour.SdeId = model.SdeId;
-                        retour.DateRetour = DateTime.Now.ToString();
-                        retour.Raison = raison;
-                        retour.Statut = Constant.STATUT_NON_EFFECTUE;
-                        bool save = confService.saveRetour(retour);
-                        //
-                    }
-                    if (menageDetails.Type == Constant.CODE_TYPE_ENVDIVIDI)
-                    {
-                        IndividuModel model = new IndividuModel();
-                        model.IndividuId = Convert.ToInt32(menageDetails.MenageDetailsId);
-                        model.BatimentId = menageDetails.Menage.BatimentId;
-                        model.MenageId = menageDetails.Menage.MenageId;
-                        model.LogeId = menageDetails.Menage.LogementId;
-                        model.SdeId = menageDetails.Menage.SdeId;
-                        model.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
-                        model.IsFieldAllFilled = false;
-                        //On charge le popup pour dire pour quelle raison on veut faire le retour
-                        showDialogForRaison();
-                        //
-                        result = sw.changeStatus<IndividuModel>(model, model.SdeId);
-                        //On garde une historique du retour;
-                        confService = new ConfigurationService();
-                        RetourModel retour = new RetourModel();
-                        retour.BatimentId = model.BatimentId;
-                        retour.LogementId = model.LogeId;
-                        retour.MenageId = model.MenageId;
-                        retour.IndividuId = model.IndividuId;
-                        retour.SdeId = model.SdeId;
-                        retour.DateRetour = DateTime.Now.ToString();
-                        retour.Raison = raison;
-                        retour.Statut = Constant.STATUT_NON_EFFECTUE;
-                        bool save = confService.saveRetour(retour);
-                        //
-                    }
-                    if (result == true)
-                    {
-                        MessageBox.Show(Constant.MSG_MODULE_KI_MAL_RANPLI, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                        menageDetails.Status = true;
-                        menageDetails.Tip = Constant.GetStringValue(Constant.ToolTipMessage.MalRempli);
-                        menageDetails.ImageSource = Constant.GetStringValue(Constant.ImagePath.MalRempli);
-                    }
+
                 }
                 else
                 {
@@ -1212,9 +1223,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 MessageBox.Show(ex.Message, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -1228,15 +1239,26 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 if (this.GetTreeviewItem != null)
                 {
                     BatimentViewModel batVM = GetTreeviewItem.DataContext as BatimentViewModel;
-                    BatimentModel batiment = new BatimentModel();
-                    batiment.BatimentId = batVM.Batiment.BatimentId;
-                    batiment.SdeId = batVM.SdeName;
-                    batiment.IsValidated = Convert.ToBoolean(Constant.STATUS_VALIDATED_1);
-                    bool result = sw.validate<BatimentModel>(batiment, batiment.SdeId);
-                    if (result == true)
+                    if (batVM.Batiment.Statut == (int)Constant.STATUT_MODULE_KI_FINI_1)
                     {
-                        MessageBox.Show(Constant.MSG_VALIDATION, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                        BatimentModel batiment = new BatimentModel();
+                        batiment.BatimentId = batVM.Batiment.BatimentId;
+                        batiment.SdeId = batVM.SdeName;
+                        batiment.IsValidated = Convert.ToBoolean(Constant.STATUS_VALIDATED_1);
+                        bool result = sw.validate<BatimentModel>(batiment, batiment.SdeId);
+                        if (result == true)
+                        {
+                            MessageBox.Show(Constant.MSG_VALIDATION, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            batVM.Status = true;
+                            batVM.ImageSource = Constant.GetStringValue(Constant.ImagePath.Valide);
+                            batVM.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Valide_deja);
+                        }
                     }
+                    else
+                    {
+                        MessageBox.Show(Constant.MSG_NOT_VALIDATE, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
                 }
                 else
                 {
@@ -1281,8 +1303,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         void popupTransfert_Closing(object sender, CancelEventArgs e)
         {
-            
-        }       
+
+        }
     }
 
 }

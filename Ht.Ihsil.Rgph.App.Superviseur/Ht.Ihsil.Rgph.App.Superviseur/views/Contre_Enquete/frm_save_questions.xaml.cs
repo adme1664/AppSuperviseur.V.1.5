@@ -507,6 +507,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     deces = getDecesModel(reponseSaisie, deces);
                                     question = service.getQuestion(qrCurrent.QSuivant);
                                 }
+                                if (questionCours.NomObjet == "Emigre")
+                                {
+                                    reponseSaisie.NomChamps = service.getQuestion(qrCurrent.CodeQuestion).NomChamps;
+                                    reponseSaisie.CodeReponse = reponse.CodeReponse;
+                                    deces = getDecesModel(reponseSaisie, deces);
+                                    question = service.getQuestion(qrCurrent.QSuivant);
+                                }
 
                             }
                             else
@@ -566,6 +573,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                         question = service.getQuestion(questionCours.QSuivant);
                                     }
                                     if (questionCours.NomObjet == "Deces")
+                                    {
+                                        reponseSaisie.NomChamps = questionCours.NomChamps;
+                                        reponseSaisie.CodeReponse = reponse.CodeReponse;
+                                        deces = getDecesModel(reponseSaisie, deces);
+                                        question = service.getQuestion(questionCours.QSuivant);
+                                    }
+                                    if (questionCours.NomObjet == "Emigre")
                                     {
                                         reponseSaisie.NomChamps = questionCours.NomChamps;
                                         reponseSaisie.CodeReponse = reponse.CodeReponse;
@@ -961,7 +975,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             #endregion
 
@@ -1219,7 +1233,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
@@ -1471,7 +1485,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             }
             catch (Exception ex)
             {
-                log.Info("<:>===========================ERROR:" + ex.Message);
+                MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             
 

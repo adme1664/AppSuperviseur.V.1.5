@@ -44,7 +44,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                 rpc_contreenquete.IsEnabled = false;
                 rpc_rapports.IsEnabled = false;
                 rpc_sdes.IsEnabled = false;
-                txt_connecteduser.Text = "" + Users.users.Nom + " " + Users.users.Prenom + " (ASTIC)";
+                txt_connecteduser.Text = "" + Users.users.Nom + " " + Users.users.Prenom + " (Agent de Support TIC)";
             }
             model = new TextModel();
             model.Username = "" + Users.users.Nom + " " + Users.users.Prenom;
@@ -92,6 +92,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     frm_view_verification verification = new frm_view_verification();
                     Utilities.showControl(verification, main_grid);
+                    bbi_verification.Dispatcher.BeginInvoke((Action)(() => bbi_verification.IsChecked = true));
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = false));
                 }
             }
@@ -102,6 +103,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     Frm_view_transfert frm_transfert = new Frm_view_transfert(this);
                     Utilities.showControl(frm_transfert, main_grid);
+                    deselectedBarItem();
+                    bbi_transfert.Dispatcher.BeginInvoke((Action)(() => bbi_transfert.IsChecked = true));
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = false));
                 }
             }
@@ -112,6 +115,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.BatimentVide);
                     Utilities.showControl(frm_ce, main_grid);
+                    deselectedBarItem();
+                    bbi_batiman_vid.Dispatcher.BeginInvoke((Action)(() => bbi_batiman_vid.IsChecked = true));
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = false));
                 }
             }
@@ -122,6 +127,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     frm_rapports rapports = new frm_rapports();
                     Utilities.showControl(rapports, main_grid);
+                    deselectedBarItem();
+                    rpc_rpt_tronc.Dispatcher.BeginInvoke((Action)(() => rpc_rpt_tronc.IsChecked = true));
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = false));
                 }
             }
@@ -134,14 +141,51 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             }
             
         }
+
+        public void deselectedBarItem()
+        {
+            //bbi_agents.Dispatcher.BeginInvoke((Action)(() => bbi_agents.IsChecked = false));
+            //bbi_agents.IsChecked = false;
+            //bbi_avances.IsChecked = false;
+            //bbi_batiman_vid.IsChecked = false;
+            //bbi_lojman_kolektif.IsChecked = false;
+            //bbi_lojman_okipe.IsChecked = false;
+            //bbi_lojman_vid.IsChecked = false;
+            //bbi_menaj.IsChecked = false;
+            //bbi_retour.IsChecked = false;
+            //bbi_synchronisation.IsChecked = false;
+            //bbi_verification.IsChecked = false;
+            //bbi_visualisation.IsChecked = false;
+            //rpc_rpt_deroulement_collecte.IsChecked = false;
+            //rpc_rpt_personnel.IsChecked = false;
+            //rpc_rpt_personnel.IsChecked = false;
+            //rpc_rpt_tronc.IsChecked = false; 
+            bbi_agents.Dispatcher.BeginInvoke((Action)(() => bbi_agents.IsChecked = false));
+            bbi_avances.Dispatcher.BeginInvoke((Action)(() => bbi_avances.IsChecked = false));
+            bbi_batiman_vid.Dispatcher.BeginInvoke((Action)(() => bbi_batiman_vid.IsChecked = false));
+            bbi_lojman_kolektif.Dispatcher.BeginInvoke((Action)(() => bbi_lojman_kolektif.IsChecked = false));
+            bbi_lojman_okipe.Dispatcher.BeginInvoke((Action)(() => bbi_lojman_okipe.IsChecked = false));
+            bbi_lojman_vid.Dispatcher.BeginInvoke((Action)(() => bbi_lojman_vid.IsChecked = false));
+            bbi_menaj.Dispatcher.BeginInvoke((Action)(() => bbi_menaj.IsChecked = false));
+            bbi_retour.Dispatcher.BeginInvoke((Action)(() => bbi_retour.IsChecked = false));
+            bbi_synchronisation.Dispatcher.BeginInvoke((Action)(() => bbi_synchronisation.IsChecked = false));
+            bbi_verification.Dispatcher.BeginInvoke((Action)(() => bbi_verification.IsChecked = false));
+            bbi_visualisation.Dispatcher.BeginInvoke((Action)(() => bbi_visualisation.IsChecked = false));
+            rpc_rpt_deroulement_collecte.Dispatcher.BeginInvoke((Action)(() => rpc_rpt_deroulement_collecte.IsChecked = false));
+            rpc_rpt_personnel.Dispatcher.BeginInvoke((Action)(() => rpc_rpt_personnel.IsChecked = false));
+            rpc_rpt_tronc.Dispatcher.BeginInvoke((Action)(() => rpc_rpt_tronc.IsChecked = false)); 
+        }
         private void bbi_sdes_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             frm_view_sdes frm_sde = new frm_view_sdes();
+            deselectedBarItem();
             Utilities.showControl(frm_sde, main_grid);
         }
 
         private void bbi_agents_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_agents.Dispatcher.BeginInvoke((Action)(() => bbi_agents.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_view_agents frm_agents = new frm_view_agents();
             Utilities.showControl(frm_agents, main_grid);
@@ -150,6 +194,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_visualisation_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_visualisation.Dispatcher.BeginInvoke((Action)(() => bbi_visualisation.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_visualisation frm_visualisation = new frm_visualisation();
             Utilities.showControl(frm_visualisation, main_grid);
@@ -159,6 +205,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_transfert_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_transfert.Dispatcher.BeginInvoke((Action)(() => bbi_transfert.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             Frm_view_transfert frm_transfert = new Frm_view_transfert(this);
             Utilities.showControl(frm_transfert, main_grid);
@@ -167,6 +215,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_batiman_vid_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_batiman_vid.Dispatcher.BeginInvoke((Action)(() => bbi_batiman_vid.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.BatimentVide);
             Utilities.showControl(frm_ce, main_grid);
@@ -175,6 +225,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_lojman_vid_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_lojman_vid.Dispatcher.BeginInvoke((Action)(() => bbi_lojman_vid.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.LogementInvididuelVide);
             Utilities.showControl(frm_ce, main_grid);
@@ -183,6 +235,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_lojman_kolektif_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_lojman_kolektif.Dispatcher.BeginInvoke((Action)(() => bbi_lojman_kolektif.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.LogementCollectif);
             Utilities.showControl(frm_ce, main_grid);
@@ -190,6 +244,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
         }
         private void bbi_lojman_okipe_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_lojman_okipe.Dispatcher.BeginInvoke((Action)(() => bbi_lojman_okipe.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.LogementOccupantAbsent);
             Utilities.showControl(frm_ce, main_grid);
@@ -198,6 +254,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_menaj_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_menaj.Dispatcher.BeginInvoke((Action)(() => bbi_menaj.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.LogementIndividuelMenage);
             Utilities.showControl(frm_ce, main_grid);
@@ -214,6 +272,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void rpc_rpt_tronc_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            rpc_rpt_tronc.Dispatcher.BeginInvoke((Action)(() => rpc_rpt_tronc.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_rapports rapports = new frm_rapports();
             Utilities.showControl(rapports, main_grid);
@@ -222,6 +282,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void rpc_rpt_personnel_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            rpc_rpt_personnel.Dispatcher.BeginInvoke((Action)(() => rpc_rpt_personnel.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_rpt_personnel rpt = new frm_rpt_personnel();
             Utilities.showControl(rpt, main_grid);
@@ -230,6 +292,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_avances_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_avances.Dispatcher.BeginInvoke((Action)(() => bbi_avances.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_configurations conf = new frm_configurations();
             Utilities.showControl(conf, main_grid);
@@ -238,6 +302,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void rpc_rpt_deroulement_collecte_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            rpc_rpt_deroulement_collecte.Dispatcher.BeginInvoke((Action)(() => rpc_rpt_deroulement_collecte.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_rpt_dereoulement_entete rpt = new frm_rpt_dereoulement_entete();
             Utilities.showControl(rpt, main_grid);
@@ -246,6 +312,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_verification_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_verification.Dispatcher.BeginInvoke((Action)(() => bbi_verification.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_view_verification verification = new frm_view_verification();
             Utilities.showControl(verification, main_grid);
@@ -254,6 +322,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         private void bbi_retour_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
+            deselectedBarItem();
+            bbi_retour.Dispatcher.BeginInvoke((Action)(() => bbi_retour.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
             frm_retours retours = new frm_retours();
             Utilities.showControl(retours, main_grid);
@@ -263,6 +333,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
         private void bbi_synchronisation_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
             frm_pop_up_transfert popupTransfert = new frm_pop_up_transfert(Constant.TRANSFERT_MOBILE);
+            deselectedBarItem();
+            bbi_synchronisation.Dispatcher.BeginInvoke((Action)(() => bbi_synchronisation.IsChecked = true));
             popupTransfert.Closing += popupTransfert_Closing;
             if (popupTransfert.ShowDialog() == true)
             {
@@ -289,8 +361,5 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                 }
             }
         }
-
-     
-
     }
 }

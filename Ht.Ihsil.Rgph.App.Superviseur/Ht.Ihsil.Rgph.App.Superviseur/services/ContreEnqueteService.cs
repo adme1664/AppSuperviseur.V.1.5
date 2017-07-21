@@ -1438,6 +1438,24 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             return new List<DetailsRapportModel>();
         }
+        public bool deleteDetailsDeroulement(long Id)
+        {
+            try
+            {
+                DetailsRapportModel details = getDetailsRapportDeroulement(Id);
+                if (details != null)
+                {
+                    daoCE.getRepository().RapportDetailsDeroulementRepository.Delete(Id);
+                    daoCE.getRepository().Save();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return false;
+        }
         #endregion
         public DetailsRapportModel getDetailsRapportDeroulement(long id)
         {
@@ -1452,6 +1470,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             return new DetailsRapportModel();
         }
+
 
         #region emigre
         public bool saveEmigre(EmigreCEModel _emigre)
@@ -1476,6 +1495,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         #endregion
 
 
-       
+
+
+
+        
     }
 }

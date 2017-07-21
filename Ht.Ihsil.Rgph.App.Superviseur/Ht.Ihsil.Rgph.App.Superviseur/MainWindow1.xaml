@@ -20,38 +20,38 @@
             <dxr:RibbonDefaultPageCategory Name="rpc_sdes" Color="White" Loaded="rpc_sdes_Loaded">
                 <dxr:RibbonPage Caption="SDES" Name="page_SDE">
                     <dxr:RibbonPageGroup >
-                        <dxb:BarButtonItem x:Name="bbi_synchronisation"   Content="Synchronisation" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tb_pc.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_synchronisation_ItemClick"/>
+                        <dxb:BarCheckItem x:Name="bbi_synchronisation"   Content="Synchronisation" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tb_pc.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_synchronisation_ItemClick"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup >
-                        <dxb:BarButtonItem x:Name="bbi_verification"   Content="Verification" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/vi1.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_verification_ItemClick" />
+                        <dxb:BarCheckItem x:Name="bbi_verification"   Content="Verification" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/vi1.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_verification_ItemClick" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup>
-                        <dxb:BarButtonItem x:Name="bbi_visualisation" Content="Affichage" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tb.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_visualisation_ItemClick" />
+                        <dxb:BarCheckItem x:Name="bbi_visualisation" Content="Affichage" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tb.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_visualisation_ItemClick" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup>
-                        <dxb:BarButtonItem x:Name="bbi_retour" Content="Gestion des retours" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/formulaire_retour.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_retour_ItemClick" />
+                        <dxb:BarCheckItem x:Name="bbi_retour" Content="Gestion des retours" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/formulaire_retour.png" GlyphSize="Large" RibbonStyle="Large" ItemClick="bbi_retour_ItemClick" />
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonDefaultPageCategory>
             <dxr:RibbonPageCategory Name="rpc_transfert" Color="White">
                 <dxr:RibbonPage Caption="TRANSFERTS" Name="page_transfret">
                     <dxr:RibbonPageGroup>
-                        <dxb:BarButtonItem x:Name="bbi_transfert" Content="Transfert de données" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/trans.png" RibbonStyle="Large" ItemClick="bbi_transfert_ItemClick" />
+                        <dxb:BarCheckItem x:Name="bbi_transfert" Content="Transfert de données" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/trans.png" RibbonStyle="Large" ItemClick="bbi_transfert_ItemClick" />
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
             <dxr:RibbonPageCategory  Color="White" Name="rpc_contreenquete">
                 <dxr:RibbonPage Caption="CONTRE-ENQUETE" Name="page_contreneuqete">
                     <dxr:RibbonPageGroup Caption="Fe yon kont anket sou.">
-                        <dxb:BarButtonItem x:Name="bbi_batiman_vid" Content="Batiman vid" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/batiment.png" ItemClick="bbi_batiman_vid_ItemClick" />
+                        <dxb:BarCheckItem x:Name="bbi_batiman_vid" Content="Batiman vid" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/batiment.png" ItemClick="bbi_batiman_vid_ItemClick" />
                         <dxb:BarItemSeparator/>
-                        <dxb:BarButtonItem x:Name="bbi_lojman_kolektif"  Content="Lojman Kolektif" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/logement.png" ItemClick="bbi_lojman_kolektif_ItemClick"/>
+                        <dxb:BarCheckItem x:Name="bbi_lojman_kolektif"  Content="Lojman Kolektif" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/logement.png" ItemClick="bbi_lojman_kolektif_ItemClick"/>
                         <dxb:BarItemSeparator/>
-                        <dxb:BarButtonItem x:Name="bbi_lojman_vid" Content="Lojman Individyel vid" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/logement.png" ItemClick="bbi_lojman_vid_ItemClick" />
+                        <dxb:BarCheckItem x:Name="bbi_lojman_vid" Content="Lojman Individyel vid" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/logement.png" ItemClick="bbi_lojman_vid_ItemClick" />
                         <dxb:BarItemSeparator/>
-                        <dxb:BarButtonItem x:Name="bbi_lojman_okipe" Content="Lojman okipe yon lè konsa" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/logement.png" ItemClick="bbi_lojman_okipe_ItemClick" />
+                        <dxb:BarCheckItem x:Name="bbi_lojman_okipe" Content="Lojman okipe yon lè konsa" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/logement.png" ItemClick="bbi_lojman_okipe_ItemClick" />
                         <dxb:BarItemSeparator/>
-                        <dxb:BarButtonItem x:Name="bbi_menaj" Content="Menaj" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/menage.png" ItemClick="bbi_menaj_ItemClick" />
+                        <dxb:BarCheckItem x:Name="bbi_menaj" Content="Menaj" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/menage.png" ItemClick="bbi_menaj_ItemClick" />
                         <dxb:BarItemSeparator/>
                     </dxr:RibbonPageGroup>
                     <!--<dxr:RibbonPageGroup Caption="Gade">
@@ -62,13 +62,13 @@
             <dxr:RibbonPageCategory Name="rpc_rapports" Color="White">
                 <dxr:RibbonPage Caption="RAPPORTS" Name="page_rapports">
                     <dxr:RibbonPageGroup>
-                        <dxb:BarButtonItem Name="rpc_rpt_tronc" Content="Rapport de Tronc Commun" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/report3.png"  RibbonStyle="Large" ItemClick="rpc_rpt_tronc_ItemClick"/>
+                        <dxb:BarCheckItem Name="rpc_rpt_tronc" Content="Rapport de Tronc Commun" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/report3.png"  RibbonStyle="Large" ItemClick="rpc_rpt_tronc_ItemClick"/>
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup>
-                        <dxb:BarButtonItem Name="rpc_rpt_personnel" Content="Rapport de Supervision directe" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/individu1.png"  RibbonStyle="Large" ItemClick="rpc_rpt_personnel_ItemClick" />
+                        <dxb:BarCheckItem Name="rpc_rpt_personnel" Content="Rapport de Supervision directe" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/individu1.png"  RibbonStyle="Large" ItemClick="rpc_rpt_personnel_ItemClick" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup>
-                        <dxb:BarButtonItem Name="rpc_rpt_deroulement_collecte" Content="Rapport sur le deroulement de la collecte" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/individu1.png"  RibbonStyle="Large" ItemClick="rpc_rpt_deroulement_collecte_ItemClick" />
+                        <dxb:BarCheckItem Name="rpc_rpt_deroulement_collecte" Content="Rapport sur le deroulement de la collecte" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/individu1.png"  RibbonStyle="Large" ItemClick="rpc_rpt_deroulement_collecte_ItemClick" />
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
@@ -77,9 +77,10 @@
                     <dxr:RibbonPageGroup ToolTip="Configurations">
                         <!--<dxb:BarButtonItem x:Name="bbi_sdes" Content="SDEs" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/map.png"  RibbonStyle="Large" ItemClick="bbi_sdes_ItemClick"/>
                         <dxb:BarItemSeparator/>-->
-                        <dxb:BarButtonItem x:Name="bbi_agents" Content="Tablettes" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tab_settings.png" ItemClick="bbi_agents_ItemClick"/>
+                        <dxb:BarCheckItem x:Name="bbi_agents" Content="Tablettes" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/tab_settings.png" ItemClick="bbi_agents_ItemClick"/>
                         <dxb:BarItemSeparator/>
-                        <dxb:BarButtonItem x:Name="bbi_avances" Content="Avancées" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/portable_setting.png" ItemClick="bbi_avances_ItemClick" />
+                        <dxb:BarCheckItem x:Name="bbi_avances" Content="Avancées" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/portable_setting.png" ItemClick="bbi_avances_ItemClick" />
+                        <dxb:BarItemSeparator/>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>

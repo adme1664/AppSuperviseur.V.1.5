@@ -327,65 +327,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region EVALUATION
-        //public static string Qa1StatutQuestionnaire = "Qa1StatutQuestionnaire";
-        //public static string QbPrincipalRepondant = "QbPrincipalRepondant";
-        //public static string Qa1RaisonStatut = "Qa1RaisonStatut";
-        //public static string Qb1RepondantNoOrdre = "Qb1RepondantNoOrdre";
-        //public static string Qb1RepondantRChefMenage = "Qb1RepondantRChefMenage";
-        //public static string Qb1RepondantSexe = "Qb1RepondantSexe";
-        //public static string Qb1RepondantAge = "Qb1RepondantAge";
-        //public static string Qb1RepondantNiveauEtude = "Qb1RepondantNiveauEtude";
-        //public static string Qc1MembreMenage = "Qc1MembreMenage";
-        //public static string Qc2MembreMenage = "Qc2MembreMenage";
-        //public static string Qc3MembreMenageNoOrdre = "Qc3MembreMenageNoOrdre";
-        //public static string Qc3MembreMenageNom = "Qc3MembreMenageNom";
-        //public static string Qc1Mortalite = "Qc1Mortalite";
-        //public static string Qc2Mortalite = "Qc2Mortalite";
-        //public static string Qc3MortaliteNoOrdre = "Qc3MortaliteNoOrdre";
-        //public static string Qc3MortaliteNom = "Qc3MortaliteNom";
-        //public static string Qc1Education = "Qc1Education";
-        //public static string Qc2Education = "Qc2Education";
-        //public static string Qc3EducationNoOrdre = "Qc3EducationNoOrdre";
-        //public static string Qc3EducationNom = "Qc3EducationNom";
-        //public static string Qc1Fonctionnement = "Qc1Fonctionnement";
-        //public static string Qc2Fonctionnement = "Qc2Fonctionnement";
-        //public static string Qc3FonctionnementNoOrdre = "Qc3FonctionnementNoOrdre";
-        //public static string Qc3FonctionnementNom = "Qc3FonctionnementNom";
-        //public static string Qc1Economique = "Qc1Economique";
-        //public static string Qc2Economique = "Qc2Economique";
-        //public static string Qc3EconomiqueNoOrdre = "Qc3EconomiqueNoOrdre";
-        //public static string Qc3EconomiqueNom = "Qc3EconomiqueNom";
-        //public static string Qc1Fecondite = "Qc1Fecondite";
-        //public static string Qc2Fecondite = "Qc2Fecondite";
-        //public static string Qc3FeconditeNoOrdre = "Qc3FeconditeNoOrdre";
-        //public static string Qc3FeconditeNom = "Qc3FeconditeNom";
-        //public static string Qd11NbrePerVivant = "Qd11NbrePerVivant";
-        //public static string Qd12NbrePerVivantG = "Qd12NbrePerVivantG";
-        //public static string Qd13NbrePerVivantF = "Qd13NbrePerVivantF";
-        //public static string Qd21NbrePerRecense = "Qd21NbrePerRecense";
-        //public static string Qd22NbrePerRecenseG = "Qd22NbrePerRecenseG";
-        //public static string Qd23NbrePerRecenseF = "Qd23NbrePerRecenseF";
-        //public static string Qd31NbrePerUneAnnee = "Qd31NbrePerUneAnnee";
-        //public static string Qd32NbrePerUneAnneeG = "Qd32NbrePerUneAnneeG";
-        //public static string Qd33NbrePerUneAnneeF = "Qd33NbrePerUneAnneeF";
-        //public static string Qd41NbrePerCinqAnnee = "Qd41NbrePerCinqAnnee";
-        //public static string Qd42NbrePerCinqAnneeG = "Qd42NbrePerCinqAnneeG";
-        //public static string Qd43NbrePerCinqAnneeF = "Qd43NbrePerCinqAnneeF";
-        //public static string Qd5nbreFilleTreizeAnnee = "Qd5nbreFilleTreizeAnnee";
-        //public static string Qe1StatutFinal = "Qe1StatutFinal";
-        //public static string Qe1RaisonStatutFinal = "Qe1RaisonStatutFinal";
-        //public static string NomSuperviseur = "NomSuperviseur";
-        //public static string DateContreEnquete = "DateContreEnquete";
-        //public static string DureEntrevue = "DureEntrevue";
-        //public static string NomResponsableCom = "NomResponsableCom";
-        //public static string DateVerification = "DateVerification";
-
-        //public static string INFO_PERSONNE_VIVANT_MENAGE = "D1.- Konbyen moun kap viv nan menaj la / nan lojman kolektif la";
-        //public static string INFO_PERSONNE_RECENSE_MENAGE = "D2.- Konbyen moun ki resanse nan menaj la/ nan lojman kolektif la";
-        //public static string INFO_PERSONNE_RECENSE_MENAGE_PLUS_1_AN = "D3.- Konbyen moun ki resanse nan manaj la /nan lojman kolektif la, ki gen pi piti pase yon lane";
-        //public static string INFO_PERSONNE_RECENSE_MENAGE_PLUS_5_ANS = "D4.- Konbyen moun ki resanse nan menaj la /nan lojman kolektif la, ki gen pi piti pase senk lane";
-        //public static string INFO_FEMME_RECENSE_MENAGE_PLUS_13_ANS = "D5.- Konbyen fi ki resanse nan menaj la  /nan lojman kolektif la, ki gen 13 lane oswa plis";
-
+       
 
         #endregion
 
@@ -473,7 +415,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string MSG_TABLET_PAS_CONNECTE = "Pa gen tablèt ki konekte.";
         public static string MSG_FICHIER_PAS_COPIE = "Fichye yo pa kopye. Eseye ankò";
         public static string MSG_VALIDATION = "Validasyon an fèt avèk siksè.";
-        public static string WINDOW_TITLE = "IHSI-RGPH[2016]";
+        public static string MSG_NOT_VALIDATE = "Batiman an dwe fini avan ou valide li.";
+        public static string MSG_RAPO_SAVE = "Rapò a anregistre avèk siksè.";
+        public static string MSG_RAPO_UPDATE = "Rapò a modifye avèk siksè.";
+        public static string WINDOW_TITLE = "IHSI-RGPH[2017]";
         #endregion
 
         #region TYOE CONTRE-ENQEUTE
