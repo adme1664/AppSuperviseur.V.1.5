@@ -224,6 +224,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
                         foreach (QuestionReponseModel qr in listQR)
                         {
                             ReponseModel rep = service.getReponse(qr.CodeUniqueReponse);
+                            rep.CodeQuestion = q1.CodeQuestion;
                             list.Add(rep);
                         }
                     }
@@ -288,6 +289,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
                         foreach (QuestionReponseModel qr in listQR)
                         {
                             ReponseModel rep = service.getReponse(qr.CodeUniqueReponse);
+                            rep.CodeQuestion = questionEnCours.CodeQuestion;
                             list.Add(rep);
                         }
                     }

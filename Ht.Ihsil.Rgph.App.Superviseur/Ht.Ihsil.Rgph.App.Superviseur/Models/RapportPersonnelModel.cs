@@ -9,7 +9,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
     public class RapportPersonnelModel
     {
         public long rapportId { get; set; }
-        public Nullable<long> persId { get; set; }
+        public string persId { get; set; }
         public string codeDistrict { get; set; }
         public string comId { get; set; }
         public string deptId { get; set; }
@@ -30,7 +30,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public Nullable<long> q15 { get; set; }
         public Nullable<long> score { get; set; }
         public string dateEvaluation { get; set; }
-        public Nullable<long> ReportSenderId { get; set; }
+        public string ReportSenderId { get; set; }
         public string RapportName { get; set; }
     }
 }

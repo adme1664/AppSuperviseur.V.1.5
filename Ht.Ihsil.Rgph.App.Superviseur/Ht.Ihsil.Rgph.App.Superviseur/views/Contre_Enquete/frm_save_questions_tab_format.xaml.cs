@@ -59,7 +59,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
         string Departement = null;
         string Pays = null;
         string Vqse = null;
-
+        bool IsQuestionAsk = false;
+        bool IsQuestionAsk1 = false;
         private string module;
         private string nameOfModule = null;
 
@@ -539,26 +540,57 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 ind.Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(reponse.CodeReponse);
                 checkConstraint<IndividuCEModel>(this.individu);
             }
-            if (reponse.NomChamps == Constant.Qa2ActAvoirDemele1) { ind.Qa2ActAvoirDemele1 = Convert.ToByte(reponse.CodeReponse); }
-            if (reponse.NomChamps == Constant.Qa2ActDomestique2) { ind.Qa2ActDomestique2 = Convert.ToByte(reponse.CodeReponse); }
-            if (reponse.NomChamps == Constant.Qa2ActCultivateur3) { ind.Qa2ActCultivateur3 = Convert.ToByte(reponse.CodeReponse); }
-            if (reponse.NomChamps == Constant.Qa2ActAiderParent4) { ind.Qa2ActAiderParent4 = Convert.ToByte(reponse.CodeReponse); }
-            if (reponse.NomChamps == Constant.Qa2ActAutre5) { ind.Qa2ActAutre5 = Convert.ToByte(reponse.CodeReponse); }
+            if (reponse.NomChamps == Constant.Qa2ActAvoirDemele1)
+            { 
+                ind.Qa2ActAvoirDemele1 = Convert.ToByte(reponse.CodeReponse);
+                checkConstraint<IndividuCEModel>(this.individu);
+            }
+            if (reponse.NomChamps == Constant.Qa2ActDomestique2)
+            { 
+                ind.Qa2ActDomestique2 = Convert.ToByte(reponse.CodeReponse);
+                checkConstraint<IndividuCEModel>(this.individu);
+            }
+            if (reponse.NomChamps == Constant.Qa2ActCultivateur3)
+            { 
+                ind.Qa2ActCultivateur3 = Convert.ToByte(reponse.CodeReponse);
+                checkConstraint<IndividuCEModel>(this.individu);
+            }
+            if (reponse.NomChamps == Constant.Qa2ActAiderParent4) 
+            { 
+                ind.Qa2ActAiderParent4 = Convert.ToByte(reponse.CodeReponse);
+                checkConstraint<IndividuCEModel>(this.individu);
+            }
+            if (reponse.NomChamps == Constant.Qa2ActAutre5) 
+            { 
+                ind.Qa2ActAutre5 = Convert.ToByte(reponse.CodeReponse);
+                checkConstraint<IndividuCEModel>(this.individu);
+            }
 
-            if (reponse.NomChamps == Constant.Qa8EntreprendreDemarcheTravail) { ind.Qa8EntreprendreDemarcheTravail = Convert.ToByte(reponse.CodeReponse); }
+            if (reponse.NomChamps == Constant.Qa8EntreprendreDemarcheTravail) 
+            { 
+                ind.Qa8EntreprendreDemarcheTravail = Convert.ToByte(reponse.CodeReponse);
+                checkConstraint<IndividuCEModel>(this.individu);
+            }
             if (reponse.NomChamps == Constant.Qf1aNbreEnfantNeVivantM)
             {
+                IsQuestionAsk = true;
                 ind.Qf1aNbreEnfantNeVivantM = Convert.ToInt32(reponse.CodeReponse);
                 checkConstraint<IndividuCEModel>(this.individu);
+                IsQuestionAsk = false;
             }
             if (reponse.NomChamps == Constant.Qf2bNbreEnfantNeVivantF)
             {
+                IsQuestionAsk1 = true;
+                IsQuestionAsk = true;
                 ind.Qf2bNbreEnfantNeVivantF = Convert.ToInt32(reponse.CodeReponse);
                 checkConstraint<IndividuCEModel>(this.individu);
+                IsQuestionAsk1 = false;
+                IsQuestionAsk = false;
             }
             if (reponse.NomChamps == Constant.Qf2aNbreEnfantVivantM)
             {
                 ind.Qf2aNbreEnfantVivantM = Convert.ToInt32(reponse.CodeReponse);
+                checkConstraint<IndividuCEModel>(this.individu);
             }
             if (reponse.NomChamps == Constant.Qf2bNbreEnfantVivantF)
             {
@@ -585,122 +617,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
 
         }
 
-        //public EvaluationModel getEvaluationModel(ReponseSaisie reponse, EvaluationModel _eva)
-        //{
-
-        //    if (reponse.NomChamps == Constant.Qa1StatutQuestionnaire) { _eva.Qa1StatutQuestionnaire = Convert.ToByte(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qa1RaisonStatut) { _eva.Qa1RaisonStatut = Convert.ToByte(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.QbPrincipalRepondant)
-        //    {
-        //        foreach (IndividuCEModel _ind in listOFindividu)
-        //        {
-        //            if (_ind.IndividuId == Convert.ToInt32(reponse.CodeReponse))
-        //            {
-        //                _eva.Qb1RepondantNoOrdre = _ind.Qp1NoOrdre.GetValueOrDefault();
-        //                _eva.Qb1RepondantRChefMenage = _ind.Q3LienDeParente.GetValueOrDefault();
-        //                _eva.Qb1RepondantNiveauEtude = _ind.Qe4aNiveauEtude;
-        //                _eva.Qb1RepondantSexe = _ind.Q4Sexe.GetValueOrDefault();
-        //            }
-        //        }
-        //    }
-        //    if (reponse.NomChamps == Constant.Qc1MembreMenage) { _eva.Qc1MembreMenage = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc2MembreMenage) { _eva.Qc2MembreMenage = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc3MembreMenageNoOrdre)
-        //    { 
-        //        _eva.Qc3MembreMenageNoOrdre = Convert.ToInt32(reponse.CodeReponse);
-        //        foreach (IndividuCEModel _ind in listOFindividu)
-        //        {
-        //            if (_ind.IndividuId == Convert.ToInt32(reponse.CodeReponse))
-        //            {
-        //                _eva.Qc3MembreMenageNoOrdre = _ind.Qp1NoOrdre.GetValueOrDefault();
-        //                _eva.Qc3MembreMenageNom = _ind.Qp2Nom + " " + _ind.Qp2Prenom;
-        //            }
-        //        }
-        //    }
-
-        //    if (reponse.NomChamps == Constant.Qc1Mortalite) { _eva.Qc1Mortalite = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc2Mortalite) { _eva.Qc2Mortalite = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc3MortaliteNoOrdre) 
-        //    {
-        //        foreach (IndividuCEModel _ind in listOFindividu)
-        //        {
-        //            if (_ind.IndividuId == Convert.ToInt32(reponse.CodeReponse))
-        //            {
-        //                _eva.Qc3MortaliteNoOrdre = _ind.Qp1NoOrdre.GetValueOrDefault();
-        //                _eva.Qc3MortaliteNom = _ind.Qp2Nom + " " + _ind.Qp2Prenom;
-        //            }
-        //        }
-        //    }
-        //    if (reponse.NomChamps == Constant.Qc1Education) { _eva.Qc1Education = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc2Education) { _eva.Qc2Education = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc3EducationNoOrdre) 
-        //    {
-        //        foreach (IndividuCEModel _ind in listOFindividu)
-        //        {
-        //            if (_ind.IndividuId == Convert.ToInt32(reponse.CodeReponse))
-        //            {
-        //                _eva.Qc3EducationNoOrdre = _ind.Qp1NoOrdre.GetValueOrDefault();
-        //                _eva.Qc3EducationNom = _ind.Qp2Nom + " " + _ind.Qp2Prenom;
-        //            }
-        //        }
-        //    }
-        //    if (reponse.NomChamps == Constant.Qc1Fonctionnement) { _eva.Qc1Fonctionnement = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc2Fonctionnement) { _eva.Qc2Fonctionnement = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc3FonctionnementNoOrdre)
-        //    {
-        //        foreach (IndividuCEModel _ind in listOFindividu)
-        //        {
-        //            if (_ind.IndividuId == Convert.ToInt32(reponse.CodeReponse))
-        //            {
-        //                _eva.Qc3FonctionnementNoOrdre = _ind.Qp1NoOrdre.GetValueOrDefault();
-        //                _eva.Qc3FonctionnementNom = _ind.Qp2Nom + " " + _ind.Qp2Prenom;
-        //            }
-        //        }
-        //    }
-        //    if (reponse.NomChamps == Constant.Qc1Economique) { _eva.Qc1Economique = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc2Economique) { _eva.Qc2Economique = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc3EconomiqueNoOrdre) 
-        //    {
-        //        foreach (IndividuCEModel _ind in listOFindividu)
-        //        {
-        //            if (_ind.IndividuId == Convert.ToInt32(reponse.CodeReponse))
-        //            {
-        //                _eva.Qc3EconomiqueNoOrdre = _ind.Qp1NoOrdre.GetValueOrDefault();
-        //                _eva.Qc3EconomiqueNom = _ind.Qp2Nom + " " + _ind.Qp2Prenom;
-        //            }
-        //        }
-        //    }
-        //    if (reponse.NomChamps == Constant.Qc1Fecondite) { _eva.Qc1Fecondite = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc2Fecondite) { _eva.Qc2Fecondite = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qc3FeconditeNoOrdre)
-        //    {
-        //        foreach (IndividuCEModel _ind in listOFindividu)
-        //        {
-        //            if (_ind.IndividuId == Convert.ToInt32(reponse.CodeReponse))
-        //            {
-        //                _eva.Qc3FeconditeNoOrdre = _ind.Qp1NoOrdre.GetValueOrDefault();
-        //                _eva.Qc3FeconditeNom = _ind.Qp2Nom + " " + _ind.Qp2Prenom;
-        //            }
-        //        }
-        //    }
-        //    if (reponse.NomChamps == Constant.Qd11NbrePerVivant) { _eva.Qd11NbrePerVivant = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd12NbrePerVivantG) { _eva.Qd12NbrePerVivantG = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd13NbrePerVivantF) { _eva.Qd13NbrePerVivantF = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd21NbrePerRecense) { _eva.Qd21NbrePerRecense = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd22NbrePerRecenseG) { _eva.Qd22NbrePerRecenseG = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd23NbrePerRecenseF) { _eva.Qd23NbrePerRecenseF = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd31NbrePerUneAnnee) { _eva.Qd31NbrePerUneAnnee = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd32NbrePerUneAnneeG) { _eva.Qd32NbrePerUneAnneeG = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd33NbrePerUneAnneeF) { _eva.Qd33NbrePerUneAnneeF = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd41NbrePerCinqAnnee) { _eva.Qd41NbrePerCinqAnnee = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd42NbrePerCinqAnneeG) { _eva.Qd42NbrePerCinqAnneeG = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd43NbrePerCinqAnneeF) { _eva.Qd43NbrePerCinqAnneeF = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qd5nbreFilleTreizeAnnee) { _eva.Qd5nbreFilleTreizeAnnee = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qe1StatutFinal) { _eva.Qe1StatutFinal = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.Qe1RaisonStatutFinal) { _eva.Qe1RaisonStatutFinal = Convert.ToInt32(reponse.CodeReponse); }
-        //    if (reponse.NomChamps == Constant.NomSuperviseur) { _eva.NomSuperviseur = reponse.CodeReponse; }
-        //    return _eva;
-        //}
+       
         #endregion
 
         #region CONSTRAINTS
@@ -1265,19 +1182,111 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 #endregion
 
                 #region SI L'INDIVIDU EST UN HOMME/OU UNE FEMME DE MOINS DE 13 ANS/  PAS DE FECONDITE
-
                 if (individu.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault() != 0)
                 {
-                    if (this.individu.Q4Sexe.GetValueOrDefault() == 1)
+                    if (  individu.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault() == 1
+                           || individu.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault() == 2
+                           || individu.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault() == 3
+                        )
                     {
-                        throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                        if (this.individu.Q4Sexe.GetValueOrDefault() == 1)
+                        {
+                            throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                        }
+                        if (individu.Q4Sexe.GetValueOrDefault() == 2 && individu.Q5bAge < 13)
+                        {
+                            throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                        }
                     }
-                    if (individu.Q4Sexe.GetValueOrDefault() == 2 && individu.Q5bAge < 13)
+                    else
                     {
-                        throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                         if(individu.Qa2ActAvoirDemele1.GetValueOrDefault()==2
+                                ||individu.Qa2ActDomestique2.GetValueOrDefault()==2 
+                                ||individu.Qa2ActCultivateur3.GetValueOrDefault()==2
+                                ||individu.Qa2ActAiderParent4.GetValueOrDefault()==2
+                                ||individu.Qa2ActAutre5.GetValueOrDefault()==2
+                                )
+                         {
+                             if (individu.Qa8EntreprendreDemarcheTravail.GetValueOrDefault() != 0)
+                             {
+                                 if (this.individu.Q4Sexe.GetValueOrDefault() == 1)
+                                 {
+                                     throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                                 }
+                                 if (individu.Q4Sexe.GetValueOrDefault() == 2 && individu.Q5bAge < 13)
+                                 {
+                                     throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                                 }
+                             }
+                         }
+                         else
+                         {
+                             if (this.individu.Q4Sexe.GetValueOrDefault() == 1)
+                                 {
+                                     throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                                 }
+                                 if (individu.Q4Sexe.GetValueOrDefault() == 2 && individu.Q5bAge < 13)
+                                 {
+                                     throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                                 }
+                         }
                     }
                 }
+              #endregion
 
+                #region SI LA FEMME N'A PAS D'ENFANT NE VIVANT
+                if (this.individu.Q4Sexe.GetValueOrDefault() == 2)
+                {
+                    if (individu.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault()!= 0)
+                    {
+                        if (  individu.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault() == 1
+                           || individu.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault() == 2
+                           || individu.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault() == 3
+                        )
+                        {
+                            if (IsQuestionAsk == true && IsQuestionAsk1==true)
+                            {
+                                if (individu.Qf1aNbreEnfantNeVivantM.GetValueOrDefault() == 0 && individu.Qf2bNbreEnfantNeVivantF.GetValueOrDefault() == 0)
+                                {
+                                    throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if(individu.Qa2ActAvoirDemele1.GetValueOrDefault()==2
+                                ||individu.Qa2ActDomestique2.GetValueOrDefault()==2 
+                                ||individu.Qa2ActCultivateur3.GetValueOrDefault()==2
+                                ||individu.Qa2ActAiderParent4.GetValueOrDefault()==2
+                                ||individu.Qa2ActAutre5.GetValueOrDefault()==2
+                                )
+                            {
+                                if (individu.Qa8EntreprendreDemarcheTravail.GetValueOrDefault() != 0)
+                                {
+                                    if (IsQuestionAsk == true && IsQuestionAsk1 == true)
+                                    {
+                                        if (individu.Qf1aNbreEnfantNeVivantM.GetValueOrDefault() == 0 && individu.Qf2bNbreEnfantNeVivantF.GetValueOrDefault() == 0)
+                                        {
+                                            throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    if (IsQuestionAsk == true && IsQuestionAsk1 == true)
+                                    {
+                                        if (individu.Qf1aNbreEnfantNeVivantM.GetValueOrDefault() == 0 && individu.Qf2bNbreEnfantNeVivantF.GetValueOrDefault() == 0)
+                                        {
+                                            throw new MessageFinException("" + Constant.MESSAGE12EXCEPTION);
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                }
                 #endregion
 
                 #region CONTRAINTE TESTANT LE NOMBRE D'ENFANT QUE PEUT AVOIR UNE FEMME
@@ -2249,7 +2258,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             }
 
         }
-
         private TabItem AddTabItem()
         {
             //Aouter un tab dans la grille
@@ -2288,9 +2296,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
         //Gerer la derniere question dans le formulaire
         void setLastQuestionBeforeSave<T>(T objet)
         {
+            DateTime dayEnd = DateTime.Now;
             try
             {
-                DateTime dayEnd = DateTime.Now;
+               
                 //Si la derniere question est de Type choix on recupere la reponse dans un combobox
                 if (questionEnCours.TypeQuestion.GetValueOrDefault() == Convert.ToInt32(Constant.TypeQuestionMobile.Choix))
                 {
@@ -2368,10 +2377,25 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             ind.IsContreEnqueteMade = true;
                             sw.contreEnqueteMade<IndividuModel>(ind, ind.SdeId);
                             MessageBox.Show("Endividi sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            detailsViewModel.Status = true;
+                            detailsViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
+                            detailsViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
                         }
 
                     }
                 }
+            }
+            catch (MessageFinException)
+            {
+                this.individu.DureeSaisie = Utilities.getDureeSaisie(dateStart, dayEnd);
+                this.individu.IsContreEnqueteMade = 1;
+                bool result = contreEnqueteService.updateIndividuCE(objet as IndividuCEModel);
+                IndividuModel ind = new IndividuModel();
+                ind.IndividuId = this.individu.IndividuId;
+                ind.SdeId = this.individu.SdeId;
+                ind.IsContreEnqueteMade = true;
+                sw.contreEnqueteMade<IndividuModel>(ind, ind.SdeId);
+                MessageBox.Show("Endividi sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (MessageException ex)
             {

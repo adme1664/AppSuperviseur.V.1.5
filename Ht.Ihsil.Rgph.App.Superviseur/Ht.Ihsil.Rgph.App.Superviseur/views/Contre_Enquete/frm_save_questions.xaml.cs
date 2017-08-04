@@ -1294,7 +1294,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 lg.SdeId = this.logement.SdeId;
                                 lg.IsContreEnqueteMade = true;
                                 bool save=sw.contreEnqueteMade<LogementModel>(lg, lg.SdeId);
-                                if (save)
+                                if (save && result==true)
                                 {
                                     MessageBox.Show("Lojman sa a anregistre.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                                     //Fire les controles sur l'interface (Le check mark)
@@ -1302,10 +1302,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     logViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
                                     logViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
                                 }
-                                //else
-                                //{
-                                //    MessageBox.Show("Erreur lors de la sauvegarde", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                                //}
+                                else
+                                {
+                                    MessageBox.Show("Erreur lors de la sauvegarde", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
                             }
                             else
                             {
@@ -1321,35 +1321,25 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     men.MenageId = this.menage.MenageId;
                                     men.IsContreEnqueteMade = true;
                                     men.SdeId = menage.SdeId;
-                                    sw.contreEnqueteMade<MenageModel>(men, men.SdeId);
-                                    MessageBox.Show("Menaj sa a anregistre.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                                    //Fire les controles sur l'interface (Le check mark)
-                                    menViewModel.Status = true;
-                                    menViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
-                                    menViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                    bool save=sw.contreEnqueteMade<MenageModel>(men, men.SdeId);
+                                    if (save && result == true)
+                                    {
+                                        MessageBox.Show("Menaj sa a anregistre.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                        //Fire les controles sur l'interface (Le check mark)
+                                        menViewModel.Status = true;
+                                        menViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
+                                        menViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Gen yon erè pandan anregistreman", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+                                    
                                 }
                                 else
                                 {
                                     if (objet.ToString() == Constant.OBJET_MODEL_DECESCE)
                                     {
-                                        ////Si le defunt est un homme on ne prend pas les questions concernant la fecondation
-                                        //if (deces.Qd2aSexe.GetValueOrDefault() == 1)
-                                        //{
-                                        //    deces.DureeSaisie = Utilities.getDureeSaisie(dateStart, dateEnd);
-                                        //    deces.IsContreEnqueteMade = true;
-                                        //    bool result = contreEnqueteService.updateDecesCE(this.deces);
-                                        //    MenageCEModel menCe = contreEnqueteService.getMenageById(deces.BatimentId, deces.LogeId, deces.SdeId, deces.MenageId);
-                                        //    menCe.Qm12Deces = deces.Qm12Deces;
-                                        //    menCe.Qm12NbreDecede = deces.Qm12NbreDecede.GetValueOrDefault();
-                                        //    result = contreEnqueteService.updateMenageCE(menCe);
-                                        //    MessageBox.Show("Desè sa a anregistre.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                                        //    //Fire les controles sur l'interface (Le check mark)
-                                        //    detailsViewModel.Status = true;
-                                        //    detailsViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
-                                        //    detailsViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
-                                        //}
-                                        //else
-                                        //{
                                             reponseSaisie.NomChamps = questionEnCours.NomChamps;
                                             reponseSaisie.CodeReponse = reponse.CodeReponse;
                                             deces = getDecesModel(reponseSaisie, deces);
@@ -1360,11 +1350,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                             dec.DecesId = this.deces.DecesId;
                                             dec.SdeId = this.deces.SdeId;
                                             dec.IsContreEnqueteMade = true;
-                                            sw.contreEnqueteMade<DecesModel>(dec, dec.SdeId);
-                                            MessageBox.Show("Desè sa a anregistre.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                                            detailsViewModel.Status = true;
-                                            detailsViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
-                                            detailsViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                            bool save = sw.contreEnqueteMade<DecesModel>(dec, dec.SdeId);
+                                            if (save && result == true)
+                                            {
+                                                MessageBox.Show("Desè sa a anregistre.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                                detailsViewModel.Status = true;
+                                                detailsViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
+                                                detailsViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                            }
+                                            else
+                                            {
+                                                MessageBox.Show("Gen yon erè pandan anregistreman", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                            }   
                                      }
                                 }
                             }
@@ -1403,12 +1400,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 bat.BatimentId = this.batiment.BatimentId;
                                 bat.IsContreEnqueteMade = true;
                                 bat.SdeId = this.batiment.SdeId;
-                                sw.contreEnqueteMade<BatimentModel>(bat, bat.SdeId);
-                                MessageBox.Show("Batiman sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                                //Fire les controles sur l'interface (Le check mark)
-                                batViewModel.Status = true;
-                                batViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
-                                batViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                bool save=sw.contreEnqueteMade<BatimentModel>(bat, bat.SdeId);
+                                if (save && result)
+                                {
+                                    MessageBox.Show("Batiman sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    //Fire les controles sur l'interface (Le check mark)
+                                    batViewModel.Status = true;
+                                    batViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
+                                    batViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Erreur lors de la sauvegarde", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                                
                             }
                         }
                         else
@@ -1425,11 +1430,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 lg.LogeId = this.logement.BatimentId;
                                 lg.SdeId = this.logement.SdeId;
                                 lg.IsContreEnqueteMade = true;
-                                sw.contreEnqueteMade<LogementModel>(lg, lg.SdeId);
-                                MessageBox.Show("Lojman sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                                logViewModel.Status = true;
-                                logViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
-                                logViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                bool save=sw.contreEnqueteMade<LogementModel>(lg, lg.SdeId);
+                                if (save && result)
+                                {
+                                    MessageBox.Show("Lojman sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                    logViewModel.Status = true;
+                                    logViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
+                                    logViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Erreur lors de la sauvegarde", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                                
                             }
                             else
                             {
@@ -1445,11 +1458,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                     men.MenageId = this.menage.MenageId;
                                     men.IsContreEnqueteMade = true;
                                     men.SdeId = this.menage.SdeId;
-                                    sw.contreEnqueteMade<MenageModel>(men, men.SdeId);
-                                    MessageBox.Show("Menaj sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                                    menViewModel.Status = true;
-                                    menViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
-                                    menViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                    bool save=sw.contreEnqueteMade<MenageModel>(men, men.SdeId);
+                                    if (save && result)
+                                    {
+                                        MessageBox.Show("Menaj sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                        menViewModel.Status = true;
+                                        menViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
+                                        menViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Erreur lors de la sauvegarde", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+                                    
                                 }
                                 else
                                 {
@@ -1465,11 +1486,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                         dec.DecesId = this.deces.DecesId;
                                         dec.SdeId = this.deces.SdeId;
                                         dec.IsContreEnqueteMade = true;
-                                        sw.contreEnqueteMade<DecesModel>(dec, dec.SdeId);
-                                        MessageBox.Show("Desè sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                                        detailsViewModel.Status = true;
-                                        detailsViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
-                                        detailsViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                        bool save=sw.contreEnqueteMade<DecesModel>(dec, dec.SdeId);
+                                        if (save && result)
+                                        {
+                                            MessageBox.Show("Desè sa a anregistre", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                            detailsViewModel.Status = true;
+                                            detailsViewModel.Tip = Constant.GetStringValue(Constant.ToolTipMessage.Kont_anket_fet);
+                                            detailsViewModel.ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Erreur lors de la sauvegarde", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                        }                                       
                                     }
                                 }
                             }

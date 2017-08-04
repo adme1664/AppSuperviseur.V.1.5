@@ -368,6 +368,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 if (GetTreeviewItem.DataContext == null)
                 {
+                    MessageBox.Show(Constant.MSG_NOT_CLICK, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 SdeViewModel _sde = GetTreeviewItem.DataContext as SdeViewModel;
@@ -1262,7 +1263,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
                 else
                 {
-                    MessageBox.Show("Chwazi yon eleman.", "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(Constant.MSG_NOT_CLICK, "" + Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (MessageException ex)

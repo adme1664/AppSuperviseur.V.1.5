@@ -166,7 +166,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     Users.users.Nom = user.Nom;
                     Users.users.Profile = "" + user.ProfileId;
                     state = true;
+                    Users.users.Utilisateur = new UtilisateurModel();
+                    Users.users.Utilisateur = user;
+
+                
                     Users.users.DatabasePath = MAIN_DATABASE_PATH;
+                    
                     //Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory;
                 }
                 else

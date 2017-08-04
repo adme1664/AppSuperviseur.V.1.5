@@ -24,8 +24,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
     public partial class frm_questions_agent : UserControl
     {
         ContreEnqueteService service_ce;
+        IConfigurationService configuration;
         AgentModel agent = null;
         RapportPersonnelModel rptModel = null;
+        
         public frm_questions_agent(AgentModel agent)
         {
             InitializeComponent();
@@ -61,11 +63,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             cQ15.ItemsSource = Constant.listOfChoixQ15();
 
             service_ce = new ContreEnqueteService(Users.users.SupDatabasePath);
+            configuration = new ConfigurationService();
             this.agent = agent;
         }
         public frm_questions_agent(AgentModel agent,RapportPersonnelModel rpt)
         {
             InitializeComponent();
+            configuration = new ConfigurationService();
             q1.Text = Constant.q1;
             q2.Text = Constant.q2;
             q3.Text = Constant.q3;
@@ -220,7 +224,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     rpt.q13 = Convert.ToInt32(rep13.CodeReponse);
                     rpt.q15 = Convert.ToInt32(rep15.CodeReponse);
                     rpt.q14 = q14;
-                    rpt.persId = Convert.ToInt32(agent.Username);
+                    SdeInformation sde = Utilities.getSdeInformation(Utilities.getSdeFormatWithDistrict(configuration.getSdeByAgent(agent.AgentId).SdeId));
+                    rpt.comId = sde.ComId;
+                    rpt.deptId = sde.DeptId;
+                    rpt.codeDistrict = sde.CodeDistrict;
+                    rpt.ReportSenderId = Users.users.CodeUtilisateur;
+                    rpt.persId = agent.Username;
                 }
 
                 if (btn_save.ToolTip.ToString() == "Enregistrer")

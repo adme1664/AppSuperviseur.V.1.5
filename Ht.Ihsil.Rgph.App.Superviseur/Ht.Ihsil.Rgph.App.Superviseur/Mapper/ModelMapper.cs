@@ -891,7 +891,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 model.comId = rpt.comId;
                 model.dateEvaluation = rpt.dateEvaluation;
                 model.deptId = rpt.deptId;
-                model.persId = rpt.persId;
+                model.codeAgentRecenseur = rpt.persId;
                 model.q1 = rpt.q1;
                 model.q10 = rpt.q10;
                 model.q11 = rpt.q11;
@@ -908,7 +908,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 model.q3 = rpt.q3;
                 model.q2 = rpt.q2;
                 model.q1 = rpt.q1;
-                model.reportSenderId = rpt.ReportSenderId;
+                model.codeSuperviseur = rpt.ReportSenderId;
                 model.score = rpt.score;
                 model.rapportId = rpt.rapportId;
                 model.rapportName = "Rapport-" + rpt.rapportId;
@@ -2436,7 +2436,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             model.comId = rpt.comId;
             model.dateEvaluation = rpt.dateEvaluation;
             model.deptId = rpt.deptId;
-            model.persId = rpt.persId;
+            model.persId = rpt.persId.GetValueOrDefault().ToString();
             model.q1 = rpt.q1;
             model.q10 = rpt.q10;
             model.q11 = rpt.q11;
@@ -2453,7 +2453,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             model.q3 = rpt.q3;
             model.q2 = rpt.q2;
             model.q1 = rpt.q1;
-            model.ReportSenderId = rpt.ReportSenderId;
+            model.ReportSenderId = rpt.ReportSenderId.GetValueOrDefault().ToString();
             model.score = rpt.score;
             model.rapportId = rpt.rapportId;
             model.RapportName = "Rapport-" + rpt.rapportId;
@@ -2467,7 +2467,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             entite.comId = rpt.comId;
             entite.dateEvaluation = rpt.dateEvaluation;
             entite.deptId = rpt.deptId;
-            entite.persId = rpt.persId;
+            entite.persId = Convert.ToInt32(rpt.persId);
             entite.q1 = rpt.q1;
             entite.q10 = rpt.q10;
             entite.q11 = rpt.q11;
@@ -2484,7 +2484,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             entite.q3 = rpt.q3;
             entite.q2 = rpt.q2;
             entite.q1 = rpt.q1;
-            entite.ReportSenderId = rpt.ReportSenderId;
+            entite.ReportSenderId = Convert.ToInt32(rpt.ReportSenderId);
             entite.score = rpt.score;
             entite.rapportId = rpt.rapportId;
             return entite;

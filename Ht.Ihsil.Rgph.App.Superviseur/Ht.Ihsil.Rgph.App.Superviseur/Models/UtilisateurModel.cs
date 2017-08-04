@@ -15,5 +15,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public string MotDePasse { get; set; }
         public Nullable<byte> Statut { get; set; }
         public int ProfileId { get; set; }
+        private string SdeId { get; set; }
     }
 }

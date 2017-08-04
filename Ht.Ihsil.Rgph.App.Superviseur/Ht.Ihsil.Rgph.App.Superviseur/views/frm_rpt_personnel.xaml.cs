@@ -65,7 +65,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         }
         private void btn_create_Click(object sender, RoutedEventArgs e)
         {
-            
             frm_questions_agent frm=new frm_questions_agent(this.agent);
             Utilities.showControl(frm, grd_details);
         }

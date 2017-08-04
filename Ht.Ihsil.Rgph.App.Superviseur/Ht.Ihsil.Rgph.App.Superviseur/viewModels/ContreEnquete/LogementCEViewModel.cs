@@ -96,6 +96,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
                    details.Id = ind.IndividuId.ToString();
                    details.Name = "Endividi-" + ind.Qp1NoOrdre;
                    details.Type = Constant.CODE_TYPE_ENVDIVIDI;
+                   details.IsContreEnqueteMade = Convert.ToBoolean(ind.IsContreEnqueteMade.GetValueOrDefault());
+                   details.Valide = Convert.ToBoolean(ind.IsValidated.GetValueOrDefault());
                    base.Children.Add(new MenageDetailsViewModel(details, this));
                }
            }

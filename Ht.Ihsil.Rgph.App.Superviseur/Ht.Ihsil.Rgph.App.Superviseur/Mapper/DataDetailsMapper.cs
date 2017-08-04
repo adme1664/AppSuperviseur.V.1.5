@@ -460,7 +460,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     tbl_categorie_question tcq = reader.getCategorie("LOC", sdeID);
                     BatimentModel bat = obj as BatimentModel;
                     reader = new SqliteDataReaderService(Utilities.getConnectionString(Users.users.DatabasePath, sdeID));
-                    SdeInformation sdeInformation = Utilities.getSdeInformation(Utilities.getSdeFormatSent(sdeID));
+                    SdeInformation sdeInformation = Utilities.getSdeInformation(Utilities.getSdeFormatWithDistrict(sdeID));
                     string comId = reader.Sr.getCommune(sdeInformation.ComId).ComNom;
                     string deptId = reader.Sr.getDepartement(sdeInformation.DeptId).DeptNom;
                     string vqse = reader.Sr.getVqse(sdeInformation.VqseId).VqseNom;

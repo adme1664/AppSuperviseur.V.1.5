@@ -299,7 +299,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                 reponses = new List<DataDetails>();
 
                 reader = new SqliteDataReaderService(Utilities.getConnectionString(Users.users.DatabasePath, bat.SdeId));
-                SdeInformation sdeInformation = Utilities.getSdeInformation(Utilities.getSdeFormatSent(bat.SdeId));
+                SdeInformation sdeInformation = Utilities.getSdeInformation(Utilities.getSdeFormatWithDistrict(bat.SdeId));
                 string comId = reader.Sr.getCommune(sdeInformation.ComId).ComNom;
                 string deptId = reader.Sr.getDepartement(sdeInformation.DeptId).DeptNom;
                 string vqse = reader.Sr.getVqse(sdeInformation.VqseId).VqseNom;

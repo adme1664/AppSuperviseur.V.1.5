@@ -80,6 +80,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 sde.DeptId = sdeId.Substring(0, 2);
                 sde.ComId = sdeId.Substring(0, 4);
                 sde.VqseId = sdeId.Substring(0, 7);
+                sde.CodeDistrict = sdeId.Substring(12, 3);
                 return sde;
             }
             catch (Exception)
@@ -92,6 +93,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             string[] splits = sdeId.Split('-');
             string convertSde = "0" + splits[0] + "-" + splits[1] + "-" + splits[2];
+            //SdeInformation sde = getSdeInformation(sdeId);
+            //return "0" + sde.ComId + "-" + sde.DeptId + "-" + sde.VqseId;
+            return convertSde;
+        }
+        public static string getSdeFormatWithDistrict(string sdeId)
+        {
+            string[] splits = sdeId.Split('-');
+            string convertSde = "0" + splits[0] + "-" + splits[1] + "-" + splits[2] + "-" + splits[3];
             //SdeInformation sde = getSdeInformation(sdeId);
             //return "0" + sde.ComId + "-" + sde.DeptId + "-" + sde.VqseId;
             return convertSde;

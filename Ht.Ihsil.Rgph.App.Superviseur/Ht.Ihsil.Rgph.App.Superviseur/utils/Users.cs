@@ -17,6 +17,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         private string supDatabasePath;
         private string appExecutionPath;
         private UtilisateurModel _utilisateur;
+        
 
         public UtilisateurModel Utilisateur
         {

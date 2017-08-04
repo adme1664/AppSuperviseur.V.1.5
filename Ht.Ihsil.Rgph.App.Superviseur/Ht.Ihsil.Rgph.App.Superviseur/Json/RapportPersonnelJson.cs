@@ -9,7 +9,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
    public class RapportPersonnelJson
     {
         public long rapportId { get; set; }
-        public Nullable<long> persId { get; set; }
+        public string codeAgentRecenseur { get; set; }
         public string codeDistrict { get; set; }
         public string comId { get; set; }
         public string deptId { get; set; }
@@ -30,7 +30,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public Nullable<long> q15 { get; set; }
         public Nullable<long> score { get; set; }
         public string dateEvaluation { get; set; }
-        public Nullable<long> reportSenderId { get; set; }
+        public string codeSuperviseur { get; set; }
         public string rapportName { get; set; }
     }
 }

@@ -13,15 +13,14 @@
                 <ColumnDefinition Width="355"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Creer rapport" Name="btn_create" HorizontalAlignment="Left" Margin="72,69,0,0" VerticalAlignment="Top" Width="110" Height="31" Click="btn_create_Click"/>
-            <Button Content="Afficher rapport" HorizontalAlignment="Left" Margin="14,69,0,0" VerticalAlignment="Top" Width="114" Height="31" Grid.Column="1"/>
+           
 
             <Grid Name="grd_details" Background="#FFF5F1F1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="345,0,0,0">
                 <UserControl Background="LightGray"/>
             </Grid>
             <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="White" Name="scrl_view_tree" Margin="0,0,10,0">
                 <Grid HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Grid.Column="0">
-                    <GroupBox Header="Rapports Effectues" HorizontalAlignment="Left" Grid.Row="0" Margin="11,212,0,0" VerticalAlignment="Top" Width="287" Height="257" Grid.Column="0">
+                    <GroupBox Header="Rapports Effectues" HorizontalAlignment="Left" Grid.Row="0" Margin="11,245,0,0" VerticalAlignment="Top" Width="287" Height="257" Grid.Column="0">
                         <Grid>
                             <ListBox x:Name="lbRprts" Margin="0,0,0,-1" SelectionChanged="lbRprts_SelectionChanged">
                                 <ListBox.ItemTemplate>
@@ -35,6 +34,7 @@
                             </ListBox>
                         </Grid>
                     </GroupBox>
+                    <Button Content="Ajouter un nouveau Rapport" Name="btn_create" HorizontalAlignment="Left" Margin="10,207,0,0" VerticalAlignment="Top" Width="234" Height="31" Click="btn_create_Click"/>
                     <GroupBox Header="Agents" HorizontalAlignment="Left"  Margin="10,0,0,0" VerticalAlignment="Top" Height="197" Width="288" Grid.Column="0">
                         <ListBox x:Name="lbAgents" Margin="0,0,0,-1" SelectionChanged="lbAgents_SelectionChanged">
                             <ListBox.ItemTemplate>

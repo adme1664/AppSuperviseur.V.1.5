@@ -326,10 +326,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #endregion
 
-        #region EVALUATION
-       
-
-        #endregion
 
         #region CODE MODULE
         public static string MODULE_INDIVIDU = "FRM-IND";
@@ -418,7 +414,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string MSG_NOT_VALIDATE = "Batiman an dwe fini avan ou valide li.";
         public static string MSG_RAPO_SAVE = "Rapò a anregistre avèk siksè.";
         public static string MSG_RAPO_UPDATE = "Rapò a modifye avèk siksè.";
+        public static string MSG_NOT_CLICK = "Ou dwe klike sou yon objè.";
         public static string WINDOW_TITLE = "IHSI-RGPH[2017]";
+        public static string MSG_KE_IS_MADE = "Kont ankèt sa a fèt deja.";
         #endregion
 
         #region TYOE CONTRE-ENQEUTE

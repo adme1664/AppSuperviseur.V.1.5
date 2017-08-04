@@ -193,15 +193,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         model.BatimentId = batViewModel.Batiment.BatimentId;
                         model.SdeId = batViewModel.Batiment.SdeId;
                         BatimentCEModel batiment = ModelMapper.MapToBatimentCEModel(contreEnqueteService.daoCE.getBatiment(Convert.ToInt32(model.BatimentId), model.SdeId));
-                        if (batiment.Statut.GetValueOrDefault() != 0)
+                        if (batiment.IsContreEnqueteMade.GetValueOrDefault() == true)
                         {
-                            MessageBox.Show("Ou gentan chwazi batiman sa a deja", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(Constant.MSG_KE_IS_MADE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         else
                         {
-                            frm_save_questions bat = new frm_save_questions(batViewModel);
-                            Utilities.showControl(bat, grd_details);
+                            if (batiment.Statut.GetValueOrDefault() != 0)
+                            {
+                                MessageBox.Show("Ou gentan chwazi batiman sa a deja", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            else
+                            {
+                                frm_save_questions bat = new frm_save_questions(batViewModel);
+                                Utilities.showControl(bat, grd_details);
+                            }
                         }
+                        
                     }
                 }
             }
@@ -350,21 +358,29 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     LogementCEViewModel logViewModel = this.GetTreeviewItem.DataContext as LogementCEViewModel;
                     if (logViewModel != null)
                     {
-                        LogementModel model = new LogementModel();
-                        model.LogeId = logViewModel.Logement.LogeId;
-                        model.BatimentId = Convert.ToInt32(logViewModel.Logement.BatimentId);
-                        model.SdeId = logViewModel.Logement.SdeId;
-                        model.Qlin1NumeroOrdre = Convert.ToByte(logViewModel.Logement.Qlin1NumeroOrdre.GetValueOrDefault());
-                        BatimentCEModel batiment = ModelMapper.MapToBatimentCEModel(contreEnqueteService.daoCE.getBatiment(model.BatimentId, model.SdeId));
-                        if (batiment.IsContreEnqueteMade.GetValueOrDefault() == false)
+                        if (logViewModel.Logement.IsContreEnqueteMade.GetValueOrDefault() == 1)
                         {
-                            throw new MessageException(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Batiment));
+                            MessageBox.Show(Constant.MSG_KE_IS_MADE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         else
                         {
-                            frm_save_questions viewLogement = new frm_save_questions(logViewModel);
-                            Utilities.showControl(viewLogement, grd_details);
+                            LogementModel model = new LogementModel();
+                            model.LogeId = logViewModel.Logement.LogeId;
+                            model.BatimentId = Convert.ToInt32(logViewModel.Logement.BatimentId);
+                            model.SdeId = logViewModel.Logement.SdeId;
+                            model.Qlin1NumeroOrdre = Convert.ToByte(logViewModel.Logement.Qlin1NumeroOrdre.GetValueOrDefault());
+                            BatimentCEModel batiment = ModelMapper.MapToBatimentCEModel(contreEnqueteService.daoCE.getBatiment(model.BatimentId, model.SdeId));
+                            if (batiment.IsContreEnqueteMade.GetValueOrDefault() == false)
+                            {
+                                throw new MessageException(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Batiment));
+                            }
+                            else
+                            {
+                                frm_save_questions viewLogement = new frm_save_questions(logViewModel);
+                                Utilities.showControl(viewLogement, grd_details);
+                            }
                         }
+                        
                     }
                     else
                     {
@@ -563,22 +579,30 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     MenageCEViewModel menageCEViewModel = this.GetTreeviewItem.DataContext as MenageCEViewModel;
                     if (menageCEViewModel != null)
                     {
-                        MenageModel model = new MenageModel();
-                        model.MenageId = menageCEViewModel.MenageId;
-                        model.LogeId = menageCEViewModel.LogementId;
-                        model.BatimentId = menageCEViewModel.BatimentId;
-                        model.SdeId = menageCEViewModel.NumSde;
-                        model.Qm1NoOrdre = Convert.ToByte(menageCEViewModel.Menage.Qm1NoOrdre.GetValueOrDefault());
-                        LogementCEModel logement = ModelMapper.MapToLogementCEModel(contreEnqueteService.daoCE.getLogementCE(Convert.ToInt32(model.BatimentId), model.SdeId, Convert.ToInt32(model.LogeId)));
-                        if (logement.IsContreEnqueteMade.GetValueOrDefault() == 0)
+                        if (menageCEViewModel.Menage.IsContreEnqueteMade.GetValueOrDefault() == true)
                         {
-                            MessageBox.Show(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Logement), Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(Constant.MSG_KE_IS_MADE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         else
                         {
-                            frm_save_questions viewMenage = new frm_save_questions(menageCEViewModel);
-                            Utilities.showControl(viewMenage, grd_details);
+                            MenageModel model = new MenageModel();
+                            model.MenageId = menageCEViewModel.MenageId;
+                            model.LogeId = menageCEViewModel.LogementId;
+                            model.BatimentId = menageCEViewModel.BatimentId;
+                            model.SdeId = menageCEViewModel.NumSde;
+                            model.Qm1NoOrdre = Convert.ToByte(menageCEViewModel.Menage.Qm1NoOrdre.GetValueOrDefault());
+                            LogementCEModel logement = ModelMapper.MapToLogementCEModel(contreEnqueteService.daoCE.getLogementCE(Convert.ToInt32(model.BatimentId), model.SdeId, Convert.ToInt32(model.LogeId)));
+                            if (logement.IsContreEnqueteMade.GetValueOrDefault() == 0)
+                            {
+                                MessageBox.Show(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Logement), Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            else
+                            {
+                                frm_save_questions viewMenage = new frm_save_questions(menageCEViewModel);
+                                Utilities.showControl(viewMenage, grd_details);
+                            }
                         }
+                        
                     }
                     else
                     {
@@ -588,7 +612,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
 
 
@@ -848,29 +872,41 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                             model = contreEnqueteService.getIndividuCEModel(Convert.ToInt32(menageDetails.MenageType.Id), menageDetails.MenageType.SdeId);
                             if (model != null)
                             {
-                                IndividuModel ind = new IndividuModel();
-                                ind.BatimentId = model.BatimentId;
-                                ind.LogeId = model.LogeId;
-                                ind.MenageId = model.MenageId;
-                                ind.IndividuId = model.IndividuId;
-                                ind.SdeId = model.SdeId;
-                                ind.Qp2APrenom = model.Q3Prenom;
-                                ind.Qp3LienDeParente = Convert.ToByte(model.Q3LienDeParente.GetValueOrDefault());
-                                LogementCEModel logementCe = contreEnqueteService.getLogementCE(Convert.ToInt32(model.BatimentId), model.SdeId, Convert.ToInt32(model.LogeId));
-                                if (logementCe.LogeId != 0)
+                                if (model.IsContreEnqueteMade.GetValueOrDefault() == 1)
                                 {
-                                    if (logementCe.IsContreEnqueteMade.GetValueOrDefault() == 0)
+                                    MessageBox.Show(Constant.MSG_KE_IS_MADE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                                else
+                                {
+                                    IndividuModel ind = new IndividuModel();
+                                    ind.BatimentId = model.BatimentId;
+                                    ind.LogeId = model.LogeId;
+                                    ind.MenageId = model.MenageId;
+                                    ind.IndividuId = model.IndividuId;
+                                    ind.SdeId = model.SdeId;
+                                    ind.Qp2APrenom = model.Q3Prenom;
+                                    ind.Qp3LienDeParente = Convert.ToByte(model.Q3LienDeParente.GetValueOrDefault());
+                                    LogementCEModel logementCe = contreEnqueteService.getLogementCE(Convert.ToInt32(model.BatimentId), model.SdeId, Convert.ToInt32(model.LogeId));
+                                    if (logementCe.LogeId != 0)
                                     {
-                                        MessageBox.Show(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Logement), Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                                    }
-                                    else
-                                    {
-                                        MenageCEModel menage = ModelMapper.MapToMenageCEModel(contreEnqueteService.daoCE.getMenageCE(model.BatimentId, model.LogeId, model.SdeId, model.MenageId));
-                                        if (menage.MenageId != 0)
+                                        if (logementCe.IsContreEnqueteMade.GetValueOrDefault() == 0)
                                         {
-                                            if (menage.IsContreEnqueteMade.GetValueOrDefault() == false)
+                                            MessageBox.Show(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Logement), Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                        }
+                                        else
+                                        {
+                                            MenageCEModel menage = ModelMapper.MapToMenageCEModel(contreEnqueteService.daoCE.getMenageCE(model.BatimentId, model.LogeId, model.SdeId, model.MenageId));
+                                            if (menage.MenageId != 0)
                                             {
-                                                MessageBox.Show(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Menage), Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                                if (menage.IsContreEnqueteMade.GetValueOrDefault() == false)
+                                                {
+                                                    MessageBox.Show(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Menage), Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                                }
+                                                else
+                                                {
+                                                    frm_save_questions_tab_format frm_ind = new frm_save_questions_tab_format(menageDetails);
+                                                    Utilities.showControl(frm_ind, grd_details);
+                                                }
                                             }
                                             else
                                             {
@@ -878,14 +914,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                                 Utilities.showControl(frm_ind, grd_details);
                                             }
                                         }
-                                        else
-                                        {
-                                            frm_save_questions_tab_format frm_ind = new frm_save_questions_tab_format(menageDetails);
-                                            Utilities.showControl(frm_ind, grd_details);
-                                        }
                                     }
-                                }
-
+                                }                             
                             }
 
                         }
@@ -893,26 +923,34 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         {
                             DecesCEModel model = new DecesCEModel();
                             model = contreEnqueteService.getDecesCEModel(Convert.ToInt32(menageDetails.MenageType.Id), menageDetails.MenageType.SdeId);
-                            if (model != null)
+                            if (model.IsContreEnqueteMade.GetValueOrDefault() == 1)
                             {
-                                DecesModel _deces = new DecesModel();
-                                _deces.DecesId = model.DecesId;
-                                _deces.BatimentId = model.BatimentId;
-                                _deces.LogeId = model.LogeId;
-                                _deces.MenageId = model.MenageId;
-                                _deces.SdeId = model.SdeId;
-                                _deces.Qd2NoOrdre = Convert.ToByte(model.Qd2NoOrdre.GetValueOrDefault());
-                                MenageCEModel menage = ModelMapper.MapToMenageCEModel(contreEnqueteService.daoCE.getMenageCE(model.BatimentId, model.LogeId, model.SdeId, model.MenageId));
-                                if (menage.IsContreEnqueteMade.GetValueOrDefault() == false)
+                                MessageBox.Show(Constant.MSG_KE_IS_MADE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            else
+                            {
+                                if (model != null)
                                 {
-                                    MessageBox.Show(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Menage), Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                                }
-                                else
-                                {
-                                    frm_save_questions frm_deces = new frm_save_questions(menageDetails);
-                                    Utilities.showControl(frm_deces, grd_details);
+                                    DecesModel _deces = new DecesModel();
+                                    _deces.DecesId = model.DecesId;
+                                    _deces.BatimentId = model.BatimentId;
+                                    _deces.LogeId = model.LogeId;
+                                    _deces.MenageId = model.MenageId;
+                                    _deces.SdeId = model.SdeId;
+                                    _deces.Qd2NoOrdre = Convert.ToByte(model.Qd2NoOrdre.GetValueOrDefault());
+                                    MenageCEModel menage = ModelMapper.MapToMenageCEModel(contreEnqueteService.daoCE.getMenageCE(model.BatimentId, model.LogeId, model.SdeId, model.MenageId));
+                                    if (menage.IsContreEnqueteMade.GetValueOrDefault() == false)
+                                    {
+                                        MessageBox.Show(Constant.GetStringValue(Constant.ContreEnqueteNotMade.Menage), Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+                                    else
+                                    {
+                                        frm_save_questions frm_deces = new frm_save_questions(menageDetails);
+                                        Utilities.showControl(frm_deces, grd_details);
+                                    }
                                 }
                             }
+                            
                         }
                     }
                 }

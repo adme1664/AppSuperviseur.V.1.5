@@ -70,12 +70,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
                 #region RECHERCHE DE LOGEMENTS INDIVIDUELS
                 List<LogementIsJson> logModels = ModelMapper.MapToListLIJson(GetLogementIByBatiment(bat.BatimentId));
+                batJson.logementIs = new List<LogementIsJson>();
                 if (logModels != null)
                 {
                     foreach (LogementIsJson logm in logModels)
                     {
                         //Recherche de menage(s) dans le logement
                         LogementIsJson logJson = logm;
+                        logJson.menages = new List<MenageJson>();
                         List<MenageModel> menModels = GetMenageByLogement(logm.logeId);
                         if (menModels != null)
                         {
@@ -109,12 +111,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                                     menageJson.individus = ModelMapper.MapToListJson(indModels);
                                 }
                                 menages.Add(menageJson);
-                            }
-                            logJson.menages = new List<MenageJson>();
-                            logJson.menages = menages;
-                            batJson.logementIs = new List<LogementIsJson>();
-                            batJson.logementIs.Add(logJson);
+                                logJson.menages.Add(menageJson);
+                            }                            
                         }
+                        batJson.logementIs.Add(logJson);
                     }
                 }
                 #endregion

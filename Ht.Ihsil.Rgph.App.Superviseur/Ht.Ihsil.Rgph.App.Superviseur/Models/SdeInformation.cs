@@ -29,5 +29,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
             get { return vqseId; }
             set { vqseId = value; }
         }
+        private string codeDistrict;
+
+        public string CodeDistrict
+        {
+            get { return codeDistrict; }
+            set { codeDistrict = value; }
+        }
     }
 }

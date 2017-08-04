@@ -20,7 +20,7 @@
             </Grid>
             <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="White" Name="scrl_view_tree" Margin="0,0,10,0">
                 <Grid HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Grid.Column="0">
-                    <GroupBox Header="Rapports Effectues" HorizontalAlignment="Left" Grid.Row="0" Margin="12,220,0,0" VerticalAlignment="Top" Width="251" Height="196" Grid.Column="0">
+                    <GroupBox Header="Rapports Effectues" HorizontalAlignment="Left" Grid.Row="0" Margin="12,203,0,0" VerticalAlignment="Top" Width="251" Height="196" Grid.Column="0">
                         <Grid>
                             <ListBox x:Name="lbRprts" Margin="0,0,0,-1" SelectionChanged="lbRprts_SelectionChanged">
                                 <ListBox.ItemTemplate>
@@ -46,7 +46,7 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </GroupBox>
-                    <Button Content="Ajouter" HorizontalAlignment="Left" Margin="11,149,0,0" VerticalAlignment="Top" Width="99" Height="40" Name="btn_add_report" IsEnabled="False" Click="btn_add_report_Click"/>
+                    <Button Content="Ajouter un nouveau Rapport" HorizontalAlignment="Left" Margin="11,149,0,0" VerticalAlignment="Top" Width="218" Height="40" Name="btn_add_report" IsEnabled="False" Click="btn_add_report_Click"/>
                 </Grid>
             </ScrollViewer>
         </Grid>
