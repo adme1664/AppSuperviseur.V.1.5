@@ -26,55 +26,63 @@
                     </dx:DXTabItem.HeaderTemplate>
                     <Grid Background="Transparent">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="199*"/>
-                            <RowDefinition Height="94*"/>
-                            <RowDefinition Height="400*"/>
-                            <RowDefinition Height="91*"/>
+                            <RowDefinition Height="170*"/>
+                            <RowDefinition Height="129*"/>
+                            <RowDefinition Height="113*"/>
+                            <RowDefinition Height="53*"/>
                         </Grid.RowDefinitions>
-                        <GroupBox Header="Transfert vers le serveur central" HorizontalAlignment="Left"  Background="White" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9" Grid.Row="0">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="35*"/>
-                                    <ColumnDefinition Width="78*"/>
-                                </Grid.ColumnDefinitions>
-                                <GroupBox x:Name="grp_SDE" Header="Selectionner une SDE"  HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="130" >
-                                    <ListBox x:Name="lbSdes" SelectionChanged="lbSdes_SelectionChanged">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal">
+                        <!--<GroupBox Header="Transfert vers le serveur central" HorizontalAlignment="Left"  Background="White" FontFamily="Candara" FontSize="13" FontWeight="Bold" FontStyle="Italic" Foreground="#FF1433F9" Grid.Row="0" Margin="0,0,0,0.333" Width="187">
+                            
+
+                        </GroupBox>-->
+                        <Grid Margin="0,0,-0.333,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="223*"/>
+                                <ColumnDefinition Width="408*"/>
+                            </Grid.ColumnDefinitions>
+                            <GroupBox x:Name="grp_SDE" Header="Selectionner une SDE"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
+                                <ListBox x:Name="lbSdes" SelectionChanged="lbSdes_SelectionChanged">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Width="150" BorderBrush="Black" Background="#FF72C0F3"  BorderThickness="1" CornerRadius="2" Margin="2" Padding="2" >
+                                                <StackPanel Orientation="Horizontal" Background="#FFF98E43">
                                                     <Image Width="16" Height="16" Source="/images/database.png" />
-                                                    <TextBlock Text="{Binding SdeId}" />
+                                                    <TextBlock Text="{Binding SdeId}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
                                                 </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                </GroupBox>
-                                <GroupBox x:Name="grp_Actions" Header="Transferer" Grid.Column="1" HorizontalAlignment="Left" Width="94" Margin="6,-3,0,0" Height="79" VerticalAlignment="Top">
-                                    <Grid>
-                                        <Button  VerticalAlignment="top" HorizontalAlignment="Left" Width="55" Height="20" Margin="6,11,0,0" x:Name="btn_transfertr_sc" Click="btn_transfertr_sc_Click" RenderTransformOrigin="0.5,0.5">
-                                            <Button.RenderTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform ScaleY="-1"/>
-                                                    <SkewTransform/>
-                                                    <RotateTransform/>
-                                                    <TranslateTransform/>
-                                                </TransformGroup>
-                                            </Button.RenderTransform>
-                                            <Image Source="/images/trans1.png" />
-                                        </Button>
+                                            </Border>
+                                        </DataTemplate>
+                                        <!--<DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="16" Height="16" Source="/images/database.png" />
+                                                <TextBlock Text="{Binding SdeId}" />
+                                            </StackPanel>
+                                        </DataTemplate>-->
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </GroupBox>
+                            <GroupBox x:Name="grp_Actions" Header="Transferer" Grid.Column="1" HorizontalAlignment="Left" Width="94"  Height="79" VerticalAlignment="Top" Margin="0.333,0,0,0" >
+                                <Grid>
+                                    <Button  VerticalAlignment="top" HorizontalAlignment="Left" Width="55" Height="20" Margin="6,11,0,0" x:Name="btn_transfertr_sc" Click="btn_transfertr_sc_Click" RenderTransformOrigin="0.5,0.5">
+                                        <Button.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform ScaleY="-1"/>
+                                                <SkewTransform/>
+                                                <RotateTransform/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Button.RenderTransform>
+                                        <Image Source="/images/trans1.png" />
+                                    </Button>
 
-                                        <Label  x:Name="lbl_statut_transfert"  Margin="117,45,-1,55" Foreground="#FF2AB2FF" FontWeight="Bold" FontStyle="Italic" FontSize="14" FontFamily="Candara" RenderTransformOrigin="0.5,0.5"/>
-                                        <Image gif:ImageBehavior.AnimatedSource="/images/loading.gif"  HorizontalAlignment="Left" Height="42" x:Name="img_loading_ser" Margin="3,73,0,0"  VerticalAlignment="Top" Width="52" Visibility="Hidden" RenderTransformOrigin="3.731,2.19"/>
-                                        <Label x:Name="lbl_sde"  HorizontalAlignment="Left" Margin="3,45,0,0" VerticalAlignment="Top" Height="23" Width="114"/>
-                                    </Grid>
-                                </GroupBox>
+                                    <Label  x:Name="lbl_statut_transfert"  Margin="117,45,-1,55" Foreground="#FF2AB2FF" FontWeight="Bold" FontStyle="Italic" FontSize="14" FontFamily="Candara" RenderTransformOrigin="0.5,0.5"/>
+                                    <Image gif:ImageBehavior.AnimatedSource="/images/loading.gif"  HorizontalAlignment="Left" Height="42" x:Name="img_loading_ser" Margin="3,73,0,0"  VerticalAlignment="Top" Width="52" Visibility="Hidden" RenderTransformOrigin="3.731,2.19"/>
+                                    <Label x:Name="lbl_sde"  HorizontalAlignment="Left" Margin="3,45,0,0" VerticalAlignment="Top" Height="23" Width="114"/>
+                                </Grid>
+                            </GroupBox>
 
-                            </Grid>
+                        </Grid>
 
-                        </GroupBox>
-
-
-                        <GroupBox Header="Informations"  Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="13" Foreground="#FF1433F9" Grid.Row="1">
+                        <GroupBox Header="Informations"  Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="13" Foreground="#FF1433F9" Grid.Row="1" Margin="0,1,-0.333,0.333" >
                             <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                 <Label Content="Telecharger..." x:Name="lbl_telecharger" HorizontalAlignment="Left" VerticalAlignment="Top" Width="112" Margin="27,10,0,0"/>
                                 <Label Content="Pourcentage" HorizontalAlignment="Left" VerticalAlignment="Top" Width="99" Margin="185,9,0,0"/>
@@ -90,7 +98,7 @@
                                 </ProgressBar>
                             </Grid>
                         </GroupBox>
-                        <GroupBox Header="Sortie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9" Grid.Row="2">
+                        <GroupBox Header="Sortie" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" FontWeight="Bold" FontStyle="Italic" FontFamily="Candara" FontSize="14" Foreground="#FF1433F9" Grid.Row="2" Margin="0,0.667,-0.333,52.333" Grid.RowSpan="2" >
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                 <TextBox Visibility="Visible" AcceptsReturn="True" TextWrapping="Wrap"  x:Name="txt_sortie" Text="SDE:"  BorderThickness="0"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,10,0"/>
                             </Grid>
@@ -98,7 +106,7 @@
                         <Button  HorizontalAlignment="Left" x:Name="btn_effacer"  ToolTip="Effacer le contenu" VerticalAlignment="Top" Width="44" Height="23" Click="btn_effacer_Click" Grid.Row="3" Margin="0,5,0,0">
                             <Image Source="/images/delete-xxl.png" />
                         </Button>
-                        <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false" Grid.RowSpan="4">
+                        <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false" Grid.RowSpan="4" Margin="0,0,-0.333,0.333">
                             <dx:WaitIndicator.ContentTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Vertical">

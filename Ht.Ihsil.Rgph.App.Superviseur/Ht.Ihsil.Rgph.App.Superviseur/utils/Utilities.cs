@@ -80,7 +80,29 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 sde.DeptId = sdeId.Substring(0, 2);
                 sde.ComId = sdeId.Substring(0, 4);
                 sde.VqseId = sdeId.Substring(0, 7);
-                sde.CodeDistrict = sdeId.Substring(12, 3);
+                //sde.CodeDistrict = sdeId.Substring(12, 3);
+                return sde;
+            }
+            catch (Exception)
+            {
+
+            }
+            return null;
+        }
+        public static SdeInformation getSdeInformationForTabletConf(string sdeId)
+        {
+            try
+            {
+                SdeInformation sde = new SdeInformation();
+                sde.DeptId = "0" + sdeId.Substring(0, 1);
+                sde.ComId = "0" + sdeId.Substring(0, 3);
+                sde.VqseId = "0" + sdeId.Substring(0, 6);
+                if (sdeId.Substring(4, 2)=="90")
+                {
+                    sde.Zone = Constant.SDE_ZONE_URBAINE;
+                }
+                else
+                    sde.Zone = Constant.SDE_ZONE_RURAL;
                 return sde;
             }
             catch (Exception)
@@ -327,11 +349,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             foreach (IndividuModel individu in individus)
             {
-                if (individu.IndividuId == ind.IndividuId && 
-                    individu.BatimentId==ind.BatimentId &&
-                    individu.LogeId==ind.LogeId &&
-                    individu.MenageId==ind.MenageId &&
-                    individu.SdeId==ind.SdeId)
+                if (individu.IndividuId == ind.IndividuId &&
+                    individu.BatimentId == ind.BatimentId &&
+                    individu.LogeId == ind.LogeId &&
+                    individu.MenageId == ind.MenageId &&
+                    individu.SdeId == ind.SdeId)
                 {
                     return true;
                 }
@@ -404,7 +426,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             string connectionString = new EntityConnectionStringBuilder
             {
-                Metadata = @"res://*/Entities.SupEntities.RgphSup.csdl|res://*/Entities.SupEntities.RgphSup.ssdl|res://*/Entities.SupEntities.RgphSup.msl",
+                //res://*/Entities.SupEntities.RgphSup.csdl|res://*/Entities.SupEntities.RgphSup.ssdl|res://*/Entities.SupEntities.RgphSup.msl
+                Metadata = @"res://*/Entities.SupEntities.RgphContext.csdl|res://*/Entities.SupEntities.RgphContext.ssdl|res://*/Entities.SupEntities.RgphContext.msl",
                 Provider = "System.Data.SQLite.EF6",
                 ProviderConnectionString = new SqlConnectionStringBuilder
                 {
@@ -437,7 +460,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ParentID = 0;
                 report.Indicateur = "Uniquement les questionnaires en premier passage.";
                 report.Niveau = "1";
-                report.Total = ""+totalBatiments;
+                report.Total = "" + totalBatiments;
                 rapports.Add(report);
                 lastId = report.ID;
                 firstParentId = report.ID;
@@ -449,7 +472,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.ID = lastId + 1;
                 report.ParentID = lastId;
                 report.Niveau = "2";
-                report.Taux = "" + Utilities.getPourcentage(nbreBatimentPasRempli,totalBatiments )+"%";
+                report.Taux = "" + Utilities.getPourcentage(nbreBatimentPasRempli, totalBatiments) + "%";
                 rapports.Add(report);
                 lastId = report.ID;
                 lastParentId = report.ID;
@@ -710,7 +733,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             int totalBatimentParSde = 0;
             SqliteDataReaderService sqliteService = null;
 
-                #region BRANCHE BATIMENTS MAL REMPLI
+            #region BRANCHE BATIMENTS MAL REMPLI
             //
             //Somme des batiments mal rempli pour le district du superviseur
             foreach (SdeModel sde in listOfSdes)
@@ -737,7 +760,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.Type = "1-NOMBRE QUESTIONNAIRES PAS DU TOUT REMPLIS ";
                 report.Indicateur = "";
                 report.Total = "" + nbreBatimentPasRempli;
-                report.Taux = "" + getPourcentage(nbreBatimentPasRempli, totalBatiments)+"%";
+                report.Taux = "" + getPourcentage(nbreBatimentPasRempli, totalBatiments) + "%";
                 report.ID = lastId + 1;
                 report.ParentID = lastId;
                 report.Niveau = "2";
@@ -819,7 +842,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     report.ID = lastId + 1;
                     report.ParentID = batimentInobservableId;
                     report.Total = "" + batiments.Count();
-                    report.Taux = "" + Utilities.getPourcentage(batiments.Count(), totalBatimentParSde)+"%";
+                    report.Taux = "" + Utilities.getPourcentage(batiments.Count(), totalBatimentParSde) + "%";
                     lastId = report.ID;
                     lastParentId = report.ID;
                     report.Niveau = "3";
@@ -1127,7 +1150,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             int nbreTotalMenages = service.Sr.GetAllMenages().Count();
             int nbreTotalIndividus = service.Sr.GetAllIndividus().Count();
             int totalBatiments = service.getAllBatiments().Count();
-            int totalBatimentsPasFini =service.Sr.GetAllBatimentNotFinished().Count();
+            int totalBatimentsPasFini = service.Sr.GetAllBatimentNotFinished().Count();
 
             //Ajout des ID  parents 
             int parent_0 = 0;
@@ -1260,7 +1283,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             parent_2 = report.ID;
             report.Niveau = "2";
             report.Total = "" + nbreLogOccupantAbsent;
-            report.Taux = "" + getPourcentage(nbreLogOccupantAbsent, nbreTotalLogement)+"%";
+            report.Taux = "" + getPourcentage(nbreLogOccupantAbsent, nbreTotalLogement) + "%";
             lastId = report.ID;
             lastParentId = report.ID;
             rapports.Add(report);
@@ -1705,7 +1728,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 report.Type = "Nombre de ménages";
                 report.Total = "" + menages.Count;
                 report.Niveau = "4";
-                report.Taux = "" + getPourcentage(menages.Count, service.GetAllMenages().Count)+"%";
+                report.Taux = "" + getPourcentage(menages.Count, service.GetAllMenages().Count) + "%";
                 lastId = report.ID;
                 parentMenage = report.ID;
                 rapports.Add(report);
@@ -2221,7 +2244,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 List<RapportModel> rapports = new List<RapportModel>();
                 RapportModel report = new RapportModel();
                 report.Type = "Couverture";
-                report.ID =  lastId + 1 ;
+                report.ID = lastId + 1;
                 report.ParentID = parentId;
                 lastId = report.ID;
 
@@ -2249,7 +2272,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 rapports.Add(report);
 
                 report = new RapportModel();
-                report.ID = lastId+1;
+                report.ID = lastId + 1;
                 report.ParentID = parentId;
                 report.Indicateur = "Nombre de ménages recensés par l'agent recenseur";
                 report.Total = "" + sde.TotalMenageRecense.GetValueOrDefault();
@@ -2258,8 +2281,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 rapports.Add(report);
 
                 report = new RapportModel();
-                report.ID = lastId + 1 ;
-                report.ParentID =parentId;
+                report.ID = lastId + 1;
+                report.ParentID = parentId;
                 report.Indicateur = "Nombre de personnes recensées par l'agent recenseur";
                 report.Total = "" + sde.TotalIndRecense.GetValueOrDefault();
                 lastId = report.ID;

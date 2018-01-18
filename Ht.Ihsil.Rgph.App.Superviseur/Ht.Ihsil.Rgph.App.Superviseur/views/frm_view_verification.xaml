@@ -12,7 +12,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="8*"/>
-            <RowDefinition Height="54*"/>
+            <RowDefinition Height="124*"/>
             <RowDefinition Height="16*"/>
             <RowDefinition Height="148*"/>
         </Grid.RowDefinitions>
@@ -22,8 +22,8 @@
         </Grid.ColumnDefinitions>
 
         <!--<ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="White" Name="scrl_view_tree" Margin="0,23,0,0">-->
-        <GroupBox Header="SDEs" Margin="0,3,0,6"  Grid.Row="1" BorderThickness="1" BorderBrush="#FF92C0DA">
-            <ListBox  Name="listBox_sde" ItemsSource="{Binding Path=Sdes}" SelectionChanged="listBox_sde_SelectionChanged">
+        <GroupBox Header="SDEs" Margin="0,5,0,6"  Grid.Row="1" BorderThickness="1" BorderBrush="#FF92C0DA">
+            <ListBox  Name="listBox_sde" ItemsSource="{Binding Path=Sdes}" SelectionChanged="listBox_sde_SelectionChanged" Margin="0,0,0.333,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border Width="250" BorderBrush="Black" Background="#FF72C0F3"  BorderThickness="1" CornerRadius="2" Margin="2" Padding="2" >

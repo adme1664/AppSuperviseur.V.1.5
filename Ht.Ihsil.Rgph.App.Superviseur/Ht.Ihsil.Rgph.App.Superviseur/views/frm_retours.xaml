@@ -6,19 +6,31 @@
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_retours" 
              mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Grid>
-        <GroupBox Header="Sdes" HorizontalAlignment="Left" Margin="11,13,0,0" VerticalAlignment="Top" Height="267" Width="225">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="247*"/>
+            <ColumnDefinition Width="1148*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Sdes" Grid.Column="0"  Margin="11,13,0,0" HorizontalAlignment="Stretch">
             <ListBox Name="lb_sdes" SelectionChanged="lb_sdes_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
+                        <Border Width="150" BorderBrush="Black" Background="#FF72C0F3"  BorderThickness="1" CornerRadius="2" Margin="2" Padding="2" >
+                            <StackPanel Orientation="Horizontal" Background="#FFF98E43">
+                                <Image Width="16" Height="16" Source="/images/database.png" />
+                                <TextBlock Text="{Binding SdeId}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                    <!--<DataTemplate>
                         <StackPanel Orientation="Horizontal">
                             <Image Width="16" Height="16" Source="/images/database.png" />
                             <TextBlock Text="{Binding SdeId}" FontWeight="Bold"/>
                         </StackPanel>
-                    </DataTemplate>
+                    </DataTemplate>-->
                 </ListBox.ItemTemplate>
             </ListBox>
         </GroupBox>
-        <GroupBox Header="Retours" HorizontalAlignment="Left" Margin="256,14,0,-1" VerticalAlignment="Stretch">
+        <GroupBox Header="Retours" Grid.Column="1" HorizontalAlignment="Left" Margin="9.234,14,-0.334,-1" VerticalAlignment="Stretch" >
             <Grid>
                 <dxg:GridControl AutoGenerateColumns="AddNew" Name="grid" EnableSmartColumnsGeneration="True" ItemsSource="{Binding ListOfRetours}" AutoGeneratingColumn="grid_AutoGeneratingColumn" >
                     <dxg:GridControl.Columns>
@@ -34,7 +46,7 @@
                     </dxg:GridControl.Columns>
                     <dxg:GridControl.View>
                         <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" ShowGroupPanel="False"/>
-                   </dxg:GridControl.View>
+                    </dxg:GridControl.View>
                 </dxg:GridControl>
 
             </Grid>

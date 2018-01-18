@@ -45,8 +45,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             service = new ConfigurationService();
             DataContext = this;
             lbAgents.ItemsSource = service.searchAllAgents();
-            List<MaterielModel> listOf = ModelMapper.MapToList(service.SearchMateriels());
-            gridTablette.ItemsSource=listOf;
+            btn_save_tab.IsEnabled = false;
+            //List<MaterielModel> listOf = ModelMapper.MapToList(service.SearchMateriels());
+            //gridTablette.ItemsSource=listOf;
         }
 
         private void btn_synch_Click(object sender, RoutedEventArgs e)
@@ -87,7 +88,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 person.persId = agentModel.AgentId;
                                 person.sdeId = sdeModel.SdeId;
                                 SdeInformation sde = new SdeInformation();
-                                sde = Utilities.getSdeInformation(sdeModel.SdeId);
+                                sde = Utilities.getSdeInformationForTabletConf(sdeModel.SdeId);
+                                
                                 person.prenom = agentModel.Prenom;
                                 person.nom = agentModel.Nom;
                                 person.nomUtilisateur = agentModel.Username;
@@ -108,6 +110,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 person.comId = sde.ComId;
                                 person.deptId = sde.DeptId;
                                 person.vqseId = sde.VqseId;
+                                person.zone = sde.Zone;
                                 person.motDePasse = "passpass";
                                 service.savePersonne(person);
                                 Tbl_Materiels mat = service.getMateriels(devInfo.Serial);
@@ -201,13 +204,35 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 agents.Add(agent);
                 List<MaterielModel> materielForAgent=new List<MaterielModel>();
                 MaterielModel materiel = ModelMapper.MapToMateriel(service.getMaterielByAgent(agent.AgentId));
-                if (materiel != null)
+                if (materiel.MaterielId != 0)
                 {
+                    //Activer ou desactiver le bouton configurer si le materiel est deja configurer
+                    if (materiel.Configure == "OUI")
+                    {
+                        btn_synch.IsEnabled = false;
+                    }
+                    else
+                        btn_synch.IsEnabled = true;
+                    //
+
+                    //Desactiver le bouton save si le materiel est deja enregistre
+                    btn_save_tab.IsEnabled = false;
+                    //
                     materiel.Agent = agentModel.AgentName;
                     materielForAgent.Add(materiel);
-                
+                    gridTablette.ItemsSource = materielForAgent;
+                    
                 }
-                gridTablette.ItemsSource = materielForAgent;
+                else
+                {
+                    //Activer le bouton save
+                    btn_save_tab.IsEnabled = true;
+                    //Desactiver le botuon configurer
+                    btn_synch.IsEnabled = false;
+                    //Efface le grid
+                    gridTablette.ItemsSource = new List<MaterielModel>();
+                }
+                              
              }
             catch (Exception)
             {
@@ -263,7 +288,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 mat.DateAssignation = DateTime.Now.ToString();
                                 mat.LastSynchronisation = DateTime.Now.ToString();
                                 mat.IsConfigured = 0;
-                                mat.Imei = "N/A";
+                                mat.Imei = devInfo.Imei;
                                 mat.AgentId = this.agentModel.AgentId;
                                 bool result = service.saveMateriels(mat);
 

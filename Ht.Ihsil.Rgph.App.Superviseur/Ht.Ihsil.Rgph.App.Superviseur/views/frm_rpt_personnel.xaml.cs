@@ -65,7 +65,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         }
         private void btn_create_Click(object sender, RoutedEventArgs e)
         {
-            frm_questions_agent frm=new frm_questions_agent(this.agent);
+            frm_questions_agent frm=new frm_questions_agent(this.agent,this);
             Utilities.showControl(frm, grd_details);
         }
 
@@ -77,14 +77,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 RapportPersonnelModel rpt = ltb.SelectedItems.OfType<RapportPersonnelModel>().FirstOrDefault();
                 if (rpt == null)
                 {
-                    frm_questions_agent frm = new frm_questions_agent(this.agent);
+                    frm_questions_agent frm = new frm_questions_agent(this.agent,this);
                     Utilities.showControl(frm, grd_details);
                 }
                 else
                 {
                     if (rpt.RapportName == "Nouveau")
                     {
-                        frm_questions_agent frm = new frm_questions_agent(this.agent);
+                        frm_questions_agent frm = new frm_questions_agent(this.agent,this);
                         Utilities.showControl(frm, grd_details);
                     }
                     else

@@ -344,7 +344,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         void popupTransfert_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
+            Process[] procs = Process.GetProcessesByName("adb");
+            if (procs.Length != 0)
+            {
+                foreach (var proc in procs)
+                {
+                    if (!proc.HasExited)
+                    {
+                        proc.Kill();
+                    }
+                }
+            }
         }
 
         private void DXRibbonWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

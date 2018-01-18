@@ -27,47 +27,48 @@
                     <ComboBox HorizontalAlignment="Left" Margin="551,29,0,0" VerticalAlignment="Top" Width="150" Name="cmbIntervention" DisplayMemberPath="Value"/>
                     <Label Content="Solution" HorizontalAlignment="Left" Margin="712,30,0,0" VerticalAlignment="Top" />
                     <ComboBox HorizontalAlignment="Left" Margin="762,30,0,0" VerticalAlignment="Top" Width="150" Name="cmbSolution" ItemsSource="{Binding ListOfSolutions}" DisplayMemberPath="Value"/>
-                    <Label Content="Précisions" HorizontalAlignment="Left" Margin="11,73,0,0" VerticalAlignment="Top"/>
-                    <TextBox HorizontalAlignment="Left" Height="93" Name="txtPrecision" Margin="72,79,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="150" AcceptsReturn="True"/>
-                    <Label Content="Suggestions" HorizontalAlignment="Left" Margin="235,72,0,0" VerticalAlignment="Top"/>
-                    <TextBox HorizontalAlignment="Left" Height="94" Name="txtSuggestion" Margin="317,77,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="387" AcceptsReturn="True"/>
+                    <Label Content="Précisions" HorizontalAlignment="Left" Margin="11,67,0,0" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Height="76" Name="txtPrecision" Margin="72,73,0,-2.333" TextWrapping="Wrap"  VerticalAlignment="Top" Width="150" AcceptsReturn="True"/>
+                    <Label Content="Suggestions" HorizontalAlignment="Left" Margin="235,66,0,0" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Height="74" Name="txtSuggestion" Margin="317,71,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="387" AcceptsReturn="True"/>
                     <Label Content="Suivi" HorizontalAlignment="Left" Margin="711,72,0,0" VerticalAlignment="Top"/>
                     <ComboBox HorizontalAlignment="Left" Margin="761,75,0,0" VerticalAlignment="Top" Width="150" Name="cmbSuivi" DisplayMemberPath="Value"/>
-                    <Button Content="Ajouter" Name="btnAjouter" HorizontalAlignment="Left" Margin="763,114,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.813,-0.545" Height="33" Click="btnAjouter_Click"/>
+                    <Button Content="Ajouter" Name="btnAjouter" HorizontalAlignment="Left" Margin="761,114,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.813,-0.545" Height="33" Click="btnAjouter_Click"/>
+                    <Button Content="D'autres domaines" Name="btnUpdateDomaines" HorizontalAlignment="Left" Margin="856,114,0,0" VerticalAlignment="Top" Width="141" Height="33" Click="btnUpdateDomaines_Click"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Details" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="1">
                 <Grid >
-                    <dxg:GridControl  Name="grid_rapport" ItemsSource="{Binding Rapports}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row" AutoGeneratingColumn="grid_rapport_AutoGeneratingColumn">
+                    <dxg:GridControl  Name="grid_rapport"  ItemsSource="{Binding Rapports}" AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row" AutoGeneratingColumn="grid_rapport_AutoGeneratingColumn">
                         <dxg:GridControl.Columns>
                             <dxg:GridColumn FieldName="Num" Header="#" AllowEditing="False">
                             </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="Domaine" Header="Domaines" Binding="{Binding Path=Domaine.Value}">
+                            <dxg:GridColumn FieldName="Domaine" Header="Domaines" Binding="{Binding Path=Domaine.Value}" AllowEditing="False">
 
                             </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="SousDomaine" Header="Sous Domaines" Binding="{Binding Path=SousDomaine.Value}">
+                            <dxg:GridColumn FieldName="SousDomaine" Header="Sous Domaines" Binding="{Binding Path=SousDomaine.Value}" AllowEditing="False">
 
                             </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="Probleme" Header="Identification des problèmes" AllowEditing="True" IsSmart="True" Binding="{Binding Path=Probleme.Value}">
+                            <dxg:GridColumn FieldName="Probleme" Header="Identification des problèmes" AllowEditing="False" IsSmart="True" Binding="{Binding Path=Probleme.Value}">
 
                             </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="Solution" Header="Solution apportée" Binding="{Binding Path=Solution.Value}">
+                            <dxg:GridColumn FieldName="Solution" Header="Solution apportée" Binding="{Binding Path=Solution.Value}" AllowEditing="False">
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:TextEditSettings>
 
                                     </dxe:TextEditSettings>
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="Precisions" Header="Précisions">
+                            <dxg:GridColumn FieldName="Precisions" Header="Précisions" AllowEditing="False">
 
                             </dxg:GridColumn>
-                            <dxg:GridColumn FieldName="Suggestions" Header="Suggestions" />
-                            <dxg:GridColumn FieldName="Suivi" Header="Suivi à effectuer" AllowUnboundExpressionEditor="True" Binding="{Binding Path=Suivi.Value}">
+                            <dxg:GridColumn FieldName="Suggestions" Header="Suggestions" AllowEditing="False" />
+                            <dxg:GridColumn FieldName="Suivi" Header="Suivi à effectuer" AllowUnboundExpressionEditor="True" Binding="{Binding Path=Suivi.Value}" AllowEditing="False">
 
                             </dxg:GridColumn>
                         </dxg:GridControl.Columns>
                         <dxg:GridControl.View>
-                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="False" NewItemRowPosition="Top" ShowGroupPanel="False" AutoWidth="True" FocusedRowChanged="TableView_FocusedRowChanged" RowDoubleClick="TableView_RowDoubleClick">
+                            <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="False" NewItemRowPosition="Top" AllowEditing="False" ShowGroupPanel="False" AutoWidth="True" FocusedRowChanged="TableView_FocusedRowChanged" RowDoubleClick="TableView_RowDoubleClick">
                                 <dxg:TableView.RowCellMenuCustomizations>
                                     <dxb:BarButtonItem Name="deleteDataItem" Content="Supprimer" Glyph="/Ht.Ihsil.Rgph.App.Superviseur;component/images/delete-xxl.png" SerializationName="deleteDataItem" ItemClick="deleteDataItem_ItemClick" />
                                 </dxg:TableView.RowCellMenuCustomizations>
@@ -76,8 +77,7 @@
                     </dxg:GridControl>
                 </Grid>
             </GroupBox>
-            <Button x:Name="btnSauvegarder" Content="Sauvegarder"  HorizontalAlignment="Right" Margin="0,13,887,0" Width="123" Click="Button_Click" Height="33" VerticalAlignment="Top" Grid.Row="2"/>
+            <Button x:Name="btnSauvegarder" Content="Sauvegarder"  HorizontalAlignment="Right" Margin="-2,3.333,900.333,-0.333" Width="123" Click="Button_Click" Height="33" VerticalAlignment="Top" Grid.Row="2"/>
         </Grid>
-
     </Grid>
 </UserControl>

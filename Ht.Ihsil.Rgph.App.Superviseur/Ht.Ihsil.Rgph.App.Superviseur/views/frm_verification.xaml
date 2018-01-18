@@ -10,7 +10,6 @@
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
              x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_verification" 
              mc:Ignorable="d" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch" >
-
     <UserControl.Resources>
         <Style TargetType="dxg:GridColumn">
             <Setter Property="ReadOnly" Value="True"/>
@@ -35,7 +34,6 @@
                                             <dxg:TableView Name="table_couverture"  AllowPerPixelScrolling="True" ShowTotalSummary="True" AllowEditing="False" NavigationStyle="Row" ShowGroupPanel="False"/>
                                         </dxg:GridControl.View>
                                     </dxg:GridControl>
-
                                     <dxc:ChartControl Grid.Row="2" AnimationMode="OnLoad">
                                         <dxc:ChartControl.Legend>
                                             <dxc:Legend/>
@@ -48,7 +46,6 @@
                                             </dxc:BarSideBySideSeries2D>
                                         </dxc:XYDiagram2D>
                                     </dxc:ChartControl>
-
                                 </Grid>
                             </dx:DXTabItem>
                             <dx:DXTabItem Header="Indicateurs socio-demographiques" Name="tabSocioDemographiques" GotFocus="tabSocioDemographiques_GotFocus">
@@ -212,7 +209,7 @@
                                 <RowDefinition Height="254*"/>
                                 <RowDefinition Height="0*"/>
                             </Grid.RowDefinitions>
-                            <GroupBox Header="Difficultés rencontrées" Grid.Row="1">
+                            <GroupBox Header="Difficultés rencontrées" Margin="0,53,0,22.333" Grid.RowSpan="2">
                                 <Grid>
                                     <Label Content="Code Question" HorizontalAlignment="Left" Margin="3,111,0,0" VerticalAlignment="Top"/>
                                     <ComboBox HorizontalAlignment="Left" Margin="140,109,0,0" VerticalAlignment="Top" Width="166" Name="cmbCodeQuestion" DisplayMemberPath="CodeQuestion" SelectionChanged="cmbCodeQuestion_SelectionChanged" IsEnabled="False" />
@@ -221,7 +218,7 @@
                                     <Label Content="Module" HorizontalAlignment="Left" Margin="3,47,0,0" VerticalAlignment="Top"/>
                                     <ComboBox HorizontalAlignment="Left" Margin="140,45,0,0" VerticalAlignment="Top" Width="166" Name="cmbObjet" SelectionChanged="cmbObjet_SelectionChanged" DisplayMemberPath="Name" IsEnabled="False"/>
                                     <Label Content="Description du probleme" HorizontalAlignment="Left" Margin="5,198,0,0"  VerticalAlignment="Top"/>
-                                    <TextBox HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="141,200,0,5" TextWrapping="Wrap" Text="" Name="txtNature" AcceptsReturn="True" Width="166" Height="100" IsEnabled="False" />
+                                    <TextBox HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="141,200,0,0" TextWrapping="Wrap" Text="" Name="txtNature" AcceptsReturn="True" Width="166" Height="82" IsEnabled="False" />
                                     <Label Content="Choisir le(s) code(s) questionnaire(s)" HorizontalAlignment="Left" Margin="3,7,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.357,-0.045"/>
                                     <ComboBox HorizontalAlignment="Left" Margin="237,10,0,0" VerticalAlignment="Top" Width="68" Name="cmbBatiment" DisplayMemberPath="BatimentId" SelectionChanged="cmbBatiment_SelectionChanged" IsEnabled="False"/>
                                     <Label Content="Liste des codes à problème" Margin="312,8,314,0" VerticalAlignment="Top" Height="32"/>
@@ -234,8 +231,6 @@
                             <Label Content="Type de difficultés" HorizontalAlignment="Left" Margin="4,8,0,0" VerticalAlignment="Top" Height="22" Width="96" Grid.Row="0"/>
                             <ComboBox HorizontalAlignment="Left" Margin="152,8,0,0" VerticalAlignment="Top" Width="166" Name="cmbTypeProbleme" DisplayMemberPath="Value" SelectionChanged="cmbTypeProbleme_SelectionChanged" Height="22" Grid.Row="0"/>
                             <TextBlock HorizontalAlignment="Left" Margin="333,15,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="38" Width="372" x:Name="txtIndicateur" Foreground="#FF0F79E4"/>
-
-
                         </Grid>
                     </dx:DXTabItem>
                     <dx:DXTabItem Header="Affichage" GotFocus="DXTabItem_GotFocus">

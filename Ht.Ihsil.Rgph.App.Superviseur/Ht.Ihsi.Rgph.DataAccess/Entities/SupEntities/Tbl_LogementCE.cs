@@ -14,7 +14,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
     
     public partial class Tbl_LogementCE
     {
-        public long LogeId { get; set; }
+        public long Id { get; set; }
+        public Nullable<long> LogeId { get; set; }
         public Nullable<long> BatimentId { get; set; }
         public string SdeId { get; set; }
         public Nullable<long> QlCategLogement { get; set; }
@@ -35,6 +36,5 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
         public string DateFinCollecte { get; set; }
         public Nullable<long> DureeSaisie { get; set; }
         public Nullable<long> IsContreEnqueteMade { get; set; }
-        public long Id { get; set; }
     }
 }

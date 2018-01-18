@@ -878,7 +878,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             individu.BatimentId = _ind.BatimentId.GetValueOrDefault();
             individu.LogeId = _ind.LogeId.GetValueOrDefault();
             individu.MenageId = _ind.MenageId.GetValueOrDefault();
-            individu.IndividuId = _ind.IndividuId;
+            individu.IndividuId = _ind.IndividuId.GetValueOrDefault();
             individu.SdeId = _ind.SdeId;
             individu.Q3LienDeParente = Convert.ToByte(_ind.Q3LienDeParente.GetValueOrDefault());
             individu.Q3aRaisonChefMenage = Convert.ToByte(_ind.Q3aRaisonChefMenage.GetValueOrDefault());

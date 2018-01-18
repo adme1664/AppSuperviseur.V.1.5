@@ -35,20 +35,21 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         }
          public void insertUser(Tbl_Utilisateur utilisateur)
         {
-           
-            //try
-            //{
-                if(Utils.IsNotNull(utilisateur)){
+
+            try
+            {
+                if (Utils.IsNotNull(utilisateur))
+                {
                     log.Info("<>======Info user:" + utilisateur.Nom);
                     repository.UtilisateurRepository.Insert(utilisateur);
-                    repository.Context.SaveChanges();
+                    repository.SupDatabaseContext.SaveChanges();
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    log.Info("<>=================Insert user Error:" + ex.Message);
-            //    log.Info("<>=================Insert user Error:" + ex.InnerException);
-            //}
+            }
+            catch (Exception ex)
+            {
+                log.Info("<>=================Insert user Error:" + ex.Message);
+                log.Info("<>=================Insert user Error:" + ex.InnerException);
+            }
         }
 
          public void updateUser(Tbl_Utilisateur utilisateur)

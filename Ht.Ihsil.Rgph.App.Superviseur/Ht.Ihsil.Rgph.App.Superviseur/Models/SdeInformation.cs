@@ -36,5 +36,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
             get { return codeDistrict; }
             set { codeDistrict = value; }
         }
+       private string zone;
+        public string Zone
+        {
+            get
+            {
+                return zone;
+            }
+            set { zone = value; }
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public short qp5DateNaissanceJour { get; set; }
         public short qp5DateNaissanceMois { get; set; }
         public int qp5DateNaissanceAnnee { get; set; }
-        public short qp5bAge { get; set; }
+        public int qp5bAge { get; set; }
         public short qp6religion { get; set; }
         public string qp6AutreReligion { get; set; }
         public short qp7Nationalite { get; set; }

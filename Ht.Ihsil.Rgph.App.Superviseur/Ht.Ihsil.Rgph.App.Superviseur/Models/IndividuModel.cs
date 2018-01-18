@@ -24,7 +24,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public short Qp5DateNaissanceJour { get; set; }
         public short Qp5DateNaissanceMois { get; set; }
         public int Qp5DateNaissanceAnnee { get; set; }
-        public short Qp5bAge { get; set; }
+        public int Qp5bAge { get; set; }
         public short Qp6religion { get; set; }
         public string Qp6AutreReligion { get; set; }
         public short Qp7Nationalite { get; set; }

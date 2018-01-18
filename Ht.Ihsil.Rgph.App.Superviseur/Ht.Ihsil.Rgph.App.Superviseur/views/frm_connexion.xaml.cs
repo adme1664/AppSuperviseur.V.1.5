@@ -21,6 +21,8 @@ using Ht.Ihsil.Rgph.App.Superviseur.Models;
 using Ht.Ihsil.Rgph.App.Superviseur.services;
 using Ht.Ihsi.Rgph.Utility.Utils;
 using Ht.Ihsi.Rgph.Logging.Logs;
+using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
+using Ht.Ihsil.Rgph.App.Superviseur.Json;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.views
 {
@@ -30,6 +32,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
     public partial class frm_connexion : Window
     {
         private IUtilisateurService service;
+        private IConfigurationService configuration;
+        private ConsumeApiService apiService;
         private bool state = false;
         private static string MAIN_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Data\Databases\";
 
@@ -40,6 +44,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             Users.users = new Users();
             Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
             service = new UtilisateurService();
+            configuration = new ConfigurationService();
             log = new Logger();
         }
 
@@ -100,7 +105,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
             return false;
         }
-        public bool initializeConnexion(string username, string password)
+        public async Task initializeConnexion(string username, string password)
         {
             bool pingStatus = true;
             Dispatcher.Invoke(new Action(() =>
@@ -113,13 +118,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
             if (username.Length == 0 || password.Length == 0)
             {
-                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
-                MessageBox.Show("Veuillez saisir un nom utilisateur et un mot de passe", "ERREUR/IHSI", MessageBoxButton.OK, MessageBoxImage.Error);
+               await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+               await img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
+                MessageBox.Show("Veuillez saisir un nom utilisateur et un mot de passe", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                
             }
             else
             {
                 UtilisateurModel user = null;
-                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion avec la base de donnéees..."));
+                await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion avec la base de donnéees..."));
                 if (service.isSuperviseurAccountExist() == true)
                 {
                     try
@@ -127,37 +134,86 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         string[] tab = username.Split('.');
                         username = tab[0] + "" + tab[1];
                         user = service.authenticateUserLocally(username, password);
-                        img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-
+                        await img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                     }
                     catch (Exception ex)
                     {
                         log.Info("Error:" + ex.Message);
-                        img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
+                         img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                     }
                 }
                 else
                 {
 
-                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Application non encore configuree. Connexion avec le serveur..."));
+                    await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Application non encore configuree. Connexion avec le serveur..."));
                     pingStatus = pingTheServer(ConfigurationManager.AppSettings.Get("adrIpServer"));
                     if (pingStatus == false)
                     {
                         MessageBox.Show("Serveur indisponible", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                        return false;
+                        
                     }
 
-                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion avec le serveur en cours..."));
+                    await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion avec le serveur en cours..."));
                     try
                     {
-                        user = service.authenticateUserRemotely(username, password);
+                        apiService = new ConsumeApiService();
+                        Utilisateur userApi = new Utilisateur();
+                        string[] tab = username.Split('.');
+                        username = tab[0] + "" + tab[1];
+                        userApi.username = username;
+                        userApi.password = password;
+                        Utilisateur test = await apiService.authenticateUser(userApi);
+                        user = new UtilisateurModel();
+                        user.CodeUtilisateur = test.username;
+                        user.MotDePasse = test.password;
+                        user.ProfileId = Convert.ToInt32(test.profileId);
+                        user.Nom = test.nom;
+                        user.Prenom = test.prenom;
+                        //Enregistrement du superviseur
+                        service.insertUser(user);
+                        //Recherche des Sdes assignees au superviseur
+                        List<SdeBean> sdes = await apiService.listOfSde(test);
+                        if (sdes != null)
+                        {
+                            foreach (SdeBean s in sdes)
+                            {
+                                SdeModel sde = new SdeModel();
+                                sde.CodeDistrict = s.codeDistrict;
+                                sde.SdeId = s.SdeId;
+                                //Enregistrements
+                                configuration.saveSdeDetails(ModelMapper.MapToSde(sde));
+                            }
+                        }
+                        //
+                        //Recherche des agents
+                        List<AgentJson> agents = await apiService.listOfAgent(test);
+                        if (agents != null)
+                        {
+                            foreach (AgentJson a in agents)
+                            {
+                                AgentModel agent = new AgentModel();
+                                agent.Username = a.agentId;
+                                agent.Nom = a.nom;
+                                agent.Prenom = a.prenom;
+                                agent.Email = a.email;
+                                //Ajout des agents
+                                AgentModel agentSaved=configuration.insertAgentSde(agent);
+                                //Modification de la sde
+                                SdeModel s = configuration.getSdeDetails(a.sde);
+                                if (s != null)
+                                {
+                                    s.AgentId = agentSaved.AgentId;
+                                    configuration.updateSdeDetails(ModelMapper.MapToSde(s));
+                                }
+                             }
+                        }
                     }
                     catch (Exception ex)
                     {
-
+                        log.Info("ERROR:===============>" + ex.Message);
                     }
 
-                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion reussie"));
+                     busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion reussie"));
                 }
                 if (Utils.IsNotNull(user))
                 {
@@ -168,26 +224,26 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     state = true;
                     Users.users.Utilisateur = new UtilisateurModel();
                     Users.users.Utilisateur = user;
-
-                
                     Users.users.DatabasePath = MAIN_DATABASE_PATH;
+                    MainWindow1 m = new MainWindow1();
+                    this.Close();
+                    m.ShowDialog();
                     
-                    //Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory;
                 }
                 else
                 {
-                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Erreur de connexion."));
-                    Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+                    await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Erreur de connexion."));
+                    await Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
                     {
                         busyIndicator.IsBusy = false;
                         lbl_error.Content = "Erreur- Nom Utilisateur ou mot de passe errone.";
                         lbl_error.Visibility = Visibility.Visible;
                         img_loading.Visibility = Visibility.Hidden;
                     }, null);
+                    state = false;
                 }
             }
-
-            return state;
+            //return state;
         }
 
         private void chk_isAstic_Checked(object sender, RoutedEventArgs e)
@@ -202,20 +258,24 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
         }
 
-        private void t_password_KeyDown(object sender, KeyEventArgs e)
+        //private async Task<bool> callMethod()
+        //{
+        //    bool result= await initializeConnexion(t_username.Text, t_password.Password);
+        //    return result;
+        //}
+
+        private  void t_password_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 try
                 {
-
-                    initializeConnexion(t_username.Text, t_password.Password);
-                    if (state == true)
-                    {
-                        MainWindow1 m = new MainWindow1();
-                        this.Close();
-                        m.ShowDialog();
-                    }
+                    //this.Dispatcher.BeginInvoke( (Action)(() => initializeConnexion(t_username.Text, t_password.Password)));
+                    //bool r =  callMethod().Result;
+                    //if (r)
+                    //{
+                     initializeConnexion(t_username.Text, t_password.Password);
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -223,7 +283,5 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
             }
         }
-
-
     }
 }

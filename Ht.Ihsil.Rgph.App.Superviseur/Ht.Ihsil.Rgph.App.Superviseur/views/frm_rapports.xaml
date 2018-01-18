@@ -7,8 +7,8 @@
              mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="53*"/>
-            <RowDefinition Height="151*"/>
+            <RowDefinition Height="83*"/>
+            <RowDefinition Height="131*"/>
         </Grid.RowDefinitions>
         <TabControl HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,4,0,0" x:Name="tab_control">
             <TabItem x:Name="tb_ind_gestion">
@@ -59,7 +59,7 @@
             </TabItem>
         </TabControl>
         <Grid  Grid.Row="0" Margin="10,0,0,0">
-            
+
             <GroupBox Header="Sdes" HorizontalAlignment="Left"  VerticalAlignment="Stretch"  FontWeight="Bold" FontStyle="Italic" FontSize="13"  Margin="0,15,0,13" Width="153">
                 <ListBox x:Name="lbSdes" SelectionChanged="lbSdes_SelectionChanged">
                     <ListBox.ItemTemplate>

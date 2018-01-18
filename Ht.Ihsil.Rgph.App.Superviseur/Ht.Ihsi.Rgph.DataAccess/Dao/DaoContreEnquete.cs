@@ -123,7 +123,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         }
         public bool updateBatimentCE(Tbl_BatimentCE bat)
         {
-            Tbl_BatimentCE batUpdate = getBatiment(bat.BatimentId,bat.SdeId);
+            Tbl_BatimentCE batUpdate = getBatiment(bat.BatimentId.GetValueOrDefault(),bat.SdeId);
             if (batUpdate != null)
             {
                 
@@ -457,7 +457,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         {
             try
             {
-                Tbl_EmigreCE _em = getEmigreCEModel(_emigre.EmigreId, _emigre.SdeId);
+                Tbl_EmigreCE _em = getEmigreCEModel(_emigre.EmigreId.GetValueOrDefault(), _emigre.SdeId);
                 _em.BatimentId = _emigre.BatimentId;
                 _em.LogeId = _emigre.LogeId;
                 _em.MenageId = _emigre.MenageId;

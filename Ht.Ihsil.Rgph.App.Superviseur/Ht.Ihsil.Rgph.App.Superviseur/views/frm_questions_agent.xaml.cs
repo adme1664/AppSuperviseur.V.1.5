@@ -27,10 +27,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         IConfigurationService configuration;
         AgentModel agent = null;
         RapportPersonnelModel rptModel = null;
+        frm_rpt_personnel main_rpm = null;
         
-        public frm_questions_agent(AgentModel agent)
+        public frm_questions_agent(AgentModel agent,frm_rpt_personnel frm)
         {
             InitializeComponent();
+            main_rpm = frm;
             q1.Text = Constant.q1;
             q2.Text = Constant.q2;
             q3.Text = Constant.q3;
@@ -205,7 +207,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 string q14 = tQ14.Text;
                 if (rep1 == null || rep2 == null || rep3 == null || rep4 == null || rep5 == null || rep6 == null || rep7 == null || rep8 == null || rep9 == null || rep10 == null || rep11 == null || rep12 == null || rep13 == null || rep15 == null)
                 {
-                    MessageBox.Show("Tous les champs sont obligatoires", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Ou dwe mete repons yo.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
                 else
                 {
@@ -236,7 +239,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     bool result = service_ce.saveRptPersonnel(rpt);
                     if (result == true)
+                    {
                         MessageBox.Show("Rapport enregistre avec succes", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                        main_rpm.lbAgents.ItemsSource = configuration.searchAllAgents();
+                    }
                     else
                         MessageBox.Show("Erreur", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -247,11 +253,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         MessageBox.Show("Rapport modifie avec succes", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                     else
                         MessageBox.Show("Erreur", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                
-               
+                }                             
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
 
             }
@@ -259,8 +263,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
 
             }
-            
-            
+                        
         }
 
     }

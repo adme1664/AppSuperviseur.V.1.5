@@ -15,7 +15,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
        public GenericSupDatabaseContext(string connectionString)
            :base(connectionString)
        {
-
+           
        }
    
        public virtual DbSet<Tbl_Agent> Tbl_Agent { get; set; }

@@ -72,7 +72,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             {
                 log.Info("<>=======Password : " + password + " Pwd encryted : " + user.MotDePasse);
                     
-                //if (user.MotDePasse==MD5Encoder.encode(password))
+                //if (user.MotDePasse==MD5Encoder.encode(Password))
                 if (user.MotDePasse == password)
                 {
                     log.Info("<>==========OK");

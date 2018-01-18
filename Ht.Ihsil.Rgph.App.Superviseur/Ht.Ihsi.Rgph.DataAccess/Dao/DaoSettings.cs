@@ -83,7 +83,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         {
             try
             {
-                repository.SdeRepository.Update(sde);
+                repository.SdeRepository.Insert(sde);
                 repository.Save();
                 return true;
             }
@@ -101,6 +101,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
                 Tbl_Sde entity = repository.SdeRepository.Find(s => s.SdeId == sde.SdeId).FirstOrDefault();
                 entity.SdeId = sde.SdeId;
                 entity.NoOrdre = sde.NoOrdre;
+                entity.AgentId = sde.AgentId.GetValueOrDefault();
                 entity.StatutContreEnquete = sde.StatutContreEnquete.GetValueOrDefault();
                 entity.StatutCollecte = sde.StatutCollecte.GetValueOrDefault();
                 entity.RaisonCouverture = sde.RaisonCouverture.GetValueOrDefault();
@@ -132,20 +133,22 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         #endregion
 
         #region GESTION DES AGENTS
-        public void insertAgent(Tbl_Agent agent)
+        public Tbl_Agent insertAgent(Tbl_Agent agent)
         {
             try
             {
                 if (Utils.IsNotNull(agent))
                 {
-                    repository.AgentRepository.Insert(agent);
+                   Tbl_Agent a= repository.AgentRepository.Insert(agent);
                     repository.Save();
+                    return a;
                 }
             }
             catch (Exception)
             {
 
             }
+            return new Tbl_Agent();
         }
 
         public void updateAgent(Tbl_Agent agent)
@@ -177,6 +180,11 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         public Tbl_Agent findAgentById(long agentId)
         {
             return repository.AgentRepository.FindOne(agentId);
+        }
+
+        public Tbl_Agent findAgentByUsername(string username)
+        {
+            return repository.AgentRepository.Find(a => a.CodeUtilisateur == username).FirstOrDefault();
         }
 
         public void deleteAgent(long agentId)
@@ -471,7 +479,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
             return new List<Tbl_Materiels>();
         }
 
-
-     
+        
     }
 }

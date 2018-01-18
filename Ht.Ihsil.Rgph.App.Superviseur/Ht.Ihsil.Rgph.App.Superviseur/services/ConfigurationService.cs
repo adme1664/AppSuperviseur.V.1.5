@@ -14,7 +14,7 @@ using Ht.Ihsi.Rgph.DataAccess.Exceptions;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.services
 {
-    public class ConfigurationService:IConfigurationService
+    public class ConfigurationService : IConfigurationService
     {
         #region DECLARATIONS VARIABLES
         private DaoSettings daoSettings;
@@ -28,7 +28,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             string path = Utilities.getConnectionString(Users.users.SupDatabasePath);
             daoSettings = new DaoSettings(path);
             log = new Logger();
-         }
+        }
         #endregion
 
         #region SDE
@@ -37,7 +37,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             try
             {
                 return ModelMapper.MapToSdeModel(daoSettings.getSdeDetails(sdeId));
-            
+
             }
             catch (Exception)
             {
@@ -48,7 +48,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
 
         public bool saveSdeDetails(Tbl_Sde sde)
         {
-           
+
             try
             {
                 return daoSettings.saveSdeDetails(sde);
@@ -71,7 +71,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
 
             }
             return false;
-            
+
         }
 
         public List<Models.SdeModel> searchAllSdes()
@@ -90,17 +90,30 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         #endregion
 
         #region AGENTS
-
-        public void insertAgentSde(Models.AgentModel agent)
+        public AgentModel findAgentByUsername(string username)
         {
             try
             {
-                daoSettings.insertAgent(EntityMapper.MapMAgentInInEntity(agent));
+                return ModelMapper.MapToAgentModel(daoSettings.findAgentByUsername(username));
+            }
+            catch (Exception e)
+            {
+
+            }
+            return new AgentModel();
+        }
+
+        public AgentModel insertAgentSde(Models.AgentModel agent)
+        {
+            try
+            {
+               return ModelMapper.MapToAgentModel( daoSettings.insertAgent(EntityMapper.MapMAgentInInEntity(agent)));
             }
             catch (Exception)
             {
 
             }
+            return new AgentModel();
         }
 
         public void updateAgentSde(Models.AgentModel agent)
@@ -113,7 +126,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             {
 
             }
-            
+
         }
 
         public Models.AgentModel findAgentSderById(long agentId)
@@ -189,7 +202,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     foreach (Tbl_Agent agent in list)
                     {
                         AgentModel model = ModelMapper.MapToAgentModel(agent);
-                        model.Username = "" + agent.Nom + " " + agent.Prenom + "(" + agent.CodeUtilisateur + ")";
+                        model.Username = "" + agent.Prenom + "(" + agent.CodeUtilisateur + ")";
                         listOfAgent.Add(model);
                     }
                 }
@@ -219,7 +232,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             return false;
         }
-   
+
         public bool ifPersonExist(tbl_personnel person)
         {
             try
@@ -257,7 +270,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             {
                 return daoSettings.getRepository().MaterielsRepository.Find(m => m.AgentId == agentId).FirstOrDefault();
             }
-            catch (Exception )
+            catch (Exception)
             {
 
             }
@@ -289,7 +302,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
 
             }
             return false;
-            
+
         }
 
         public bool updateMateriels(Tbl_Materiels materiels)
@@ -302,7 +315,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             {
 
             }
-            return false ;
+            return false;
         }
 
         public Tbl_Materiels getMateriels(string serial)
@@ -455,12 +468,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         #region GESTION DES PROBLEMES
         public bool saveProbleme(ProblemeModel probleme)
         {
-            string method="saveProbleme";
+            string method = "saveProbleme";
             try
             {
                 return daoSettings.saveProbleme(ModelMapper.MapToTbl_Probleme(probleme));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Info("Erreur/" + method + "<>===========:" + ex.Message);
                 throw new MessageException(ex.Message);
@@ -472,7 +485,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             string method = "updateProbleme";
             try
             {
-               // ProblemeModel problemeUpdate = ModelMapper.MapToProblemeModel(daoSettings.getProblemeByCodeQuestionAndBatiment(probleme.CodeQuestion,probleme.BatimentId.GetValueOrDefault()));
+                // ProblemeModel problemeUpdate = ModelMapper.MapToProblemeModel(daoSettings.getProblemeByCodeQuestionAndBatiment(probleme.CodeQuestion,probleme.BatimentId.GetValueOrDefault()));
                 return daoSettings.updateProbleme(ModelMapper.MapToTbl_Probleme(probleme));
             }
             catch (Exception ex)
@@ -542,7 +555,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             string method = "getProblemeByCodeQuestionAndBatiment";
             try
             {
-                return ModelMapper.MapToProblemeModel(daoSettings.getProblemeByCodeQuestionAndBatiment(codeQuestion,batimentId)); 
+                return ModelMapper.MapToProblemeModel(daoSettings.getProblemeByCodeQuestionAndBatiment(codeQuestion, batimentId));
             }
             catch (Exception ex)
             {
@@ -552,11 +565,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         }
         #endregion
 
-
-
-
-
-
-       
     }
+   
 }

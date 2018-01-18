@@ -20,11 +20,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         #endregion
 
         #region GESTIONS DES AGENTS
-        void insertAgentSde(AgentModel agent);
+        AgentModel insertAgentSde(AgentModel agent);
         List<AgentModel> searchAllAgents();
         List<AgentModel> searchAllAgentsToDisplay();
         void updateAgentSde(AgentModel agent);
         AgentModel findAgentSderById(long agentId);
+        AgentModel findAgentByUsername(string username);
         void deleteAgentSde(long agentId);
         bool isAgentExist(int agentId);
         #endregion

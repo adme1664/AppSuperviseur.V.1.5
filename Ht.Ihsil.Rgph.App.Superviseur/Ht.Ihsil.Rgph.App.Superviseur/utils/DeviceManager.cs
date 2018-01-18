@@ -131,16 +131,24 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 if (reader != null)
                 {
                     output = reader.ReadToEnd().ToString();
-                    messages = output.Split(split, StringSplitOptions.RemoveEmptyEntries);
-                    for (int i = 0; i < messages.Length; i++)
+                    if (output != "")
                     {
-                        if (messages[i].Contains("Device"))
+                        messages = output.Split(split, StringSplitOptions.RemoveEmptyEntries);
+                        for (int i = 0; i < messages.Length; i++)
                         {
-                            split = new string[] { "=" };
-                            string[] mes = messages[i].Split(split, StringSplitOptions.RemoveEmptyEntries);
-                            deviceInfo.Imei = mes[1].ToString();
+                            if (messages[i].Contains("Device"))
+                            {
+                                split = new string[] { "=" };
+                                string[] mes = messages[i].Split(split, StringSplitOptions.RemoveEmptyEntries);
+                                deviceInfo.Imei = mes[1].ToString();
+                            }
                         }
                     }
+                    else
+                    {
+                        deviceInfo.Imei = "";
+                    }
+                    
                 }
 
                 process.StartInfo.Arguments = Constant.CMD_MODEL;
@@ -310,7 +318,5 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             android.Dispose();
             return pushed;
         }
-
-
     }
 }

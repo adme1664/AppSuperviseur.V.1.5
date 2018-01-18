@@ -6,133 +6,148 @@
              xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" 
              xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" 
              x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_details_sdes" 
-             mc:Ignorable="d" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Width="1258.239" Height="650.373">
+             mc:Ignorable="d" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch">
     <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="531*"/>
+            <RowDefinition Height="326*"/>
         </Grid.RowDefinitions>
-        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0">
-            <Grid HorizontalAlignment="Left" Height="319" Margin="12,41,0,0" VerticalAlignment="Top" Width="994">
-                <GroupBox Header="Endividi" HorizontalAlignment="Left" Margin="2,38,0,0" VerticalAlignment="Top" Height="271" Width="406">
-                    <Grid>
-                        <dxc:ChartControl HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <dxc:ChartControl.Legend>
-                                <dxc:Legend/>
-                            </dxc:ChartControl.Legend>
-                            <dxc:ChartControl.Diagram>
-                                <dxc:SimpleDiagram2D>
-                                    <dxc:SimpleDiagram2D.Series>
-                                        <dxc:PieSeries2D HoleRadiusPercent="0" Name="pieSeriesEndividi">
-                                            <dxc:PieSeries2D.Model>
-                                                <dxc:GlarePie2DModel />
-                                            </dxc:PieSeries2D.Model>
-                                            <dxc:PieSeries2D.PointOptions>
-                                                <dxc:PointOptions>
-                                                    <dxc:PointOptions.ValueNumericOptions>
-                                                        <dxc:NumericOptions Format="Number" Precision="0"/>
-                                                    </dxc:PointOptions.ValueNumericOptions>
-                                                </dxc:PointOptions>
-                                            </dxc:PieSeries2D.PointOptions>
-                                            <dxc:PieSeries2D.LegendPointOptions>
-                                                <dxc:PointOptions Pattern="{}{A}: {V}" />
-                                            </dxc:PieSeries2D.LegendPointOptions>
-                                        </dxc:PieSeries2D>
-                                    </dxc:SimpleDiagram2D.Series>
-                                </dxc:SimpleDiagram2D>
-                            </dxc:ChartControl.Diagram>                         
-                        </dxc:ChartControl>
-                    </Grid>
-                </GroupBox>
-                <GroupBox Header="Emigre" HorizontalAlignment="Left" Margin="413,38,0,0" VerticalAlignment="Top" Height="271" Width="405">
-                    <Grid>
-                        <dxc:ChartControl HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <dxc:ChartControl.Legend>
-                                <dxc:Legend/>
-                            </dxc:ChartControl.Legend>
-                            <dxc:ChartControl.Diagram>
-                                <dxc:SimpleDiagram2D>
-                                    <dxc:SimpleDiagram2D.Series>
-                                        <dxc:PieSeries2D HoleRadiusPercent="0" Name="pieSeriesEmigre">
-                                            <dxc:PieSeries2D.Model>
-                                                <dxc:GlarePie2DModel />
-                                            </dxc:PieSeries2D.Model>
-                                            <dxc:PieSeries2D.PointOptions>
-                                                <dxc:PointOptions>
-                                                    <dxc:PointOptions.ValueNumericOptions>
-                                                        <dxc:NumericOptions Format="Percent" Precision="0" />
-                                                    </dxc:PointOptions.ValueNumericOptions>
-                                                </dxc:PointOptions>
-                                            </dxc:PieSeries2D.PointOptions>
-                                            <dxc:PieSeries2D.LegendPointOptions>
-                                                <dxc:PointOptions Pattern="{}{A}: {V}" />
-                                            </dxc:PieSeries2D.LegendPointOptions>
-                                        </dxc:PieSeries2D>
-                                    </dxc:SimpleDiagram2D.Series>
-                                </dxc:SimpleDiagram2D>
-                            </dxc:ChartControl.Diagram>
-                        </dxc:ChartControl>
-                    </Grid>
-                </GroupBox>
-                <GroupBox Header="Dese" HorizontalAlignment="Left" Margin="823,38,-240,0" VerticalAlignment="Top" Height="271" Width="411">
-                    <Grid>
-                        <dxc:ChartControl HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <dxc:ChartControl.Legend>
-                                <dxc:Legend/>
-                            </dxc:ChartControl.Legend>
-                            <dxc:ChartControl.Diagram>
-                                <dxc:SimpleDiagram2D>
-                                    <dxc:SimpleDiagram2D.Series>
-                                        <dxc:PieSeries2D HoleRadiusPercent="0" Name="pieSeriesDeces">
-                                            <dxc:PieSeries2D.Model>
-                                                <dxc:GlarePie2DModel />
-                                            </dxc:PieSeries2D.Model>
-                                            <dxc:PieSeries2D.PointOptions>
-                                                <dxc:PointOptions>
-                                                    <dxc:PointOptions.ValueNumericOptions>
-                                                        <dxc:NumericOptions Format="Percent" Precision="0" />
-                                                    </dxc:PointOptions.ValueNumericOptions>
-                                                </dxc:PointOptions>
-                                            </dxc:PieSeries2D.PointOptions>
-                                            <dxc:PieSeries2D.LegendPointOptions>
-                                                <dxc:PointOptions Pattern="{}{A}: {V}" />
-                                            </dxc:PieSeries2D.LegendPointOptions>
-                                        </dxc:PieSeries2D>
-                                    </dxc:SimpleDiagram2D.Series>
-                                </dxc:SimpleDiagram2D>
-                            </dxc:ChartControl.Diagram>
-                        </dxc:ChartControl>
-                    </Grid>
-                </GroupBox>
-            </Grid>
-            <!--<Label Content="Label" Name="lbl_details_sde" HorizontalAlignment="Left" Margin="12,10,0,0" VerticalAlignment="Top" Width="352" Height="40"/>-->
-
-            <GroupBox Header="Enfomasyon sou SDE a:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="1236" Height="52">
-                <TextBlock HorizontalAlignment="Center" Margin="10,-6,-2,0" Name="lbl_details_sde" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"  Foreground="#FF059EF5"  FontSize="16" TextOptions.TextHintingMode="Animated" Width="1204">
-                    <TextBlock.LayoutTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform X="5" Y="5"/>
-                        </TransformGroup>
-                    </TextBlock.LayoutTransform>
-                </TextBlock>
-            </GroupBox>
-        </Grid>
-
-        <Grid HorizontalAlignment="Stretch" Margin="0,350,0,10" VerticalAlignment="Stretch">
+        <GroupBox Header="Enfomasyon sou SDE a:"  Height="52" Grid.Row="0">
+            <TextBlock HorizontalAlignment="Center" Margin="10,-6,-2,0" Name="lbl_details_sde" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"  Foreground="#FF059EF5"  FontSize="16" TextOptions.TextHintingMode="Animated" Width="1204">
+                <TextBlock.LayoutTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="5" Y="5"/>
+                    </TransformGroup>
+                </TextBlock.LayoutTransform>
+            </TextBlock>
+        </GroupBox>
+        <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="69*"/>
-                <!--<ColumnDefinition Width="295*"/>-->
-                <!--<ColumnDefinition Width="364*"/>-->
+                <ColumnDefinition Width="413*"/>
+                <ColumnDefinition Width="408*"/>
+                <ColumnDefinition Width="415*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox VerticalAlignment="Stretch" Header="Details" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"  Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Margin="0,10,10,10" HorizontalAlignment="Right" Width="1238">
+            <GroupBox Header="Endividi" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid>
-                    <dxc:ChartControl HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <dxc:ChartControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AnimationMode="OnLoad">
+                        <dxc:ChartControl.Legend>
+                            <dxc:Legend Visibility="Visible"/>
+                        </dxc:ChartControl.Legend>
+                        <dxc:ChartControl.Diagram>
+                            <dxc:SimpleDiagram2D>
+                                <dxc:SimpleDiagram2D.Series>
+                                    <dxc:PieSeries2D HoleRadiusPercent="0" Name="pieSeriesEndividi" LabelsVisibility="True" ToolTipEnabled="True">
+                                        <dxc:PieSeries2D.PointAnimation>
+                                            <dxc:Pie2DFlyInAnimation />
+                                        </dxc:PieSeries2D.PointAnimation>
+                                        <dxc:PieSeries2D.Label>
+                                            <dxc:SeriesLabel Visible="True" dxc:PieSeries.LabelPosition="TwoColumns" RenderMode="RectangleConnectedToCenter" TextPattern="{}{A}: {V}"/>
+                                        </dxc:PieSeries2D.Label>
+                                        <dxc:PieSeries2D.Model>
+                                            <dxc:GlarePie2DModel />
+                                        </dxc:PieSeries2D.Model>
+                                        <dxc:PieSeries2D.PointOptions>
+                                            <dxc:PointOptions>
+                                                <dxc:PointOptions.ValueNumericOptions>
+                                                    <dxc:NumericOptions Format="Number" Precision="0"/>
+                                                </dxc:PointOptions.ValueNumericOptions>
+                                            </dxc:PointOptions>
+                                        </dxc:PieSeries2D.PointOptions>
+                                        <dxc:PieSeries2D.LegendPointOptions>
+                                            <dxc:PointOptions Pattern="{}{A}: {V}" />
+                                        </dxc:PieSeries2D.LegendPointOptions>
+                                    </dxc:PieSeries2D>
+                                </dxc:SimpleDiagram2D.Series>
+                            </dxc:SimpleDiagram2D>
+                        </dxc:ChartControl.Diagram>
+                    </dxc:ChartControl>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Emigre" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid>
+                    <dxc:ChartControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AnimationMode="OnLoad">
                         <dxc:ChartControl.Legend>
                             <dxc:Legend/>
                         </dxc:ChartControl.Legend>
-                        <dxc:XYDiagram2D Width="1000">
+                        <dxc:ChartControl.Diagram>
+                            <dxc:SimpleDiagram2D>
+                                <dxc:SimpleDiagram2D.Series>
+                                    <dxc:PieSeries2D HoleRadiusPercent="0" Name="pieSeriesEmigre" LabelsVisibility="True" ToolTipEnabled="True">
+                                        <dxc:PieSeries2D.PointAnimation>
+                                            <dxc:Pie2DFlyInAnimation />
+                                        </dxc:PieSeries2D.PointAnimation>
+                                        <dxc:PieSeries2D.Label>
+                                            <dxc:SeriesLabel Visible="True" dxc:PieSeries.LabelPosition="TwoColumns" RenderMode="RectangleConnectedToCenter" TextPattern="{}{A}: {V}"/>
+                                        </dxc:PieSeries2D.Label>
+                                        <dxc:PieSeries2D.Model>
+                                            <dxc:GlarePie2DModel />
+                                        </dxc:PieSeries2D.Model>
+                                        <dxc:PieSeries2D.PointOptions>
+                                            <dxc:PointOptions>
+                                                <dxc:PointOptions.ValueNumericOptions>
+                                                    <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                </dxc:PointOptions.ValueNumericOptions>
+                                            </dxc:PointOptions>
+                                        </dxc:PieSeries2D.PointOptions>
+                                        <dxc:PieSeries2D.LegendPointOptions>
+                                            <dxc:PointOptions Pattern="{}{A}: {V}" />
+                                        </dxc:PieSeries2D.LegendPointOptions>
+                                    </dxc:PieSeries2D>
+                                </dxc:SimpleDiagram2D.Series>
+                            </dxc:SimpleDiagram2D>
+                        </dxc:ChartControl.Diagram>
+                    </dxc:ChartControl>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Dese" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid>
+                    <dxc:ChartControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AnimationMode="OnLoad">
+                        <dxc:ChartControl.Legend>
+                            <dxc:Legend/>
+                        </dxc:ChartControl.Legend>
+                        <dxc:ChartControl.Diagram>
+                            <dxc:SimpleDiagram2D>
+                                <dxc:SimpleDiagram2D.Series>
+                                    <dxc:PieSeries2D HoleRadiusPercent="0" Name="pieSeriesDeces" LabelsVisibility="True" ToolTipEnabled="True">
+                                        <dxc:PieSeries2D.PointAnimation>
+                                            <dxc:Pie2DFlyInAnimation />
+                                        </dxc:PieSeries2D.PointAnimation>
+                                        <dxc:PieSeries2D.Label>
+                                            <dxc:SeriesLabel Visible="True" dxc:PieSeries.LabelPosition="TwoColumns" RenderMode="RectangleConnectedToCenter" TextPattern="{}{A}: {V}"/>
+                                        </dxc:PieSeries2D.Label>
+                                        <dxc:PieSeries2D.Model>
+                                            <dxc:GlarePie2DModel />
+                                        </dxc:PieSeries2D.Model>
+                                        <dxc:PieSeries2D.PointOptions>
+                                            <dxc:PointOptions>
+                                                <dxc:PointOptions.ValueNumericOptions>
+                                                    <dxc:NumericOptions Format="Percent" Precision="0" />
+                                                </dxc:PointOptions.ValueNumericOptions>
+                                            </dxc:PointOptions>
+                                        </dxc:PieSeries2D.PointOptions>
+                                        <dxc:PieSeries2D.LegendPointOptions>
+                                            <dxc:PointOptions Pattern="{}{A}: {V}" />
+                                        </dxc:PieSeries2D.LegendPointOptions>
+                                    </dxc:PieSeries2D>
+                                </dxc:SimpleDiagram2D.Series>
+                            </dxc:SimpleDiagram2D>
+                        </dxc:ChartControl.Diagram>
+                    </dxc:ChartControl>
+                </Grid>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="2">
+            <GroupBox Header="Details" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}">
+                <Grid>
+                    <dxc:ChartControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AnimationMode="OnLoad">
+                        <dxc:ChartControl.Legend>
+                            <dxc:Legend/>
+                        </dxc:ChartControl.Legend>
+                        <dxc:XYDiagram2D>
                             <dxc:BarSideBySideSeries2D DisplayName="Series 1" Name="barSeriesDetails" ColorEach="True">
                                 <dxc:BarSideBySideSeries2D.Model>
                                     <dxc:Quasi3DBar2DModel/>

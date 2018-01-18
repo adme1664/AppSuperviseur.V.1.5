@@ -26,9 +26,10 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         #endregion
 
         #region GESTION DES AGENTS
-        void insertAgent(Tbl_Agent agent);
+        Tbl_Agent insertAgent(Tbl_Agent agent);
         void updateAgent(Tbl_Agent agent);
         Tbl_Agent findAgentById(long agentId);
+        Tbl_Agent findAgentByUsername(string username);
         void deleteAgent(long agentId);
         Tbl_Agent findAgent(string sdeId);
         List<Tbl_Agent> searchAllAgents();

@@ -7,8 +7,8 @@
     <Grid>
         <GroupBox Header="Evaluation" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Stretch">
             <Grid Margin="0,0,-14,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <GroupBox Header="Evaluation quantitative du comportement de l'Agent Recenseur" HorizontalAlignment="Left" VerticalAlignment="Top" Height="363" Width="550">
-                    <Grid HorizontalAlignment="Left" Width="535">
+                <GroupBox Header="Evaluation quantitative du comportement de l'Agent Recenseur" HorizontalAlignment="Left" VerticalAlignment="Top" Height="363" Width="485" Margin="0,-6,0,0">
+                    <Grid HorizontalAlignment="Left" Width="515" Margin="0,0,0,-0.333">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*"/>
                             <ColumnDefinition Width="2*"/>
@@ -20,17 +20,17 @@
                         <TextBlock TextWrapping="Wrap" Name="q5" Text="TextBlock" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.549,1.286" Width="300" Grid.Column="0" Height="37"/>
                         <TextBlock TextWrapping="Wrap" Name="q6" Text="TextBlock" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="300" Grid.Column="0" Height="37"/>
                         <TextBlock  Name="q7" HorizontalAlignment="Left" Margin="10,280,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="300" Grid.Column="0" Height="50" />
-                        <ComboBox Grid.Column="1" Name="cQ1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="193" DisplayMemberPath="LibelleReponse" Height="22"/>
-                        <ComboBox Grid.Column="1" Name="cQ2" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="193" DisplayMemberPath="LibelleReponse" Height="22"/>
-                        <ComboBox Grid.Column="1" Name="cQ3" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="193" DisplayMemberPath="LibelleReponse" Height="22"/>
-                        <ComboBox Grid.Column="1" Name="cQ4" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="193" DisplayMemberPath="LibelleReponse" Height="22"/>
-                        <ComboBox Grid.Column="1" Name="cQ5" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="193" DisplayMemberPath="LibelleReponse" Height="22"/>
-                        <ComboBox Grid.Column="1" Name="cQ6" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="193" DisplayMemberPath="LibelleReponse" Height="22"/>
-                        <ComboBox Grid.Column="1" Name="cQ7" HorizontalAlignment="Left" Margin="10,280,0,0" VerticalAlignment="Top" Width="193" DisplayMemberPath="LibelleReponse" Height="22"/>
+                        <ComboBox Grid.Column="1" Name="cQ1" HorizontalAlignment="Left" Margin="10.333,10,0,0" VerticalAlignment="Top" Width="140" DisplayMemberPath="LibelleReponse" Height="22"/>
+                        <ComboBox Grid.Column="1" Name="cQ2" HorizontalAlignment="Left" Margin="10.333,55,0,0" VerticalAlignment="Top" Width="140" DisplayMemberPath="LibelleReponse" Height="22"/>
+                        <ComboBox Grid.Column="1" Name="cQ3" HorizontalAlignment="Left" Margin="10.333,100,0,0" VerticalAlignment="Top" Width="140" DisplayMemberPath="LibelleReponse" Height="22"/>
+                        <ComboBox Grid.Column="1" Name="cQ4" HorizontalAlignment="Left" Margin="10.333,145,0,0" VerticalAlignment="Top" Width="140" DisplayMemberPath="LibelleReponse" Height="22"/>
+                        <ComboBox Grid.Column="1" Name="cQ5" HorizontalAlignment="Left" Margin="10.333,190,0,0" VerticalAlignment="Top" Width="140" DisplayMemberPath="LibelleReponse" Height="22"/>
+                        <ComboBox Grid.Column="1" Name="cQ6" HorizontalAlignment="Left" Margin="10.333,235,0,0" VerticalAlignment="Top" Width="140" DisplayMemberPath="LibelleReponse" Height="22"/>
+                        <ComboBox Grid.Column="1" Name="cQ7" HorizontalAlignment="Left" Margin="10.333,280,0,0" VerticalAlignment="Top" Width="140" DisplayMemberPath="LibelleReponse" Height="22"/>
                     </Grid>
                 </GroupBox>
 
-                <GroupBox Header="Evaluation quantitative du comportement de l'Agent Recenseur" HorizontalAlignment="Left" Margin="555,0,0,0" VerticalAlignment="Top" Height="361" Width="543">
+                <GroupBox Header="Evaluation quantitative du comportement de l'Agent Recenseur" HorizontalAlignment="Left" Margin="498,-6,-0.333,0" VerticalAlignment="Top" Height="361" Width="497">
                     <Grid HorizontalAlignment="Left" Width="531">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="316*"/>
@@ -42,30 +42,30 @@
                         <TextBlock TextWrapping="Wrap" Name="q11" Text="TextBlock" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="300" Grid.Column="0" Height="37" />
                         <TextBlock TextWrapping="Wrap" Name="q12" Text="TextBlock" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="300" Grid.Column="0" Height="37" />
                         <TextBlock TextWrapping="Wrap" Name="q13" Text="TextBlock" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="300" Grid.Column="0" Height="50" />
-                        <ComboBox Name="cQ8" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="193" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
-                        <ComboBox Name="cQ9" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="193" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
-                        <ComboBox Name="cQ10" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="193" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
-                        <ComboBox Name="cQ11" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="193" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
-                        <ComboBox Name="cQ12" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="193" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
-                        <ComboBox Name="cQ13" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="193" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
+                        <ComboBox Name="cQ8" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="140" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
+                        <ComboBox Name="cQ9" HorizontalAlignment="Left" Margin="10,55,0,0" VerticalAlignment="Top" Width="140" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
+                        <ComboBox Name="cQ10" HorizontalAlignment="Left" Margin="10,100,0,0" VerticalAlignment="Top" Width="140" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
+                        <ComboBox Name="cQ11" HorizontalAlignment="Left" Margin="10,145,0,0" VerticalAlignment="Top" Width="140" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
+                        <ComboBox Name="cQ12" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Width="140" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
+                        <ComboBox Name="cQ13" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="140" Grid.Column="1" Height="22" DisplayMemberPath="LibelleReponse"/>
                     </Grid>
 
                 </GroupBox>
-                <GroupBox Header="Evaluation qualitative du comportement de l'Agent Recenseur" HorizontalAlignment="Left" Margin="0,363,0,0" VerticalAlignment="Top" Width="549" Height="108">
+                <GroupBox Header="Evaluation qualitative du comportement de l'Agent Recenseur" HorizontalAlignment="Left" Margin="0,356,0,0" VerticalAlignment="Top" Width="485" Height="90">
                     <Grid>
-                        <TextBlock TextWrapping="Wrap" x:Name="q14" Text="TextBlock" HorizontalAlignment="Left" Margin="7,9,0,0" VerticalAlignment="Top" Width="300" Grid.Column="0" Height="50"/>
-                        <TextBox HorizontalAlignment="Left" Name="tQ14" Height="60" Margin="329,6,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="174" AcceptsReturn="True"/>
+                        <TextBlock TextWrapping="Wrap" x:Name="q14" Text="TextBlock" HorizontalAlignment="Left" Margin="7,9,0,0" VerticalAlignment="Top" Width="300" Grid.Column="0" Height="42"/>
+                        <TextBox HorizontalAlignment="Left" Name="tQ14" Height="43" Margin="317,6,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143" AcceptsReturn="True"/>
 
                     </Grid>
                 </GroupBox>
-                <GroupBox Header="Degré d'alerte" HorizontalAlignment="Left" Margin="556,363,0,0" VerticalAlignment="Top" Width="535" Height="110">
+                <GroupBox Header="Degré d'alerte" HorizontalAlignment="Left" Margin="499,356,0,0" VerticalAlignment="Top" Width="487" Height="91">
                     <Grid>
                         <TextBlock TextWrapping="Wrap" x:Name="q15" Text="TextBlock" HorizontalAlignment="Left" Margin="7,9,0,0" VerticalAlignment="Top" Width="300" Height="50"/>
-                        <ComboBox x:Name="cQ15" HorizontalAlignment="Left" Margin="310,16,0,0" VerticalAlignment="Top" Width="193" Height="22" DisplayMemberPath="LibelleReponse"/>
+                        <ComboBox x:Name="cQ15" HorizontalAlignment="Left" Margin="323,13,-3.333,0" VerticalAlignment="Top" Width="143" Height="22" DisplayMemberPath="LibelleReponse"/>
                     </Grid>
-                    
+
                 </GroupBox>
-                <Button HorizontalAlignment="Left" Name="btn_save" ToolTip="Enregistrer" Margin="0,475,0,0" VerticalAlignment="Top" Width="93" Height="34" Click="btn_save_Click">
+                <Button HorizontalAlignment="Left" Name="btn_save" ToolTip="Enregistrer" Margin="0,447,0,0" VerticalAlignment="Top" Width="93" Height="31" Click="btn_save_Click">
                     <Image Source="/images/save.png" x:Name="img_save" />
                 </Button>
             </Grid>

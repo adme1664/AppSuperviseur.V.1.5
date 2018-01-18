@@ -326,7 +326,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         public static BatimentType MapReaderToBatimentType(Tbl_BatimentCE batiment)
         {
             BatimentType bat = new BatimentType();
-            bat.batimentId = batiment.BatimentId;
+            bat.batimentId = batiment.BatimentId.GetValueOrDefault();
             bat.sdeId = batiment.SdeId;
             bat.qrec = batiment.Qrec;
             bat.qrgph = batiment.Qrgph;
@@ -375,7 +375,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         {
             return new LogementCType
             {
-                logeId = logement.LogeId,
+                logeId = logement.LogeId.GetValueOrDefault(),
                 sdeId = logement.SdeId,
                 batimentId = logement.BatimentId.GetValueOrDefault(),
                 qlc2bTotalFille = Convert.ToByte(logement.Qlc2bTotalFille.GetValueOrDefault()),
@@ -529,7 +529,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             return new IndividuType
             {
                 logeId = ind.LogeId.GetValueOrDefault(),
-                individuId = ind.IndividuId,
+                individuId = ind.IndividuId.GetValueOrDefault(),
                 batimentId = ind.BatimentId.GetValueOrDefault(),
                 menageId = ind.MenageId.GetValueOrDefault(),
                 sdeId = ind.SdeId,

@@ -14,7 +14,13 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
     
     public partial class Tbl_BatimentCE
     {
-        public long BatimentId { get; set; }
+        public long Id { get; set; }
+        public Nullable<long> BatimentId { get; set; }
+        public string DeptId { get; set; }
+        public string ComId { get; set; }
+        public string VqseId { get; set; }
+        public string DistrictId { get; set; }
+        public string Zone { get; set; }
         public string SdeId { get; set; }
         public string Qhabitation { get; set; }
         public string Qrec { get; set; }
@@ -38,11 +44,5 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
         public string DateFinCollecte { get; set; }
         public Nullable<long> DureeSaisie { get; set; }
         public Nullable<long> IsContreEnqueteMade { get; set; }
-        public long Id { get; set; }
-        public string DeptId { get; set; }
-        public string ComId { get; set; }
-        public string VqseId { get; set; }
-        public string DistrictId { get; set; }
-        public string Zone { get; set; }
     }
 }

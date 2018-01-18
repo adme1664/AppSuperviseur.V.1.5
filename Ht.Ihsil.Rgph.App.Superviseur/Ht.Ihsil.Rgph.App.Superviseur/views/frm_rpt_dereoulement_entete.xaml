@@ -10,17 +10,17 @@
                 <ImageBrush TileMode="FlipX"/>
             </Grid.Background>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="355"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Button Content="Creer rapport" Name="btn_create" HorizontalAlignment="Left" Margin="72,69,0,0" VerticalAlignment="Top" Width="110" Height="31"/>
-            <Button Content="Afficher rapport" HorizontalAlignment="Left" Margin="14,69,0,0" VerticalAlignment="Top" Width="114" Height="31" Grid.Column="1"/>
-            <Grid Name="grd_details" Background="#FFF5F1F1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Margin="345,0,0,0">
-                <UserControl Background="LightGray"/>
+            <!--<Button Content="Creer rapport" Name="btn_create" HorizontalAlignment="Left" Margin="72,69,0,0" VerticalAlignment="Top" Width="110" Height="31"/>-->
+            <Button Content="Afficher rapport" HorizontalAlignment="Left" Margin="16,69,-2,0" VerticalAlignment="Top" Width="114" Height="31" Grid.Column="1"/>
+            <Grid Name="grd_details" Background="#FFF5F1F1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="1">
+                <UserControl Background="LightGray" />
             </Grid>
-            <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="White" Name="scrl_view_tree" Margin="0,0,10,0">
-                <Grid HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" Grid.Column="0">
-                    <GroupBox Header="Rapports Effectues" HorizontalAlignment="Left" Grid.Row="0" Margin="12,203,0,0" VerticalAlignment="Top" Width="251" Height="196" Grid.Column="0">
+            <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Background="White" Name="scrl_view_tree" Grid.Column="0">
+                <Grid HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" >
+                    <GroupBox Header="Rapports Effectues" HorizontalAlignment="Left" Grid.Row="0" Margin="12,203,0,-0.333" VerticalAlignment="Top" Width="186" Height="196" Grid.Column="0">
                         <Grid>
                             <ListBox x:Name="lbRprts" Margin="0,0,0,-1" SelectionChanged="lbRprts_SelectionChanged">
                                 <ListBox.ItemTemplate>
@@ -34,7 +34,7 @@
                             </ListBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Code District" HorizontalAlignment="Left"  Margin="10,0,0,0" VerticalAlignment="Top" Height="136" Width="251" Grid.Column="0">
+                    <GroupBox Header="Code District" HorizontalAlignment="Left"  Margin="10,0,0,0" VerticalAlignment="Top" Height="136" Width="187" Grid.Column="0">
                         <ListBox x:Name="lbCodeDistrict" Margin="0,0,0,-1" SelectionChanged="lbCodeDistrict_SelectionChanged">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -46,7 +46,7 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </GroupBox>
-                    <Button Content="Ajouter un nouveau Rapport" HorizontalAlignment="Left" Margin="11,149,0,0" VerticalAlignment="Top" Width="218" Height="40" Name="btn_add_report" IsEnabled="False" Click="btn_add_report_Click"/>
+                    <Button Content="Nouveau Rapport" HorizontalAlignment="Left" Margin="11,149,0,0" VerticalAlignment="Top" Width="129" Height="40" Name="btn_add_report" IsEnabled="False" Click="btn_add_report_Click"/>
                 </Grid>
             </ScrollViewer>
         </Grid>

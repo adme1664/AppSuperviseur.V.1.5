@@ -46,11 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>C:\Program Files (x86)\System.Data.SQLite\2013\bin\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Ht.Ihsi.Rgph.Logging">
       <HintPath>..\..\..\..\WEB_APPLICATION\rgphv.1.1\Ht.Ihsi.Rgph\Ht.Ihsi.Rgph.Logging\bin\Debug\Ht.Ihsi.Rgph.Logging.dll</HintPath>
@@ -97,17 +98,17 @@
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.SQLite, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+    <Reference Include="System.Data.SQLite, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\System.Data.SQLite.Core.1.0.104.0\lib\net45\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.106.0\lib\net45\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.104.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.106.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.104.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.106.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.104.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.106.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -223,98 +224,98 @@
     <Compile Include="Entities\MobileEntities\tbl_vqse.cs">
       <DependentUpon>MobileDataEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\SupEntities\RgphSup.Context.cs">
+    <Compile Include="Entities\SupEntities\RgphContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RgphSup.Context.tt</DependentUpon>
+      <DependentUpon>RgphContext.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\SupEntities\RgphSup.cs">
+    <Compile Include="Entities\SupEntities\RgphContext.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Entities\SupEntities\RgphSup.Designer.cs">
+    <Compile Include="Entities\SupEntities\RgphContext.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RgphSup.edmx</DependentUpon>
+      <DependentUpon>RgphContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Agent.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_BatimentCE.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_CategorieQuestion.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Commune.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_ContreEnquete.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_DecesCE.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Departement.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_DetailsRapport.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_EmigreCE.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_IndividusCE.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_LogementCE.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Materiels.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_MenageCE.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Pays.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Probleme.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Questions.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Questions_Reponses.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_RapportPersonnel.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Reponses.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Retour.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_RprtComparaison.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_RprtDeroulement.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Sde.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Utilisateur.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_Utilisation.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\SupEntities\Tbl_VilleQuartierSectionCommunale.cs">
-      <DependentUpon>RgphSup.tt</DependentUpon>
+      <DependentUpon>RgphContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\MessageException.cs" />
     <Compile Include="Exceptions\NotFoundException.cs" />
@@ -347,22 +348,22 @@
       <DependentUpon>MobileDataEntities.edmx</DependentUpon>
       <LastGenOutput>MobileDataEntities.cs</LastGenOutput>
     </None>
-    <EntityDeploy Include="Entities\SupEntities\RgphSup.edmx">
+    <EntityDeploy Include="Entities\SupEntities\RgphContext.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>RgphSup.Designer.cs</LastGenOutput>
+      <LastGenOutput>RgphContext.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Entities\SupEntities\RgphSup.Context.tt">
+    <None Include="Entities\SupEntities\RgphContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RgphSup.edmx</DependentUpon>
-      <LastGenOutput>RgphSup.Context.cs</LastGenOutput>
+      <DependentUpon>RgphContext.edmx</DependentUpon>
+      <LastGenOutput>RgphContext.Context.cs</LastGenOutput>
     </None>
-    <None Include="Entities\SupEntities\RgphSup.edmx.diagram">
-      <DependentUpon>RgphSup.edmx</DependentUpon>
+    <None Include="Entities\SupEntities\RgphContext.edmx.diagram">
+      <DependentUpon>RgphContext.edmx</DependentUpon>
     </None>
-    <None Include="Entities\SupEntities\RgphSup.tt">
+    <None Include="Entities\SupEntities\RgphContext.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>RgphSup.edmx</DependentUpon>
-      <LastGenOutput>RgphSup.cs</LastGenOutput>
+      <DependentUpon>RgphContext.edmx</DependentUpon>
+      <LastGenOutput>RgphContext.cs</LastGenOutput>
     </None>
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -395,7 +396,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets')" />
-  <Import Project="..\packages\System.Data.SQLite.Core.1.0.104.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.104.0\build\net45\System.Data.SQLite.Core.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.106.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net45\System.Data.SQLite.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

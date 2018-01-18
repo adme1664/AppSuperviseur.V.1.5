@@ -43,9 +43,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         XmlUtils xmlReader;
         IContreEnqueteService service = null;
         private string codeDomaine = null;
-        public frm_rapport_deroulement()
+        frm_rpt_dereoulement_entete mainRpt = null;
+        public frm_rapport_deroulement( frm_rpt_dereoulement_entete rpt_entete)
         {
             InitializeComponent();
+            mainRpt = rpt_entete;
             log = new Logger();
             xmlReader = new XmlUtils(AppDomain.CurrentDomain.BaseDirectory + @"App_data\rapports.xml");
             ListOfDomaine = new ObservableCollection<KeyValue>();
@@ -61,10 +63,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             service = new ContreEnqueteService(Users.users.SupDatabasePath);
             cmbDomaine.ItemsSource = ListOfDomaine;
         }
-        public frm_rapport_deroulement(RapportDeroulementModel rpt)
+        public frm_rapport_deroulement(RapportDeroulementModel rpt, frm_rpt_dereoulement_entete rpt_entete)
         {
             InitializeComponent();
             log = new Logger();
+
+            if(rpt_entete!=null)
+                mainRpt = rpt_entete;
+
             xmlReader = new XmlUtils(AppDomain.CurrentDomain.BaseDirectory + @"App_data\rapports.xml");
             ListOfDomaine = new ObservableCollection<KeyValue>();
             Rapports = new ObservableCollection<DetailsRapportDeroulement>();
@@ -133,7 +139,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         log.Info("Enregistrer:" + resultat);
                     }
                     if (resultat == true)
+                    {
                         MessageBox.Show(Constant.MSG_RAPO_SAVE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                        List<RapportDeroulementModel> listOf = new List<RapportDeroulementModel>();
+                        listOf = service.searchRptDeroulment();
+                        mainRpt.lbRprts.ItemsSource = listOf;
+                        blankItems();
+                        grid_rapport.ItemsSource = new ObservableCollection<DetailsRapportDeroulement>();
+                    }
+                        
                 }
             }
             else
@@ -141,6 +155,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 List<DetailsRapportModel> listOfDetails = service.searchDetailsReport(rapport);
                 if (listOfDetails != null)
                 {
+                    bool result = false;
                     for (int i = 0; i < grid_rapport.VisibleRowCount; i++)
                     {
                         DetailsRapportDeroulement row = (DetailsRapportDeroulement)grid_rapport.GetRow(i);
@@ -160,10 +175,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             dt.Probleme = modelForUpdating.Probleme;
                             dt.RapportId = modelForUpdating.RapportId;
                             dt.DetailsRapportId = modelForUpdating.DetailsRapportId;
-                            bool result = service.updateDetailsDeroulement(dt);
-                            log.Info("Result updating============================<>" + result);
-                            //if(result==true)
-                            //    MessageBox.Show(Constant.MSG_RAPO_UPDATE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            result = service.updateDetailsDeroulement(dt);
+                            log.Info("Result updating============================<>" + result);                            
                         }
                         else
                         {
@@ -171,6 +184,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             log.Info("Result updating============================<>" + result1);
                         }
                     }
+                    if (result == true)
+                        MessageBox.Show(Constant.MSG_RAPO_UPDATE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
 
                 }
             }
@@ -290,7 +305,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
             }
         }
-
+        public void blankItems()
+        {
+            //cmbDomaine.ItemsSource = new List<KeyValue>();
+            cmbSousDomaine.ItemsSource = new List<KeyValue>();
+            cmbIntervention.ItemsSource = new List<KeyValue>();
+            cmbSolution.ItemsSource = new List<KeyValue>();
+            cmbSuivi.ItemsSource = new List<KeyValue>();
+            txtPrecision.Text = "";
+            txtSuggestion.Text = "";
+        }
         private void btnAjouter_Click(object sender, RoutedEventArgs e)
         {
             KeyValue domaine = new KeyValue();
@@ -298,57 +322,53 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             KeyValue probleme = new KeyValue();
             KeyValue solution = new KeyValue();
             KeyValue suivi = new KeyValue();
-            domaine = (KeyValue)cmbDomaine.SelectedItem;
-            sousDomaine = (KeyValue)cmbSousDomaine.SelectedItem;
-            probleme = (KeyValue)cmbIntervention.SelectedItem;
-            solution = (KeyValue)cmbSolution.SelectedItem;
-            suivi = (KeyValue)cmbSuivi.SelectedItem;
-
-            if (domaine.Key != 0 && sousDomaine.Key != 0
-                && probleme.Key != 0 && solution.Key != 0
-                && suivi.Key != 0)
+            try
             {
-                int i = Rapports.Count;
-                DetailsRapportDeroulement rprt = new DetailsRapportDeroulement(i + 1, domaine, sousDomaine, probleme, solution, txtPrecision.Text, txtSuggestion.Text, suivi, "Aucun");
-                if (btnAjouter.Content.ToString() == "Modifier")
+                domaine = (KeyValue)cmbDomaine.SelectedItem;
+                sousDomaine = (KeyValue)cmbSousDomaine.SelectedItem;
+                probleme = (KeyValue)cmbIntervention.SelectedItem;
+                solution = (KeyValue)cmbSolution.SelectedItem;
+                suivi = (KeyValue)cmbSuivi.SelectedItem;
+
+                if (domaine.Key != 0 && sousDomaine.Key != 0
+                    && probleme.Key != 0 && solution.Key != 0
+                    && suivi.Key != 0)
                 {
-                    foreach (DetailsRapportDeroulement dt in Rapports)
+                    int i = Rapports.Count;
+                    DetailsRapportDeroulement rprt = new DetailsRapportDeroulement(i + 1, domaine, sousDomaine, probleme, solution, txtPrecision.Text, txtSuggestion.Text, suivi, "Aucun");
+                    if (btnAjouter.Content.ToString() == "Modifier")
                     {
-                        if (dtModel.DetailsRapportId == dt.DetailsRapportId)
+                        foreach (DetailsRapportDeroulement dt in Rapports)
                         {
-                            rprt.Num = dt.Num;
-                            rprt.DetailsRapportId = dt.DetailsRapportId;
-                            Rapports.Remove(dt);
-                            Rapports.Add(rprt);
-                            grid_rapport.ItemsSource = Rapports;
-                            ListOfDomaine = new ObservableCollection<KeyValue>();
-                            ListOfDomaine = getListOfDomaines();
-                            ListOfSousDomaine = new ObservableCollection<KeyValue>();
-                            ListOfProbleme = new ObservableCollection<KeyValue>();
-                            ListOfSolutions = new ObservableCollection<KeyValue>();
-                            ListOfSuivi = new ObservableCollection<KeyValue>();
-                            txtPrecision.Text = "";
-                            txtSuggestion.Text = "";
-                            break;
+                            if (dtModel.DetailsRapportId == dt.DetailsRapportId)
+                            {
+                                rprt.Num = dt.Num;
+                                rprt.DetailsRapportId = dt.DetailsRapportId;
+                                Rapports.Remove(dt);
+                                Rapports.Add(rprt);
+                                grid_rapport.ItemsSource = Rapports;
+                                blankItems();
+                                break;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    Rapports.Add(rprt);
-                    grid_rapport.ItemsSource = Rapports;
-                    ListOfDomaine = new ObservableCollection<KeyValue>();
-                    ListOfDomaine = getListOfDomaines();
-                    ListOfSousDomaine = new ObservableCollection<KeyValue>();
-                    ListOfProbleme = new ObservableCollection<KeyValue>();
-                    ListOfSolutions = new ObservableCollection<KeyValue>();
-                    ListOfSuivi = new ObservableCollection<KeyValue>();
-                    txtPrecision.Text = "";
-                    txtSuggestion.Text = "";
-
+                    else
+                    {
+                        Rapports.Add(rprt);
+                        grid_rapport.ItemsSource = Rapports;
+                        btnAjouter.Content = "Ajouter";
+                        blankItems();
+                    }
                 }
             }
-
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show("Ou dwe chwazi yon domèn.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }           
         }
 
         private void TableView_FocusedRowChanged(object sender, FocusedRowChangedEventArgs e)
@@ -361,7 +381,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 int i = 0;
                 txtPrecision.Text = rpt.Precisions;
                 txtSuggestion.Text = rpt.Suggestions;
-                btnAjouter.Content = "Modifier";
                 foreach (KeyValue key in cmbDomaine.Items)
                 {
                     if (key.Key == rpt.Domaine.Key)
@@ -371,6 +390,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     }
                     i++;
                 }
+                btnAjouter.Content = "Modifier";
+                //blankItems();
             }
         }
 
@@ -384,8 +405,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
         {
-            btnAjouter.Content = "Modifier";
-            MessageBox.Show("" + dtModel.Domaine.Value);
+            try
+            {
+                btnAjouter.Content = "Modifier";
+            }
+            catch(Exception )
+            {
+
+            }
         }
 
         private void deleteDataItem_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
@@ -419,13 +446,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             rowAdd.DetailsRapportId = dt.DetailsRapportId;
                             rowAdd.Num = i;
                             Rapports.Add(rowAdd);
-                        }
-                        
+                        }                        
                         grid_rapport.ItemsSource = Rapports;
 
                     }
                 }
             }
+        }
+
+        private void btnUpdateDomaines_Click(object sender, RoutedEventArgs e)
+        {
+            btnAjouter.Content = "Ajouter";
+            blankItems();
         }
 
     }

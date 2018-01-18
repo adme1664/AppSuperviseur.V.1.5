@@ -1922,8 +1922,27 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 List<BatimentModel> listOfBatiments = ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.statut == (int)Constant.StatutModule.Fini).ToList());
                 BatimentModel firstBatiment = listOfBatiments.First();
                 BatimentModel lastBatiment = listOfBatiments.Last();
-                DateTime dateSaisieFirst = DateTime.ParseExact(firstBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
-                DateTime dateSaisieLast = DateTime.ParseExact(lastBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
+
+                DateTime dateSaisieFirst=new DateTime();
+                DateTime dateSaisieLast = new DateTime();
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(firstBatiment.DateDebutCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieFirst))
+                        log.Info("Format date:" + dateSaisieFirst.ToString());
+                }
+                //
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(firstBatiment.DateFinCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieLast))
+                        log.Info("Format date:" + dateSaisieLast.ToString());
+                }
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)
@@ -1957,10 +1976,28 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             try
             {
                 List<LogementModel> listOfLogements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.statut == (int)Constant.StatutModule.Fini).ToList());
-                LogementModel firstBatiment = listOfLogements.First();
-                LogementModel lastBatiment = listOfLogements.Last();
-                DateTime dateSaisieFirst = DateTime.ParseExact(firstBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
-                DateTime dateSaisieLast = DateTime.ParseExact(lastBatiment.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                LogementModel firstLogement = listOfLogements.First();
+                LogementModel lastLogement = listOfLogements.Last();
+                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
+                DateTime dateSaisieFirst = new DateTime();
+                DateTime dateSaisieLast = new DateTime();
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(firstLogement.DateDebutCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieFirst))
+                        log.Info("Format date:" + dateSaisieFirst.ToString());
+                }
+                //
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(lastLogement.DateFinCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieLast))
+                        log.Info("Format date:" + dateSaisieLast.ToString());
+                }
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)
@@ -1991,8 +2028,26 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 List<LogementModel> listOfLogements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.statut == (int)Constant.StatutModule.Fini).ToList());
                 LogementModel firstLogement = listOfLogements.First();
                 LogementModel lastLogement = listOfLogements.Last();
-                DateTime dateSaisieFirst = DateTime.ParseExact(firstLogement.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
-                DateTime dateSaisieLast = DateTime.ParseExact(lastLogement.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                DateTime dateSaisieFirst=new DateTime();
+                DateTime dateSaisieLast = new DateTime();
+                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(firstLogement.DateDebutCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieFirst))
+                        log.Info("Format date:" + dateSaisieFirst.ToString());
+                }
+                //
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(lastLogement.DateFinCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieLast))
+                        log.Info("Format date:" + dateSaisieLast.ToString());
+                }
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)
@@ -2048,8 +2103,27 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 List<MenageModel> listOfMenages = ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(l => l.statut == (int)Constant.StatutModule.Fini).ToList());
                 MenageModel firstMenage = listOfMenages.First();
                 MenageModel lastMenage = listOfMenages.Last();
-                DateTime dateSaisieFirst = DateTime.ParseExact(firstMenage.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
-                DateTime dateSaisieLast = DateTime.ParseExact(lastMenage.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                DateTime dateSaisieFirst = new DateTime();
+                DateTime dateSaisieLast = new DateTime();
+                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(firstMenage.DateDebutCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieFirst))
+                        log.Info("Format date:" + dateSaisieFirst.ToString());
+                }
+                //
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(lastMenage.DateFinCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieLast))
+                        log.Info("Format date:" + dateSaisieLast.ToString());
+                }
+
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)
@@ -2086,8 +2160,26 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 List<IndividuModel> listOfIndividus = ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(l => l.statut == (int)Constant.StatutModule.Fini).ToList());
                 IndividuModel firstIndividu = listOfIndividus.First();
                 IndividuModel lastIndividu = listOfIndividus.Last();
-                DateTime dateSaisieFirst = DateTime.ParseExact(firstIndividu.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
-                DateTime dateSaisieLast = DateTime.ParseExact(lastIndividu.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null);
+                DateTime dateSaisieFirst = new DateTime();
+                DateTime dateSaisieLast = new DateTime();
+                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(firstIndividu.DateDebutCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieFirst))
+                        log.Info("Format date:" + dateSaisieFirst.ToString());
+                }
+                //
+                foreach (string dateStringFormat in formatDates)
+                {
+                    if (DateTime.TryParseExact(lastIndividu.DateFinCollecte, dateStringFormat,
+                                      CultureInfo.InvariantCulture,
+                                      DateTimeStyles.None,
+                                      out dateSaisieLast))
+                        log.Info("Format date:" + dateSaisieLast.ToString());
+                }
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)

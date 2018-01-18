@@ -35,6 +35,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         private static string TEMP_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Temp\";
         private static string BACKUP_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Backup\";
         private static string APP_DIRECTORY_PATH = AppDomain.CurrentDomain.BaseDirectory;
+        private static string CLASSNAME = "frm_pop_up_transfert";
         private DeviceManager device;
         BackgroundWorker bckw;
         SqliteDataReaderService service;
@@ -69,10 +70,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
             Users.users.SupDatabasePath = AppDomain.CurrentDomain.BaseDirectory + @"Data\";
         }
-
         public void pullFile()
         {
-
+            string methodName = "pullFile";
             string sdeId = null;
             Tbl_Materiels mat = null;
             img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Visible));
@@ -197,6 +197,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     else
                     {
                         MessageBox.Show(Constant.MSG_TABLET_PAS_CONFIGURE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        Process[] procs = Process.GetProcessesByName("adb");
+                        if (procs.Length != 0)
+                        {
+                            foreach (var proc in procs)
+                            {
+                                if (!proc.HasExited)
+                                {
+                                    proc.Kill();
+                                }
+                            }
+                        }
                         prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
                         this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
                     }
@@ -204,13 +215,24 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 else
                 {
                     MessageBox.Show(Constant.MSG_TABLET_PAS_CONNECTE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    Process[] procs = Process.GetProcessesByName("adb");
+                    if (procs.Length != 0)
+                    {
+                        foreach (var proc in procs)
+                        {
+                            if (!proc.HasExited)
+                            {
+                                proc.Kill();
+                            }
+                        }
+                    }
                     prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 0));
                     this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Info("Classname/"+CLASSNAME+"/Method/"+methodName+"=>Error:" + ex.Message);
             }
             finally
             {
@@ -230,7 +252,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
 
         }
-
         public void pushFile()
         {
             string sdeId = null;
@@ -268,7 +289,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 }
                                 else
                                 {
-                                    //System.IO.File.Delete(destFileName);
                                     System.IO.File.Copy(f, destFileName, true);
                                 }
                                 break;
@@ -300,11 +320,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         MessageBox.Show(Constant.MSG_TRANSFERT_TERMINE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                         lbl_trans.Dispatcher.BeginInvoke((Action)(() => lbl_trans.Content = "Transfè a fini. "));
                         this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
-                        //img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                        //img_finish.Dispatcher.BeginInvoke((Action)(() => img_finish.Visibility = Visibility.Visible));
-                        //btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.IsEnabled = true));
-                        //btn_start.Dispatcher.BeginInvoke((Action)(() => btn_start.Content = "Fermer"));
-                     }
+                    }
                 }
                 else
                 {

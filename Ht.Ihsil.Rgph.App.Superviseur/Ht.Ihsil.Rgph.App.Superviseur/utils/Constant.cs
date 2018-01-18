@@ -20,6 +20,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static short STATUT_MODULE_KI_FINI_1 = 1;
         public static short STATUT_MODULE_KI_MAL_RANPLI_2 = 2;
         public static short STATUT_MODULE_KI_PA_FINI_3 = 3;
+        public static string SDE_ZONE_RURAL = "2";
+        public static string SDE_ZONE_URBAINE = "1";
 
         public static string STATUT_EFFECTUE = "Effectue";
         public static string STATUT_NON_EFFECTUE = "Non Effectue";
@@ -438,7 +440,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #region ANDROID ADB COMMAND
         public static string CMD_IMEI = "/c adb shell dumpsys iphonesubinfo";
-        public static string CMD_SERIAL = "/c adb shell getprop ril.serialnumber";
+        public static string CMD_SERIAL = "/c adb shell getprop ro.boot.serialno";
         public static string CMD_MODEL = "/c adb shell getprop ro.product.model";
         public static string CMD_VERSION = "/c adb shell getprop ro.build.version.release";
         public static string DB_NAME = "rgph_data-db";
