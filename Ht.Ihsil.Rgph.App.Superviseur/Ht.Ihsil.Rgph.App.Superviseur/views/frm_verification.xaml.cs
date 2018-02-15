@@ -739,6 +739,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     //
                     nbreLogementC += reader.getTotalPersonnesByLogementCollections();
                     nbreLimitation += reader.getTotalPersonnesByLimitation();
+                    nbreMenage = nbreMenage + reader.getTotalHommeChefMenage();
                     nbreFemmeChefMenage += reader.getTotalFemmeChefMenage();
                     nbreMenageUniPersonnel += reader.getTotalMenageUnipersonnel();
                     nbreMenage6Personnes += nbreMenage6Personnes + reader.getTotalMenageDe6IndsEtPlus();
@@ -751,7 +752,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 //Indicateurs de couverture
                 nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
                 nbreLogementInd = nbreLogementInd + reader.getTotalLogementInds();
-                nbreMenage = nbreMenage + reader.getTotalMenages();
+                nbreMenage = nbreMenage + reader.getTotalHommeChefMenage();
                 //
 
                 //Indicateurs socio-demographiques
@@ -795,7 +796,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         barSeriesTailleMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages de grande taille (6  et plus)", nbreMenage6Personnes))));
 
             pieSeriesNbreMenage.Dispatcher.BeginInvoke((Action)(() =>
-                   pieSeriesNbreMenage.Points.Add(new SeriesPoint("Nombre de ménages recensés", nbreMenage))));
+                   pieSeriesNbreMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages dont le chef est un homme", nbreMenage))));
             pieSeriesNbreMenage.Dispatcher.BeginInvoke((Action)(() =>
                        pieSeriesNbreMenage.Points.Add(new SeriesPoint("Proportion (%)  de ménages dont le chef est une femme. ", nbreFemmeChefMenage))));
 
@@ -1067,8 +1068,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     foreach (SdeModel sde in configuration.searchAllSdes())
                     {
                         reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
-                        nbreTotal += reader.GetAllIndividus().Count;
-                        Flag flagPopulation = reader.CountTotalFlag();
+                        List<IndividuModel> individus = reader.GetAllIndividus();
+                        nbreTotal += individus.Count;
+                        Flag flagPopulation = reader.CountTotalFlag(individus);
                         Flag flagAgeDateNaissance = reader.Count2FlagAgeDateNaissance();
                         Flag flagFecondite = reader.CountFlagFecondite();
                         Flag flagEmploi = reader.CountFlagEmploi();
@@ -1115,8 +1117,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 else
                 {
                     reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
-                    nbreTotal = reader.GetAllIndividus().Count;
-                    flagPopulationParDistrict = reader.CountTotalFlag();
+                    List<IndividuModel> individus = reader.GetAllIndividus();
+                    nbreTotal += individus.Count;
+                    flagPopulationParDistrict = reader.CountTotalFlag(individus);
                     flagAgeDateNaissanceParDistrict = reader.Count2FlagAgeDateNaissance();
                     flagFeconditeParDistrict = reader.CountFlagFecondite();
                     flagEmploiParDistrict = reader.CountFlagEmploi();
@@ -1204,6 +1207,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
         }
 
-      
+        private void chartControlCompteur_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Point point=e.GetPosition(this);
+            //System.Drawing.Point pointD = new System.Drawing.Point();
+            //pointD.X = Convert.ToInt32(point.X);
+            //pointD.Y = Convert.ToInt32(point.Y);
+            ChartHitInfo info = chartControlCompteur.CalcHitInfo(point);
+            if (info.Series != null)
+            {
+                MessageBox.Show("" + info.Series.Name);
+            }
+
+         }
+
+     
     }
 }

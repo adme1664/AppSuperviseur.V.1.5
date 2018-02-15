@@ -22,6 +22,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public int Flag11 { get; set; }
         public int Flag12 { get; set; }
         public int Flag13 { get; set; }
+        public List<IndividuModel> Individus { get; set; }
 
     }
 }

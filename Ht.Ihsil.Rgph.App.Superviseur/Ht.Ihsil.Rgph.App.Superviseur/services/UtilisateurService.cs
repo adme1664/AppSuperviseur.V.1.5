@@ -134,6 +134,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             dao.getRepository().Save();
         }
-            
+
+        public bool isAsticAccountExist()
+        {
+            if (dao.getRepository().UtilisateurRepository.Find(u => u.ProfileId == 6).Count() > 0) return true;
+            return false;
+        }
     }
 }

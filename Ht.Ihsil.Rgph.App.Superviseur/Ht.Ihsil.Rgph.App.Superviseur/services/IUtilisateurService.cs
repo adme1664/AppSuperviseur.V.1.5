@@ -11,6 +11,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
    public interface IUtilisateurService
     {
        bool isSuperviseurAccountExist();
+       bool isAsticAccountExist();
        UtilisateurModel authenticateUserLocally(string username, string password);
        UtilisateurModel authenticateUserRemotely(string username, string password);
         void insertUser(UtilisateurModel utilisateur);

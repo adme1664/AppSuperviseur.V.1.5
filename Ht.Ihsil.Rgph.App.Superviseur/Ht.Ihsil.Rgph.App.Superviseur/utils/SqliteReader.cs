@@ -1158,18 +1158,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return new Codification();
         }
-        public Flag CountTotalFlag()
+        public Flag CountTotalFlag(List<IndividuModel> individus)
         {
             string methodName = "CountFlag";
             try
             {
-                List<IndividuModel> listOfIndividus = GetAllIndividus();
                 Flag compteur = new Flag();
-
-
-                foreach (IndividuModel ind in listOfIndividus)
+                foreach (IndividuModel ind in individus)
                 {
                     int numberOfProblems = 0;
+                    
                     #region Test date de naissance/age
                     if (ind.Qp5DateNaissanceAnnee == 9999 && ind.Qp5DateNaissanceJour == 99 && ind.Qp5DateNaissanceMois == 99)
                     {
@@ -1269,6 +1267,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         compteur.Flag12 += 1;
                     if (numberOfProblems == 13)
                         compteur.Flag13 += 1;
+                    compteur.Individus = new List<IndividuModel>();
+                   
                     #endregion
                 }
                 return compteur;
@@ -1283,27 +1283,43 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public Flag Count2FlagAgeDateNaissance()
         {
             string methodName = "Count2FlagAgeDateNaissance";
+            List<IndividuModel> individusWithFlags = new List<IndividuModel>();
             try
             {
                 List<IndividuModel> listOfIndividus = GetAllIndividus();
                 Flag compteur = new Flag();
-
-
                 foreach (IndividuModel ind in listOfIndividus)
                 {
                     int numberOfProblems = 0;
                     #region Test date de naissance/age
+                    //Si on ne connait ni l'annee, le jour et le mois de naissance de la personne 
                     if (ind.Qp5DateNaissanceAnnee == 9999 && ind.Qp5DateNaissanceJour == 99 && ind.Qp5DateNaissanceMois == 99)
                     {
                         numberOfProblems += 1;
-                    }
+                        //Verifie si l'individu existe deja dans la liste
+                        if(Utilities.isIndividuExist(individusWithFlags, ind)==false){
+                            individusWithFlags.Add(ind);
+                        }
+                   }
+                    //Si on ne connait ni l'annee, le jour et le mois de naissance de la personne mais on connait son age
                     if (ind.Qp5DateNaissanceAnnee == 9999 && ind.Qp5DateNaissanceJour == 99 && ind.Qp5DateNaissanceMois == 99 && ind.Qp5bAge != 999)
                     {
                         numberOfProblems += 1;
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusWithFlags, ind) == false)
+                        {
+                            individusWithFlags.Add(ind);
+                        }
                     }
+                    //Si on connait l'annee, le jour et le mois de naissance de la personne mais on ne connait pas son age
                     if (ind.Qp5DateNaissanceAnnee != 9999 && ind.Qp5DateNaissanceJour != 99 && ind.Qp5DateNaissanceMois != 99 && ind.Qp5bAge == 999)
                     {
                         numberOfProblems += 1;
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusWithFlags, ind) == false)
+                        {
+                            individusWithFlags.Add(ind);
+                        }
                     }
                     #endregion
                     if (numberOfProblems == 0)
@@ -1312,6 +1328,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         compteur.Flag1 += 1;
                     if (numberOfProblems == 2)
                         compteur.Flag2 += 1;
+                    compteur.Individus = new List<IndividuModel>();
+                    compteur.Individus = individusWithFlags;
                 }
                 return compteur;
 
@@ -1322,31 +1340,47 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return new Flag();
         }
-
         public Flag CountFlagFecondite()
         {
             string methodName = "CountFlagFecondite";
+            List<IndividuModel> individusWithFlags = new List<IndividuModel>();
             try
             {
                 List<IndividuModel> listOfIndividus = GetAllIndividus();
                 Flag compteur = new Flag();
-
-
                 foreach (IndividuModel ind in listOfIndividus)
                 {
                     int numberOfProblems = 0;
                     #region Fecondite
+                    //Si on ne connait pas le nombre d'enfants nes vivants dans le menage
                     if (ind.Qp4Sexe == (int)Constant.Sexe.Fi && ind.Qp5bAge >= 13 && ind.Qf1aNbreEnfantNeVivantM == 99)
                     {
                         numberOfProblems += 1;
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusWithFlags, ind) == false)
+                        {
+                            individusWithFlags.Add(ind);
+                        }
                     }
+                    //Si on ne connait pas le nombre d'enfants de sexe feminin ne dans le menage
                     if (ind.Qp4Sexe == (int)Constant.Sexe.Fi && ind.Qp5bAge >= 13 && ind.Qf1bNbreEnfantNeVivantF == 99)
                     {
                         numberOfProblems += 1;
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusWithFlags, ind) == false)
+                        {
+                            individusWithFlags.Add(ind);
+                        }
                     }
+                    //Si on connait pas le nombre d'enfants de sexe masculin ne dans le menage
                     if (ind.Qp4Sexe == (int)Constant.Sexe.Fi && ind.Qp5bAge >= 13 && ind.Qf1bNbreEnfantNeVivantF == 99 && ind.Qf1aNbreEnfantNeVivantM == 99)
                     {
                         numberOfProblems += 1;
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusWithFlags, ind) == false)
+                        {
+                            individusWithFlags.Add(ind);
+                        }
                     }
                     #endregion
                     if (numberOfProblems == 0)
@@ -1357,6 +1391,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         compteur.Flag2 += 1;
                     if (numberOfProblems == 3)
                         compteur.Flag3 += 1;
+                    compteur.Individus = new List<IndividuModel>();
+                    compteur.Individus = individusWithFlags;
                 }
                 return compteur;
 
@@ -1367,31 +1403,47 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return new Flag();
         }
-
         public Flag CountFlagEmploi()
         {
             string methodName = "CountFlagEmploi";
+            List<IndividuModel> individusWithFlags = new List<IndividuModel>();
             try
             {
                 List<IndividuModel> listOfIndividus = GetAllIndividus();
                 Flag compteur = new Flag();
-
-
                 foreach (IndividuModel ind in listOfIndividus)
                 {
                     int numberOfProblems = 0;
                     #region Activite Economique
+                    //Si on ne connait le type de bien produit dans l'entreprise ou l'individu travail
                     if (ind.Qp5bAge >= 10 && ind.Qa5TypeBienProduitParEntreprise == "99")
                     {
                         numberOfProblems += 1;
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusWithFlags, ind) == false)
+                        {
+                            individusWithFlags.Add(ind);
+                        }
                     }
+                    //Si on connait pas le poste qu'occupe l'individu dans l'entreprise
                     if (ind.Qp5bAge >= 10 && ind.Qa7FoncTravail == 99)
                     {
                         numberOfProblems += 1;
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusWithFlags, ind) == false)
+                        {
+                            individusWithFlags.Add(ind);
+                        }
                     }
+                    //S'il n'a pas entrepris de demarche pour pouvoir travailler
                     if (ind.Qp5bAge >= 10 && ind.Qa8EntreprendreDemarcheTravail == 10)
                     {
                         numberOfProblems += 1;
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusWithFlags, ind) == false)
+                        {
+                            individusWithFlags.Add(ind);
+                        }
                     }
                     #endregion
                     if (numberOfProblems == 0)
@@ -1402,6 +1454,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         compteur.Flag2 += 1;
                     if (numberOfProblems == 3)
                         compteur.Flag3 += 1;
+                    compteur.Individus = new List<IndividuModel>();
+                    compteur.Individus = individusWithFlags;
                 }
                 return compteur;
 
@@ -2235,7 +2289,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qp5bAge < 1).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge < 1 ).Count();
             }
             catch (Exception ex)
             {
@@ -2252,7 +2306,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 18).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 18 && i.qp5bAge<Constant.AGE_PA_KONNEN).Count();
             }
             catch (Exception)
             {
@@ -2268,7 +2322,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 10).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 10 && i.qp5bAge < Constant.AGE_PA_KONNEN).Count();
             }
             catch (Exception)
             {
@@ -2285,7 +2339,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 65).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 65 && i.qp5bAge < Constant.AGE_PA_KONNEN).Count();
             }
             catch (Exception ex)
             {
@@ -2616,6 +2670,62 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region INDICATEURS SOCIO-DEMOGRAPHIQUES PAR MENAGES
+
+        //Retourne tous les menages unipersonnels
+        public List<MenageModel> searchMenageUnipersonnel()
+        {
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.qm11TotalIndividuVivant == 1).ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<MenageModel>();
+        }
+
+        //Retourne tous les menages ayant 2 ou 3 personnnes
+        public List<MenageModel> searchMenage2Ou3Personne()
+        {
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m=>m.qm11TotalIndividuVivant==2 || m.qm11TotalIndividuVivant==3).ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<MenageModel>();
+        }
+
+        //Retourne tous les menages ayant 4 ou 5 personnes
+        public List<MenageModel> searchMenage4Ou5Personne()
+        {
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m=>m.qm11TotalIndividuVivant==4 || m.qm11TotalIndividuVivant==5).ToList());
+            }
+            catch (Exception)
+            {
+
+            }
+            return new List<MenageModel>();
+        }
+
+        //Retourne tous les menages ayant 6 personnes ou plus
+        public List<MenageModel> searchMenage6PlusPersonne()
+        {
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.qm11TotalIndividuVivant == 6 || m.qm11TotalIndividuVivant >6).ToList());
+            }
+            catch (Exception)
+            {
+
+            }
+            return new List<MenageModel>();
+        }
         public float tailleMoyenneMenage()
         {
             try
@@ -2655,6 +2765,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return 0;
         }
+        public int getTotalHommeChefMenage()
+        {
+            List<IndividuModel> listOf = GetAllIndividus();
+            if (listOf != null)
+            {
+                int nbre = 0;
+                foreach (IndividuModel ind in listOf)
+                {
+                    if (ind.Qp4Sexe == 1)
+                    {
+                        nbre = nbre + 1;
+                    }
+                }
+                return nbre;
+            }
+            return 0;
+        }
 
         public int getTotalEnfantMoins5AnsByMenage(long menageId)
         {
@@ -2664,11 +2791,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge < 5)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        nbre = nbre + 1;
+                        if (ind.Qp5bAge < 5)
+                        {
+                            nbre = nbre + 1;
+                        }
                     }
-                }
+               }
                 return nbre;
             }
             return 0;
@@ -2682,9 +2813,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge < 15)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        nbre = nbre + 1;
+                        if (ind.Qp5bAge < 15)
+                        {
+                            nbre = nbre + 1;
+                        }
                     }
                 }
                 return nbre;
@@ -2706,14 +2841,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge >= 5)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        if (ind.Qaf1HandicapVoir >= 2)
+                        if (ind.Qp5bAge >= 5)
                         {
-                            nbre = nbre + 1;
+                            if (ind.Qaf1HandicapVoir >= 2)
+                            {
+                                nbre = nbre + 1;
+                            }
                         }
                     }
-                }
+               }
                 return nbre;
             }
             return 0;
@@ -2727,14 +2866,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge >= 5)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        if (ind.Qaf2HandicapEntendre >= 2)
+                        if (ind.Qp5bAge >= 5)
                         {
-                            nbre = nbre + 1;
+                            if (ind.Qaf2HandicapEntendre >= 2)
+                            {
+                                nbre = nbre + 1;
+                            }
                         }
                     }
-                }
+               }
                 return nbre;
             }
             return 0;
@@ -2748,11 +2891,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge >= 5)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        if (ind.Qaf3HandicapMarcher >= 2)
+                        if (ind.Qp5bAge >= 5)
                         {
-                            nbre = nbre + 1;
+                            if (ind.Qaf3HandicapMarcher >= 2)
+                            {
+                                nbre = nbre + 1;
+                            }
                         }
                     }
                 }
@@ -2769,11 +2916,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge >= 5)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        if (ind.Qaf4HandicapSouvenir >= 2)
+                        if (ind.Qp5bAge >= 5)
                         {
-                            nbre = nbre + 1;
+                            if (ind.Qaf4HandicapSouvenir >= 2)
+                            {
+                                nbre = nbre + 1;
+                            }
                         }
                     }
                 }
@@ -2790,11 +2941,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge >= 5)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        if (ind.Qaf5HandicapPourSeSoigner >= 2)
+                        if (ind.Qp5bAge >= 5)
                         {
-                            nbre = nbre + 1;
+                            if (ind.Qaf5HandicapPourSeSoigner >= 2)
+                            {
+                                nbre = nbre + 1;
+                            }
                         }
                     }
                 }
@@ -2811,13 +2966,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge >= 5)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        if (ind.Qaf6HandicapCommuniquer >= 2)
+                        if (ind.Qp5bAge >= 5)
                         {
-                            nbre = nbre + 1;
+                            if (ind.Qaf6HandicapCommuniquer >= 2)
+                            {
+                                nbre = nbre + 1;
+                            }
                         }
                     }
+                    
                 }
                 return nbre;
             }
@@ -2832,14 +2992,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge >= 15)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        if (ind.Qe2FreqentationScolaireOuUniv == 5)
+                        if (ind.Qp5bAge >= 15)
                         {
-                            nbre = nbre + 1;
+                            if (ind.Qe2FreqentationScolaireOuUniv == 5)
+                            {
+                                nbre = nbre + 1;
+                            }
                         }
-
                     }
+                    
                 }
                 return nbre;
             }
@@ -2854,11 +3018,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qe2FreqentationScolaireOuUniv <= 6)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        if (ind.Qp5bAge >= 6 && ind.Qp5bAge <= 24)
+                        if (ind.Qe2FreqentationScolaireOuUniv <= 6)
                         {
-                            nbre = nbre + 1;
+                            if (ind.Qp5bAge >= 6 && ind.Qp5bAge <= 24)
+                            {
+                                nbre = nbre + 1;
+                            }
                         }
                     }
                 }
@@ -2875,15 +3043,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 int nbre = 0;
                 foreach (IndividuModel ind in listOf)
                 {
-                    if (ind.Qp5bAge >= 6 && ind.Qp5bAge <= 24)
+                    //Eviter les individus qui n'ont pas d'age
+                    if (ind.Qp5bAge < Constant.AGE_PA_KONNEN)
                     {
-                        if (ind.Qe4aNiveauEtude >= 4 && ind.Qe4aNiveauEtude == 6)
+                        if (ind.Qp5bAge >= 6 && ind.Qp5bAge <= 24)
                         {
-                            nbre = nbre + 1;
+                            if (ind.Qe4aNiveauEtude >= 4 && ind.Qe4aNiveauEtude == 6)
+                            {
+                                nbre = nbre + 1;
+                            }
                         }
                     }
-
-                }
+               }
                 return nbre;
             }
             return 0;
@@ -3044,24 +3215,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         }
         #endregion
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
+      
     }
 }

@@ -90,7 +90,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<IndividuModel> GetAllIndividusFemmes13ansSansFGNesVivants();
 
         Codification getInformationForCodification();
-        Flag CountTotalFlag();
+        Flag CountTotalFlag(List<IndividuModel> individus);
         Flag Count2FlagAgeDateNaissance();
         Flag CountFlagFecondite();
         Flag CountFlagEmploi();
@@ -174,10 +174,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         int getTotalIndividu10AnsEtPlus();
         int getTotalIndividu65AnsEtPlus();
         int getTotalMenageUnipersonnel();
+        List<MenageModel> searchMenageUnipersonnel();
+        List<MenageModel> searchMenage2Ou3Personne();
+        List<MenageModel> searchMenage4Ou5Personne();
+        List<MenageModel> searchMenage6PlusPersonne();
         int getTotalMenageDe6IndsEtPlus();
         int getTotalPersonnesByLogementCollections();
         int getTotalPersonnesByLimitation();
         int getTotalFemmeChefMenage();
+        int getTotalHommeChefMenage();
         int getTotalPersonnesByMenage(long menageId);
         int getTotalFemmesByMenage(long menageId);
         int getTotalEnfantMoins5AnsByMenage(long menageId);

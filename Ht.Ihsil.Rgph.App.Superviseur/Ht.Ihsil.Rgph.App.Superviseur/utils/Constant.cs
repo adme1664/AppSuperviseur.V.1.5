@@ -698,6 +698,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string PA_KONNEN_SEKSYON_KOMINAL = "9999-99";
         public static int TRANSFERT_MOBILE = 1;
         public static int TRANSFERT_PC = 2;
+        public static int AGE_PA_KONNEN = 999;
 
         #region OTHERS STUFF
         public static List<KeyValue> ListOfRaisons()

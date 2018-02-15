@@ -120,103 +120,129 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
                await img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                MessageBox.Show("Veuillez saisir un nom utilisateur et un mot de passe", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                
+               MessageBox.Show("Veuillez saisir un nom utilisateur et un mot de passe", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);                
             }
             else
             {
                 UtilisateurModel user = null;
                 await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion avec la base de donnéees..."));
-                if (service.isSuperviseurAccountExist() == true)
+
+                //Tester si c'est l'astic qui se connecte
+                if (chk_isAstic.IsChecked == true)
                 {
-                    try
+                    if (service.isAsticAccountExist() == true)
                     {
                         string[] tab = username.Split('.');
                         username = tab[0] + "" + tab[1];
                         user = service.authenticateUserLocally(username, password);
                         await img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                     }
-                    catch (Exception ex)
-                    {
-                        log.Info("Error:" + ex.Message);
-                         img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
-                    }
+                   
                 }
                 else
                 {
-
-                    await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Application non encore configuree. Connexion avec le serveur..."));
-                    pingStatus = pingTheServer(ConfigurationManager.AppSettings.Get("adrIpServer"));
-                    if (pingStatus == false)
+                    //Authentification au niveau sans passer par l'API
+                    if (service.isSuperviseurAccountExist() == true)
                     {
-                        MessageBox.Show("Serveur indisponible", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                        
-                    }
-
-                    await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion avec le serveur en cours..."));
-                    try
-                    {
-                        apiService = new ConsumeApiService();
-                        Utilisateur userApi = new Utilisateur();
-                        string[] tab = username.Split('.');
-                        username = tab[0] + "" + tab[1];
-                        userApi.username = username;
-                        userApi.password = password;
-                        Utilisateur test = await apiService.authenticateUser(userApi);
-                        user = new UtilisateurModel();
-                        user.CodeUtilisateur = test.username;
-                        user.MotDePasse = test.password;
-                        user.ProfileId = Convert.ToInt32(test.profileId);
-                        user.Nom = test.nom;
-                        user.Prenom = test.prenom;
-                        //Enregistrement du superviseur
-                        service.insertUser(user);
-                        //Recherche des Sdes assignees au superviseur
-                        List<SdeBean> sdes = await apiService.listOfSde(test);
-                        if (sdes != null)
+                        try
                         {
-                            foreach (SdeBean s in sdes)
+                            string[] tab = username.Split('.');
+                            username = tab[0] + "" + tab[1];
+                            user = service.authenticateUserLocally(username, password);
+                            await img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
+                        }
+                        catch (Exception ex)
+                        {
+                            log.Info("Error:" + ex.Message);
+                            img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
+                        }
+                    }
+                    //
+                    //Atuhentification a partir de l'API
+                    else
+                    {
+
+                        await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Application non encore configuree. Connexion avec le serveur..."));
+                        //
+                        //On fait ping de l'addresse du server
+                        pingStatus = pingTheServer(ConfigurationManager.AppSettings.Get("adrIpServer"));
+                        if (pingStatus == false)
+                        {
+                            MessageBox.Show("Serveur indisponible", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        }
+
+                        await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion avec le serveur en cours..."));
+                        try
+                        {
+                            //Point de Contact avec l'API 
+                            apiService = new ConsumeApiService();
+                            Utilisateur userApi = new Utilisateur();
+                            string[] tab = username.Split('.');
+                            username = tab[0] + "" + tab[1];
+                            userApi.username = username;
+                            userApi.password = password;
+                            //Authentification de du superviseur et recuperation de son identifiant
+                            Utilisateur test = await apiService.authenticateUser(userApi);
+                            user = new UtilisateurModel();
+                            user.CodeUtilisateur = test.username;
+                            user.MotDePasse = test.password;
+                            user.ProfileId = Convert.ToInt32(test.profileId);
+                            user.Nom = test.nom;
+                            user.Prenom = test.prenom;
+
+                            //Enregistrement du superviseur
+                            service.insertUser(user);
+
+                            //Recherche des Sdes assignees au superviseur
+                            List<SdeBean> sdes = await apiService.listOfSde(test);
+                            if (sdes != null)
                             {
-                                SdeModel sde = new SdeModel();
-                                sde.CodeDistrict = s.codeDistrict;
-                                sde.SdeId = s.SdeId;
-                                //Enregistrements
-                                configuration.saveSdeDetails(ModelMapper.MapToSde(sde));
+                                foreach (SdeBean s in sdes)
+                                {
+                                    SdeModel sde = new SdeModel();
+                                    sde.CodeDistrict = s.codeDistrict;
+                                    sde.SdeId = s.SdeId;
+                                    //Enregistrements
+                                    configuration.saveSdeDetails(ModelMapper.MapToSde(sde));
+                                }
+                            }
+                            //
+                            //Recherche des agents
+                            List<AgentJson> agents = await apiService.listOfAgent(test);
+                            if (agents != null)
+                            {
+                                foreach (AgentJson a in agents)
+                                {
+                                    AgentModel agent = new AgentModel();
+                                    agent.Username = a.agentId;
+                                    agent.Nom = a.nom;
+                                    agent.Prenom = a.prenom;
+                                    agent.Email = a.email;
+                                    //Ajout des agents
+                                    AgentModel agentSaved = configuration.insertAgentSde(agent);
+                                    //Modification de la sde en attribuant un agent a une sde
+                                    SdeModel s = configuration.getSdeDetails(a.sde);
+                                    if (s != null)
+                                    {
+                                        s.AgentId = agentSaved.AgentId;
+                                        configuration.updateSdeDetails(ModelMapper.MapToSde(s));
+                                    }
+                                }
                             }
                         }
-                        //
-                        //Recherche des agents
-                        List<AgentJson> agents = await apiService.listOfAgent(test);
-                        if (agents != null)
+                        catch (Exception ex)
                         {
-                            foreach (AgentJson a in agents)
-                            {
-                                AgentModel agent = new AgentModel();
-                                agent.Username = a.agentId;
-                                agent.Nom = a.nom;
-                                agent.Prenom = a.prenom;
-                                agent.Email = a.email;
-                                //Ajout des agents
-                                AgentModel agentSaved=configuration.insertAgentSde(agent);
-                                //Modification de la sde
-                                SdeModel s = configuration.getSdeDetails(a.sde);
-                                if (s != null)
-                                {
-                                    s.AgentId = agentSaved.AgentId;
-                                    configuration.updateSdeDetails(ModelMapper.MapToSde(s));
-                                }
-                             }
+                            log.Info("ERROR:===============>" + ex.Message);
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        log.Info("ERROR:===============>" + ex.Message);
-                    }
 
-                     busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion reussie"));
+                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Connexion reussie"));
+                    }
                 }
+                
                 if (Utils.IsNotNull(user))
                 {
+                    //Creation d'une variable statique User accessible n'importe dans le programme
                     Users.users.CodeUtilisateur = user.CodeUtilisateur;
                     Users.users.Prenom = user.Prenom;
                     Users.users.Nom = user.Nom;
@@ -225,6 +251,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     Users.users.Utilisateur = new UtilisateurModel();
                     Users.users.Utilisateur = user;
                     Users.users.DatabasePath = MAIN_DATABASE_PATH;
+                    //
+                    //Affichage de la fenetre mere
                     MainWindow1 m = new MainWindow1();
                     this.Close();
                     m.ShowDialog();
@@ -243,7 +271,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     state = false;
                 }
             }
-            //return state;
         }
 
         private void chk_isAstic_Checked(object sender, RoutedEventArgs e)
@@ -258,24 +285,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
         }
 
-        //private async Task<bool> callMethod()
-        //{
-        //    bool result= await initializeConnexion(t_username.Text, t_password.Password);
-        //    return result;
-        //}
-
         private  void t_password_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
                 try
                 {
-                    //this.Dispatcher.BeginInvoke( (Action)(() => initializeConnexion(t_username.Text, t_password.Password)));
-                    //bool r =  callMethod().Result;
-                    //if (r)
-                    //{
+                   
                      initializeConnexion(t_username.Text, t_password.Password);
-                    //}
                 }
                 catch (Exception ex)
                 {

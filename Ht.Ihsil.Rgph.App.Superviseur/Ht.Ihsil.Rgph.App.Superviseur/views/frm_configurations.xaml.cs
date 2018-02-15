@@ -59,6 +59,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 string adrServer = txt_new_adr_server.Text;
                 char split = '.';
                 string[] adr = adrServer.Split(split);
+                StringBuilder adresse = new StringBuilder();
                 int range = Convert.ToInt32(adr[0]);
                 if (range > 256 || range < 0)
                 {
@@ -66,6 +67,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
                 else
                 {
+                    adresse.Append(""+range);
                     range = Convert.ToInt32(adr[1]);
                     if (range > 256 || range < 0)
                     {
@@ -73,6 +75,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     }
                     else
                     {
+                        adresse.Append("." + range);
                         range = Convert.ToInt32(adr[2]);
                         if (range > 256 || range < 0)
                         {
@@ -80,6 +83,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         }
                         else
                         {
+                            adresse.Append("." + range);
                             range = Convert.ToInt32(adr[3]);
                             if (range > 256 || range < 0)
                             {
@@ -87,7 +91,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             }
                             else
                             {
-                                string ipAdress = txt_new_adr_server.Text;
+                                adresse.Append("." + range);
+                                string ipAdress = adresse.ToString();
                                 configuration.UpdateAdrServer(ipAdress);
                                 MessageBox.Show("Mise à effectuée avec succès", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
 

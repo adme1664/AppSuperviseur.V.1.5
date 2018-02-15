@@ -1,5 +1,6 @@
 ﻿using Ht.Ihsil.Rgph.App.Superviseur.Json;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
+using Ht.Ihsil.Rgph.App.Superviseur.utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
    public class ConsumeApiService 
     {
        static HttpClient client = null;
+       string basePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Configuration\";
+       XmlUtils conf = null;
        public ConsumeApiService()
        {
            client = new HttpClient();
-           client.BaseAddress = new Uri("http://localhost:8082/rgph/api/v1/management/");
+           string file = basePath + "configuration.xml";
+           conf = new XmlUtils(file);
+           string serverAdress = conf.getAdrServer();
+           string url ="http://"+serverAdress+":8080/rgph/api/v1/management/";
+           client.BaseAddress = new Uri(url);
            client.DefaultRequestHeaders.Accept.Clear();
            client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
@@ -55,11 +62,5 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
            }
            return agents;
        }
-
-       //async  Task runASync()
-       //{
-           
-
-       //}
     }
 }
