@@ -463,6 +463,7 @@
     <Compile Include="Models\MaterielModel.cs" />
     <Compile Include="Models\ProblemeModel.cs" />
     <Compile Include="Models\QuestionModule.cs" />
+    <Compile Include="Models\RapportFlagModel.cs" />
     <Compile Include="Models\SdeBean.cs" />
     <Compile Include="Models\TextModel.cs" />
     <Compile Include="Models\Utilisateur.cs" />

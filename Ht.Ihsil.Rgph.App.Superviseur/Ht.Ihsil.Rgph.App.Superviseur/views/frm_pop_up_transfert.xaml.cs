@@ -181,7 +181,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             }
 
                             //
-
                             prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 100));
                             lbl_trans.Dispatcher.BeginInvoke((Action)(() => lbl_trans.Content = "Transfè a fini. "));
                             this.Dispatcher.BeginInvoke((Action)(() =>  this.Close()));

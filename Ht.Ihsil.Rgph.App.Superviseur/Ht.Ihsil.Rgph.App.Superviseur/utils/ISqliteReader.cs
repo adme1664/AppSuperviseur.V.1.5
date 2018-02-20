@@ -139,10 +139,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         int getTotalMenageRecenseNV();
         int getTotalIndRecenseV();
         int getTotalIndRecenseNV();
-
         int getTotalLogeIOccupeRecenseNV();
         int getTotalLogeIOccupeRecenseV();
-
         int getTotalLogeIVideRecenseNV();
         int getTotalLogeIVideRecenseV();
         int getTotalLogeIUsageTemporelRecenseNV();

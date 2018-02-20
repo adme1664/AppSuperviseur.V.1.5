@@ -1164,6 +1164,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             try
             {
                 Flag compteur = new Flag();
+                compteur.Individus = new List<IndividuModel>();
                 foreach (IndividuModel ind in individus)
                 {
                     int numberOfProblems = 0;
@@ -1266,9 +1267,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     if (numberOfProblems == 12)
                         compteur.Flag12 += 1;
                     if (numberOfProblems == 13)
+                    {
                         compteur.Flag13 += 1;
-                    compteur.Individus = new List<IndividuModel>();
-                   
+                        compteur.Individus.Add(ind);
+                    }
                     #endregion
                 }
                 return compteur;
@@ -3214,7 +3216,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return null;
         }
         #endregion
-
-      
+    
     }
 }

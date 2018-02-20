@@ -1104,7 +1104,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         flagFeconditeParDistrict.Flag5 += flagFecondite.Flag5;
                         flagFeconditeParDistrict.Flag6 += flagFecondite.Flag6;
 
-
                         flagEmploiParDistrict.Flag0 += flagEmploi.Flag0;
                         flagEmploiParDistrict.Flag1 += flagEmploi.Flag1;
                         flagEmploiParDistrict.Flag2 += flagEmploi.Flag2;
@@ -1123,6 +1122,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     flagAgeDateNaissanceParDistrict = reader.Count2FlagAgeDateNaissance();
                     flagFeconditeParDistrict = reader.CountFlagFecondite();
                     flagEmploiParDistrict = reader.CountFlagEmploi();
+                    gridFlag.ItemsSource = Utilities.getListOfIndividuWithFlag(MAIN_DATABASE_PATH, sdeSelected.SdeId);
                 }
 
                 chartFlag0.Dispatcher.BeginInvoke((Action)(() =>
@@ -1199,6 +1199,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                            chartFlag11.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag11, nbreTotal)))));
                 chartFlag12.Dispatcher.BeginInvoke((Action)(() =>
                            chartFlag12.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag12, nbreTotal)))));
+
+                //Ajout des individus ayant des flags dans le tableau
+
                 
             }
             catch (Exception ex)
@@ -1210,9 +1213,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         private void chartControlCompteur_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Point point=e.GetPosition(this);
-            //System.Drawing.Point pointD = new System.Drawing.Point();
-            //pointD.X = Convert.ToInt32(point.X);
-            //pointD.Y = Convert.ToInt32(point.Y);
             ChartHitInfo info = chartControlCompteur.CalcHitInfo(point);
             if (info.Series != null)
             {
@@ -1220,7 +1220,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
 
          }
+        private void Grid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Point point = e.GetPosition(this);
+            ChartHitInfo info = chartControlCompteur.CalcHitInfo(point);
+            if (info.Series != null)
+            {
+                MessageBox.Show("" + info.Series.Name);
+            }
+        }
 
-     
+        private void gridFlag_AutoGeneratingColumn(object sender, AutoGeneratingColumnEventArgs e)
+        {
+
+        }
+    
     }
 }

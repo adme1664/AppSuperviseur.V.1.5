@@ -283,8 +283,12 @@
                 <dx:DXTabControl>
                     <dx:DXTabItem Header="Compteur de Flags par Individu" Name="tabCompteurFlag" GotFocus="tabCompteurFlag_GotFocus">
                         <GroupBox Header="Tableau de Verification">
-                            <Grid>
-                                <dxc:ChartControl Name="chartControlCompteur" MouseDoubleClick="chartControlCompteur_MouseDoubleClick">
+                            <Grid MouseRightButtonDown="Grid_MouseRightButtonDown">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="41*"/>
+                                    <RowDefinition Height="34*"/>
+                                </Grid.RowDefinitions>
+                                <dxc:ChartControl Name="chartControlCompteur" MouseDoubleClick="chartControlCompteur_MouseDoubleClick" Grid.Row="0">
                                     <dxc:ChartControl.Palette>
                                         <dxc:CustomPalette>
                                             <dxc:CustomPalette.Colors>
@@ -583,8 +587,19 @@ en fonction du nombre total de problèmes spécifié par groupe
                                         <dxc:Title Dock="Bottom" HorizontalAlignment="Right" FontSize="12" Foreground="Silver" Margin="0,10,0,0">IHSI</dxc:Title>
                                     </dxc:ChartControl.Titles>
                                 </dxc:ChartControl>
+                                <GroupBox Header="Nombres d'individus" Grid.Row="1">
+                                    <Grid>
+                                        <dxg:TreeListControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row" Name="gridFlag" AutoGeneratingColumn="gridFlag_AutoGeneratingColumn">
+                                            <dxg:TreeListControl.View>
+                                                <dxg:TreeListView NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListView2" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"   AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD"/>
+                                            </dxg:TreeListControl.View>
+                                        </dxg:TreeListControl>
+
+                                    </Grid>
+                                </GroupBox>
+
                             </Grid>
-                          </GroupBox>
+                        </GroupBox>
                     </dx:DXTabItem>
                     <dx:DXTabItem Header="Vérification de la codification" Name="tabCodification" GotFocus="tabCodification_GotFocus">
                         <GroupBox Header="Codification">
@@ -783,7 +798,7 @@ en fonction du nombre total de problèmes spécifié par groupe
                                                             </dxc:PointOptions.ValueNumericOptions>
                                                         </dxc:PointOptions>
                                                     </dxc:BarFullStackedSeries2D.PointOptions>
-                                                </dxc:BarFullStackedSeries2D> 
+                                                </dxc:BarFullStackedSeries2D>
                                                 <dxc:BarFullStackedSeries2D Name="flag_48_70" DisplayName="48-70 Flags">
                                                     <dxc:BarFullStackedSeries2D.Model>
                                                         <dxc:Quasi3DBar2DModel />

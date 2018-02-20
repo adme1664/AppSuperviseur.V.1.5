@@ -441,6 +441,69 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region VERIFICATION
+        //Affichage ayant des flags
+        public static List<RapportFlagModel> getListOfIndividuWithFlag(string path, string sdeId)
+        {
+            List<RapportFlagModel> rapports = new List<RapportFlagModel>();
+            RapportFlagModel rpt = null;
+            int lastParentId = 0;
+            int lastId = 0;
+            int firstParentId = 0;
+            try
+            {
+                ISqliteReader reader = new SqliteReader(getConnectionString(path, sdeId));
+                Flag individusWith2Flags = reader.Count2FlagAgeDateNaissance();
+                if (individusWith2Flags != null)
+                {
+                    //Ajout du premier noeud
+                    rpt = new RapportFlagModel();
+                    rpt.ID = 1;
+                    rpt.ParentID = 0;
+                    rpt.Type = "Ensemble d'individus possedant des flags";
+                    firstParentId = rpt.ParentID;
+                    lastId = rpt.ID;
+                    lastParentId = rpt.ParentID;
+                    rapports.Add(rpt);
+                    //Ajout flag pour la population totale
+                    rpt = new RapportFlagModel();
+                    rpt.ID = lastId + 1;
+                    rpt.ParentID = lastParentId;
+                    rpt.Type = "1- Population Totale (2 Flags au total)";
+                    rpt.Total = individusWith2Flags.Individus.Count;
+                    rapports.Add(rpt);
+                    lastId = rpt.ID;
+                    lastParentId = rpt.ID;
+                    foreach (IndividuModel ind in individusWith2Flags.Individus)
+                    {
+                        rpt = new RapportFlagModel();
+                        rpt.ID = lastId + 1;
+                        rpt.Type = "Batiman: " + ind.BatimentId + "/Lojman:" + ind.LogeId + "/Menaj:" + ind.MenageId + "/Endividi:" + ind.Q1NoOrdre;
+                        rpt.ParentID = lastParentId;
+                        lastId = rpt.ID;
+                        rapports.Add(rpt);
+                    }
+                    //
+                    //Ajout population de 13 flags et plus
+                    rpt = new RapportFlagModel();
+                    rpt.ID = lastId + 1;
+                    rpt.ParentID = firstParentId;
+                    rpt.Type = "2- Population Totale (13 Flags au total)";
+                    lastId = rpt.ID;
+                    lastParentId = rpt.ID;
+                    rapports.Add(rpt);
+                    individusWith2Flags = new Flag();
+                    individusWith2Flags = reader.CountTotalFlag(reader.GetAllIndividus());
+                    //Stay there
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }          
+            return rapports;
+        }
+
+
         //Effectue la verification de la sde en fonction de certains criteres
         public static List<TableVerificationModel> getVerificatoinNonReponseTotal(string path, string sdeId)
         {

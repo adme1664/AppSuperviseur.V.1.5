@@ -114,15 +114,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     deviceInfo.Serial = messages.ToString();
                     int size = messages.Count();
                     deviceInfo.Serial = messages[size - 1].ToString();
-                    //for (int i = 0; i < messages.Length; i++)
-                    //{
-                    //    if (messages[i].Contains("Device"))
-                    //    {
-                    //        split = new string[] { "=" };
-                    //        string[] mes = messages[i].Split(split, StringSplitOptions.RemoveEmptyEntries);
-                    //        deviceInfo.Imei = mes[1].ToString();
-                    //    }
-                    //}
                 }
 
                 process.StartInfo.Arguments = Constant.CMD_IMEI;
