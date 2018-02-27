@@ -94,6 +94,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         Flag Count2FlagAgeDateNaissance();
         Flag CountFlagFecondite();
         Flag CountFlagEmploi();
+
+        /// <summary>
+        /// Return location of an individu (Batiment/Logement/Menage/NoOrdre)
+        /// </summary>
+        /// <param name="individus"></param>
+        /// <returns></returns>
+        string locateIndividu(IndividuModel individu);
         #endregion
 
         #region SDES

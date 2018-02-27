@@ -51,6 +51,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             InitializeComponent();
             sdeSelected = sde;
             listOfBatiments = new List<BatimentModel>();
+            
 
             //Style of the tabcontrol
             #region Ajout des donnees dans les tableaux
@@ -1057,6 +1058,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             initializeChartControls();
             try
             {
+                //ouvrir le decorateur
+                decoratorTab.Dispatcher.BeginInvoke((Action)(() => decoratorTab.IsSplashScreenShown = true));
                 IConfigurationService configuration = new ConfigurationService();
                 int nbreTotal = 0;
                 Flag flagPopulationParDistrict = new Flag();
@@ -1122,7 +1125,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     flagAgeDateNaissanceParDistrict = reader.Count2FlagAgeDateNaissance();
                     flagFeconditeParDistrict = reader.CountFlagFecondite();
                     flagEmploiParDistrict = reader.CountFlagEmploi();
-                    gridFlag.ItemsSource = Utilities.getListOfIndividuWithFlag(MAIN_DATABASE_PATH, sdeSelected.SdeId);
+                    //Fill the grid
+                    gridFlag.Dispatcher.BeginInvoke((Action)(() => gridFlag.ItemsSource = Utilities.getListOfIndividuWithFlag(MAIN_DATABASE_PATH, sdeSelected.SdeId)));
                 }
 
                 chartFlag0.Dispatcher.BeginInvoke((Action)(() =>
@@ -1200,9 +1204,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 chartFlag12.Dispatcher.BeginInvoke((Action)(() =>
                            chartFlag12.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag12, nbreTotal)))));
 
-                //Ajout des individus ayant des flags dans le tableau
-
-                
+                //fermer le decorateur
+                decoratorTab.Dispatcher.BeginInvoke((Action)(() => decoratorTab.IsSplashScreenShown = false));
             }
             catch (Exception ex)
             {
@@ -1229,7 +1232,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 MessageBox.Show("" + info.Series.Name);
             }
         }
-
         private void gridFlag_AutoGeneratingColumn(object sender, AutoGeneratingColumnEventArgs e)
         {
 

@@ -1468,6 +1468,33 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return new Flag();
         }
+
+        /// <summary>
+        /// Return the location of an individu in a SDE
+        /// </summary>
+        /// <param name="individu"></param>
+        /// <returns></returns>
+        public string locateIndividu(IndividuModel individu)
+        {
+            string methodName = "locateIndividu";
+            try
+            {
+                log.Info("Inside:" + methodName);
+                BatimentModel bat = GetBatimentbyId(individu.BatimentId);
+                LogementModel logement = GetLogementById(individu.LogeId);
+                MenageModel menage = GetMenageById(individu.MenageId);
+                if (menage != null)
+                {
+                    return "Batiman-" + bat.BatimentId + "/Lojman-" + logement.Qlin1NumeroOrdre + "/Menaj-" + menage.Qm1NoOrdre + "/Endividi-" + individu.Q1NoOrdre;
+                }
+                return "Batiman-" + bat.BatimentId + "/Lojman-" + logement.Qlin1NumeroOrdre + "/Endividi-" + individu.Q1NoOrdre;
+            }
+            catch (Exception ex)
+            {
+                log.Info("Erreur/"+methodName+":" + ex.Message);
+            }
+            return null;
+        }
         #endregion
 
         #region Retrieving data for LOGEMENT
@@ -3216,6 +3243,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return null;
         }
         #endregion
-    
+
+        
     }
 }

@@ -97,7 +97,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 sde.DeptId = "0" + sdeId.Substring(0, 1);
                 sde.ComId = "0" + sdeId.Substring(0, 3);
                 sde.VqseId = "0" + sdeId.Substring(0, 6);
-                if (sdeId.Substring(4, 2)=="90")
+                if (sdeId.Substring(4, 2) == "90")
                 {
                     sde.Zone = Constant.SDE_ZONE_URBAINE;
                 }
@@ -452,54 +452,105 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             try
             {
                 ISqliteReader reader = new SqliteReader(getConnectionString(path, sdeId));
+                //Ajout du premier noeud
+                rpt = new RapportFlagModel();
+                rpt.ID = 1;
+                rpt.ParentID = 0;
+                rpt.Type = "Ensemble d'individus possedant des flags";
+                firstParentId = rpt.ParentID;
+                lastId = rpt.ID;
+                lastParentId = rpt.ParentID;
+                rapports.Add(rpt);
                 Flag individusWith2Flags = reader.Count2FlagAgeDateNaissance();
-                if (individusWith2Flags != null)
+
+                //Ajout flag pour la population totale
+                rpt = new RapportFlagModel();
+                rpt.ID = lastId + 1;
+                rpt.ParentID = lastParentId;
+                rpt.Type = "1- Population Totale (2 Flags au total/Date de Naissance)";
+                rpt.Total = individusWith2Flags.Individus.Count;
+                rapports.Add(rpt);
+                lastId = rpt.ID;
+                lastParentId = rpt.ID;
+                foreach (IndividuModel ind in individusWith2Flags.Individus)
                 {
-                    //Ajout du premier noeud
-                    rpt = new RapportFlagModel();
-                    rpt.ID = 1;
-                    rpt.ParentID = 0;
-                    rpt.Type = "Ensemble d'individus possedant des flags";
-                    firstParentId = rpt.ParentID;
-                    lastId = rpt.ID;
-                    lastParentId = rpt.ParentID;
-                    rapports.Add(rpt);
-                    //Ajout flag pour la population totale
                     rpt = new RapportFlagModel();
                     rpt.ID = lastId + 1;
+                    rpt.Type = reader.locateIndividu(ind);
                     rpt.ParentID = lastParentId;
-                    rpt.Type = "1- Population Totale (2 Flags au total)";
-                    rpt.Total = individusWith2Flags.Individus.Count;
-                    rapports.Add(rpt);
                     lastId = rpt.ID;
-                    lastParentId = rpt.ID;
-                    foreach (IndividuModel ind in individusWith2Flags.Individus)
-                    {
-                        rpt = new RapportFlagModel();
-                        rpt.ID = lastId + 1;
-                        rpt.Type = "Batiman: " + ind.BatimentId + "/Lojman:" + ind.LogeId + "/Menaj:" + ind.MenageId + "/Endividi:" + ind.Q1NoOrdre;
-                        rpt.ParentID = lastParentId;
-                        lastId = rpt.ID;
-                        rapports.Add(rpt);
-                    }
-                    //
-                    //Ajout population de 13 flags et plus
+                    rapports.Add(rpt);
+                }
+                //
+                //Ajout population de 13 flags et plus
+                rpt = new RapportFlagModel();
+                rpt.ID = lastId + 1;
+                rpt.ParentID = firstParentId;
+                rpt.Type = "2- Population Totale (13 Flags au total)";
+                lastId = rpt.ID;
+                lastParentId = rpt.ID;
+                individusWith2Flags = new Flag();
+                individusWith2Flags = reader.CountTotalFlag(reader.GetAllIndividus());
+                rpt.Total = individusWith2Flags.Individus.Count;
+                rapports.Add(rpt);
+                //Ajout des individus se trouvant dans cette categorie
+                foreach (IndividuModel ind in individusWith2Flags.Individus)
+                {
                     rpt = new RapportFlagModel();
                     rpt.ID = lastId + 1;
-                    rpt.ParentID = firstParentId;
-                    rpt.Type = "2- Population Totale (13 Flags au total)";
+                    rpt.Type = reader.locateIndividu(ind);
+                    rpt.ParentID = lastParentId;
                     lastId = rpt.ID;
-                    lastParentId = rpt.ID;
                     rapports.Add(rpt);
-                    individusWith2Flags = new Flag();
-                    individusWith2Flags = reader.CountTotalFlag(reader.GetAllIndividus());
-                    //Stay there
                 }
+                //Ajout flag fecondite
+                rpt = new RapportFlagModel();
+                rpt.ID = lastId + 1;
+                rpt.ParentID = firstParentId;
+                rpt.Type = "3- Femmes de 13 ans et plus";
+                lastId = rpt.ID;
+                lastParentId = rpt.ID;
+                individusWith2Flags = new Flag();
+                individusWith2Flags = reader.CountFlagFecondite();
+                rpt.Total = individusWith2Flags.Individus.Count;
+                rapports.Add(rpt);
+                //Ajout des individus se trouvant dans cette categorie
+                foreach (IndividuModel ind in individusWith2Flags.Individus)
+                {
+                    rpt = new RapportFlagModel();
+                    rpt.ID = lastId + 1;
+                    rpt.Type = reader.locateIndividu(ind);
+                    rpt.ParentID = lastParentId;
+                    lastId = rpt.ID;
+                    rapports.Add(rpt);
+                }
+                //Ajout flag emploi
+                rpt = new RapportFlagModel();
+                rpt.ID = lastId + 1;
+                rpt.ParentID = firstParentId;
+                rpt.Type = "4- Population de 10 ans et plus avec un emploi";
+                lastId = rpt.ID;
+                lastParentId = rpt.ID;
+                individusWith2Flags = new Flag();
+                individusWith2Flags = reader.CountFlagEmploi();
+                rpt.Total = individusWith2Flags.Individus.Count;
+                rapports.Add(rpt);
+                //Ajout des individus se trouvant dans cette categorie
+                foreach (IndividuModel ind in individusWith2Flags.Individus)
+                {
+                    rpt = new RapportFlagModel();
+                    rpt.ID = lastId + 1;
+                    rpt.Type = reader.locateIndividu(ind);
+                    rpt.ParentID = lastParentId;
+                    lastId = rpt.ID;
+                    rapports.Add(rpt);
+                }
+
             }
             catch (Exception ex)
             {
 
-            }          
+            }
             return rapports;
         }
 
@@ -2885,6 +2936,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         }
 
         #endregion
+
 
     }
 }
