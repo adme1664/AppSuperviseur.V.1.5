@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <rapports>
   
-    <domaine code="1" name="Terrain">
-      
+    <domaine code="1" name="Terrain">     
         <sousDomaine code="1" name="CARTOGRAPHIE 1 - Reconnaissance des lieux pré-collecte">
 			<probleme code="0">0. Aucun problème 1</probleme>
             <probleme code="1">1. Carte incomplète </probleme>

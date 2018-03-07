@@ -43,8 +43,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                  RapportDeroulementModel rptDeroulement = new RapportDeroulementModel();
                  rptDeroulement.CodeDistrict = sde.CodeDistrict;
-                 frm_rapport_deroulement frm = new frm_rapport_deroulement(rptDeroulement,this);
-                 frm.btnUpdateDomaines.Visibility = Visibility.Hidden;
+                 frm_rpt_deroulement frm = new frm_rpt_deroulement(rptDeroulement, this);
                  Utilities.showControl(frm, grd_details);
             }
             else
@@ -87,8 +86,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     if (rpt.RapportName == "Nouveau")
                     {
-                        frm_rapport_deroulement frm = new frm_rapport_deroulement(rpt,this);
-                        frm.btnUpdateDomaines.Visibility = Visibility.Hidden;
+                        frm_rpt_deroulement frm = new frm_rpt_deroulement(rpt, this);
                         Utilities.showControl(frm, grd_details);
                     }
                     else

@@ -309,6 +309,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             Utilities.showControl(rpt, main_grid);
             main_grid_1.IsSplashScreenShown = false;
         }
+        //private void rpc_rpt_deroulement_collecte_test_ItemClick(object sender, ItemClickEventArgs e)
+        //{
+        //    deselectedBarItem();
+        //    //rpc_rpt_deroulement_collecte_test.Dispatcher.BeginInvoke((Action)(() => rpc_rpt_deroulement_collecte_test.IsChecked = true));
+        //    //main_grid_1.IsSplashScreenShown = true;
+        //    //frm_rpt_deroulement rpt = new frm_rpt_deroulement();
+        //    //Utilities.showControl(rpt, main_grid);
+        //    //main_grid_1.IsSplashScreenShown = false;
+        //}
 
         private void bbi_verification_ItemClick(object sender, DevExpress.Xpf.Bars.ItemClickEventArgs e)
         {
@@ -371,5 +380,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                 }
             }
         }
+
+       
     }
 }

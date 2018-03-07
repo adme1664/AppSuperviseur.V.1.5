@@ -262,6 +262,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             t.Bottom = 0;
             return t;
         }
+
+        public static Thickness getRightThickness(Thickness t)
+        {
+            t.Left = t.Left+80;
+            t.Top = t.Top;
+            t.Right = 0;
+            t.Bottom = 0;
+            return t;
+        }
+
+
         public static void writeInBusyTool(string message, BusyIndicator busyIndicator, Control control)
         {
             control.Dispatcher.BeginInvoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate

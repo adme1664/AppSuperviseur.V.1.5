@@ -646,6 +646,9 @@
     <Compile Include="views\frm_rpt_dereoulement_entete.xaml.cs">
       <DependentUpon>frm_rpt_dereoulement_entete.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\frm_rpt_deroulement.xaml.cs">
+      <DependentUpon>frm_rpt_deroulement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\frm_rpt_personnel.xaml.cs">
       <DependentUpon>frm_rpt_personnel.xaml</DependentUpon>
     </Compile>
@@ -777,6 +780,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\frm_rpt_dereoulement_entete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_rpt_deroulement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -114,17 +114,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             btnSuivant = new Button();
             comboBox = new ComboBox();
             textbox = new TextEdit();
-            //individu = new IndividuCEModel();
-            //individu.IndividuId = model.IndividuId;
-            //individu.BatimentId = model.BatimentId;
-            //individu.LogeId = model.LogeId;
-            //individu.MenageId = model.MenageId;
-            //individu.SdeId = model.SdeId;
-            //individu.Qp1NoOrdre = Convert.ToByte(model.Qp1NoOrdre);
-            //if (model.Q3LienDeParente == 1)
-            //{
-            //    individu.Q3LienDeParente = 1;
-            //}
             TextBlock tHeader = new TextBlock();
             tHeader.Foreground = Brushes.Red;
             tHeader.Text = "BATIMAN " + individu.BatimentId + "/ LOJMAN-" + individu.LogeId + "/MENAJ-" + individu.MenageId + "Endividi-" + individu.Qp1NoOrdre + "/SDE " + individu.SdeId;

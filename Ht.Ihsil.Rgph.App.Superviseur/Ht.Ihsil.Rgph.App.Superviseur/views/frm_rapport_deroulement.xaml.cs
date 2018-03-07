@@ -143,7 +143,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         MessageBox.Show(Constant.MSG_RAPO_SAVE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                         List<RapportDeroulementModel> listOf = new List<RapportDeroulementModel>();
                         listOf = service.searchRptDeroulment();
-                        mainRpt.lbRprts.ItemsSource = listOf;
+                        mainRpt.lbRprts.ItemsSource = listOf;       
                         blankItems();
                         grid_rapport.ItemsSource = new ObservableCollection<DetailsRapportDeroulement>();
                     }

@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Ht.Ihsil.Rgph.App.Superviseur.views.frm_rpt_deroulement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+    <Grid>
+        <GroupBox Header="Rapport sur le deroulement de la Collecte">
+            <Grid>
+                <TabControl Name="mainTab">
+                    <TabControl.Resources>
+                        <DataTemplate x:Key="TabHeader" DataType="TabItem">
+                            <DockPanel>
+                                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=TabItem }, Path=Header}" />
+                            </DockPanel>
+                        </DataTemplate>
+                        <Style TargetType="TextBox">
+                            <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                            <Setter Property="AcceptsReturn" Value="True"></Setter>
+                            <Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
+                            <Setter Property="MaxLines" Value="5000"></Setter>
+                            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"></Setter>
+                            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"></Setter>
+                        </Style>
+                    </TabControl.Resources>
+                    
+                </TabControl>
+
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

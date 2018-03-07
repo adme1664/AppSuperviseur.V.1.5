@@ -70,6 +70,9 @@
                     <dxr:RibbonPageGroup>
                         <dxb:BarCheckItem Name="rpc_rpt_deroulement_collecte" Content="Rapport sur le deroulement de la collecte" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/individu1.png"  RibbonStyle="Large" ItemClick="rpc_rpt_deroulement_collecte_ItemClick" />
                     </dxr:RibbonPageGroup>
+                    <!--<dxr:RibbonPageGroup>
+                        <dxb:BarCheckItem Name="rpc_rpt_deroulement_collecte_test" Content="Rapport sur le deroulement de la collecte" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/individu1.png"  RibbonStyle="Large" ItemClick="rpc_rpt_deroulement_collecte_test_ItemClick" />
+                    </dxr:RibbonPageGroup>-->
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>
             <dxr:RibbonPageCategory x:Name="rpc_tab_bord" Color="White">
