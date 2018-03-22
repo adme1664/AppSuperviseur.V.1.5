@@ -708,13 +708,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             int nbrePersonnes65Ans = 0;
             int nbreBatiment = 0;
             int nbreLogementC = 0;
+            int nbreLogementCD = 0;
             int nbreLogementInd = 0;
             int nbreMenage = 0;
             int nbreLimitation = 0;
             int nbreFemmeChefMenage = 0;
             int nbreMenageUniPersonnel = 0;
             int nbreMenage6Personnes = 0;
-            float tailleMoyenneMenage = 0;
+            double tailleMoyenneMenage = 0;
 
 
             //if (sdeSelected == null)
@@ -729,7 +730,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
                     //Indicateurs socio-demographiques
                     nbreEnfantMoins1Ans = nbreEnfantMoins1Ans + reader.getTotalEnfantDeMoinsDe1Ans();
-                    nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
+                    nbrePersonnes = nbrePersonnes + reader.getTotalIndividusHommes();
                     nbreFemmesRecenses = nbreFemmesRecenses + reader.getTotalIndividusFemmes();
                     nbreEnfant10Ans = nbreEnfant10Ans + reader.getTotalIndividu10AnsEtPlus();
                     nbrePersonnes18Ans = nbrePersonnes18Ans + reader.getTotalIndividu18AnsEtPlus();
@@ -738,7 +739,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     //
 
                     //
-                    nbreLogementC += reader.getTotalPersonnesByLogementCollections();
+                    nbreLogementC += reader.getTotalPersonnesByLogementCollectif();
+                    nbreLogementCD += reader.getTotalPersonnesByLogementCollectifDeclare();
                     nbreLimitation += reader.getTotalPersonnesByLimitation();
                     nbreMenage = nbreMenage + reader.getTotalHommeChefMenage();
                     nbreFemmeChefMenage += reader.getTotalFemmeChefMenage();
@@ -758,7 +760,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
                 //Indicateurs socio-demographiques
                 nbreEnfantMoins1Ans = nbreEnfantMoins1Ans + reader.getTotalEnfantDeMoinsDe1Ans();
-                nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
+                nbrePersonnes = nbrePersonnes + reader.getTotalIndividusHommes();
                 nbreFemmesRecenses = nbreFemmesRecenses + reader.getTotalIndividusFemmes();
                 nbreEnfant10Ans = nbreEnfant10Ans + reader.getTotalIndividu10AnsEtPlus();
                 nbrePersonnes18Ans = nbrePersonnes18Ans + reader.getTotalIndividu18AnsEtPlus();
@@ -767,12 +769,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 //
 
                 //
-                nbreLogementC += reader.getTotalPersonnesByLogementCollections();
+                nbreLogementC += reader.getTotalPersonnesByLogementCollectif();
+                nbreLogementCD += reader.getTotalPersonnesByLogementCollectifDeclare();
                 nbreLimitation += reader.getTotalPersonnesByLimitation();
                 nbreFemmeChefMenage += reader.getTotalFemmeChefMenage();
                 nbreMenageUniPersonnel += reader.getTotalMenageUnipersonnel();
             }
-            pieSeriesNbreFemmes.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreFemmes.Points.Add(new SeriesPoint("Nombre de personnes recensées", nbrePersonnes))));
+            pieSeriesNbreFemmes.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreFemmes.Points.Add(new SeriesPoint("% d'hommes dans la population recensée", nbrePersonnes))));
             pieSeriesNbreFemmes.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreFemmes.Points.Add(new SeriesPoint("% de femmes dans la population recensée", nbreFemmesRecenses))));
 
             barSeriesProportionsDetails.Dispatcher.BeginInvoke((Action)(() =>
@@ -786,6 +789,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
             barSeriesIndividus.Dispatcher.BeginInvoke((Action)(() =>
                     barSeriesIndividus.Points.Add(new SeriesPoint("Nombre de personnes recensées dans les logements collectifs", nbreLogementC))));
+            barSeriesIndividus.Dispatcher.BeginInvoke((Action)(() =>
+                    barSeriesIndividus.Points.Add(new SeriesPoint("Nombre de personnes declarées dans les logements collectifs", nbreLogementCD))));
             barSeriesIndividus.Dispatcher.BeginInvoke((Action)(() =>
                     barSeriesIndividus.Points.Add(new SeriesPoint("Nombre de personnes présentant au moins une limitation dans leurs activités. ", nbreLimitation))));
 

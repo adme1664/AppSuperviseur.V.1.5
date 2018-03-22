@@ -31,7 +31,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<BatimentJson> GetAllBatimentsInJson();
         //Retourne les batiments inobservables(modalite =5)
         List<BatimentModel> GetAllBatimentsInobservables();
-
         //Retourne les batiments ayant des objets vides (Pas du tout rempli)
         List<BatimentModel> GetAllBatimentsWithAtLeastOneBlankObject();
         #endregion
@@ -55,6 +54,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<LogementModel> GetLogementIFiniByBatiment(long batimentId);
         List<LogementModel> GetAllLogementIndNotFinish();
         List<LogementModel> GetAllLogementOccupantAbsent();
+        List<LogementModel> GetAllLogementOccupeOccasionnellement();
+        List<LogementModel> GetAllLogementVide();
         LogementModel GetLogementById(long logId);
         #endregion
 
@@ -73,7 +74,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<MenageDetailsModel> GetIndividuByMenageDetails(long menageId);
         List<IndividuModel> GetIndividuByLoge(long logeId);
         List<IndividuModel> GetAllIndividus();
-
+        //Nombre d'individus dans les menages
+        List<IndividuModel> GetAllIndividusInMenage();
         //Nombre d'individus sans informations sur l'Age et sur la date de naissance;
         List<IndividuModel> GetAllIndividusWithoutAgeAndBirthDay();
 
@@ -172,7 +174,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region DEMOGRAPHIQUE
-        float tailleMoyenneMenage();
+        double tailleMoyenneMenage();
         float getIndiceMasculinite();
         int getTotalEnfantDeMoinsDe1Ans();
         int getTotalIndividu18AnsEtPlus();
@@ -184,7 +186,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<MenageModel> searchMenage4Ou5Personne();
         List<MenageModel> searchMenage6PlusPersonne();
         int getTotalMenageDe6IndsEtPlus();
-        int getTotalPersonnesByLogementCollections();
+        int getTotalPersonnesByLogementCollectif();
+        int getTotalPersonnesByLogementCollectifDeclare();
+
         int getTotalPersonnesByLimitation();
         int getTotalFemmeChefMenage();
         int getTotalHommeChefMenage();

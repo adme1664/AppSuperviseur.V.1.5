@@ -22,6 +22,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         private MainRepository sqliteRepository;
         private ILogger log;
         ISqliteReader sr;
+        private static readonly object syncLock = new object();
+        private static readonly Random random=new Random();
 
         public ISqliteReader Sr
         {
@@ -355,51 +357,94 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             }
             return listOfBatiment;
         }
+
+        public List<BatimentModel> getAllBatimentWithLogementOccupesOccasionnellemt()
+        {
+
+            string methodName = "getAllBatimentWithLogementOccupesOccasionnellemt";
+            List<BatimentModel> listOfBatiment = new List<BatimentModel>();
+            try
+            {
+                List<LogementModel> listOfLogement = sr.GetAllLogementOccupeOccasionnellement();
+                if (listOfLogement.Count != 0)
+                {
+                    foreach (LogementModel logement in listOfLogement)
+                    {
+                        BatimentModel bat = new BatimentModel();
+                        bat.BatimentId = logement.BatimentId;
+                        bat.SdeId = logement.SdeId;
+                        listOfBatiment.Add(bat);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteDataReaderService/" + methodName + ":Erreur=>" + ex.Message);
+            }
+            return listOfBatiment;
+        }
         /// <summary>
         /// Retourne 3 batiments ayant des logements occupes occasionnelllement
         /// </summary>
         /// <returns></returns>
-        public List<BatimentModel> get3BatimentWithLogementOccupantAbsent()
+        public List<BatimentModel> get3BatimentWithLogementOccupesOccasionnellement()
         {
 
-            string methodName = "getAllBatimentWithLogementOccupantAbsent";
+            string methodName = "get3BatimentWithLogementOccupesOccasionnellement";
             List<BatimentModel> listOfBatiment = new List<BatimentModel>();
             try
             {
-                List<BatimentModel> listOf = getAllBatimentWithLogementOccupantAbsent();
+                List<BatimentModel> listOf = getAllBatimentWithLogementOccupesOccasionnellemt();
                 if (listOf.Count > 0)
                 {
-                    Random random = new Random();
-                    List<BatimentModel> listBatLogOccupantAbsent = new List<BatimentModel>();
+                   
+                    List<BatimentModel> listBatLogOccupesOccasionellement = new List<BatimentModel>();
                     if (listOf.Count <= 1)
                     {
                         return listOf;
                     }
+                    int aleatoire = 0;
                     for (int i = 0; i <= listOf.Count; i++)
                     {
-                        BatimentModel bat = listOf.ElementAt(random.Next(1, listOf.Count()));
-                        if (listBatLogOccupantAbsent.Count > 0)
+                        aleatoire = RandomNumber((aleatoire + 1), listOf.Count);
+                        BatimentModel bat = listOf.ElementAt(aleatoire);
+                        if (listBatLogOccupesOccasionellement.Count > 0)
                         {
-                            foreach (BatimentModel batiment in listBatLogOccupantAbsent)
+                            foreach (BatimentModel batiment in listBatLogOccupesOccasionellement)
                             {
-                                if (Utilities.isBatimentExistInList(listBatLogOccupantAbsent, bat))
+                                if (Utilities.isBatimentExistInList(listBatLogOccupesOccasionellement, bat)==false)
                                 {
-                                    listBatLogOccupantAbsent.Add(bat);
+                                    listBatLogOccupesOccasionellement.Add(bat);
                                     break;
                                 }
                             }
                         }
                         else
                         {
-                            listBatLogOccupantAbsent.Add(bat);
+                            listBatLogOccupesOccasionellement.Add(bat);
                         }
-                        if (listBatLogOccupantAbsent.Count == 3)
+                        if (listBatLogOccupesOccasionellement.Count == 3)
                             break;
                     }
 
-                    return listBatLogOccupantAbsent;   
-                }
-               
+                    //Ajout des logements
+                    foreach (BatimentModel bat in listBatLogOccupesOccasionellement)
+                    {
+                        List<LogementModel> logmnt = Sr.GetLogementIByBatiment(bat.BatimentId);
+                        if (logmnt.Count != 0)
+                        {
+                            bat.Logement = new List<LogementModel>();
+                            foreach (LogementModel lg in logmnt)
+                            {
+                                if (lg.Qlin2StatutOccupation == (int)Constant.StatutOccupation.Okipe_le_konsa)
+                                {
+                                    bat.Logement.Add(lg);
+                                }
+                            }
+                            listOfBatiment.Add(bat);
+                        }
+                    }
+                }               
             }
             catch (Exception ex)
             {
@@ -426,21 +471,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     #region si le nombre de batiments collectes dans la SDE est superieur a 10
                     if (listOfBatiments.Count() >= 10)
                     {
-                        Random random = new Random();
+                        int aleatoire = 0;
                         //On prend 8 batiments ayant au moins un logement et un Menage;
-                        foreach (BatimentModel b in listOfBatiments)
+                        for (int i = 0; i <= listOfBatiments.Count; i++)
                         {
-                            BatimentModel next = listOfBatiments.ElementAt(random.Next(1, listOfBatiments.Count()));
-                            if (Utilities.isBatimentExistInList(listOfBatimentsUnique, next) == false)
+                            BatimentModel bat = listOfBatiments.ElementAt(RandomNumber(0, listOfBatiments.Count));
+                            if (Utilities.isBatimentExistInList(listOfBatimentsUnique, bat) == false)
                             {
-                                listOfBatimentsUnique.Add(next);
+                                listOfBatimentsUnique.Add(bat);
                             }
                             if (listOfBatimentsUnique.Count == 8)
                             {
                                 break;
                             }
+                            
                         }
-                        //On ajoute les autres 2 batiments ayant un logment avec un Menage avec au moins un deces
+                                             
+                       //On ajoute les autres 2 batiments ayant un logment avec un Menage avec au moins un deces
                         List<BatimentModel> listBatWithDeces = new List<BatimentModel>();
                         listBatWithDeces = Sr.GetBatLogMenWithDeces();
                         foreach (BatimentModel _b in listBatWithDeces)
@@ -485,8 +532,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                                         //Sinon
                                         if (listOfMenage.Count() > 1)
                                         {
-                                            Random rand = new Random();
-                                            MenageModel _men = listOfMenage.ElementAt(rand.Next(1, listOfMenage.Count()));
+                                            MenageModel _men = listOfMenage.ElementAt(RandomNumber(1, listOfMenage.Count()));
                                             _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
                                             _men.SdeId = _bat.SdeId;
                                             _log.Menages = new List<MenageModel>();
@@ -501,8 +547,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                                 {
                                     if (listOfLogmentInd.Count() > 1)
                                     {
-                                        Random rand = new Random();
-                                        LogementModel _log = listOfLogmentInd.ElementAt(rand.Next(1, listOfLogmentInd.Count()));
+                                        LogementModel _log = listOfLogmentInd.ElementAt(RandomNumber(1, listOfLogmentInd.Count()));
                                         _log.SdeId = _bat.SdeId;
                                         List<MenageModel> listOfMenage = new List<MenageModel>();
                                         listOfMenage = Sr.GetMenageByLogement(Convert.ToInt32(_log.LogeId));
@@ -521,8 +566,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                                         {
                                             if (listOfMenage.Count() > 1)
                                             {
-                                                Random rand1 = new Random();
-                                                MenageModel _men = listOfMenage.ElementAt(rand1.Next(1, listOfMenage.Count()));
+                                                MenageModel _men = listOfMenage.ElementAt(RandomNumber(1, listOfMenage.Count()));
                                                 _men.BatimentId = Convert.ToInt32(_bat.BatimentId);
                                                 _men.SdeId = _bat.SdeId;
                                                 _log.Menages = new List<MenageModel>();
@@ -538,7 +582,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         }
                     }
                     #endregion
-                    //#region si le nombre de batiments collectes dans la SDE est inferieur a 10
+                    #region si le nombre de batiments collectes dans la SDE est inferieur a 10
                     ////else
                     ////{
                     ////    #region si le nombre de batiments est egal 1
@@ -713,7 +757,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     ////    }
                     ////    #endregion
                     ////}
-                    //#endregion
+                    #endregion
                     IEnumerable<BatimentModel> lBat = listOfBatWithLInd.GroupBy(b => b.BatimentId).Select(group => group.First());
                     return lBat.ToList();
                 }
@@ -858,13 +902,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         List<LogementModel> listLogementVide = new List<LogementModel>();
                         foreach (LogementModel logement in listOfLogementIndividuel)
                         {
-                            if (logement.Qlin2StatutOccupation == 3 || logement.Qlin2StatutOccupation == 4)
+                            if (logement.Qlin2StatutOccupation == (int)Constant.StatutOccupation.Pa_okipe)
                             {
                                 logement.SdeId = batiment.SdeId;
                                 listLogementVide.Add(logement);
+                                batiment.Logement = new List<LogementModel>();
                                 batiment.Logement = listLogementVide;
-                                listOfBatWithLIV.Add(batiment);
-                            }
+                                if (Utilities.isBatimentExistInList(listOfBatWithLIV, batiment) == false)
+                                {
+                                    listOfBatWithLIV.Add(batiment);
+                                }
+                             }
 
                         }
 
@@ -964,7 +1012,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         List<LogementModel> listLogementVide = new List<LogementModel>();
                         foreach (LogementModel log in listOfLogementIndividuel)
                         {
-                            if (log.Qlin2StatutOccupation == 3)
+                            if (log.Qlin2StatutOccupation == (int)Constant.StatutOccupation.Pa_okipe)
                             {
                                 log.SdeId = _sde.SdeId;
                                 listLogementVide.Add(log);
@@ -1156,6 +1204,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         }
         #endregion
         #endregion
+
+
+        public static int RandomNumber(int min, int max)
+        {
+            lock (syncLock)
+            { // synchronize
+                return random.Next(min, max);
+            }
+        }
 
     }
 }

@@ -82,7 +82,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
            this.Children.Clear();
            if (_batiment.TypeContreEnquete == (int)Constant.TypeContrEnquete.LogementIndividuelMenage 
                || _batiment.TypeContreEnquete == (int)Constant.TypeContrEnquete.LogementCollectif
-               || _batiment.TypeContreEnquete == (int)Constant.TypeContrEnquete.LogementInvididuelVide)
+               || _batiment.TypeContreEnquete == (int)Constant.TypeContrEnquete.LogementInvididuelVide
+               || _batiment.TypeContreEnquete==(int)Constant.TypeContrEnquete.LogementOccupantAbsent)
            {
                SdeModel _sde = new SdeModel();
                _sde.SdeId = _batiment.SdeId;

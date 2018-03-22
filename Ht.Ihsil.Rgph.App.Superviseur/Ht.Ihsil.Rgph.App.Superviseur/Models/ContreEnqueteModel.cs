@@ -15,9 +15,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public string NomSuperviseur { get; set; }
         public string PrenomSuperviseur { get; set; }
         public Nullable<byte> ModelTirage { get; set; }
-        public Nullable<byte> TypeContreEnquete { get; set; }
-        public Nullable<byte> Raison { get; set; }
-        public Nullable<byte> Statut { get; set; }
+        public Nullable<int> TypeContreEnquete { get; set; }
+        public Nullable<int> Raison { get; set; }
+        public Nullable<int> Statut { get; set; }
         public string DateDebut { get; set; }
         public string DateFin { get; set; }
         public string ContreEnqueteName { get; set; }

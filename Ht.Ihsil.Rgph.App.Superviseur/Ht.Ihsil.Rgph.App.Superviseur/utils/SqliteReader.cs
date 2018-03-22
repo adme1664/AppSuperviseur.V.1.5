@@ -12,11 +12,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Globalization;
 using Ht.Ihsil.Rgph.App.Superviseur.Json;
+using System.Data.SQLite;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 {
     public class SqliteReader : ISqliteReader
     {
+        
         #region DECLARATIONS
         private MainRepository repository;
 
@@ -250,7 +252,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     BatimentModel bat = GetBatimentbyId(men.batimentId.GetValueOrDefault());
                     if (bat.Statut == Constant.STATUT_MODULE_KI_FINI_1)
-                        batiments.Add(bat);
+                        if (Utilities.isBatimentExistInList(batiments, bat) == false)
+                        {
+                            batiments.Add(bat);
+                        }                        
                 }
                 return batiments;
             }
@@ -1532,6 +1537,35 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return new List<LogementModel>();
         }
         /// <summary>
+        /// Retourne les logements occupes occasionnellement
+        /// </summary>
+        /// <returns></returns>
+        public List<LogementModel> GetAllLogementOccupeOccasionnellement()
+        {
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlin2StatutOccupation == (int)Constant.StatutOccupation.Okipe_le_konsa).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader:/GetAllLogementOccupeOccasionnellement" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<LogementModel> GetAllLogementVide()
+        {
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlin2StatutOccupation == (int)Constant.StatutOccupation.Pa_okipe).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader:/GetAllLogementVide" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+        /// <summary>
         /// Retourne tous les logements
         /// </summary>
         /// <returns>List LogementModel</returns>
@@ -2005,27 +2039,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 List<BatimentModel> listOfBatiments = ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.statut == (int)Constant.StatutModule.Fini).ToList());
                 BatimentModel firstBatiment = listOfBatiments.First();
                 BatimentModel lastBatiment = listOfBatiments.Last();
-                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-
+                
                 DateTime dateSaisieFirst=new DateTime();
                 DateTime dateSaisieLast = new DateTime();
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(firstBatiment.DateDebutCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieFirst))
-                        log.Info("Format date:" + dateSaisieFirst.ToString());
-                }
-                //
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(firstBatiment.DateFinCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieLast))
-                        log.Info("Format date:" + dateSaisieLast.ToString());
-                }
+
+                dateSaisieFirst = Convert.ToDateTime(firstBatiment.DateDebutCollecte);
+                dateSaisieLast = Convert.ToDateTime(lastBatiment.DateFinCollecte);
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)
@@ -2061,26 +2080,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 List<LogementModel> listOfLogements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.statut == (int)Constant.StatutModule.Fini).ToList());
                 LogementModel firstLogement = listOfLogements.First();
                 LogementModel lastLogement = listOfLogements.Last();
-                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
+                
                 DateTime dateSaisieFirst = new DateTime();
                 DateTime dateSaisieLast = new DateTime();
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(firstLogement.DateDebutCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieFirst))
-                        log.Info("Format date:" + dateSaisieFirst.ToString());
-                }
-                //
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(lastLogement.DateFinCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieLast))
-                        log.Info("Format date:" + dateSaisieLast.ToString());
-                }
+
+                dateSaisieFirst = Convert.ToDateTime(firstLogement.DateDebutCollecte);
+                dateSaisieLast = Convert.ToDateTime(lastLogement.DateFinCollecte);
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)
@@ -2113,24 +2118,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 LogementModel lastLogement = listOfLogements.Last();
                 DateTime dateSaisieFirst=new DateTime();
                 DateTime dateSaisieLast = new DateTime();
-                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(firstLogement.DateDebutCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieFirst))
-                        log.Info("Format date:" + dateSaisieFirst.ToString());
-                }
-                //
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(lastLogement.DateFinCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieLast))
-                        log.Info("Format date:" + dateSaisieLast.ToString());
-                }
+                dateSaisieFirst = Convert.ToDateTime(firstLogement.DateDebutCollecte);
+                dateSaisieLast = Convert.ToDateTime(lastLogement.DateFinCollecte);
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)
@@ -2188,24 +2177,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 MenageModel lastMenage = listOfMenages.Last();
                 DateTime dateSaisieFirst = new DateTime();
                 DateTime dateSaisieLast = new DateTime();
-                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(firstMenage.DateDebutCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieFirst))
-                        log.Info("Format date:" + dateSaisieFirst.ToString());
-                }
-                //
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(lastMenage.DateFinCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieLast))
-                        log.Info("Format date:" + dateSaisieLast.ToString());
-                }
+
+                dateSaisieFirst = Convert.ToDateTime(firstMenage.DateDebutCollecte);
+                dateSaisieLast = Convert.ToDateTime(lastMenage.DateFinCollecte);
 
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
@@ -2245,24 +2219,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 IndividuModel lastIndividu = listOfIndividus.Last();
                 DateTime dateSaisieFirst = new DateTime();
                 DateTime dateSaisieLast = new DateTime();
-                string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(firstIndividu.DateDebutCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieFirst))
-                        log.Info("Format date:" + dateSaisieFirst.ToString());
-                }
-                //
-                foreach (string dateStringFormat in formatDates)
-                {
-                    if (DateTime.TryParseExact(lastIndividu.DateFinCollecte, dateStringFormat,
-                                      CultureInfo.InvariantCulture,
-                                      DateTimeStyles.None,
-                                      out dateSaisieLast))
-                        log.Info("Format date:" + dateSaisieLast.ToString());
-                }
+                dateSaisieFirst = Convert.ToDateTime(firstIndividu.DateDebutCollecte);
+                dateSaisieLast = Convert.ToDateTime(lastIndividu.DateFinCollecte);
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)
@@ -2414,7 +2372,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         /// Retourne le nombre de personnes vivant dans les logements collectifs
         /// </summary>
         /// <returns></returns>
-        public int getTotalPersonnesByLogementCollections()
+        public int getTotalPersonnesByLogementCollectif()
         {
             try
             {
@@ -2425,7 +2383,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     foreach (LogementModel lgc in listOfLogementsCollectifs)
                     {
-                        nbLogementCollectif = nbLogementCollectif + lgc.QlcTotalIndividus;
+                        nbLogementCollectif = nbLogementCollectif + lgc.QlcTotalIndividus+lgc.Qlc2bTotalGarcon+lgc.Qlc2bTotalFille;
                     }
                     return nbLogementCollectif;
                 }
@@ -2699,6 +2657,42 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region INDICATEURS SOCIO-DEMOGRAPHIQUES PAR MENAGES
+        public int getTotalPersonnesByLogementCollectifDeclare()
+        {
+            string methodName = "getTotalPersonnesByLogementCollectifDeclare";
+            try
+            {
+                int NbreTotal = 0;
+                List<LogementModel> logements = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == 0).ToList());
+                foreach (LogementModel lg in logements)
+                {
+                    log.Info("Logement:" + lg.LogeId + "/G:" + lg.Qlc2bTotalGarcon + "/F:" + lg.Qlc2bTotalFille);
+                    NbreTotal += lg.Qlc2bTotalFille + lg.Qlc2bTotalGarcon;
+                }
+                return NbreTotal;
+
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return 0;
+        }
+        public List<IndividuModel> GetAllIndividusInMenage()
+        {
+            string methodName = "GetAllIndividusInMenage";
+            try
+            {
+                List<IndividuModel> individus = new List<IndividuModel>();
+                individus = ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(i => i.menageId != 0).ToList());
+                return individus;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/"+methodName+":" + ex.Message);
+            }
+            return new List<IndividuModel>();
+        }
 
         //Retourne tous les menages unipersonnels
         public List<MenageModel> searchMenageUnipersonnel()
@@ -2755,11 +2749,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return new List<MenageModel>();
         }
-        public float tailleMoyenneMenage()
+        public double tailleMoyenneMenage()
         {
             try
             {
-                return GetAllIndividus().Count / GetAllMenages().Count;
+                double ind = GetAllIndividusInMenage().Count;
+                log.Info("Ind:" + ind);
+                double men = GetAllMenages().Count;
+                log.Info("Men:" + men);
+                double res = ind / men;
+                return res ;
             }
             catch (Exception)
             {
@@ -3244,6 +3243,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         }
         #endregion
 
-        
+
+
+
+       
     }
 }

@@ -139,6 +139,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             Alphanumerique = 3
         }
 
+        public enum StatutOccupation : int
+        {
+            Okipe_Toutan=1,
+            Okipe_Moun_Pa_la=2,
+            Okipe_le_konsa=3,
+            Pa_okipe=4
+        }
+
         public enum ImagePath:int
         {
             [StringValue("/images/malrempli.png")]
@@ -417,7 +425,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string MSG_RAPO_SAVE = "Rapò a anregistre avèk siksè.";
         public static string MSG_RAPO_UPDATE = "Rapò a modifye avèk siksè.";
         public static string MSG_NOT_CLICK = "Ou dwe klike sou yon objè.";
-        public static string WINDOW_TITLE = "IHSI-RGPH[2017]";
+        public static string WINDOW_TITLE = "IHSI-RGPH[2018]";
         public static string MSG_KE_IS_MADE = "Kont ankèt sa a fèt deja.";
         #endregion
 

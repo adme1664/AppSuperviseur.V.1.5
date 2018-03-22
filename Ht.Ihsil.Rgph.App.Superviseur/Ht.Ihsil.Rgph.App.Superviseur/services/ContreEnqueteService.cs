@@ -21,6 +21,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         public SqliteDataReaderService readerService;
         private Logger log;
         public DaoContreEnquete daoCE;
+        private static readonly Random random=new Random();
+        private static readonly object syncLock = new object();
         #endregion
 
         #region CONSTRUCTOR
@@ -193,11 +195,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                         }
                         else
                         {
-                            Random random = new Random();
                             List<BatimentModel> listOfBatiments = new List<BatimentModel>();
                             for (int i = 0; i <= listB.Count(); i++)
                             {
-                                BatimentModel bat = listB.ElementAt(random.Next(1, listB.Count()));
+                                BatimentModel bat = listB.ElementAt(RandomNumber(1, listB.Count()));
                                 if (listOfBatiments.Count > 0)
                                 {
                                     foreach (BatimentModel b in listOfBatiments)
@@ -332,7 +333,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         public BatimentModel getBatimentWithLogementC()
         {
             List<BatimentModel> listOfBat= readerService.getAllLogementCollectif();
-            Random random = new Random();
             if (listOfBat.Count() == 0)
             {
                 return new BatimentModel();
@@ -343,7 +343,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     return listOfBat.FirstOrDefault();
                 else
                 {
-                    BatimentModel batiment = listOfBat.ElementAt(random.Next(1, listOfBat.Count()));
+                    BatimentModel batiment = listOfBat.ElementAt(RandomNumber(1, listOfBat.Count()));
                     return batiment;
                 }
             }
@@ -358,20 +358,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             List<BatimentModel> listOfBat = readerService.getAllLogementIndividuelVide();
             if (Utils.IsNotNull(listOfBat))
             {
-                Random random = new Random();
                 List<BatimentModel> listBatLogVide = new List<BatimentModel>();
                 if (listOfBat.Count <= 1)
                 {
                     return listOfBat;
                 }
+                int aleatoire = 0;
                 for (int i = 0; i <= listOfBat.Count; i++)
                 {
-                    BatimentModel bat = listOfBat.ElementAt(random.Next(1, listOfBat.Count()));
+                    aleatoire = RandomNumber((aleatoire + 1), listOfBat.Count());
+                    BatimentModel bat = listOfBat.ElementAt(aleatoire);
                     if (listBatLogVide.Count > 0)
                     {
                         foreach (BatimentModel batiment in listBatLogVide)
                         {
-                            if (Utilities.isBatimentExistInList(listBatLogVide, bat))
+                            if (Utilities.isBatimentExistInList(listBatLogVide, bat)==false)
                             {
                                 listBatLogVide.Add(bat);
                                 break;
@@ -385,7 +386,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     if (listBatLogVide.Count == 3)
                         break;
                 }
-
                    return listBatLogVide;    
             }
             return null;
@@ -880,41 +880,41 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             individu.MenageId = _ind.MenageId.GetValueOrDefault();
             individu.IndividuId = _ind.IndividuId.GetValueOrDefault();
             individu.SdeId = _ind.SdeId;
-            individu.Q3LienDeParente = Convert.ToByte(_ind.Q3LienDeParente.GetValueOrDefault());
-            individu.Q3aRaisonChefMenage = Convert.ToByte(_ind.Q3aRaisonChefMenage.GetValueOrDefault());
-            individu.Q5bAge = Convert.ToByte(_ind.Q5bAge.GetValueOrDefault());
+            individu.Q3LienDeParente = Convert.ToInt32(_ind.Q3LienDeParente.GetValueOrDefault());
+            individu.Q3aRaisonChefMenage = Convert.ToInt32(_ind.Q3aRaisonChefMenage.GetValueOrDefault());
+            individu.Q5bAge = Convert.ToInt32(_ind.Q5bAge.GetValueOrDefault());
             individu.Q2Nom = _ind.Q2Nom;
             individu.Q3Prenom = _ind.Q3Prenom;
-            individu.Q4Sexe = Convert.ToByte(_ind.Q4Sexe.GetValueOrDefault());
-            individu.Qp7Nationalite = Convert.ToByte(_ind.Qp7Nationalite.GetValueOrDefault());
+            individu.Q4Sexe = Convert.ToInt32(_ind.Q4Sexe.GetValueOrDefault());
+            individu.Qp7Nationalite = Convert.ToInt32(_ind.Qp7Nationalite.GetValueOrDefault());
             individu.Qp7PaysNationalite = _ind.Qp7PaysNationalite;
-            individu.Q7DateNaissanceJour = Convert.ToByte(_ind.Q7DateNaissanceJour.GetValueOrDefault());
-            individu.Q7DateNaissanceMois = Convert.ToByte(_ind.Q7DateNaissanceMois.GetValueOrDefault());
+            individu.Q7DateNaissanceJour = Convert.ToInt32(_ind.Q7DateNaissanceJour.GetValueOrDefault());
+            individu.Q7DateNaissanceMois = Convert.ToInt32(_ind.Q7DateNaissanceMois.GetValueOrDefault());
             individu.Q7DateNaissanceAnnee = Convert.ToInt32(_ind.Q7DateNaissanceAnnee.GetValueOrDefault());
-            individu.Qp10LieuNaissance = Convert.ToByte(_ind.Qp10LieuNaissance.GetValueOrDefault());
+            individu.Qp10LieuNaissance = Convert.ToInt32(_ind.Qp10LieuNaissance.GetValueOrDefault());
             individu.Qp10CommuneNaissance = _ind.Qp10CommuneNaissance;
             individu.Qp10LieuNaissanceVqse = _ind.Qp10LieuNaissanceVqse;
             individu.Qp10PaysNaissance = _ind.Qp10PaysNaissance;
-            individu.Qp11PeriodeResidence = Convert.ToByte(_ind.Qp11PeriodeResidence.GetValueOrDefault());
-            individu.Qe2FreqentationScolaireOuUniv = Convert.ToByte(_ind.Qe2FreqentationScolaireOuUniv.GetValueOrDefault());
-            individu.Qe4aNiveauEtude = Convert.ToByte(_ind.Qe4aNiveauEtude.GetValueOrDefault());
-            individu.Qe4bDerniereClasseOUAneEtude = Convert.ToByte(_ind.Qe4bDerniereClasseOUAneEtude.GetValueOrDefault());
-            individu.Qsm1StatutMatrimonial = Convert.ToByte(_ind.Qsm1StatutMatrimonial.GetValueOrDefault());
-            individu.Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(_ind.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault());
-            individu.Qa2ActAvoirDemele1 = Convert.ToByte(_ind.Qa2ActAvoirDemele1.GetValueOrDefault());
-            individu.Qa2ActDomestique2 = Convert.ToByte(_ind.Qa2ActDomestique2.GetValueOrDefault());
-            individu.Qa2ActCultivateur3 = Convert.ToByte(_ind.Qa2ActCultivateur3.GetValueOrDefault());
-            individu.Qa2ActAiderParent4 = Convert.ToByte(_ind.Qa2ActAiderParent4.GetValueOrDefault());
-            individu.Qa2ActAutre5 = Convert.ToByte(_ind.Qa2ActAutre5.GetValueOrDefault());
-            individu.Qa8EntreprendreDemarcheTravail = Convert.ToByte(_ind.Qa8EntreprendreDemarcheTravail.GetValueOrDefault());
-            individu.Qf1aNbreEnfantNeVivantM = Convert.ToByte(_ind.Qf1aNbreEnfantNeVivantM.GetValueOrDefault());
-            individu.Qf2bNbreEnfantNeVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantNeVivantF.GetValueOrDefault());
-            individu.Qf2aNbreEnfantVivantM = Convert.ToByte(_ind.Qf2aNbreEnfantVivantM.GetValueOrDefault());
-            individu.Qf2bNbreEnfantVivantF = Convert.ToByte(_ind.Qf2bNbreEnfantVivantF.GetValueOrDefault());
-            individu.Qf3DernierEnfantJour = Convert.ToByte(_ind.Qf3DernierEnfantJour.GetValueOrDefault());
-            individu.Qf3DernierEnfantMois = Convert.ToByte(_ind.Qf3DernierEnfantMois.GetValueOrDefault());
-            individu.Qf3DernierEnfantAnnee = Convert.ToByte(_ind.Qf3DernierEnfantAnnee.GetValueOrDefault());
-            individu.Qf4DENeVivantVit = Convert.ToByte(_ind.Qf4DENeVivantVit.GetValueOrDefault());
+            individu.Qp11PeriodeResidence = Convert.ToInt32(_ind.Qp11PeriodeResidence.GetValueOrDefault());
+            individu.Qe2FreqentationScolaireOuUniv = Convert.ToInt32(_ind.Qe2FreqentationScolaireOuUniv.GetValueOrDefault());
+            individu.Qe4aNiveauEtude = Convert.ToInt32(_ind.Qe4aNiveauEtude.GetValueOrDefault());
+            individu.Qe4bDerniereClasseOUAneEtude = Convert.ToInt32(_ind.Qe4bDerniereClasseOUAneEtude.GetValueOrDefault());
+            individu.Qsm1StatutMatrimonial = Convert.ToInt32(_ind.Qsm1StatutMatrimonial.GetValueOrDefault());
+            individu.Qa1ActEconomiqueDerniereSemaine = Convert.ToInt32(_ind.Qa1ActEconomiqueDerniereSemaine.GetValueOrDefault());
+            individu.Qa2ActAvoirDemele1 = Convert.ToInt32(_ind.Qa2ActAvoirDemele1.GetValueOrDefault());
+            individu.Qa2ActDomestique2 = Convert.ToInt32(_ind.Qa2ActDomestique2.GetValueOrDefault());
+            individu.Qa2ActCultivateur3 = Convert.ToInt32(_ind.Qa2ActCultivateur3.GetValueOrDefault());
+            individu.Qa2ActAiderParent4 = Convert.ToInt32(_ind.Qa2ActAiderParent4.GetValueOrDefault());
+            individu.Qa2ActAutre5 = Convert.ToInt32(_ind.Qa2ActAutre5.GetValueOrDefault());
+            individu.Qa8EntreprendreDemarcheTravail = Convert.ToInt32(_ind.Qa8EntreprendreDemarcheTravail.GetValueOrDefault());
+            individu.Qf1aNbreEnfantNeVivantM = Convert.ToInt32(_ind.Qf1aNbreEnfantNeVivantM.GetValueOrDefault());
+            individu.Qf2bNbreEnfantNeVivantF = Convert.ToInt32(_ind.Qf2bNbreEnfantNeVivantF.GetValueOrDefault());
+            individu.Qf2aNbreEnfantVivantM = Convert.ToInt32(_ind.Qf2aNbreEnfantVivantM.GetValueOrDefault());
+            individu.Qf2bNbreEnfantVivantF = Convert.ToInt32(_ind.Qf2bNbreEnfantVivantF.GetValueOrDefault());
+            individu.Qf3DernierEnfantJour = Convert.ToInt32(_ind.Qf3DernierEnfantJour.GetValueOrDefault());
+            individu.Qf3DernierEnfantMois = Convert.ToInt32(_ind.Qf3DernierEnfantMois.GetValueOrDefault());
+            individu.Qf3DernierEnfantAnnee = Convert.ToInt32(_ind.Qf3DernierEnfantAnnee.GetValueOrDefault());
+            individu.Qf4DENeVivantVit = Convert.ToInt32(_ind.Qf4DENeVivantVit.GetValueOrDefault());
             individu.DureeSaisie = Convert.ToInt32(_ind.DureeSaisie.GetValueOrDefault());
             individu.IsContreEnqueteMade = _ind.IsContreEnqueteMade.GetValueOrDefault();
             individu.IsValidated = _ind.IsValidated.GetValueOrDefault();
@@ -1494,10 +1494,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         }
         #endregion
 
-
-
-
-
-        
+        public  int RandomNumber(int min, int max)
+        {
+            lock (syncLock)
+            { // synchronize
+                return random.Next(min, max);
+            }
+        }      
     }
 }

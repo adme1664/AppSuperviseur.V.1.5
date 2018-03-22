@@ -146,8 +146,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         mainRpt.lbRprts.ItemsSource = listOf;       
                         blankItems();
                         grid_rapport.ItemsSource = new ObservableCollection<DetailsRapportDeroulement>();
-                    }
-                        
+                    }                        
                 }
             }
             else

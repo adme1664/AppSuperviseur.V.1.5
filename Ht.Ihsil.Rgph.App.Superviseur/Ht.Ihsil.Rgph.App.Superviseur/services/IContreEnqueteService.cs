@@ -140,5 +140,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         int getTotalFormationProByMen(MenageCEModel model);
         #endregion
 
+        #region RANDOM GENEREATION
+        int RandomNumber(int min, int max);
+        #endregion
     }
 }

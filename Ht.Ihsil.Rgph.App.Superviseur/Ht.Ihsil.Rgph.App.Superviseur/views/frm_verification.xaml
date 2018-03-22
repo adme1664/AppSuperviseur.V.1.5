@@ -48,7 +48,7 @@
                                     </dxc:ChartControl>
                                 </Grid>
                             </dx:DXTabItem>
-                            <dx:DXTabItem Header="Indicateurs socio-demographiques" Name="tabSocioDemographiques" GotFocus="tabSocioDemographiques_GotFocus">
+                            <dx:DXTabItem Header="Indicateurs socio-demographiques" Name="tabSocioDemographiques" GotFocus="tabSocioDemographiques_GotFocus" Height="22" VerticalAlignment="Top">
                                 <Grid>
                                     <dx:WaitIndicator x:Name="waitIndicator" DeferedVisibility="false" Margin="231,106,-211,-156" RenderTransformOrigin="0.496,0.429">
                                         <dx:WaitIndicator.ContentTemplate>
@@ -257,8 +257,17 @@
                             <dxg:TreeListControl AutoGenerateColumns="AddNew"   Name="dtg_non_reponse_totale" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AutoGeneratingColumn="dtg_non_reponse_totale_AutoGeneratingColumn" SelectionMode="Row">
                                 <dxg:TreeListControl.View >
                                     <dxg:TreeListView  ShowNodeImages="True" ImageFieldName="Image"  NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListView1" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"   AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD">
-                                    </dxg:TreeListView>
+                                        <!--<dxg:TreeListView.ContextMenu>
+                                            <ContextMenu >
+                                                <MenuItem Header="mymenu"></MenuItem>
+                                            </ContextMenu>
+                                        </dxg:TreeListView.ContextMenu>-->
+                                        <dxg:TreeListView.RowCellMenuCustomizations>
+                                            <dxb:BarButtonItem Name="deleteRowItem" Content="Supprimer" />
+                                        </dxg:TreeListView.RowCellMenuCustomizations>
+                                    </dxg:TreeListView>                                    
                                 </dxg:TreeListControl.View>
+                                
                                 <dxg:TreeListControl.Columns>
                                 </dxg:TreeListControl.Columns>
                             </dxg:TreeListControl>
