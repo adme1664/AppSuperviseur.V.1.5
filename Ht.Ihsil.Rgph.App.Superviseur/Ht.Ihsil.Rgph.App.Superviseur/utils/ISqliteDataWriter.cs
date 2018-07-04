@@ -11,11 +11,31 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
    public interface ISqliteDataWriter
     {
        bool syncroBatimentToServeur(BatimentModel bat);
+       bool insertBatiment(tbl_batiment batiment);
+       bool updateBatiment(tbl_batiment batiment);
+       bool insertLogement(tbl_logement logement);
+       bool updateLogement(tbl_logement logement);
+       bool insertMenage(tbl_menage men);
+       bool updateMenage(tbl_menage men);
+       bool insertDeces(DecesModel dec);
+       bool updateDeces(DecesModel dec);
+       bool insertEmigre(EmigreModel em);
+       bool updateEmigre(EmigreModel em);
+       bool insertIndividu(IndividuModel ind);
+       bool updateIndividu(IndividuModel ind);
        bool validate<T>(T obj,string sdeId);
+       bool verified<T>(T obj, string sdeId);
        bool changeStatus<T>(T obj, string sdeId);
        bool contreEnqueteMade<T>(T obj, string sdeId);
        bool savePersonnel(tbl_personnel person);
        bool ifPersonExist(tbl_personnel person);
+       bool changeToVerified<T>(T obj, string sdeId,string path);
+       bool deleteBatiment(tbl_batiment bat);
+       bool deleteMenage(tbl_menage menage);
+       bool deleteLogement(tbl_logement logement);
+       bool deleteEmigre(tbl_emigre emigre);
+       bool deleteDeces(tbl_deces deces);
+       bool deleteIndividu(tbl_individu individu);
 
     }
 }

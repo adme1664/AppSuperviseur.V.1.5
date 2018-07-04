@@ -65,7 +65,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         #endregion
 
         #region CONSTRUCTORS
-        public frm_rpt_deroulement(RapportDeroulementModel rptDeroulement,frm_rpt_dereoulement_entete rpt_entete)
+        public frm_rpt_deroulement(RapportDeroulementModel rptDeroulement, frm_rpt_dereoulement_entete rpt_entete)
         {
             InitializeComponent();
             keyProbleme = new KeyValue();
@@ -227,12 +227,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     comboBoxSuivi.SelectionChanged += comboBoxSuivi_SelectionChanged;
                     gridGroup.Children.Add(comboBoxSuivi);
                     //
-                   
+
                     //
                     //Ajout d'un bouton save dans la derniere
                     if (positionLastMainTab == (ListOfDomaines.Count))
                     {
-                        if (positionLastSubTab == (sousDomaines.Count ))
+                        if (positionLastSubTab == (sousDomaines.Count))
                         {
                             btnSave = new Button();
                             btnSave.Content = "Sauvegarder";
@@ -282,7 +282,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     //reinitialiser le margin
                     thick = new Thickness(11, 8, 0, 0);
 
-                    
+
                 }
                 //
                 //Ajout 
@@ -305,25 +305,26 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             //Disabled all tabs
             disabledTabControls();
             numberOfItemsInMainTab = mainTab.Items.Count;
-            
+
         }
 
         void btnSave_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                long rptId=0;
+                long rptId = 0;
                 if (rapportDeroulement != null)
                 {
                     rapportDeroulement.DateRapport = DateTime.Now.ToString();
-                     rptId = service.saveRptDeroulement(rapportDeroulement);
+                    rptId = service.saveRptDeroulement(rapportDeroulement);
+                    MessageBox.Show("Rapport enregistre avec succes", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 if (detailsRapports != null)
                 {
                     foreach (DetailsRapportModel rpt in detailsRapports)
                     {
                         rpt.RapportId = rptId;
-                        bool result=service.saveDetailsDeroulement(rpt);
+                        bool result = service.saveDetailsDeroulement(rpt);
                         log.Info("" + result);
                     }
                 }
@@ -342,7 +343,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 suggestion = t.Text;
                 log.Info(suggestion);
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
@@ -396,6 +397,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 keyProbleme = new KeyValue();
                 keyProbleme = (sender as ComboBox).SelectedItem as KeyValue;
+                if (keyProbleme.Key == 1 && keyProbleme.Value == "1. Aucun problème")
+                {
+
+                    comboBoxSolution.Dispatcher.BeginInvoke((Action)(() => comboBoxSolution.IsEnabled = true));
+                    comboBoxSuivi.Dispatcher.BeginInvoke((Action)(() => comboBoxSuivi.IsEnabled = true));
+                    textPrecision.Dispatcher.BeginInvoke((Action)(() => textPrecision.IsEnabled = false));
+                    TextSuggest.Dispatcher.BeginInvoke((Action)(() => TextSuggest.IsEnabled = false));
+                    
+                }
+                                
             }
             catch (Exception)
             {
@@ -426,48 +437,65 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         rapport = new DetailsRapportModel();
                         rapport = getDomainesAndSousDomainesInTabName(it.Name);
                         //recuperer les valeurs dans les combo et les textbox
-                        if (keyProbleme.Key != 0)
+
+                        //Test si le code probleme est 1 (Aucun probleme)
+                        if (keyProbleme.Key > 1 || keyProbleme.Value != "1. Aucun problème")
                         {
-                            rapport.Probleme = keyProbleme.Key;
-                            keyProbleme = new KeyValue();
+
+
+                            if (keyProbleme.Key != 0)
+                            {
+                                rapport.Probleme = keyProbleme.Key;
+                                keyProbleme = new KeyValue();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Ou dwe chwazi yon pwoblem", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            if (keySolution.Key != 0)
+                            {
+                                rapport.Solution = keySolution.Key;
+                                keySolution = new KeyValue();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Ou dwe chwazi ki solisyon w ap pote", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            if (keySuivi.Key != 0)
+                            {
+                                rapport.Suivi = keySuivi.Key.ToString();
+                                keySuivi = new KeyValue();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Ou dwe di ki swivi ki pou fet", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            if (textPrecision.Text != null)
+                            {
+                                rapport.Precisions = precision;
+                                precision = "";
+                            }
+                            if (TextSuggest.Text != null)
+                            {
+                                rapport.Suggestions = suggestion;
+                                suggestion = "";
+                            }
+                            detailsRapports.Add(rapport);
                         }
                         else
                         {
-                            MessageBox.Show("Ou dwe chwazi yon pwoblem", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
+                            if (keyProbleme.Key == 1 && keyProbleme.Value == "1. Aucun problème")
+                            {
+                                rapport.Probleme = keyProbleme.Key;
+                                detailsRapports.Add(rapport);
+                                keyProbleme = new KeyValue();
+                            }
                         }
-                        if (keySolution.Key != 0)
-                        {
-                            rapport.Solution = keySolution.Key;
-                            keySolution = new KeyValue();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ou dwe chwazi ki solisyon w ap pote", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                        if (keySuivi.Key != 0)
-                        {
-                            rapport.Suivi = keySuivi.Key.ToString();
-                            keySuivi = new KeyValue();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ou dwe di ki swivi ki pou fet", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                        if (textPrecision.Text != null)
-                        {
-                            rapport.Precisions = precision;
-                            precision = "";
-                        }
-                        if (TextSuggest.Text != null)
-                        {
-                            rapport.Suggestions = suggestion;
-                            suggestion = "";
-                        }
-                        detailsRapports.Add(rapport);
                         
+
                         //
                         //Passe a la table suivante
                         if (it.IsSelected == true)
@@ -483,8 +511,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                     it.Dispatcher.BeginInvoke((Action)(() => it.IsEnabled = true));
                                     TabItem nextTab = tabC.Items[indexOfSubTab - 1] as TabItem;
                                     nextTab.Dispatcher.BeginInvoke((Action)(() => nextTab.IsEnabled = true));
-                                    nextTab.Dispatcher.BeginInvoke((Action)(() => nextTab.IsSelected = true));                                 
-                                    
+                                    nextTab.Dispatcher.BeginInvoke((Action)(() => nextTab.IsSelected = true));
+
                                     //Puis on reinitialise a 0
                                     indexOfSubTab = 0;
 
@@ -525,21 +553,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                         it.Dispatcher.BeginInvoke((Action)(() => it.IsEnabled = true));
                                         TabItem nextTab = tabC.Items[indexOfSubTab] as TabItem;
                                         nextTab.Dispatcher.BeginInvoke((Action)(() => nextTab.IsEnabled = true));
-                                        nextTab.Dispatcher.BeginInvoke((Action)(() => nextTab.IsSelected = true)); 
-                                    }                                       
-                                    
+                                        nextTab.Dispatcher.BeginInvoke((Action)(() => nextTab.IsSelected = true));
+                                    }
+
                                 }
-                                                           
+
                             }
                             else
                             {
-                                TabItem nextMainTab = mainTab.Items[indexOfMainTab+1] as TabItem;
+                                TabItem nextMainTab = mainTab.Items[indexOfMainTab + 1] as TabItem;
                                 nextMainTab.Dispatcher.BeginInvoke((Action)(() => nextMainTab.IsEnabled = true));
                                 nextMainTab.Dispatcher.BeginInvoke((Action)(() => nextMainTab.IsSelected = true));
                             }
-                            
+
                             //s'il est superieur
-                         
+
                         }
                     }
                 }

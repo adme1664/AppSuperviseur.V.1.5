@@ -1,6 +1,6 @@
 ﻿using Ht.Ihsi.Rgph.Logging.Logs;
 using Ht.Ihsil.Rgph.App.Superviseur.Json;
-using Ht.Ihsil.Rgph.App.Superviseur.Schema;
+using Ht.Ihsil.Rgph.App.Superviseur.SchemaTest;
 using Ht.Ihsil.Rgph.App.Superviseur.utils;
 using System;
 using System.Collections.Generic;
@@ -28,6 +28,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
            file = basePath + "configuration.xml";
            configuration = new XmlUtils(file);
            adrSvrMqtt = configuration.getAdrServer();
+           //adrSvrMqtt = "";
            log.Info("SERVER ADDRESS:" + adrSvrMqtt);
            mqttClient = new MqttClient(adrSvrMqtt);
            string clientId = Guid.NewGuid().ToString();

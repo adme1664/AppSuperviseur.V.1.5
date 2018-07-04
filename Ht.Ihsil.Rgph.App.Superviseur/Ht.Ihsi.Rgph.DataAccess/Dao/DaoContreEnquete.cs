@@ -47,12 +47,13 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         }
 
         #region CONTRE-ENQUETE
-        public void saveContreEnquete(Tbl_ContreEnquete ce)
+        public Tbl_ContreEnquete saveContreEnquete(Tbl_ContreEnquete ce)
         {
             try
             {
-                repository.ContreEnqueteRepository.Insert(ce);
+                Tbl_ContreEnquete cToSave=repository.ContreEnqueteRepository.Insert(ce);
                 repository.Save();
+                return cToSave;
             }
             catch (Exception ex)
             {

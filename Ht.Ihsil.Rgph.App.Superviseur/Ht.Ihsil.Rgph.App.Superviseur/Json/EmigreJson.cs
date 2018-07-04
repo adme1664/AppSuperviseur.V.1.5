@@ -28,5 +28,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public string dateFinCollecte { get; set; }
         public int dureeSaisie { get; set; }
         public string codeAgentRecenceur { get; set; }
+        public bool verified { get; set; }
     }
 }

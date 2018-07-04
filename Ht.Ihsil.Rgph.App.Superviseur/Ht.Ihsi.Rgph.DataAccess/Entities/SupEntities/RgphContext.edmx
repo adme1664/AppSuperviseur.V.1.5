@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RgphModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=F:\workspace\C#\Desktop\AppSuperviseur.V.1.5\Ht.Ihsil.Rgph.App.Superviseur\Ht.Ihsi.Rgph.DataAccess\Data\rgph_sup-db.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="RgphModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=D:\WORKSPACE\CSHARP\DESKSTOP_APPLICATION\AppSuperviseur.V.1.5\Ht.Ihsil.Rgph.App.Superviseur\Ht.Ihsi.Rgph.DataAccess\Data\rgph_sup-db.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Tbl_Agent">
           <Key>
             <PropertyRef Name="AgentId" />
@@ -93,6 +93,11 @@ avertissement 6002: La table/vue 'main.Tbl_Commune' n'a pas de clé primaire dé
           <Property Name="DateFin" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Raison" Type="integer" />
           <Property Name="Statut" Type="integer" />
+          <Property Name="LogeId" Type="integer" />
+          <Property Name="MenageId" Type="integer" />
+          <Property Name="Termine" Type="integer" />
+          <Property Name="Validate" Type="integer" />
+          <Property Name="CodeSuperviseur" Type="integer" />
         </EntityType>
         <EntityType Name="Tbl_DecesCE">
           <Key>
@@ -565,8 +570,7 @@ FROM [Tbl_Reponses] AS [Tbl_Reponses]</DefiningQuery>
 FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RgphModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -635,6 +639,11 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <Property Name="DateFin" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Raison" Type="Int64" />
           <Property Name="Statut" Type="Int64" />
+          <Property Name="LogeId" Type="Int64" />
+          <Property Name="MenageId" Type="Int64" />
+          <Property Name="Termine" Type="Int64" />
+          <Property Name="Validate" Type="Int64" />
+          <Property Name="CodeSuperviseur" Type="Int64" />
         </EntityType>
         <EntityType Name="Tbl_DecesCE">
           <Key>
@@ -1114,6 +1123,11 @@ FROM [Tbl_VilleQuartierSectionCommunale] AS [Tbl_VilleQuartierSectionCommunale]<
           <EntitySetMapping Name="Tbl_ContreEnquete">
             <EntityTypeMapping TypeName="RgphModel.Tbl_ContreEnquete">
               <MappingFragment StoreEntitySet="Tbl_ContreEnquete">
+                <ScalarProperty Name="CodeSuperviseur" ColumnName="CodeSuperviseur" />
+                <ScalarProperty Name="Validate" ColumnName="Validate" />
+                <ScalarProperty Name="Termine" ColumnName="Termine" />
+                <ScalarProperty Name="MenageId" ColumnName="MenageId" />
+                <ScalarProperty Name="LogeId" ColumnName="LogeId" />
                 <ScalarProperty Name="ContreEnqueteId" ColumnName="ContreEnqueteId" />
                 <ScalarProperty Name="BatimentId" ColumnName="BatimentId" />
                 <ScalarProperty Name="CodeDistrict" ColumnName="CodeDistrict" />

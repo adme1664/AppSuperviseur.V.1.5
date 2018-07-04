@@ -28,6 +28,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         AgentModel agent = null;
         RapportPersonnelModel rptModel = null;
         frm_rpt_personnel main_rpm = null;
+        int score;
+        string observation;
         
         public frm_questions_agent(AgentModel agent,frm_rpt_personnel frm)
         {
@@ -56,7 +58,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             cQ5.ItemsSource = Constant.listOf4Choix();
             cQ6.ItemsSource = Constant.listOf4Choix();
             cQ7.ItemsSource = Constant.listOf4Choix();
-            cQ8.ItemsSource = Constant.listOf3Choix();
+            cQ8.ItemsSource = Constant.listOf8Choix();
             cQ9.ItemsSource = Constant.listOf4Choix();
             cQ10.ItemsSource = Constant.listOf4Choix();
             cQ11.ItemsSource = Constant.listOf3Choix();
@@ -95,7 +97,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             cQ5.ItemsSource = Constant.listOf4Choix();
             cQ6.ItemsSource = Constant.listOf4Choix();
             cQ7.ItemsSource = Constant.listOf4Choix();
-            cQ8.ItemsSource = Constant.listOf3Choix();
+            cQ8.ItemsSource = Constant.listOf8Choix();
             cQ9.ItemsSource = Constant.listOf4Choix();
             cQ10.ItemsSource = Constant.listOf4Choix();
             cQ11.ItemsSource = Constant.listOf3Choix();
@@ -174,10 +176,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
             foreach (ReponseModel rapport in cQ15.Items)
             {
-                if (rapport.CodeReponse == rpt.q5.ToString())
+                if (rapport.CodeReponse == rpt.q15.ToString())
                     cQ15.SelectedItem = rapport;
             }
-            img_save.Source = new BitmapImage(new Uri(@"/images/update.png", UriKind.Relative));
+            //img_save.Source = new BitmapImage(new Uri(@"/images/update.png", UriKind.Relative));
             btn_save.ToolTip = "Modifier";
            
         }
@@ -202,10 +204,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 ReponseModel rep10 = cQ10.SelectedItem as ReponseModel;
                 ReponseModel rep11 = cQ11.SelectedItem as ReponseModel;
                 ReponseModel rep12 = cQ12.SelectedItem as ReponseModel;
-                ReponseModel rep13 = cQ13.SelectedItem as ReponseModel;
-                ReponseModel rep15 = cQ15.SelectedItem as ReponseModel;
+                
                 string q14 = tQ14.Text;
-                if (rep1 == null || rep2 == null || rep3 == null || rep4 == null || rep5 == null || rep6 == null || rep7 == null || rep8 == null || rep9 == null || rep10 == null || rep11 == null || rep12 == null || rep13 == null || rep15 == null)
+                if (rep1 == null || rep2 == null || rep3 == null || rep4 == null || rep5 == null || 
+                    rep6 == null || rep7 == null || rep8 == null || rep9 == null || rep10 == null ||
+                    rep11 == null || rep12 == null)
                 {
                     MessageBox.Show("Ou dwe mete repons yo.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
@@ -213,19 +216,30 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 else
                 {
                     rpt.q1 = Convert.ToInt32(rep1.CodeReponse);
+                    score = Utilities.getScore(score, rep1, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q2 = Convert.ToInt32(rep2.CodeReponse);
+                    score = Utilities.getScore(score, rep2, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q3 = Convert.ToInt32(rep3.CodeReponse);
+                    score = Utilities.getScore(score, rep3, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q4 = Convert.ToInt32(rep4.CodeReponse);
+                    score = Utilities.getScore(score, rep4, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q5 = Convert.ToInt32(rep5.CodeReponse);
+                    score = Utilities.getScore(score, rep5, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q6 = Convert.ToInt32(rep6.CodeReponse);
+                    score = Utilities.getScore(score, rep6, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q7 = Convert.ToInt32(rep7.CodeReponse);
+                    score = Utilities.getScore(score, rep7, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q8 = Convert.ToInt32(rep8.CodeReponse);
+                    score = Utilities.getScore(score, rep8, (int)Constant.RapportTypeQuestion.question_8);
                     rpt.q9 = Convert.ToInt32(rep9.CodeReponse);
+                    score = Utilities.getScore(score, rep9, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q10 = Convert.ToInt32(rep10.CodeReponse);
+                    score = Utilities.getScore(score, rep10, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q11 = Convert.ToInt32(rep11.CodeReponse);
+                    score = Utilities.getScore(score, rep11, (int)Constant.RapportTypeQuestion.question_4);
                     rpt.q12 = Convert.ToInt32(rep12.CodeReponse);
-                    rpt.q13 = Convert.ToInt32(rep13.CodeReponse);
-                    rpt.q15 = Convert.ToInt32(rep15.CodeReponse);
+                    score = Utilities.getScore(score, rep12, (int)Constant.RapportTypeQuestion.question_4);
+                    
                     rpt.q14 = q14;
                     SdeInformation sde = Utilities.getSdeInformation(Utilities.getSdeFormatWithDistrict(configuration.getSdeByAgent(agent.AgentId).SdeId));
                     rpt.comId = sde.ComId;
@@ -233,18 +247,45 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     rpt.codeDistrict = sde.CodeDistrict;
                     rpt.ReportSenderId = Users.users.CodeUtilisateur;
                     rpt.persId = agent.Username;
+                    rpt.score = score;
+                    if (score >= 18)
+                        observation = "Acceptable";
+                    if (score >= 13 && score <= 17)
+                        observation = "Passable";
+                    if (score <13)
+                        observation="Problematique";
                 }
 
-                if (btn_save.ToolTip.ToString() == "Enregistrer")
+                if (btn_save.Content.ToString() == "Score")
                 {
-                    bool result = service_ce.saveRptPersonnel(rpt);
-                    if (result == true)
+                    MessageBox.Show("Not Ajan Resansè se: " + score + "\n" + "Obsèvasyon:"+observation,Constant.WINDOW_TITLE,MessageBoxButton.OK,MessageBoxImage.Information);
+                    btn_save.Dispatcher.BeginInvoke((Action)(() => btn_save.Content = "Enregistrer"));
+                    return;
+                }
+                if (btn_save.Content.ToString() == "Enregistrer")
+                {
+                   
+                    ReponseModel rep13 = cQ13.SelectedItem as ReponseModel;
+                    ReponseModel rep15 = cQ15.SelectedItem as ReponseModel;
+                    if (rep13 == null && rep15 == null)
                     {
-                        MessageBox.Show("Rapport enregistre avec succes", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                        main_rpm.lbAgents.ItemsSource = configuration.searchAllAgents();
+                        MessageBox.Show("Ou dwe chwazi yon repons pou kesyon 13 ak 15.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     else
-                        MessageBox.Show("Erreur", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    {
+                        rpt.q13 = Convert.ToInt32(rep13.CodeReponse);
+                        rpt.q15 = Convert.ToInt32(rep15.CodeReponse);
+                        //individuJson.dateFinCollecte = DateTime.ParseExact(individu.DateFinCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                        rpt.dateEvaluation = DateTime.Now.ToString();
+                        bool result = service_ce.saveRptPersonnel(rpt);
+                        if (result == true)
+                        {
+                            MessageBox.Show("Rapport enregistre avec succes", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                            main_rpm.lbAgents.ItemsSource = configuration.searchAllAgents();
+                        }
+                        else
+                            MessageBox.Show("Erreur", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }                    
                 }
                 else
                 {

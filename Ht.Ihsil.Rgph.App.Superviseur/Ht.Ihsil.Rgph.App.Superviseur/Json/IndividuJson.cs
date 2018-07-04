@@ -90,6 +90,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public int dureeSaisie { get; set; }
         public bool isContreEnqueteMade { get; set; }
         public string codeAgentRecenceur { get; set; }
+        public bool verified { get; set; }
 
     }
 }

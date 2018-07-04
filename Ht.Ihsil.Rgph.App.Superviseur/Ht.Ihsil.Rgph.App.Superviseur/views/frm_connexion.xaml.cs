@@ -23,6 +23,7 @@ using Ht.Ihsi.Rgph.Utility.Utils;
 using Ht.Ihsi.Rgph.Logging.Logs;
 using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using Ht.Ihsil.Rgph.App.Superviseur.Json;
+using System.IO;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.views
 {
@@ -36,6 +37,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         private ConsumeApiService apiService;
         private bool state = false;
         private static string MAIN_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Data\Databases\";
+        string basePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Configuration\";
+        string pathDefaultConfigurationFile = AppDomain.CurrentDomain.BaseDirectory + @"App_data\configuration\";
+        XmlUtils conf = null;
+        string serverAdress;
 
         Logger log;
         public frm_connexion()
@@ -46,15 +51,43 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             service = new UtilisateurService();
             configuration = new ConfigurationService();
             log = new Logger();
+            try
+            {
+                if (!Directory.Exists(MAIN_DATABASE_PATH))
+                {
+                    Directory.CreateDirectory(MAIN_DATABASE_PATH);
+                }
+                if (!Directory.Exists(basePath))
+                {
+                    Directory.CreateDirectory(basePath);
+                }
+                string fileName = basePath + "configuration.xml";
+                string[] files = Directory.GetFiles(pathDefaultConfigurationFile);
+                foreach (string f in files)
+                {
+                    System.IO.File.Copy(f, fileName, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur: " + ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
+        public void getAdressServer()
+        {
+            string file = basePath + "configuration.xml";
+            conf = new XmlUtils(file);
+            serverAdress = conf.getAdrServer();
+        }
         private void btn_connexion_Click(object sender, RoutedEventArgs e)
         {
 
 
             try
             {
-
+                getAdressServer();
                 initializeConnexion(t_username.Text, t_password.Password);
                 if (state == true)
                 {
@@ -132,8 +165,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     if (service.isAsticAccountExist() == true)
                     {
-                        string[] tab = username.Split('.');
-                        username = tab[0] + "" + tab[1];
                         user = service.authenticateUserLocally(username, password);
                         await img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                     }
@@ -146,8 +177,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     {
                         try
                         {
-                            string[] tab = username.Split('.');
-                            username = tab[0] + "" + tab[1];
+                            //string[] tab = username.Split('.');
+                            //username = tab[0] + "" + tab[1];
                             user = service.authenticateUserLocally(username, password);
                             await img_loading.Dispatcher.BeginInvoke((Action)(() => img_loading.Visibility = Visibility.Hidden));
                         }
@@ -165,7 +196,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         await busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Application non encore configuree. Connexion avec le serveur..."));
                         //
                         //On fait ping de l'addresse du server
-                        pingStatus = pingTheServer(ConfigurationManager.AppSettings.Get("adrIpServer"));
+                        pingStatus = pingTheServer(serverAdress);
                         if (pingStatus == false)
                         {
                             MessageBox.Show("Serveur indisponible", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -178,58 +209,67 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             //Point de Contact avec l'API 
                             apiService = new ConsumeApiService();
                             Utilisateur userApi = new Utilisateur();
-                            string[] tab = username.Split('.');
-                            username = tab[0] + "" + tab[1];
+                            //string[] tab = username.Split('.');
+                            //username = tab[0] + "" + tab[1];
                             userApi.username = username;
                             userApi.password = password;
                             //Authentification de du superviseur et recuperation de son identifiant
                             Utilisateur test = await apiService.authenticateUser(userApi);
-                            user = new UtilisateurModel();
-                            user.CodeUtilisateur = test.username;
-                            user.MotDePasse = test.password;
-                            user.ProfileId = Convert.ToInt32(test.profileId);
-                            user.Nom = test.nom;
-                            user.Prenom = test.prenom;
-
-                            //Enregistrement du superviseur
-                            service.insertUser(user);
-
-                            //Recherche des Sdes assignees au superviseur
-                            List<SdeBean> sdes = await apiService.listOfSde(test);
-                            if (sdes != null)
+                            //Si l'utilisateur existe
+                            if (test != null)
                             {
-                                foreach (SdeBean s in sdes)
+                                user = new UtilisateurModel();
+                                user.CodeUtilisateur = test.username;
+                                user.MotDePasse = test.password;
+                                user.ProfileId = Convert.ToInt32(test.profileId);
+                                user.Nom = test.nom;
+                                user.Prenom = test.prenom;
+
+                                //Enregistrement du superviseur
+                                service.insertUser(user);
+
+                                //Recherche des Sdes assignees au superviseur
+                                List<SdeBean> sdes = await apiService.listOfSde(test);
+                                if (sdes != null)
                                 {
-                                    SdeModel sde = new SdeModel();
-                                    sde.CodeDistrict = s.codeDistrict;
-                                    sde.SdeId = s.SdeId;
-                                    //Enregistrements
-                                    configuration.saveSdeDetails(ModelMapper.MapToSde(sde));
-                                }
-                            }
-                            //
-                            //Recherche des agents
-                            List<AgentJson> agents = await apiService.listOfAgent(test);
-                            if (agents != null)
-                            {
-                                foreach (AgentJson a in agents)
-                                {
-                                    AgentModel agent = new AgentModel();
-                                    agent.Username = a.agentId;
-                                    agent.Nom = a.nom;
-                                    agent.Prenom = a.prenom;
-                                    agent.Email = a.email;
-                                    //Ajout des agents
-                                    AgentModel agentSaved = configuration.insertAgentSde(agent);
-                                    //Modification de la sde en attribuant un agent a une sde
-                                    SdeModel s = configuration.getSdeDetails(a.sde);
-                                    if (s != null)
+                                    foreach (SdeBean s in sdes)
                                     {
-                                        s.AgentId = agentSaved.AgentId;
-                                        configuration.updateSdeDetails(ModelMapper.MapToSde(s));
+                                        SdeModel sde = new SdeModel();
+                                        sde.CodeDistrict = s.codeDistrict;
+                                        sde.SdeId = s.SdeId;
+                                        //Enregistrements
+                                        configuration.saveSdeDetails(ModelMapper.MapToSde(sde));
+                                    }
+                                }
+                                //
+                                //Recherche des agents
+                                List<AgentJson> agents = await apiService.listOfAgent(test);
+                                if (agents != null)
+                                {
+                                    foreach (AgentJson a in agents)
+                                    {
+                                        AgentModel agent = new AgentModel();
+                                        agent.Username = a.agentId;
+                                        agent.Nom = a.nom;
+                                        agent.Prenom = a.prenom;
+                                        agent.Email = a.email;
+                                        //Ajout des agents
+                                        AgentModel agentSaved = configuration.insertAgentSde(agent);
+                                        //Modification de la sde en attribuant un agent a une sde
+                                        SdeModel s = configuration.getSdeDetails(a.sde);
+                                        if (s != null)
+                                        {
+                                            s.AgentId = agentSaved.AgentId;
+                                            configuration.updateSdeDetails(ModelMapper.MapToSde(s));
+                                        }
                                     }
                                 }
                             }
+                            else
+                            {
+                                MessageBox.Show("Ce superviseur n'existe pas sur le serveur ", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            
                         }
                         catch (Exception ex)
                         {
@@ -275,14 +315,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         private void chk_isAstic_Checked(object sender, RoutedEventArgs e)
         {
-            if (chk_isAstic.IsChecked == true)
-            {
-                t_username.Mask = "006.0000";
-            }
-            else
-            {
-                t_username.Mask = "007.0000";
-            }
+            //if (chk_isAstic.IsChecked == true)
+            //{
+            //    t_username.Mask = "006.0000";
+            //}
+            //else
+            //{
+            //    t_username.Mask = "007.0000";
+            //}
         }
 
         private  void t_password_KeyDown(object sender, KeyEventArgs e)

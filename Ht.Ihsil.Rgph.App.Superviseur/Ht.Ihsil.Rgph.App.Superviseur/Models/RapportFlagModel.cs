@@ -13,5 +13,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
        public string Flag;
        public string Type { get; set; }
        public int Total { get; set; }
+       public IndividuModel Individu { get; set; }
     }
 }

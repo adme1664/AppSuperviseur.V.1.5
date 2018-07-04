@@ -52,6 +52,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public Nullable<int> Termine { get; set; }
         public int TypeContreEnquete { get; set; }
         public bool IsValidate { get; set; }
+        public long IsVerified { get; set; }
         public string BatimentName
         {
             get

@@ -4,7 +4,7 @@ using Ht.Ihsi.Rgph.DataAccess.Repositories;
 using Ht.Ihsi.Rgph.Logging.Logs;
 using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
-using Ht.Ihsil.Rgph.App.Superviseur.Schema;
+using Ht.Ihsil.Rgph.App.Superviseur.SchemaTest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -157,7 +157,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         }
 
 
-        public List<Schema.ContreEnqueteType> getContreEnquete(string sdeId, int type)
+        public List<SchemaTest.ContreEnqueteType> getContreEnquete(string sdeId, int type)
         {
             try
             {

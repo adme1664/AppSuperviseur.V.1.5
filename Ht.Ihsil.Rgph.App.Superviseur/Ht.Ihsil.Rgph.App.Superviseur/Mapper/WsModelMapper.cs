@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlServerCe;
 using Ht.Ihsi.Rgph.Logging.Logs;
-using Ht.Ihsil.Rgph.App.Superviseur.Schema;
+using Ht.Ihsil.Rgph.App.Superviseur.SchemaTest;
 using Ht.Ihsil.Rgph.App.Superviseur.Constants;
 using Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities;
 using Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities;

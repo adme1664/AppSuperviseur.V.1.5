@@ -1038,7 +1038,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         BatimentCEModel batiment = contreEnqueteService.getBatiment(contre_enquete.BatimentId.GetValueOrDefault(), contre_enquete.SdeId);
                         if (batiment.IsValidated.GetValueOrDefault() == true)
                         {
-                            contre_enquete.Statut = (int)Constant.StatutContreEnquete.Valide;
+                            contre_enquete.Statut = (int)Constant.StatutContreEnquete.Effectuee;
                             bool result = contreEnqueteService.daoCE.updateContreEnquete(ModelMapper.MapToTblContreEnquete(contre_enquete));
                             if (result == true)
                             {

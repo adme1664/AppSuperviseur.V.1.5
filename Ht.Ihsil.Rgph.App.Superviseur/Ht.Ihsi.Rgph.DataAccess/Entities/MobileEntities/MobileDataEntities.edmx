@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MobileEntities.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=D:\WORKSPACE\CSHARP\DESKSTOP_APPLICATION\AppSuperviseur.V.1.4\Ht.Ihsil.Rgph.App.Superviseur\Ht.Ihsi.Rgph.DataAccess\Data\rgph_data-db.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=D:\WORKSPACE\CSHARP\DESKSTOP_APPLICATION\AppSuperviseur.V.1.5.1\Ht.Ihsil.Rgph.App.Superviseur\Ht.Ihsi.Rgph.DataAccess\Data\rgph_data-db.sqlite" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_batiment">
           <Key>
             <PropertyRef Name="batimentId" />
@@ -44,6 +44,7 @@
           <Property Name="latitude" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="longitude" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="codeAgentRecenceur" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="isVerified" Type="integer" />
         </EntityType>
         <!--Erreurs détectées durant la génération :
 avertissement 6002: La table/vue 'main.tbl_categorie_question' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
@@ -89,6 +90,7 @@ avertissement 6002: La table/vue 'main.tbl_commune' n'a pas de clé primaire dé
           <Property Name="dureeSaisie" Type="integer" />
           <Property Name="isContreEnqueteMade" Type="integer" />
           <Property Name="codeAgentRecenceur" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="isVerified" Type="integer" />
         </EntityType>
         <!--Erreurs détectées durant la génération :
 avertissement 6002: La table/vue 'main.tbl_departement' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
@@ -129,6 +131,7 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="dateFinCollecte" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="dureeSaisie" Type="integer" />
           <Property Name="codeAgentRecenceur" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="isVerified" Type="integer" />
         </EntityType>
         <EntityType Name="tbl_individu">
           <Key>
@@ -215,6 +218,7 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="dureeSaisie" Type="integer" />
           <Property Name="isContreEnqueteMade" Type="integer" />
           <Property Name="codeAgentRecenceur" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="isVerified" Type="integer" />
         </EntityType>
         <EntityType Name="tbl_logement">
           <Key>
@@ -246,6 +250,7 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="isContreEnqueteMade" Type="integer" />
           <Property Name="nbrTentative" Type="integer" />
           <Property Name="codeAgentRecenceur" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="isVerified" Type="integer" />
         </EntityType>
         <EntityType Name="tbl_menage">
           <Key>
@@ -294,6 +299,7 @@ avertissement 6002: La table/vue 'main.tbl_domaine_etude' n'a pas de clé primai
           <Property Name="isFieldAllFilled" Type="integer" />
           <Property Name="isContreEnqueteMade" Type="integer" />
           <Property Name="codeAgentRecenceur" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="isVerified" Type="integer" />
         </EntityType>
         <!--Erreurs détectées durant la génération :
 avertissement 6002: La table/vue 'main.tbl_module' n'a pas de clé primaire définie. La clé a été déduite et la définition a été créée en tant que table/vue en lecture seule.-->
@@ -389,6 +395,27 @@ avertissement 6002: La table/vue 'main.tbl_question_reponse' n'a pas de clé pri
           <Property Name="qPrecedent" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="qSuivant" Type="nvarchar" MaxLength="2147483647" />
         </EntityType>
+        <EntityType Name="tbl_rapportfinal">
+          <Key>
+            <PropertyRef Name="rapportFinalId" />
+          </Key>
+          <Property Name="batimentId" Type="integer" />
+          <Property Name="logeId" Type="integer" />
+          <Property Name="menageId" Type="integer" />
+          <Property Name="repondantPrincipalId" Type="integer" />
+          <Property Name="aE_EsKeGenMounKiEde" Type="integer" />
+          <Property Name="aE_IsVivreDansMenage" Type="integer" />
+          <Property Name="aE_RepondantQuiAideId" Type="integer" />
+          <Property Name="f_EsKeGenMounKiEde" Type="integer" />
+          <Property Name="f_IsVivreDansMenage" Type="integer" />
+          <Property Name="f_RepondantQuiAideId" Type="integer" />
+          <Property Name="dateDebutCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dateFinCollecte" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="dureeSaisie" Type="integer" />
+          <Property Name="isContreEnqueteMade" Type="integer" />
+          <Property Name="codeAgentRecenceur" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="rapportFinalId" Type="integer" Nullable="false" />
+        </EntityType>
         <EntityType Name="tbl_rapportrar">
           <Key>
             <PropertyRef Name="rapportId" />
@@ -423,7 +450,7 @@ avertissement 6002: La table/vue 'main.tbl_vqse' n'a pas de clé primaire défin
           <Property Name="VqseNom" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="ComId" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="MobileEntitiesStoreContainer">
+        <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="tbl_batiment" EntityType="Self.tbl_batiment" store:Type="Tables" />
           <EntitySet Name="tbl_deces" EntityType="Self.tbl_deces" store:Type="Tables" />
           <EntitySet Name="tbl_emigre" EntityType="Self.tbl_emigre" store:Type="Tables" />
@@ -431,6 +458,7 @@ avertissement 6002: La table/vue 'main.tbl_vqse' n'a pas de clé primaire défin
           <EntitySet Name="tbl_logement" EntityType="Self.tbl_logement" store:Type="Tables" />
           <EntitySet Name="tbl_menage" EntityType="Self.tbl_menage" store:Type="Tables" />
           <EntitySet Name="tbl_personnel" EntityType="Self.tbl_personnel" store:Type="Tables" />
+          <EntitySet Name="tbl_rapportfinal" EntityType="Self.tbl_rapportfinal" store:Type="Tables" />
           <EntitySet Name="tbl_rapportrar" EntityType="Self.tbl_rapportrar" store:Type="Tables" />
           <EntitySet Name="tbl_categorie_question" EntityType="Self.tbl_categorie_question" store:Type="Tables">
             <DefiningQuery>SELECT 
@@ -524,7 +552,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MobileEntities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="tbl_batiment">
           <Key>
             <PropertyRef Name="batimentId" />
@@ -564,6 +592,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="latitude" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="longitude" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="codeAgentRecenceur" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="isVerified" Type="Int64" />
         </EntityType>
         <EntityType Name="tbl_deces">
           <Key>
@@ -586,6 +615,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="dureeSaisie" Type="Int64" />
           <Property Name="isContreEnqueteMade" Type="Int64" />
           <Property Name="codeAgentRecenceur" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="isVerified" Type="Int64" />
         </EntityType>
         <EntityType Name="tbl_emigre">
           <Key>
@@ -608,6 +638,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="dateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="dureeSaisie" Type="Int64" />
           <Property Name="codeAgentRecenceur" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="isVerified" Type="Int64" />
         </EntityType>
         <EntityType Name="tbl_individu">
           <Key>
@@ -694,6 +725,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="dureeSaisie" Type="Int64" />
           <Property Name="isContreEnqueteMade" Type="Int64" />
           <Property Name="codeAgentRecenceur" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="isVerified" Type="Int64" />
         </EntityType>
         <EntityType Name="tbl_logement">
           <Key>
@@ -725,6 +757,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="isContreEnqueteMade" Type="Int64" />
           <Property Name="nbrTentative" Type="Int64" />
           <Property Name="codeAgentRecenceur" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="isVerified" Type="Int64" />
         </EntityType>
         <EntityType Name="tbl_menage">
           <Key>
@@ -773,6 +806,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <Property Name="isFieldAllFilled" Type="Int64" />
           <Property Name="isContreEnqueteMade" Type="Int64" />
           <Property Name="codeAgentRecenceur" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="isVerified" Type="Int64" />
         </EntityType>
         <EntityType Name="tbl_personnel">
           <Key>
@@ -942,16 +976,39 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
           <EntitySet Name="tbl_question_module" EntityType="Self.tbl_question_module" />
           <EntitySet Name="tbl_question_reponse" EntityType="Self.tbl_question_reponse" />
           <EntitySet Name="tbl_vqse" EntityType="Self.tbl_vqse" />
+          <EntitySet Name="tbl_rapportfinal" EntityType="Model.tbl_rapportfinal" />
         </EntityContainer>
+        <EntityType Name="tbl_rapportfinal">
+          <Key>
+            <PropertyRef Name="rapportFinalId" />
+          </Key>
+          <Property Name="batimentId" Type="Int64" />
+          <Property Name="logeId" Type="Int64" />
+          <Property Name="menageId" Type="Int64" />
+          <Property Name="repondantPrincipalId" Type="Int64" />
+          <Property Name="aE_EsKeGenMounKiEde" Type="Int64" />
+          <Property Name="aE_IsVivreDansMenage" Type="Int64" />
+          <Property Name="aE_RepondantQuiAideId" Type="Int64" />
+          <Property Name="f_EsKeGenMounKiEde" Type="Int64" />
+          <Property Name="f_IsVivreDansMenage" Type="Int64" />
+          <Property Name="f_RepondantQuiAideId" Type="Int64" />
+          <Property Name="dateDebutCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dateFinCollecte" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="dureeSaisie" Type="Int64" />
+          <Property Name="isContreEnqueteMade" Type="Int64" />
+          <Property Name="codeAgentRecenceur" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="rapportFinalId" Type="Int64" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MobileEntitiesStoreContainer" CdmEntityContainer="MobileDataEntities">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="MobileDataEntities">
           <EntitySetMapping Name="tbl_batiment">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_batiment">
+            <EntityTypeMapping TypeName="Model.tbl_batiment">
               <MappingFragment StoreEntitySet="tbl_batiment">
+                <ScalarProperty Name="isVerified" ColumnName="isVerified" />
                 <ScalarProperty Name="batimentId" ColumnName="batimentId" />
                 <ScalarProperty Name="deptId" ColumnName="deptId" />
                 <ScalarProperty Name="comId" ColumnName="comId" />
@@ -991,8 +1048,9 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_deces">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_deces">
+            <EntityTypeMapping TypeName="Model.tbl_deces">
               <MappingFragment StoreEntitySet="tbl_deces">
+                <ScalarProperty Name="isVerified" ColumnName="isVerified" />
                 <ScalarProperty Name="decesId" ColumnName="decesId" />
                 <ScalarProperty Name="menageId" ColumnName="menageId" />
                 <ScalarProperty Name="logeId" ColumnName="logeId" />
@@ -1014,8 +1072,9 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_emigre">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_emigre">
+            <EntityTypeMapping TypeName="Model.tbl_emigre">
               <MappingFragment StoreEntitySet="tbl_emigre">
+                <ScalarProperty Name="isVerified" ColumnName="isVerified" />
                 <ScalarProperty Name="emigreId" ColumnName="emigreId" />
                 <ScalarProperty Name="menageId" ColumnName="menageId" />
                 <ScalarProperty Name="logeId" ColumnName="logeId" />
@@ -1037,8 +1096,9 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_individu">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_individu">
+            <EntityTypeMapping TypeName="Model.tbl_individu">
               <MappingFragment StoreEntitySet="tbl_individu">
+                <ScalarProperty Name="isVerified" ColumnName="isVerified" />
                 <ScalarProperty Name="individuId" ColumnName="individuId" />
                 <ScalarProperty Name="menageId" ColumnName="menageId" />
                 <ScalarProperty Name="logeId" ColumnName="logeId" />
@@ -1124,8 +1184,9 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_logement">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_logement">
+            <EntityTypeMapping TypeName="Model.tbl_logement">
               <MappingFragment StoreEntitySet="tbl_logement">
+                <ScalarProperty Name="isVerified" ColumnName="isVerified" />
                 <ScalarProperty Name="logeId" ColumnName="logeId" />
                 <ScalarProperty Name="batimentId" ColumnName="batimentId" />
                 <ScalarProperty Name="sdeId" ColumnName="sdeId" />
@@ -1156,8 +1217,9 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_menage">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_menage">
+            <EntityTypeMapping TypeName="Model.tbl_menage">
               <MappingFragment StoreEntitySet="tbl_menage">
+                <ScalarProperty Name="isVerified" ColumnName="isVerified" />
                 <ScalarProperty Name="menageId" ColumnName="menageId" />
                 <ScalarProperty Name="logeId" ColumnName="logeId" />
                 <ScalarProperty Name="batimentId" ColumnName="batimentId" />
@@ -1205,7 +1267,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_personnel">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_personnel">
+            <EntityTypeMapping TypeName="Model.tbl_personnel">
               <MappingFragment StoreEntitySet="tbl_personnel">
                 <ScalarProperty Name="persId" ColumnName="persId" />
                 <ScalarProperty Name="sdeId" ColumnName="sdeId" />
@@ -1228,7 +1290,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_rapportrar">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_rapportrar">
+            <EntityTypeMapping TypeName="Model.tbl_rapportrar">
               <MappingFragment StoreEntitySet="tbl_rapportrar">
                 <ScalarProperty Name="rapportId" ColumnName="rapportId" />
                 <ScalarProperty Name="batimentId" ColumnName="batimentId" />
@@ -1252,7 +1314,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_categorie_question">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_categorie_question">
+            <EntityTypeMapping TypeName="Model.tbl_categorie_question">
               <MappingFragment StoreEntitySet="tbl_categorie_question">
                 <ScalarProperty Name="codeCategorie" ColumnName="codeCategorie" />
                 <ScalarProperty Name="categorieQuestion" ColumnName="categorieQuestion" />
@@ -1262,7 +1324,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_commune">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_commune">
+            <EntityTypeMapping TypeName="Model.tbl_commune">
               <MappingFragment StoreEntitySet="tbl_commune">
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
                 <ScalarProperty Name="ComNom" ColumnName="ComNom" />
@@ -1271,7 +1333,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_departement">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_departement">
+            <EntityTypeMapping TypeName="Model.tbl_departement">
               <MappingFragment StoreEntitySet="tbl_departement">
                 <ScalarProperty Name="DeptId" ColumnName="DeptId" />
                 <ScalarProperty Name="DeptNom" ColumnName="DeptNom" />
@@ -1279,7 +1341,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_domaine_etude">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_domaine_etude">
+            <EntityTypeMapping TypeName="Model.tbl_domaine_etude">
               <MappingFragment StoreEntitySet="tbl_domaine_etude">
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="NomDomaine" ColumnName="NomDomaine" />
@@ -1287,7 +1349,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_module">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_module">
+            <EntityTypeMapping TypeName="Model.tbl_module">
               <MappingFragment StoreEntitySet="tbl_module">
                 <ScalarProperty Name="codeModule" ColumnName="codeModule" />
                 <ScalarProperty Name="nomModule" ColumnName="nomModule" />
@@ -1298,7 +1360,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_pays">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_pays">
+            <EntityTypeMapping TypeName="Model.tbl_pays">
               <MappingFragment StoreEntitySet="tbl_pays">
                 <ScalarProperty Name="CodePays" ColumnName="CodePays" />
                 <ScalarProperty Name="NomPays" ColumnName="NomPays" />
@@ -1306,7 +1368,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_question">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_question">
+            <EntityTypeMapping TypeName="Model.tbl_question">
               <MappingFragment StoreEntitySet="tbl_question">
                 <ScalarProperty Name="codeQuestion" ColumnName="codeQuestion" />
                 <ScalarProperty Name="libelle" ColumnName="libelle" />
@@ -1326,7 +1388,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_question_module">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_question_module">
+            <EntityTypeMapping TypeName="Model.tbl_question_module">
               <MappingFragment StoreEntitySet="tbl_question_module">
                 <ScalarProperty Name="ordre" ColumnName="ordre" />
                 <ScalarProperty Name="codeModule" ColumnName="codeModule" />
@@ -1336,7 +1398,7 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_question_reponse">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_question_reponse">
+            <EntityTypeMapping TypeName="Model.tbl_question_reponse">
               <MappingFragment StoreEntitySet="tbl_question_reponse">
                 <ScalarProperty Name="codeQuestion" ColumnName="codeQuestion" />
                 <ScalarProperty Name="codeUniqueReponse" ColumnName="codeUniqueReponse" />
@@ -1351,11 +1413,33 @@ FROM [tbl_vqse] AS [tbl_vqse]</DefiningQuery>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="tbl_vqse">
-            <EntityTypeMapping TypeName="MobileEntities.tbl_vqse">
+            <EntityTypeMapping TypeName="Model.tbl_vqse">
               <MappingFragment StoreEntitySet="tbl_vqse">
                 <ScalarProperty Name="VqseId" ColumnName="VqseId" />
                 <ScalarProperty Name="VqseNom" ColumnName="VqseNom" />
                 <ScalarProperty Name="ComId" ColumnName="ComId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_rapportfinal">
+            <EntityTypeMapping TypeName="Model.tbl_rapportfinal">
+              <MappingFragment StoreEntitySet="tbl_rapportfinal">
+                <ScalarProperty Name="rapportFinalId" ColumnName="rapportFinalId" />
+                <ScalarProperty Name="codeAgentRecenceur" ColumnName="codeAgentRecenceur" />
+                <ScalarProperty Name="isContreEnqueteMade" ColumnName="isContreEnqueteMade" />
+                <ScalarProperty Name="dureeSaisie" ColumnName="dureeSaisie" />
+                <ScalarProperty Name="dateFinCollecte" ColumnName="dateFinCollecte" />
+                <ScalarProperty Name="dateDebutCollecte" ColumnName="dateDebutCollecte" />
+                <ScalarProperty Name="f_RepondantQuiAideId" ColumnName="f_RepondantQuiAideId" />
+                <ScalarProperty Name="f_IsVivreDansMenage" ColumnName="f_IsVivreDansMenage" />
+                <ScalarProperty Name="f_EsKeGenMounKiEde" ColumnName="f_EsKeGenMounKiEde" />
+                <ScalarProperty Name="aE_RepondantQuiAideId" ColumnName="aE_RepondantQuiAideId" />
+                <ScalarProperty Name="aE_IsVivreDansMenage" ColumnName="aE_IsVivreDansMenage" />
+                <ScalarProperty Name="aE_EsKeGenMounKiEde" ColumnName="aE_EsKeGenMounKiEde" />
+                <ScalarProperty Name="repondantPrincipalId" ColumnName="repondantPrincipalId" />
+                <ScalarProperty Name="menageId" ColumnName="menageId" />
+                <ScalarProperty Name="logeId" ColumnName="logeId" />
+                <ScalarProperty Name="batimentId" ColumnName="batimentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

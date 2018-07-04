@@ -1,10 +1,12 @@
 ﻿using DevExpress.Xpf.Charts;
 using DevExpress.Xpf.Grid;
+using Ht.Ihsi.Rgph.Logging.Logs;
 using Ht.Ihsil.Rgph.App.Superviseur.entites;
 using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
 using Ht.Ihsil.Rgph.App.Superviseur.services;
 using Ht.Ihsil.Rgph.App.Superviseur.utils;
+using Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,16 +45,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         bool tabCodificationFocus = false;
         bool tabFlagCounterFocus = false;
         ProblemeModel problemeRowToUpdate = null;
+        frm_view_verification main;
+        Logger log;
         #endregion
 
         #region CONSTRCUTORS
-        public frm_verification(SdeModel sde)
+        public frm_verification(SdeModel sde, frm_view_verification mainFrame)
         {
             InitializeComponent();
+            main = mainFrame;
+            log = new Logger();
             sdeSelected = sde;
-            listOfBatiments = new List<BatimentModel>();
-            
-
+            listOfBatiments = new List<BatimentModel>();            
             //Style of the tabcontrol
             #region Ajout des donnees dans les tableaux
             reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
@@ -134,13 +138,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
             #endregion
             //           
-
             tabIndCouverture.Focus();
 
         }
-        public frm_verification(bool isAllDistrict)
+        public frm_verification(bool isAllDistrict, frm_view_verification mainFrame)
         {
             InitializeComponent();
+            main = mainFrame;
             tabGestionNotes.Visibility = Visibility.Hidden;
             this.IsAllDistrict = isAllDistrict;
             tabIndCouverture.Focus();
@@ -667,32 +671,39 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         public void initializeChartControls()
         {
-            pieSeriesNbreFemmes.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreFemmes.Points.Clear()));
-            barSeriesProportionsDetails.Dispatcher.BeginInvoke((Action)(() => barSeriesProportionsDetails.Points.Clear()));
-            barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() => barSeriesTailleMenage.Points.Clear()));
-            barSeriesIndividus.Dispatcher.BeginInvoke((Action)(() => barSeriesIndividus.Points.Clear()));
-            pieSeriesNbreMenage.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreMenage.Points.Clear()));
-            if (tabFlagCounterFocus == true)
+            try
             {
-                chartFlag0.Dispatcher.BeginInvoke((Action)(() => chartFlag0.Points.Clear()));
-                chartFlag1.Dispatcher.BeginInvoke((Action)(() => chartFlag1.Points.Clear()));
-                chartFlag2.Dispatcher.BeginInvoke((Action)(() => chartFlag2.Points.Clear()));
-                chartFlag3.Dispatcher.BeginInvoke((Action)(() => chartFlag3.Points.Clear()));
-                chartFlag4.Dispatcher.BeginInvoke((Action)(() => chartFlag4.Points.Clear()));
-                chartFlag5.Dispatcher.BeginInvoke((Action)(() => chartFlag5.Points.Clear()));
-                chartFlag6.Dispatcher.BeginInvoke((Action)(() => chartFlag6.Points.Clear()));
-                chartFlag7.Dispatcher.BeginInvoke((Action)(() => chartFlag7.Points.Clear()));
-                chartFlag8.Dispatcher.BeginInvoke((Action)(() => chartFlag8.Points.Clear()));
-                chartFlag9.Dispatcher.BeginInvoke((Action)(() => chartFlag9.Points.Clear()));
-                chartFlag10.Dispatcher.BeginInvoke((Action)(() => chartFlag10.Points.Clear()));
-                chartFlag11.Dispatcher.BeginInvoke((Action)(() => chartFlag11.Points.Clear()));
-                chartFlag12.Dispatcher.BeginInvoke((Action)(() => chartFlag12.Points.Clear()));
+                pieSeriesNbreFemmes.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreFemmes.Points.Clear()));
+                barSeriesProportionsDetails.Dispatcher.BeginInvoke((Action)(() => barSeriesProportionsDetails.Points.Clear()));
+                barSeriesTailleMenage.Dispatcher.BeginInvoke((Action)(() => barSeriesTailleMenage.Points.Clear()));
+                barSeriesIndividus.Dispatcher.BeginInvoke((Action)(() => barSeriesIndividus.Points.Clear()));
+                pieSeriesNbreMenage.Dispatcher.BeginInvoke((Action)(() => pieSeriesNbreMenage.Points.Clear()));
+                if (tabFlagCounterFocus == true)
+                {
+                    chartFlag0.Dispatcher.BeginInvoke((Action)(() => chartFlag0.Points.Clear()));
+                    chartFlag1.Dispatcher.BeginInvoke((Action)(() => chartFlag1.Points.Clear()));
+                    chartFlag2.Dispatcher.BeginInvoke((Action)(() => chartFlag2.Points.Clear()));
+                    chartFlag3.Dispatcher.BeginInvoke((Action)(() => chartFlag3.Points.Clear()));
+                    chartFlag4.Dispatcher.BeginInvoke((Action)(() => chartFlag4.Points.Clear()));
+                    chartFlag5.Dispatcher.BeginInvoke((Action)(() => chartFlag5.Points.Clear()));
+                    chartFlag6.Dispatcher.BeginInvoke((Action)(() => chartFlag6.Points.Clear()));
+                    chartFlag7.Dispatcher.BeginInvoke((Action)(() => chartFlag7.Points.Clear()));
+                    chartFlag8.Dispatcher.BeginInvoke((Action)(() => chartFlag8.Points.Clear()));
+                    chartFlag9.Dispatcher.BeginInvoke((Action)(() => chartFlag9.Points.Clear()));
+                    chartFlag10.Dispatcher.BeginInvoke((Action)(() => chartFlag10.Points.Clear()));
+                    chartFlag11.Dispatcher.BeginInvoke((Action)(() => chartFlag11.Points.Clear()));
+                    chartFlag12.Dispatcher.BeginInvoke((Action)(() => chartFlag12.Points.Clear()));
+                }
+                if (tabCodificationFocus == true)
+                {
+                    entierementPreCodifie.Dispatcher.BeginInvoke((Action)(() => entierementPreCodifie.Points.Clear()));
+                    partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() => partiellementPreCodifieAutre.Points.Clear()));
+                    pasDuToutPreCodifie.Dispatcher.BeginInvoke((Action)(() => pasDuToutPreCodifie.Points.Clear()));
+                }
             }
-            if (tabCodificationFocus == true)
+            catch (Exception)
             {
-                entierementPreCodifie.Dispatcher.BeginInvoke((Action)(() => entierementPreCodifie.Points.Clear()));
-                partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() => partiellementPreCodifieAutre.Points.Clear()));
-                pasDuToutPreCodifie.Dispatcher.BeginInvoke((Action)(() => pasDuToutPreCodifie.Points.Clear()));
+
             }
         }
         public void createGraphicSocioControls()
@@ -716,12 +727,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             int nbreMenageUniPersonnel = 0;
             int nbreMenage6Personnes = 0;
             double tailleMoyenneMenage = 0;
-
-
-            //if (sdeSelected == null)
-            //{
-            IConfigurationService configuration = new ConfigurationService();
-
+            try
+            {
+                IConfigurationService configuration = new ConfigurationService();
             //Test pour voir si le calcul doit se faire pour tout le district ou pr un SDE
             if (IsAllDistrict == true)
             {
@@ -808,18 +816,53 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
             waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
 
-            //}
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         public void createGraphicTabCouverture()
         {
+            
             int nbrePersonnes = 0;
-            int nbreBatiment = 0;
-            int nbreLogementInd = 0;
-            int nbreMenage = 0;
+            int nbrePersonneTermine = 0;
+            int nbrePersonneNonTermine = 0;
+            int nbrePersonneVerifie = 0;
+            int nbrePersonneNonVerifie= 0;
+            int nbrePersonneValide = 0;
+            int nbreBatimentTotal = 0;
+            int nbreBatimentTotalTermine = 0;
+            int nbreBatimentTotalNonTermine = 0;
+            int nbreBatimentTotalVerifie = 0;
+            int nbreBatimentTotalNonVerife = 0;
+            int nbreBatimentTotalValide = 0;
+            int nbreLogementIndTotal = 0;
+            int nbreLogementIndTotalTermine = 0;
+            int nbreLogementIndTotalNonTermine = 0;
+            int nbreLogementIndTotalVerifie = 0;
+            int nbreLogementIndTotalNonVerifie = 0;
+            int nbreLogementIndTotalValide = 0;
+            int nbreLogementColTotal = 0;
+            int nbreLogementColTotalTermine = 0;
+            int nbreLogementColTotalNonTermine = 0;
+            int nbreLogementColTotalVerifie = 0;
+            int nbreLogementColTotalNonVerifie = 0;
+            int nbreLogementColTotalValide = 0;
+            int nbreMenageTotal = 0;
+            int nbreMenageTotalTermine = 0;
+            int nbreMenageTotalNonTermine = 0;
+            int nbreMenageTotalVerifie = 0;
+            int nbreMenageTotalNonVerife = 0;
+            int nbreMenageTotalValide = 0;
             int nbreActualisation = 0;
-            IConfigurationService configuration = new ConfigurationService();
-            List<CouvertureModel> couvertures = new List<CouvertureModel>();
+            try
+            {
+
+
+                IConfigurationService configuration = new ConfigurationService();
+                List<CouvertureModel> couvertures = new List<CouvertureModel>();
 
                 #region CONSTRUCTION DE LA GRAPHE
                 //Test pour verifier si la table st deja telechargee
@@ -833,10 +876,45 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sde.SdeId));
 
                             //Indicateurs de couverture
-                            nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
-                            nbreLogementInd = nbreLogementInd + reader.getTotalLogementInds();
-                            nbreMenage = nbreMenage + reader.getTotalMenages();
-                            nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
+                            //Batiments
+                            nbreBatimentTotal = nbreBatimentTotal + reader.GetAllBatimentModel().Count();
+                            nbreBatimentTotalNonTermine = nbreBatimentTotalNonTermine + reader.GetAllBatimentNotFinished().Count;
+                            nbreBatimentTotalTermine = nbreBatimentTotalTermine + reader.GetAllBatimentModelTermine().Count;
+                            nbreBatimentTotalVerifie = nbreBatimentTotalVerifie + reader.GetAllBatimentVerifies().Count;
+                            nbreBatimentTotalNonVerife = nbreBatimentTotalNonVerife + reader.GetAllBatimentNonVerifies().Count;
+                            nbreBatimentTotalValide = nbreBatimentTotalValide + reader.GetAllBatimentModelValide().Count;
+                            //
+                            //Logements Individuels
+                            nbreLogementIndTotal = nbreLogementIndTotal + reader.GetAllLogementsIndividuels().Count;
+                            nbreLogementIndTotalNonTermine = nbreLogementIndTotalNonTermine + reader.GetAllLogementIndNonTermines().Count;
+                            nbreLogementIndTotalTermine = nbreLogementIndTotalTermine + reader.GetAllLogementsIndTermines().Count;
+                            nbreLogementIndTotalVerifie = nbreLogementIndTotalVerifie + reader.GetAllLogementsIndVerifies().Count;
+                            nbreLogementIndTotalNonVerifie = nbreLogementIndTotalNonVerifie + reader.GetAllLogementsIndNonVerifies().Count;
+                            nbreLogementIndTotalValide = nbreLogementIndTotalValide + reader.GetAllLogementsIndValides().Count;
+                            //
+                            //Logements Collectifs
+                            nbreLogementColTotal = nbreLogementColTotal + reader.GetAllLogementsCollectifs().Count;
+                            nbreLogementColTotalNonTermine = nbreLogementColTotalNonTermine + reader.GetAllLogementsColNonTermines().Count;
+                            nbreLogementColTotalNonVerifie = nbreLogementColTotalNonVerifie + reader.GetAllLogementsColNonVerifies().Count;
+                            nbreLogementColTotalTermine = nbreLogementColTotalTermine + reader.GetAllLogementsColTermines().Count;
+                            nbreLogementColTotalValide = nbreLogementColTotalValide + reader.GetAllLogementsColValides().Count;
+                            nbreLogementColTotalVerifie = nbreLogementColTotalVerifie + reader.GetAllLogementsColVerifies().Count;
+                            //
+                            //Menages
+                            nbreMenageTotal = nbreMenageTotal + reader.GetAllMenages().Count();
+                            nbreMenageTotalNonTermine = nbreMenageTotalNonTermine + reader.GetAllMenageNonTermine().Count;
+                            nbreMenageTotalNonVerife = nbreMenageTotalNonVerife + reader.GetAllMenagesNonVerifies().Count;
+                            nbreMenageTotalTermine = nbreMenageTotalTermine + reader.GetAllMenageTermine().Count;
+                            nbreMenageTotalValide = nbreMenageTotalValide + reader.GetAllMenageValides().Count;
+                            nbreMenageTotalVerifie = nbreMenageTotalVerifie + reader.GetAllMenagesVerifies().Count;
+                            //
+                            //Personnes
+                            nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count;
+                            nbrePersonneNonTermine = nbrePersonneNonTermine + reader.GetAllIndividuNonTermine().Count;
+                            nbrePersonneTermine = nbrePersonneTermine + reader.GetAllIndividuTermine().Count;
+                            nbrePersonneValide = nbrePersonneValide + reader.GetAllIndividuValide().Count;
+                            nbrePersonneVerifie = nbrePersonneVerifie + reader.GetAllIndividuVerifie().Count;
+                            nbrePersonneNonVerifie = nbrePersonneNonVerifie + reader.GetAllIndividusNonVerifies().Count;
                             nbreActualisation = nbreActualisation + sde.TotalBatCartographie.GetValueOrDefault();
                             //
                         }
@@ -846,53 +924,127 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
 
                         //Indicateurs de couverture
-                        nbreBatiment = nbreBatiment + reader.GetAllBatimentModel().Count();
-                        nbreLogementInd = nbreLogementInd + reader.getTotalLogementInds();
-                        nbreMenage = nbreMenage + reader.getTotalMenages();
-                        nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count();
-                        nbreActualisation += nbreActualisation + sdeSelected.TotalBatCartographie.GetValueOrDefault();
+                            //Batiments
+                            nbreBatimentTotal = nbreBatimentTotal + reader.GetAllBatimentModel().Count();
+                            nbreBatimentTotalNonTermine = nbreBatimentTotalNonTermine + reader.GetAllBatimentNotFinished().Count;
+                            nbreBatimentTotalTermine = nbreBatimentTotalTermine + reader.GetAllBatimentModelTermine().Count;
+                            nbreBatimentTotalVerifie = nbreBatimentTotalVerifie + reader.GetAllBatimentVerifies().Count;
+                            nbreBatimentTotalNonVerife = nbreBatimentTotalNonVerife + reader.GetAllBatimentNonVerifies().Count;
+                            nbreBatimentTotalValide = nbreBatimentTotalValide + reader.GetAllBatimentModelValide().Count;
+                            //
+                            //Logements Individuels
+                            nbreLogementIndTotal = nbreLogementIndTotal + reader.GetAllLogementsIndividuels().Count;
+                            nbreLogementIndTotalNonTermine = nbreLogementIndTotalNonTermine + reader.GetAllLogementIndNonTermines().Count;
+                            nbreLogementIndTotalTermine = nbreLogementIndTotalTermine + reader.GetAllLogementsIndTermines().Count;
+                            nbreLogementIndTotalVerifie = nbreLogementIndTotalVerifie + reader.GetAllLogementsIndVerifies().Count;
+                            nbreLogementIndTotalNonVerifie = nbreLogementIndTotalNonVerifie + reader.GetAllLogementsIndNonVerifies().Count;
+                            nbreLogementIndTotalValide = nbreLogementIndTotalValide + reader.GetAllLogementsIndValides().Count;
+                            //
+                            //Logements Collectifs
+                            nbreLogementColTotal = nbreLogementColTotal + reader.GetAllLogementsCollectifs().Count;
+                            nbreLogementColTotalNonTermine = nbreLogementColTotalNonTermine + reader.GetAllLogementsColNonTermines().Count;
+                            nbreLogementColTotalNonVerifie = nbreLogementColTotalNonVerifie + reader.GetAllLogementsColNonVerifies().Count;
+                            nbreLogementColTotalTermine = nbreLogementColTotalTermine + reader.GetAllLogementsColTermines().Count;
+                            nbreLogementColTotalValide = nbreLogementColTotalValide + reader.GetAllLogementsColValides().Count;
+                            nbreLogementColTotalVerifie = nbreLogementColTotalVerifie + reader.GetAllLogementsColVerifies().Count;
+                            //
+                            //Menages
+                            nbreMenageTotal = nbreMenageTotal + reader.GetAllMenages().Count();
+                            nbreMenageTotalNonTermine = nbreMenageTotalNonTermine + reader.GetAllMenageNonTermine().Count;
+                            nbreMenageTotalNonVerife = nbreMenageTotalNonVerife + reader.GetAllMenagesNonVerifies().Count;
+                            nbreMenageTotalTermine = nbreMenageTotalTermine + reader.GetAllMenageTermine().Count;
+                            nbreMenageTotalValide = nbreMenageTotalValide + reader.GetAllMenageValides().Count;
+                            nbreMenageTotalVerifie = nbreMenageTotalVerifie + reader.GetAllMenagesVerifies().Count;
+                            //
+                            //Personnes
+                            nbrePersonnes = nbrePersonnes + reader.GetAllIndividus().Count;
+                            nbrePersonneNonTermine = nbrePersonneNonTermine + reader.GetAllIndividuNonTermine().Count;
+                            nbrePersonneTermine = nbrePersonneTermine + reader.GetAllIndividuTermine().Count;
+                            nbrePersonneValide = nbrePersonneValide + reader.GetAllIndividuValide().Count;
+                            nbrePersonneVerifie = nbrePersonneVerifie + reader.GetAllIndividuVerifie().Count;
+                            nbrePersonneNonVerifie = nbrePersonneNonVerifie + reader.GetAllIndividusNonVerifies().Count;
+                            nbreActualisation = nbreActualisation + sdeSelected.TotalBatCartographie.GetValueOrDefault();
+                            //
                         //
                     }
                     //On cree les graphes
                     barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
-                            barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Batiments", nbreBatiment))));
+                            barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Batiments", nbreBatimentTotal))));
                     barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
-                       barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Logements Individuels", nbreLogementInd))));
+                       barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Logements Individuels", nbreLogementIndTotal))));
                     barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
-                       barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Menages", nbreMenage))));
+                       barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Menages", nbreMenageTotal))));
                     barSeriesIndCouverture.Dispatcher.BeginInvoke((Action)(() =>
                        barSeriesIndCouverture.Points.Add(new SeriesPoint("Nombre de Personnes", nbrePersonnes))));
                 #endregion
 
-                #region CONSTRUCTION DU TABLEAU
-                CouvertureModel model1 = new CouvertureModel();
-                model1.Couverture = "Nombre de bâtiments";
-                model1.Actualisation = nbreActualisation;
-                model1.Total = nbreBatiment;
-                couvertures.Add(model1);
-                // Nombre de meanges
-                model1 = new CouvertureModel();
-                model1.Couverture = "Nombre de menages  recensés";
-                model1.Actualisation = 0;
-                model1.Total = nbreMenage;
-                couvertures.Add(model1);
+                    #region CONSTRUCTION DU TABLEAU
+                    CouvertureModel model1 = new CouvertureModel();
+                    model1.Couverture = "BATIMENTS";
+                    model1.Actualisation = nbreActualisation;
+                    model1.Total = nbreBatimentTotal;
+                    model1.NonTermine = nbreBatimentTotalNonTermine.ToString();
+                    model1.Termine = nbreBatimentTotalTermine.ToString();
+                    model1.NonVerifie = nbreBatimentTotalNonVerife.ToString();
+                    model1.Verifie = nbreBatimentTotalVerifie.ToString();
+                    model1.Valide = nbreBatimentTotalValide.ToString();
+                    couvertures.Add(model1);
 
-                //Nombre de logements Individuels
-                model1 = new CouvertureModel();
-                model1.Couverture = "Nombre de logements  individuels";
-                model1.Actualisation = 0;
-                model1.Total = nbreLogementInd;
-                couvertures.Add(model1);
-                //Nombre de personnes
-                model1 = new CouvertureModel();
-                model1.Couverture = "Nombre de personnes  recensées";
-                model1.Actualisation = 0;
-                model1.Total = nbrePersonnes;
-                couvertures.Add(model1);
-                dataGridCouverture.Dispatcher.BeginInvoke((Action)(() => dataGridCouverture.ItemsSource = couvertures));
-                #endregion
+                    //Nombre de logements Individuels
+                    model1 = new CouvertureModel();
+                    model1.Couverture = "LOGEMENTS INDIVIDUELS";
+                    model1.Actualisation = 0;
+                    model1.Total = nbreLogementIndTotal;
+                    model1.NonTermine = nbreLogementIndTotalNonTermine.ToString();
+                    model1.Termine = nbreLogementIndTotalTermine.ToString();
+                    model1.NonVerifie = nbreLogementIndTotalNonVerifie.ToString();
+                    model1.Valide = nbreLogementIndTotalValide.ToString();
+                    model1.Verifie = nbreLogementIndTotalVerifie.ToString();
+                    couvertures.Add(model1);
+                    //
+                    //Logements collectifs
+                    model1 = new CouvertureModel();
+                    model1.Couverture = "LOGEMENTS COLLECTIFS";
+                    model1.Actualisation = 0;
+                    model1.Total = nbreLogementColTotal;
+                    model1.NonTermine = nbreLogementColTotalNonTermine.ToString();
+                    model1.NonVerifie = nbreLogementColTotalNonVerifie.ToString();
+                    model1.Termine = nbreLogementColTotalTermine.ToString();
+                    model1.Valide = nbreLogementColTotalValide.ToString();
+                    model1.Verifie = nbreLogementColTotalVerifie.ToString();
 
-                isTabCouvertureLoad = true;
+                    // Nombre de meanges
+                    model1 = new CouvertureModel();
+                    model1.Couverture = "MENAGES";
+                    model1.Actualisation = 0;
+                    model1.Total = nbreMenageTotal;
+                    model1.Termine = nbreMenageTotalTermine.ToString();
+                    model1.NonTermine = nbreMenageTotalNonTermine.ToString();
+                    model1.NonVerifie = nbreMenageTotalNonVerife.ToString();
+                    model1.Verifie = nbreMenageTotalVerifie.ToString();
+                    model1.Valide = nbreMenageTotalValide.ToString();
+                    couvertures.Add(model1);
+
+                     //Nombre de personnes
+                    model1 = new CouvertureModel();
+                    model1.Couverture = "PERSONNES";
+                    model1.Actualisation = 0;
+                    model1.Total = nbrePersonnes;
+                    model1.NonTermine = nbrePersonneNonTermine.ToString();
+                    model1.NonVerifie = nbrePersonneNonVerifie.ToString();
+                    model1.Termine = nbrePersonneTermine.ToString();
+                    model1.Valide = nbrePersonneValide.ToString();
+                    model1.Verifie = nbrePersonneVerifie.ToString();
+                    couvertures.Add(model1);
+                    dataGridCouverture.Dispatcher.BeginInvoke((Action)(() => dataGridCouverture.ItemsSource = couvertures));
+                    #endregion
+
+                    isTabCouvertureLoad = true;
+                }
+            }
+            catch (Exception)
+            {
+
             }
         }
 
@@ -948,21 +1100,28 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         public void createIndicateursPerformances(bool isForSde)
         {
-            if (isForSde == true)
+            try
             {
-                reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
-                double nbreParJourBatiment = reader.getTotalBatRecenseParJourV();
-                double nbreParJourLogement = reader.getTotalLogeRecenseParJourV();
-                double nbreParJourMenage = reader.getTotalMenageRecenseParJourV();
-                double nbreParJourPersonnes = reader.getTotalIndRecenseParJourV();
-                List<KeyValue> list = new List<KeyValue>();
-                list.Add(new KeyValue(nbreParJourBatiment, "Nombre de questionnaires par jour de recensement"));
-                list.Add(new KeyValue(nbreParJourLogement, "Nombre de logements par jour de recensement"));
-                list.Add(new KeyValue(nbreParJourMenage, "Nombre de menages par jour de recensement"));
-                list.Add(new KeyValue(nbreParJourPersonnes, "Nombre d'individus par jour de recensement"));
-                dataGridIndPerformance.ItemsSource = list;
-                table_view.Dispatcher.BeginInvoke((Action)(() => table_view.BestFitColumns()));
-             }
+                if (isForSde == true)
+                {
+                    reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
+                    double nbreParJourBatiment = reader.getTotalBatRecenseParJourV();
+                    double nbreParJourLogement = reader.getTotalLogeRecenseParJourV();
+                    double nbreParJourMenage = reader.getTotalMenageRecenseParJourV();
+                    double nbreParJourPersonnes = reader.getTotalIndRecenseParJourV();
+                    List<KeyValue> list = new List<KeyValue>();
+                    list.Add(new KeyValue(nbreParJourBatiment, "Nombre de questionnaires par jour de recensement"));
+                    list.Add(new KeyValue(nbreParJourLogement, "Nombre de logements par jour de recensement"));
+                    list.Add(new KeyValue(nbreParJourMenage, "Nombre de menages par jour de recensement"));  
+                    list.Add(new KeyValue(nbreParJourPersonnes, "Nombre d'individus par jour de recensement"));
+                    dataGridIndPerformance.ItemsSource = list;
+                    table_view.Dispatcher.BeginInvoke((Action)(() => table_view.BestFitColumns()));
+                }
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         private void tabPagePerformance_GotFocus(object sender, RoutedEventArgs e)
@@ -985,6 +1144,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         private void tabCodification_GotFocus(object sender, RoutedEventArgs e)
         {
+            decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = true));
             tabCodificationFocus = true;
             initializeChartControls();
             try
@@ -1021,6 +1181,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
                     nbreTotal = reader.GetAllIndividus().Count;
                     _aCodifierTotal = reader.getInformationForCodification();
+                    gridFlagCodification.Dispatcher.BeginInvoke((Action)(() => gridFlagCodification.ItemsSource = Utilities.getListOfIndividuCodification(MAIN_DATABASE_PATH, sdeSelected.SdeId)));
                 }
                 
                  
@@ -1033,14 +1194,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 entierementPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
                             entierementPreCodifie.Points.Add(new SeriesPoint("A7/Occupation", Utilities.getPourcentage(_aCodifierTotal.A7Codifie, nbreTotal)))));
 
+                partiellementPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
+                            partiellementPreCodifie.Points.Add(new SeriesPoint("P10/Lieu de naissance", Utilities.getPourcentage(_aCodifierTotal.SommeP10PartiellementCodifie, nbreTotal)))));
+                partiellementPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
+                            partiellementPreCodifie.Points.Add(new SeriesPoint("P12/Lieu de residence", Utilities.getPourcentage(_aCodifierTotal.SommeP12PartiellementCodifie, nbreTotal)))));
+
                 partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() =>
-                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("P10/Lieu de naissance", Utilities.getPourcentage(_aCodifierTotal.sommeP10PartiellementCodifie(), nbreTotal)))));
+                            partiellementPreCodifie.Points.Add(new SeriesPoint("A5/Branche d'activite", Utilities.getPourcentage(_aCodifierTotal.A5Autre, nbreTotal)))));
                 partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() =>
-                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("P12/Lieu de residence", Utilities.getPourcentage(_aCodifierTotal.sommeP12PartiellementCodifie(), nbreTotal)))));
-                partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() =>
-                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("A5/Branche d'activite", Utilities.getPourcentage(_aCodifierTotal.A5Autre, nbreTotal)))));
-                partiellementPreCodifieAutre.Dispatcher.BeginInvoke((Action)(() =>
-                            partiellementPreCodifieAutre.Points.Add(new SeriesPoint("A7/Occupation", Utilities.getPourcentage(_aCodifierTotal.A7Autre, nbreTotal)))));
+                            partiellementPreCodifie.Points.Add(new SeriesPoint("A7/Occupation", Utilities.getPourcentage(_aCodifierTotal.A7Autre, nbreTotal)))));
 
                 pasDuToutPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
                             pasDuToutPreCodifie.Points.Add(new SeriesPoint("P10/Lieu de naissance", Utilities.getPourcentage(_aCodifierTotal.P10_4, nbreTotal)))));
@@ -1050,21 +1212,24 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             pasDuToutPreCodifie.Points.Add(new SeriesPoint("A5/Branche d'activite", Utilities.getPourcentage(_aCodifierTotal.A5NeSaitPas, nbreTotal)))));
                 pasDuToutPreCodifie.Dispatcher.BeginInvoke((Action)(() =>
                             pasDuToutPreCodifie.Points.Add(new SeriesPoint("A7/Occupation", Utilities.getPourcentage(_aCodifierTotal.A7NeSaitPas, nbreTotal)))));
-            }
+
+           }
             catch (Exception ex)
             {
                 MessageBox.Show("" + ex.Message);
             }
+            decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
         }
 
         private void tabCompteurFlag_GotFocus(object sender, RoutedEventArgs e)
         {
+            decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = true));
             tabFlagCounterFocus = true;
             initializeChartControls();
             try
             {
                 //ouvrir le decorateur
-                decoratorTab.Dispatcher.BeginInvoke((Action)(() => decoratorTab.IsSplashScreenShown = true));
+                //decoratorTab.Dispatcher.BeginInvoke((Action)(() => decoratorTab.IsSplashScreenShown = true));
                 IConfigurationService configuration = new ConfigurationService();
                 int nbreTotal = 0;
                 Flag flagPopulationParDistrict = new Flag();
@@ -1209,15 +1374,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 chartFlag12.Dispatcher.BeginInvoke((Action)(() =>
                            chartFlag12.Points.Add(new SeriesPoint("Population Totale (13 Flags au total)", Utilities.getPourcentage(flagPopulationParDistrict.Flag12, nbreTotal)))));
 
-                //fermer le decorateur
-                decoratorTab.Dispatcher.BeginInvoke((Action)(() => decoratorTab.IsSplashScreenShown = false));
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show("" + ex.Message);
             }
+            //fermer le decorateur
+            decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
         }
-
         private void chartControlCompteur_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             Point point=e.GetPosition(this);
@@ -1239,7 +1404,140 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         }
         private void gridFlag_AutoGeneratingColumn(object sender, AutoGeneratingColumnEventArgs e)
         {
+            if (e.Column.FieldName == "Individu")
+                e.Column.Visible = false;
+           
+        }
+        private void treeListView2_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
+        {
+            TreeListView listView = sender as TreeListView;
+            if (listView != null)
+            {
+                TreeListNode node = listView.FocusedNode;
+                if (node != null)
+                {
+                    if (node.HasChildren == false)
+                    {
+                        RapportFlagModel flag = node.Content as RapportFlagModel;
+                        frm_view_ce frm = new frm_view_ce(flag.Individu,flag.Individu.SdeId);
+                        main.listBox_sde.SelectedIndex = -1;
+                        Utilities.showControl(frm, main.grd_details);
+                    }
+                }
+            }
+            
+        }
+        private void tabFlagMenage_GotFocus(object sender, RoutedEventArgs e)
+        {
+            decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = true));
+            initializeChartControls();
+            int nbreTotal = 0;
+            try
+            {
+                reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeSelected.SdeId));
+                nbreTotal = reader.GetAllMenages().Count;
+                Flag menage_1_Personne = reader.compteurFlagParMenages(reader.GetAllMenage_1_Personne());
+                Flag menage_2_3_Personne = reader.compteurFlagParMenages(reader.GetAllMenage_2_3_Personnes());
+                Flag menage_4_5_Personne = reader.compteurFlagParMenages(reader.GetAllMenage_4_5_Personnes());
+                Flag menage_6_Personne = reader.compteurFlagParMenages(reader.GetAllMenage_6_Personnes());
+                Flag all_menage = reader.compteurFlagParMenages(reader.GetAllMenages());
+                
+                //Creation des barres
+                aucunFlag.Dispatcher.BeginInvoke((Action)(() =>
+                            aucunFlag.Points.Add(new SeriesPoint("Menage Unipersonnel (1)", Utilities.getPourcentage(menage_1_Personne.Flag_Aucun, nbreTotal)))));
+                aucunFlag.Dispatcher.BeginInvoke((Action)(() =>
+                            aucunFlag.Points.Add(new SeriesPoint("Ménage de deux (2) à trois (3) individus", Utilities.getPourcentage(menage_2_3_Personne.Flag_Aucun, nbreTotal)))));
+                aucunFlag.Dispatcher.BeginInvoke((Action)(() =>
+                            aucunFlag.Points.Add(new SeriesPoint("Ménage de quatre (4) à cinq (5) individus", Utilities.getPourcentage(menage_4_5_Personne.Flag_Aucun, nbreTotal)))));
+                aucunFlag.Dispatcher.BeginInvoke((Action)(() =>
+                            aucunFlag.Points.Add(new SeriesPoint("Ménage de six (6) individus ou plus", Utilities.getPourcentage(menage_6_Personne.Flag_Aucun, nbreTotal)))));
+                aucunFlag.Dispatcher.BeginInvoke((Action)(() =>
+                            aucunFlag.Points.Add(new SeriesPoint("Tous les menages", Utilities.getPourcentage(all_menage.Flag_Aucun, nbreTotal)))));
 
+                flag_1_4.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_1_4.Points.Add(new SeriesPoint("Menage Unipersonnel (1)", Utilities.getPourcentage(menage_1_Personne.Flag_1_4, nbreTotal)))));
+                flag_1_4.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_1_4.Points.Add(new SeriesPoint("Ménage de deux (2) à trois (3) individus", Utilities.getPourcentage(menage_2_3_Personne.Flag_1_4, nbreTotal)))));
+                flag_1_4.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_1_4.Points.Add(new SeriesPoint("Ménage de quatre (4) à cinq (5) individus", Utilities.getPourcentage(menage_4_5_Personne.Flag_1_4, nbreTotal)))));
+                flag_1_4.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_1_4.Points.Add(new SeriesPoint("Ménage de six (6) individus ou plus", Utilities.getPourcentage(menage_6_Personne.Flag_1_4, nbreTotal)))));
+                flag_1_4.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_1_4.Points.Add(new SeriesPoint("Tous les menages", Utilities.getPourcentage(all_menage.Flag_1_4, nbreTotal)))));
+
+                flag_5_14.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_5_14.Points.Add(new SeriesPoint("Menage Unipersonnel (1)", Utilities.getPourcentage(menage_1_Personne.Flag_5_14, nbreTotal)))));
+                flag_5_14.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_5_14.Points.Add(new SeriesPoint("Ménage de deux (2) à trois (3) individus", Utilities.getPourcentage(menage_2_3_Personne.Flag_5_14, nbreTotal)))));
+                flag_5_14.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_5_14.Points.Add(new SeriesPoint("Ménage de quatre (4) à cinq (5) individus", Utilities.getPourcentage(menage_4_5_Personne.Flag_5_14, nbreTotal)))));
+                flag_5_14.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_5_14.Points.Add(new SeriesPoint("Ménage de six (6) individus ou plus", Utilities.getPourcentage(menage_6_Personne.Flag_5_14, nbreTotal)))));
+                flag_5_14.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_5_14.Points.Add(new SeriesPoint("Tous les menages", Utilities.getPourcentage(all_menage.Flag_5_14, nbreTotal)))));
+
+                flag_15_26.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_15_26.Points.Add(new SeriesPoint("Menage Unipersonnel (1)", Utilities.getPourcentage(menage_1_Personne.Flag_15_26, nbreTotal)))));
+                flag_15_26.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_15_26.Points.Add(new SeriesPoint("Ménage de deux (2) à trois (3) individus", Utilities.getPourcentage(menage_2_3_Personne.Flag_15_26, nbreTotal)))));
+                flag_15_26.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_15_26.Points.Add(new SeriesPoint("Ménage de quatre (4) à cinq (5) individus", Utilities.getPourcentage(menage_4_5_Personne.Flag_15_26, nbreTotal)))));
+                flag_15_26.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_15_26.Points.Add(new SeriesPoint("Ménage de six (6) individus ou plus", Utilities.getPourcentage(menage_6_Personne.Flag_15_26, nbreTotal)))));
+                flag_15_26.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_15_26.Points.Add(new SeriesPoint("Tous les menages", Utilities.getPourcentage(all_menage.Flag_15_26, nbreTotal)))));
+
+                flag_27_47.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_27_47.Points.Add(new SeriesPoint("Menage Unipersonnel (1)", Utilities.getPourcentage(menage_1_Personne.Flag_27_47, nbreTotal)))));
+                flag_27_47.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_27_47.Points.Add(new SeriesPoint("Ménage de deux (2) à trois (3) individus", Utilities.getPourcentage(menage_2_3_Personne.Flag_27_47, nbreTotal)))));
+                flag_27_47.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_27_47.Points.Add(new SeriesPoint("Ménage de quatre (4) à cinq (5) individus", Utilities.getPourcentage(menage_4_5_Personne.Flag_27_47, nbreTotal)))));
+                flag_27_47.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_27_47.Points.Add(new SeriesPoint("Ménage de six (6) individus ou plus", Utilities.getPourcentage(menage_6_Personne.Flag_27_47, nbreTotal)))));
+                flag_27_47.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_27_47.Points.Add(new SeriesPoint("Tous les menages", Utilities.getPourcentage(all_menage.Flag_27_47, nbreTotal)))));
+
+                flag_48_70.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Menage Unipersonnel (1)", Utilities.getPourcentage(menage_1_Personne.Flag_48_70, nbreTotal)))));
+                flag_48_70.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Ménage de deux (2) à trois (3) individus", Utilities.getPourcentage(menage_2_3_Personne.Flag_48_70, nbreTotal)))));
+                flag_48_70.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Ménage de quatre (4) à cinq (5) individus", Utilities.getPourcentage(menage_4_5_Personne.Flag_48_70, nbreTotal)))));
+                flag_48_70.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Ménage de six (6) individus ou plus", Utilities.getPourcentage(menage_6_Personne.Flag_48_70, nbreTotal)))));
+                flag_48_70.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Tous les menages", Utilities.getPourcentage(all_menage.Flag_48_70, nbreTotal)))));
+
+                flag_71_130.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Menage Unipersonnel (1)", Utilities.getPourcentage(menage_1_Personne.Flag_48_70, nbreTotal)))));
+                flag_48_70.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Ménage de deux (2) à trois (3) individus", Utilities.getPourcentage(menage_2_3_Personne.Flag_48_70, nbreTotal)))));
+                flag_48_70.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Ménage de quatre (4) à cinq (5) individus", Utilities.getPourcentage(menage_4_5_Personne.Flag_48_70, nbreTotal)))));
+                flag_48_70.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Ménage de six (6) individus ou plus", Utilities.getPourcentage(menage_6_Personne.Flag_48_70, nbreTotal)))));
+                flag_48_70.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_48_70.Points.Add(new SeriesPoint("Tous les menages", Utilities.getPourcentage(all_menage.Flag_48_70, nbreTotal)))));
+
+                flag_71_130.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_71_130.Points.Add(new SeriesPoint("Menage Unipersonnel (1)", Utilities.getPourcentage(menage_1_Personne.Flag_71_130, nbreTotal)))));
+                flag_71_130.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_71_130.Points.Add(new SeriesPoint("Ménage de deux (2) à trois (3) individus", Utilities.getPourcentage(menage_2_3_Personne.Flag_71_130, nbreTotal)))));
+                flag_71_130.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_71_130.Points.Add(new SeriesPoint("Ménage de quatre (4) à cinq (5) individus", Utilities.getPourcentage(menage_4_5_Personne.Flag_71_130, nbreTotal)))));
+                flag_71_130.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_71_130.Points.Add(new SeriesPoint("Ménage de six (6) individus ou plus", Utilities.getPourcentage(menage_6_Personne.Flag_71_130, nbreTotal)))));
+                flag_71_130.Dispatcher.BeginInvoke((Action)(() =>
+                            flag_71_130.Points.Add(new SeriesPoint("Tous les menages", Utilities.getPourcentage(all_menage.Flag_71_130, nbreTotal)))));
+
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
         }
     
     }

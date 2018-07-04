@@ -25,6 +25,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public string DateDebutCollecte { get; set; }
         public string DateFinCollecte { get; set; }
         public int DureeSaisie { get; set; }
+        public long IsVerified { get; set; }
         public string CodeAgentRecenceur { get; set; }
         public string Header { get; set; }
      

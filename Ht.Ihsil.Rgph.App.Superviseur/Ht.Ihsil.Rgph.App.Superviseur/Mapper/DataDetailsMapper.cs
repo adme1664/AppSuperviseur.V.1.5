@@ -486,6 +486,34 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             
             return reponses;
         }
+
+        public static List<DataDetails> RapportFinal(RapportFinalModel model, string sdeId)
+        {
+            List<DataDetails> reponses=new List<DataDetails>();
+            if (model != null)
+            {
+                ISqliteReader read = new SqliteReader(Utilities.getConnectionString(Users.users.DatabasePath, sdeId));
+                IndividuModel ind = read.GetIndividuById(model.repondantPrincipalId.GetValueOrDefault());
+                IndividuModel indAide = read.GetIndividuById(model.aE_RepondantQuiAideId.GetValueOrDefault());
+                DataDetails data1 = new DataDetails(Constant.REPONDAN_PRENSIPAL,ind.Qp2APrenom+" "+ind.Qp2BNom,"REPONDAN PRESIPAL");
+                reponses.Add(data1);
+                data1 = new DataDetails(Constant.EDE_AKTIVITE_EKONOMIK_1, Constant.getKeyValue(Convert.ToInt32(model.aE_EsKeGenMounKiEde)).Value, "AKTIVITE EKONOMIK");
+                reponses.Add(data1);
+                data1 = new DataDetails(Constant.EDE_AKTIVITE_EKONOMIK_2, Constant.getKeyValue(Convert.ToInt32(model.aE_IsVivreDansMenage)).Value, "AKTIVITE EKONOMIK");
+                reponses.Add(data1);
+                data1 = new DataDetails(Constant.EDE_AKTIVITE_EKONOMIK_3, indAide.Qp2APrenom + " " + indAide.Qp2BNom, "AKTIVITE EKONOMIK");
+                reponses.Add(data1);
+
+                data1 = new DataDetails(Constant.EDE_AKTIVITE_FEKONDITE_1, Constant.getKeyValue(Convert.ToInt32(model.f_EsKeGenMounKiEde)).Value, "FEKONDITE");
+                reponses.Add(data1);
+                data1 = new DataDetails(Constant.EDE_AKTIVITE_FEKONDITE_1, Constant.getKeyValue(Convert.ToInt32(model.f_IsVivreDansMenage)).Value, "FEKONDITE");
+                reponses.Add(data1);
+                data1 = new DataDetails(Constant.EDE_AKTIVITE_FEKONDITE_3, indAide.Qp2APrenom + " " + indAide.Qp2BNom, "FEKONDITE");
+                reponses.Add(data1);
+
+            }
+            return reponses;
+        }
         #endregion
     }
 

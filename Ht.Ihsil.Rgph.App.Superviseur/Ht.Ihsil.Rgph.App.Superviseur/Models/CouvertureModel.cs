@@ -29,12 +29,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
             get { return _total; }
             set { _total = value; }
         }
-        private string _validite;
+        private string _valide;
 
-        public string Validite
+       
+        public string Termine { get; set; }
+        public string NonTermine { get; set; }
+        public string Verifie { get; set; }
+        public string NonVerifie { get; set; }
+        public string Valide
         {
-            get { return _validite; }
-            set { _validite = value; }
+            get { return _valide; }
+            set { _valide = value; }
         }
+
     }
 }

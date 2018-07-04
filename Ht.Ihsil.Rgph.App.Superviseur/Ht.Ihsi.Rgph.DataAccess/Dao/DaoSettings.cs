@@ -51,7 +51,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         {
             try
             {
-                Tbl_Materiels mat = repository.MaterielsRepository.Find(m => m.Imei == materiels.Imei).FirstOrDefault();
+                Tbl_Materiels mat = repository.MaterielsRepository.Find(m => m.Serial == materiels.Serial).FirstOrDefault();
                 mat.LastSynchronisation = materiels.LastSynchronisation;
                 mat.AgentId = materiels.AgentId;
                 mat.Version = materiels.Version;

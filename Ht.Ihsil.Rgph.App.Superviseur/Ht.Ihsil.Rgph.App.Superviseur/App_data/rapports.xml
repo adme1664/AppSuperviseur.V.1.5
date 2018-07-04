@@ -3,13 +3,13 @@
   
     <domaine code="1" name="Terrain">     
         <sousDomaine code="1" name="CARTOGRAPHIE 1 - Reconnaissance des lieux pré-collecte">
-			<probleme code="0">0. Aucun problème 1</probleme>
-            <probleme code="1">1. Carte incomplète </probleme>
-            <probleme code="2">2. Délimitation erronée </probleme>
-            <probleme code="3">3. Aires avec habitat supplémentaire</probleme>
-            <probleme code="4">4. Aires avec habitat détruit/inoccupé</probleme>
-            <probleme code="5">5. Indications erronées (hors délimitation</probleme>
-            <probleme code="6">6. Autre</probleme>
+			      <probleme code="1">1. Aucun problème 1</probleme>
+            <probleme code="2">2. Carte incomplète </probleme>
+            <probleme code="3">3. Délimitation erronée </probleme>
+            <probleme code="4">4. Aires avec habitat supplémentaire</probleme>
+            <probleme code="5">5. Aires avec habitat détruit/inoccupé</probleme>
+            <probleme code="6">6. Indications erronées (hors délimitation</probleme>
+            <probleme code="7">7. Autre</probleme>
           
 			<solution code="1">1. Requête d´une carte pertinente </solution>
             <solution code="2">2. Recherche d´informations complémentaires sur le terrain </solution>
@@ -18,7 +18,7 @@
        </sousDomaine>
         
         <sousDomaine code="2" name="CARTOGRAPHIE  2 - Couverture collecte">
-			<probleme code="1">1. Omission constatée </probleme>
+			      <probleme code="1">1. Omission constatée </probleme>
             <probleme code="2">2. Doublon possible</probleme>
             <probleme code="3">3. Doublon constaté</probleme>
             <probleme code="4">4. Autre</probleme>
@@ -30,8 +30,8 @@
         </sousDomaine>
       
         <sousDomaine code="3" name="GESTION TERRAIN">
-			<probleme code="1">0. Aucun problème </probleme>
-            <probleme code="2">1. Frais non disponibles pour recrutement/paiement guide</probleme>
+			      <probleme code="1">1. Aucun problème </probleme>
+            <probleme code="2">2. Frais non disponibles pour recrutement/paiement guide</probleme>
             <probleme code="3">3. Non disponbilité de guide/incitation salariale insuffisante</probleme>
             <probleme code="4">4. Autre</probleme>
 			
@@ -45,9 +45,9 @@
     <domaine code="2" name="RÉALISATION ENTREVUES">
       
         <sousDomaine code="4" name="INTERACTIONS AVEC LA POPULATION">
-			<probleme code="0">0. Aucun problème </probleme>
-            <probleme code="1">1. Refus fréquents </probleme>
-            <probleme code="2">2. Difficultés à convertir les refus en acceptation</probleme>
+			      <probleme code="1">1. Aucun problème </probleme>
+            <probleme code="2">2. Refus fréquents </probleme>
+            <probleme code="3">3. Difficultés à convertir les refus en acceptation</probleme>
 			
 			<solution code="0">0. aucune solution</solution>
             <solution code="1">1. Conversion des refus par le SD </solution>
@@ -56,7 +56,7 @@
         </sousDomaine>
         
         <sousDomaine code="5" name="INTERACTIONS AVEC LA RÉPONDANTS">
-			<probleme code="1">1. Manque de sensibilisation</probleme>
+			      <probleme code="1">1. Manque de sensibilisation</probleme>
             <probleme code="2">2. Difficultés dans la réception</probleme>
             <probleme code="3">3. Revendications particulières de certains répondants (lettre, langue, gestion des différends politiques)</probleme>
             <probleme code="4">4. Hostilité répandue </probleme>
@@ -68,7 +68,7 @@
         </sousDomaine>
       
         <sousDomaine code="6" name="QUESTIONNAIRE">
-			<probleme code="1">1. Aucun problème</probleme>
+			      <probleme code="1">1. Aucun problème</probleme>
             <probleme code="2">2. Réticence des répondants sur certains modules</probleme>
             <probleme code="3">3. Questions jugées sensibles 3. Instructions insuffisantes ou peu claires pour certaines questions</probleme>
             <probleme code="4">4. Autre</probleme>
@@ -157,7 +157,7 @@
       
         <sousDomaine code="12" name="SUPERVISION DIRECTE">
           
-            <probleme code="1">1. Aucun problème</probleme>
+            <probleme code="1">1.Aucun problème</probleme>
             <probleme code="2">2. Absences répétées agent recenseur</probleme>
             <probleme code="3">3. Retards par dans planification / difficultés d´accès aux SDE </probleme>
             <probleme code="4">4. Autre</probleme>
@@ -250,7 +250,7 @@
           
           
             <solution code="1">1. Requête au RC pour disponbilité équipements et accessoires</solution>
-            <solution code="2">2.  Tenue régulière de l´inventaire et des états</solution>
+            <solution code="2">2. Tenue régulière de l´inventaire et des états</solution>
             <solution code="3">3. Requête intervention du RC</solution>
             <solution code="4">4. Requête de remplacement auprès du Responsable communal </solution>
             <solution code="5">5. Autre</solution>

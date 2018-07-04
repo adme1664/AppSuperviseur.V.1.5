@@ -25,12 +25,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public static string STATUT_EFFECTUE = "Effectue";
         public static string STATUT_NON_EFFECTUE = "Non Effectue";
-
         public enum StatutModule:short
         {
             Fini=1,
             MalRempli=2,
             PasFini=3
+        }
+        public enum StatutVerifie : short
+        {
+            Verifie=1,
+            PasVerifie=0
+        }
+        public enum StatutValide : short
+        {
+            Valide = 1,
+            PasValide = 0
         }
 
         public enum EtatBatiment : int
@@ -38,6 +47,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             Inobservable=5
         }
 
+        #region VARIABLES
         public static string RESPONSE_HEADER_SUCCESS = "SUCCESS";
         public static string RESPONSE_HEADER_FAILED = "FAILED";
 
@@ -51,6 +61,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static int CODE_TYPE_DECES = 1;
         public static int CODE_TYPE_EMIGRE = 2;
         public static int CODE_TYPE_ENVDIVIDI = 3;
+        public static int CODE_TYPE_RAPO = 0;
 
         public static string DATACONTEXT_BATIMENTVIEWMODEL = "Ht.Ihsil.Rgph.App.Superviseur.viewModels.BatimentViewModel";
         public static string DATACONTEXT_SDEVIEWMODEL = "Ht.Ihsil.Rgph.App.Superviseur.viewModels.SdeViewModel";
@@ -103,7 +114,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string MIGRA = "MIGRA";
         public static string MOURI = "MOURI";
         public static string CP1 = "CP1";
+        #endregion
 
+        #region ENUMERATIONS
         public enum TypeQuestionMobile : int
         {
             Choix = 17,
@@ -128,9 +141,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public enum StatutContreEnquete : int
         {
-            Termine = 1,
-            Non_Termine = 2,
-            Valide = 3
+            Selectionee = 1,
+            Effectuee = 2,
+            Non_Effectue = 3
         }
         public enum Contrainte : int
         {
@@ -147,6 +160,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             Pa_okipe=4
         }
 
+        public enum TypeLogement : int
+        {
+            Kolektif=0,
+            Endividyel=1
+        }
         public enum ImagePath:int
         {
             [StringValue("/images/malrempli.png")]
@@ -188,6 +206,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             Deces=5,
             Individu=6
         }
+        #endregion
+
         #region MODELS
         public static string OBJET_MODEL_LOGEMENTCE = "Ht.Ihsil.Rgph.App.Superviseur.Models.LogementCEModel";
         public static string OBJET_MODEL_BATIMENTCE = "Ht.Ihsil.Rgph.App.Superviseur.Models.BatimentCEModel";
@@ -199,6 +219,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string OBJET_MODEL_BATIMENT = "Ht.Ihsil.Rgph.App.Superviseur.Models.BatimentModel";
         public static string OBJET_MODEL_MENAGE = "Ht.Ihsil.Rgph.App.Superviseur.Models.MenageModel";
         public static string OBJET_MODEL_INDIVIDU = "Ht.Ihsil.Rgph.App.Superviseur.Models.IndividuModel";
+        public static string OBJET_MODEL_RAPO_FINAL = "Ht.Ihsil.Rgph.App.Superviseur.Models.RapportFinalModel";
         public static string OBJET_MODEL_DECES = "Ht.Ihsil.Rgph.App.Superviseur.Models.DecesModel";
         public static string OBJET_MODEL_EMIGRE = "Ht.Ihsil.Rgph.App.Superviseur.Models.EmigreModel";
         public static string OBJET_MODEL_MENAGE_DETAILS = "Ht.Ihsil.Rgph.App.Superviseur.Models.MenageDetailsModel";
@@ -336,7 +357,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #endregion
 
-
         #region CODE MODULE
         public static string MODULE_INDIVIDU = "FRM-IND";
         public static string MODULE_BATIMENT = "FRM-BAT";
@@ -468,8 +488,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region PROFIL UTILISATEUR
-        public static int PROFIL_AGENT_RECENSEUR = 8;
-        public static int PROFIL_SUPERVISEUR = 7;
+        public static int PROFIL_AGENT_RECENSEUR_MOBILE = 8;
+        public static int PROFIL_SUPERVISEUR_SUPERVISION = 8;
         public static int PROFIL_ASTIC = 6;
         #endregion
 
@@ -508,6 +528,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             listOf.Add(new ReponseModel("1", "1.Oui"));
             listOf.Add(new ReponseModel("2", "2.Non"));
             listOf.Add(new ReponseModel("3", "3.Moyennement "));
+            return listOf;
+        }
+        public static List<ReponseModel> listOf8Choix()
+        {
+            List<ReponseModel> listOf = new List<ReponseModel>();
+            listOf.Add(new ReponseModel("1", "1.Une fois"));
+            listOf.Add(new ReponseModel("2", "2.Au moins 2 fois"));
+            listOf.Add(new ReponseModel("3", "3.Non "));
             return listOf;
         }
         public static List<ReponseModel> listOfChoixQ13()
@@ -709,6 +737,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static int AGE_PA_KONNEN = 999;
 
         #region OTHERS STUFF
+        public enum RapportTypeQuestion : int
+        {
+            question_4 = 1,
+            question_8 = 2
+        }
+
         public static List<KeyValue> ListOfRaisons()
         {
             List<KeyValue> listOf = new List<KeyValue>();
@@ -743,7 +777,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             return ListOfRaisons().Find(r => r.Key == raisonId);
         }
-
         public static List<NameValue> ListOfSections()
         {
             List<NameValue> listOf = new List<NameValue>();
@@ -780,6 +813,36 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             listOf.Add(new NameValue("B3.18", "B3.18. Existe-t-il des domaines sensibles pour lesquels les réponses pourraient être peu ou non fiables ?"));
             return listOf;
         }
-        #endregion
+
+        public static string REPONDAN_PRENSIPAL = "Repondan Prensipal";
+        public static string ED_REPONDAN_PRENSIPAL = "Ed Repondan Prensipal la";
+        public static string EDE_AKTIVITE_EKONOMIK_1 = "Eske gen moun ki ede l?";
+        public static string EDE_AKTIVITE_EKONOMIK_2 = "Si wi, eske moun sa a viv nan menaj la?";
+        public static string EDE_AKTIVITE_EKONOMIK_3 = "Si wi, kiyès ki ede repondan an?";
+
+        public static string EDE_AKTIVITE_FEKONDITE_1 = "Eske gen moun ki ede l?";
+        public static string EDE_AKTIVITE_FEKONDITE_2 = "Si wi, eske moun sa a viv nan menaj la?";
+        public static string EDE_AKTIVITE_FEKONDITE_3 = "Si wi, kiyès ki ede repondan an?";
+
+        public static List<KeyValue> REPONS_EDE_AKTIVITE_EKONOMIK_1()
+        {
+            List<KeyValue> repons = new List<KeyValue>();
+            repons.Add(new KeyValue(1, "Wi"));
+            repons.Add(new KeyValue(2, "Non"));
+            return repons;
+        }
+        public static KeyValue getKeyValue(int key)
+        {
+            foreach (KeyValue k in REPONS_EDE_AKTIVITE_EKONOMIK_1())
+            {
+                if (k.Key == key)
+                    return k;
+                //break;
+            }
+            return new KeyValue();
+        }
+        #endregion        
     }
+
+    
 }

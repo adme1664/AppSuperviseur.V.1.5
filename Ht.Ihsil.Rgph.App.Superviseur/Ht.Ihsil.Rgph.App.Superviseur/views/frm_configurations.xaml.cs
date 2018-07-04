@@ -24,7 +24,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
     public partial class frm_configurations : UserControl
     {
         string basePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Configuration\";
-        string pathDefaultConfigurationFile = AppDomain.CurrentDomain.BaseDirectory + @"App_data";
+        string pathDefaultConfigurationFile = AppDomain.CurrentDomain.BaseDirectory + @"App_data\configuration\";
         string file = "";
         XmlUtils configuration = null;
         public frm_configurations()

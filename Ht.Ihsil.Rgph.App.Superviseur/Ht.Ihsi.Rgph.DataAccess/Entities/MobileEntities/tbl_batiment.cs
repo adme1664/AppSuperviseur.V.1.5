@@ -49,5 +49,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public string latitude { get; set; }
         public string longitude { get; set; }
         public string codeAgentRecenceur { get; set; }
+        public Nullable<long> isVerified { get; set; }
     }
 }

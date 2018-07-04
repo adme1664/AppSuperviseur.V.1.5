@@ -1,7 +1,7 @@
 ﻿using Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities;
 using Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
-using Ht.Ihsil.Rgph.App.Superviseur.Schema;
+using Ht.Ihsil.Rgph.App.Superviseur.SchemaTest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +13,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 {
     public interface ISqliteReader
     {
-        #region BATIEMTNS
+        #region BATIMENTS
         BatimentType ReadBatimentType(long batimentId);
         List<BatimentType> GetAllBatimentType();
         List<BatimentType> GetAllBatimentMalRempli();
         List<BatimentType> GetAllBatimentPasFini();
         List<BatimentModel> GetAllBatimentNotFinished();
         List<BatimentType> GetAllBatimentTermine();
+        List<BatimentModel> GetAllBatimentModelTermine();
+        List<BatimentModel> GetAllBatimentModelValide();
         List<BatimentModel> GetAllBatimentModel();
         BatimentModel GetBatimentbyId(long batimentId);
         List<BatimentModel> GetAllBatimentWithLogVide();
@@ -29,30 +31,49 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<BatimentModel> GetAllBatimentVide();
         List<BatimentModel> GetBatLogMenWithDeces();
         List<BatimentJson> GetAllBatimentsInJson();
+        Ht.Ihsil.Rgph.App.Superviseur.Models.BatimentDataMobile GetAllBatiments();
         //Retourne les batiments inobservables(modalite =5)
         List<BatimentModel> GetAllBatimentsInobservables();
         //Retourne les batiments ayant des objets vides (Pas du tout rempli)
         List<BatimentModel> GetAllBatimentsWithAtLeastOneBlankObject();
+        List<BatimentModel> GetAllBatimentVerifies();
+        List<BatimentModel> GetAllBatimentNonVerifies();
+        //
+
         #endregion
 
         #region DECES
         DecesModel GetDecesById(long decesId);
         List<MenageDetailsModel> GetDecesByMenageDetails(long menageId);
         List<DecesModel> GetDecesByMenage(long menageId);
+        List<DecesModel> GetAllDeces();
         #endregion
 
-        #region Emigre
+        #region EMIGRE
         EmigreModel GetEmigreById(int emigreId);
         List<MenageDetailsModel> GetEmigreByMenageDetails(long menageId);
+        List<EmigreModel> GetEmigrebyMenage(long menageId);
+        List<EmigreModel> GetAllEmigres();
         #endregion
 
         #region LOGEMENTS
         List<LogementModel> GetAllLogements();
+        List<LogementModel> GetAllLogementsIndVerifies();
+        List<LogementModel> GetAllLogementsIndNonVerifies();
+        List<LogementModel> GetAllLogementsIndTermines();
+        List<LogementModel> GetAllLogementsIndValides();
+        List<LogementModel> GetAllLogementsColVerifies();
+        List<LogementModel> GetAllLogementsColNonVerifies();
+        List<LogementModel> GetAllLogementsColTermines();
+        List<LogementModel> GetAllLogementsColNonTermines();
+        List<LogementModel> GetAllLogementsColValides();
+        List<LogementModel> GetAllLogementsCollectifs();
+        List<LogementModel> GetAllLogementsIndividuels();
         List<LogementModel> GetAllLogementsByBatiment(long batimentId);
         List<LogementModel> GetLogementCByBatiment(long batimentId);
         List<LogementModel> GetLogementIByBatiment(long batimentId);
         List<LogementModel> GetLogementIFiniByBatiment(long batimentId);
-        List<LogementModel> GetAllLogementIndNotFinish();
+        List<LogementModel> GetAllLogementIndNonTermines();
         List<LogementModel> GetAllLogementOccupantAbsent();
         List<LogementModel> GetAllLogementOccupeOccasionnellement();
         List<LogementModel> GetAllLogementVide();
@@ -61,19 +82,35 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #region MENAGES
         List<MenageModel> GetMenageByLogement(long logId);
+        List<MenageDetailsModel> GetRapportFinal(long menageId);
         List<MenageModel> GetMenageFiniByLogement(long logId);
-        List<MenageModel> GetAllMenageNotFinish();
+        List<MenageModel> GetAllMenageNonTermine();
+        List<MenageModel> GetAllMenageTermine();
+        List<MenageModel> GetAllMenageValides();
         MenageModel GetMenageById(long menageId);
         List<MenageModel> GetAllMenages();
+        List<MenageModel> GetAllMenagesVerifies();
+        List<MenageModel> GetAllMenagesNonVerifies();
+        List<MenageModel> GetAllMenage_1_Personne();
+        List<MenageModel> GetAllMenage_2_3_Personnes();
+        List<MenageModel> GetAllMenage_4_5_Personnes();
+        List<MenageModel> GetAllMenage_6_Personnes();
+        Flag compteurFlagParMenages(List<MenageModel> menages);
         #endregion
 
         #region INDIVIDUS
         List<IndividuModel> GetIndividuByMenage(long menageId);
-        List<IndividuModel> GetAllIndividuNotFinish();
+        List<IndividuModel> GetAllIndividuNonTermine();
+        List<IndividuModel> GetAllIndividuNonVerifie();
+        List<IndividuModel> GetAllIndividuVerifie();
+        List<IndividuModel> GetAllIndividuTermine();
+        List<IndividuModel> GetAllIndividuValide();
         IndividuModel GetIndividuById(long indId);
         List<MenageDetailsModel> GetIndividuByMenageDetails(long menageId);
         List<IndividuModel> GetIndividuByLoge(long logeId);
         List<IndividuModel> GetAllIndividus();
+        List<IndividuModel> GetAllIndividusVerifies();
+        List<IndividuModel> GetAllIndividusNonVerifies();
         //Nombre d'individus dans les menages
         List<IndividuModel> GetAllIndividusInMenage();
         //Nombre d'individus sans informations sur l'Age et sur la date de naissance;
@@ -92,6 +129,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<IndividuModel> GetAllIndividusFemmes13ansSansFGNesVivants();
 
         Codification getInformationForCodification();
+        Flag getIndividuWithP10();
+        Flag getIndividuWithP12();
+        Flag getIndividuWithA5();
+        Flag getIndividuWithA7();
         Flag CountTotalFlag(List<IndividuModel> individus);
         Flag Count2FlagAgeDateNaissance();
         Flag CountFlagFecondite();
@@ -228,6 +269,22 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         List<RapportArModel> GetAllRptAgentRecenseurByMenage(long menageId);
         List<RapportArModel> GetAllRptAgentRecenseurByIndividu(long individuId);
         List<RapportArModel> GetAllRptAgentRecenseurForNotFinishedObject();
+        #endregion
+
+        #region RAPPORTFINAL
+        RapportFinalModel GetRapportFinal(int menageId);
+        RapportFinalModel GetRapportFinalModel(int menageId);
+        List<RapportFinalModel> searchRapportFinal(int menageId);
+        #endregion
+
+        #region DUPLICATION
+        List<BatimentModel> GetBatimentByRec(string qrec);
+        List<LogementModel> GetLogementsByNoOrdre(long batiment,long numOrdre);
+        List<MenageModel> GetMenagebyNumOrdre(long batiment, long logementId,long numOrdre);
+        List<EmigreModel> GetEmigrebyNumOrdre(long batiment, long logementId, long menageId, long numOrdre);
+        List<DecesModel> GetDecesbyNumOrdre(long batiment, long logementId, long menageId, long numOrdre);
+        List<IndividuModel> GetIndividuByNumOrdre(long batiment, long logementId, long menageId, long numOrdre);
+        
         #endregion
     }
 }

@@ -18,7 +18,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Ht.Ihsi.Rgph.Utility.Utils;
-using Ht.Ihsil.Rgph.App.Superviseur.Schema;
+using Ht.Ihsil.Rgph.App.Superviseur.SchemaTest;
 using Ht.Ihsil.Rgph.App.Superviseur.utils;
 using System.Windows.Threading;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
@@ -501,53 +501,48 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     sqliteWrite = new SqliteDataWriter();
                     foreach (BatimentJson bat in batimentsJsons)
                     {
-
-
                         if (Utils.IsNotNull(bat) && bat.isSynchroToCentrale == false)
                         {
-                            
-                                DataJson dataJson = new DataJson();
-                                dataJson.username = "Adme Jean Jeff";
-                                dataJson.deptId = "01";
-                                bat.dateEnvoi = DateTime.Now.ToShortDateString();
-                                dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
-                                string dJson = JsonConvert.SerializeObject(dataJson);
 
-                                if (transfert.publishBatimentData(dJson))
+                            DataJson dataJson = new DataJson();
+                            dataJson.username = "Adme Jean Jeff";
+                            dataJson.deptId = "01";
+                            bat.dateEnvoi = DateTime.Now.ToShortDateString();
+                            dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(bat)));
+                            string dJson = JsonConvert.SerializeObject(dataJson);
+                            if (transfert.publishBatimentData(dJson))
+                            {
+                                //Ecriture dans le fichier sqlite pr dire que le batiment a ete transfere vers le serveur centrale
+                                BatimentModel btm = new BatimentModel();
+                                btm.BatimentId = bat.batimentId;
+                                //btm.SdeId = bat.sdeId;
+                                btm.SdeId = sdeId;
+                                btm.IsSynchroToCentrale = true;
+                                //sqliteWrite.syncroBatimentToServeur(btm);
+                                //
+                                Dispatcher.Invoke(new Action(() =>
                                 {
-                                    //Ecriture dans le fichier sqlite pr dire que le batiment a ete transfere vers le serveur centrale
-                                    BatimentModel btm = new BatimentModel();
-                                    btm.BatimentId = bat.batimentId;
-                                    //btm.SdeId = bat.sdeId;
-                                    btm.SdeId = sdeId;
-                                    btm.IsSynchroToCentrale = true;
-                                    //sqliteWrite.syncroBatimentToServeur(btm);
-                                    //
-                                    Dispatcher.Invoke(new Action(() =>
-                                    {
-                                        txt_sortie.Text += "<>===================== Batiment:" + bat.batimentId + " transféré avec succes" + Environment.NewLine;
-                                        txt_sortie.CaretIndex = txt_sortie.Text.Length;
-                                        var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                                        txt_sortie.ScrollToHorizontalOffset(rect.Right);
-                                        txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                                        prg_trans_sc.Value += percent;
-                                    }), System.Windows.Threading.DispatcherPriority.Background);
+                                    txt_sortie.Text += "<>===================== Batiment:" + bat.batimentId + " transféré avec succes" + Environment.NewLine;
+                                    txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                                    txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                                    txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                                    prg_trans_sc.Value += percent;
+                                }), System.Windows.Threading.DispatcherPriority.Background);
 
-                                }
-                                else
+                            }
+                            else
+                            {
+                                Dispatcher.Invoke(new Action(() =>
                                 {
-                                    Dispatcher.Invoke(new Action(() =>
-                                    {
-                                        txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
-                                        txt_sortie.CaretIndex = txt_sortie.Text.Length;
-                                        var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                                        txt_sortie.ScrollToHorizontalOffset(rect.Right);
-                                        txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                                        prg_trans_sc.Value += percent;
-                                    }), System.Windows.Threading.DispatcherPriority.Background);
-                                }
-                            
-
+                                    txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                                    txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                                    txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                                    txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                                    prg_trans_sc.Value += percent;
+                                }), System.Windows.Threading.DispatcherPriority.Background);
+                            }
                         }
                         else
                         {
@@ -561,8 +556,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 prg_trans_sc.Value += percent;
                             }), System.Windows.Threading.DispatcherPriority.Background);
                         }
-
-
                     }
 
                     Dispatcher.Invoke(new Action(() =>
@@ -594,7 +587,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 }
                 //
                 #endregion
-
                 IContreEnqueteService contreEnqueteService = new ContreEnqueteService();
                 #region RAPPORT PERSONNEL
                 List<RapportPersonnelJson> rapportPersonnels = ModelMapper.MapToListJson(contreEnqueteService.searchRptPersonnel());
@@ -603,7 +595,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     percent = calculPercent(nbreRapport);
                 }
-                if (rapportPersonnels != null)
+                if (rapportPersonnels.Count > 0)
                 {
                     Dispatcher.Invoke(new Action(() =>
                     {
@@ -619,7 +611,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         if (transfert.publishRapportSupervisionDirect(dJson))
                         {
                             //Ecriture dans le fichier sqlite pr dire que le rapport a ete transfere vers le serveur centrale
-
                             //
                             Dispatcher.Invoke(new Action(() =>
                             {
@@ -645,7 +636,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             }), System.Windows.Threading.DispatcherPriority.Background);
                         }
                     }
-
                 }
                 else
                 {
@@ -678,7 +668,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     percent = calculPercent(nbreProblemes);
                 }
-                if (problemes != null)
+                if (problemes.Count > 0)
                 {
                     Dispatcher.Invoke(new Action(() =>
                     {
@@ -686,7 +676,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     }));
                     DataJson data = new DataJson();
                     data.deptId = "01";
-                    data.username = "user";
+                    data.username = Users.users.CodeUtilisateur;
                     data.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(problemes)));
                     string dJson = JsonConvert.SerializeObject(data);
                     if (transfert.publishRapportProbleme(dJson))
@@ -768,7 +758,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 {
                     percent = calculPercent(nbreDeroulement);
                 }
-                if (rapportsDeroulements != null)
+                if (rapportsDeroulements.Count > 0)
                 {
                     Dispatcher.Invoke(new Action(() =>
                     {
@@ -827,104 +817,113 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 #endregion
 
                 #region CONTRE ENQUETE
-                List<BatimentJson> batimentsCEJsons = contreEnqueteService.getAllBatimentCEInJson(sdeId);
-                int nbreContreEnquete = batimentsCEJsons.Count;
-                if (nbreContreEnquete != 0)
+                List<ContreEnqueteModel> listOfContreEnquete = contreEnqueteService.searchContreEnquete(sdeId);
+                foreach (ContreEnqueteModel contreEnquete in listOfContreEnquete)
                 {
-                    percent = calculPercent(nbreContreEnquete);
-                }
-                if (batimentsCEJsons.Count != 0)
-                {
-                    Dispatcher.Invoke(new Action(() =>
+                    //
+                    ContreEnqueteJson ceJson = ModelMapper.MapToJson(contreEnquete);
+                    ceJson.codeSuperviseur = Users.users.Utilisateur.CodeUtilisateur;
+                    List<BatimentJson> batimentsCEJsons = contreEnqueteService.getBatimentCEInJsonByContrEnqueteId(sdeId, Convert.ToInt32(contreEnquete.ContreEnqueteId));
+                    int nbreContreEnquete = listOfContreEnquete.Count;
+                    if (nbreContreEnquete > 0)
                     {
-                        busyIndicator.BusyContent = "Transfert des contre enquete";
-                    }));
-                    foreach (BatimentJson batiment in batimentsCEJsons)
+                        percent = calculPercent(nbreContreEnquete);
+                    }
+                    if (listOfContreEnquete.Count != 0)
                     {
-                        if (batiment.isSynchroToCentrale == false)
+                        Dispatcher.Invoke(new Action(() =>
                         {
-                            DataJson dataJson = new DataJson();
-                            dataJson.username = "Adme Jean Jeff";
-                            dataJson.deptId = "01";
-                            batiment.dateEnvoi = DateTime.Now.ToShortDateString();
-                            dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(batiment)));
-                            string dJson = JsonConvert.SerializeObject(dataJson);
-                            if (transfert.publishContreEntreData(dJson))
+                            busyIndicator.BusyContent = "Transfert des contre enquete";
+                        }));
+                        foreach (BatimentJson batiment in batimentsCEJsons)
+                        {
+                            if (batiment.isSynchroToCentrale == false)
                             {
-                                Dispatcher.Invoke(new Action(() =>
+                                DataJson dataJson = new DataJson();
+                                dataJson.username = Users.users.Utilisateur.CodeUtilisateur;
+                                dataJson.deptId = "01";
+                                batiment.dateEnvoi = DateTime.Now.ToShortDateString();
+                                ceJson.batimentJson = batiment;
+                                dataJson.data = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(ceJson)));
+                                string dJson = JsonConvert.SerializeObject(dataJson);
+                                if (transfert.publishContreEntreData(dJson))
                                 {
-                                    txt_sortie.Text += "<>===================== Batiman kont-ankèt:" + batiment.batimentId + " transféré avec succes" + Environment.NewLine;
-                                    txt_sortie.CaretIndex = txt_sortie.Text.Length;
-                                    var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                                    txt_sortie.ScrollToHorizontalOffset(rect.Right);
-                                    txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                                    prg_trans_sc.Value += percent;
-                                    busyIndicator.IsBusy = false;
-                                }), System.Windows.Threading.DispatcherPriority.Background);
+                                    Dispatcher.Invoke(new Action(() =>
+                                    {
+                                        txt_sortie.Text += "<>===================== Batiman kont-ankèt:" + batiment.batimentId + " transféré avec succes" + Environment.NewLine;
+                                        txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                                        var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                                        txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                                        txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                                        prg_trans_sc.Value += percent;
+                                        busyIndicator.IsBusy = false;
+                                    }), System.Windows.Threading.DispatcherPriority.Background);
+                                }
+                                else
+                                {
+                                    Dispatcher.Invoke(new Action(() =>
+                                    {
+                                        txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                                        txt_sortie.CaretIndex = txt_sortie.Text.Length;
+                                        var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
+                                        txt_sortie.ScrollToHorizontalOffset(rect.Right);
+                                        txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+                                        prg_trans_sc.Value += percent;
+                                        busyIndicator.IsBusy = false;
+                                    }), System.Windows.Threading.DispatcherPriority.Background);
+                                }
                             }
                             else
                             {
                                 Dispatcher.Invoke(new Action(() =>
                                 {
-                                    txt_sortie.Text += "<>===================== Serveur insdisponible" + Environment.NewLine;
+                                    txt_sortie.Text += "<>=========Batiment deja transfere=========<>" + Environment.NewLine;
                                     txt_sortie.CaretIndex = txt_sortie.Text.Length;
                                     var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
                                     txt_sortie.ScrollToHorizontalOffset(rect.Right);
                                     txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
                                     prg_trans_sc.Value += percent;
-                                    busyIndicator.IsBusy = false;
                                 }), System.Windows.Threading.DispatcherPriority.Background);
                             }
+
                         }
-                        else
+                        Dispatcher.Invoke(new Action(() =>
                         {
-                            Dispatcher.Invoke(new Action(() =>
-                            {
-                                txt_sortie.Text += "<>=========Batiment deja transfere=========<>" + Environment.NewLine;
-                                txt_sortie.CaretIndex = txt_sortie.Text.Length;
-                                var rect = txt_sortie.GetRectFromCharacterIndex(txt_sortie.CaretIndex);
-                                txt_sortie.ScrollToHorizontalOffset(rect.Right);
-                                txt_sortie.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
-                                prg_trans_sc.Value += percent;
-                            }), System.Windows.Threading.DispatcherPriority.Background);
-                        }
-
+                            lbl_sde.Content = "Transfert " + sdeId;
+                            lbl_statut_transfert.Content = "Termine";
+                            lbl_statut_transfert.Foreground = (Brush)bc.ConvertFrom("#FF26BD64");
+                            img_loading_ser.Visibility = Visibility.Hidden;
+                            btn_transfertr_sc.IsEnabled = true;
+                            btn_effacer.IsEnabled = true;
+                            busyIndicator.IsBusy = false;
+                            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                            busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                        }));
                     }
-                    Dispatcher.Invoke(new Action(() =>
+                    else
                     {
-                        lbl_sde.Content = "Transfert " + sdeId;
-                        lbl_statut_transfert.Content = "Termine";
-                        lbl_statut_transfert.Foreground = (Brush)bc.ConvertFrom("#FF26BD64");
-                        img_loading_ser.Visibility = Visibility.Hidden;
-                        btn_transfertr_sc.IsEnabled = true;
-                        btn_effacer.IsEnabled = true;
-                        busyIndicator.IsBusy = false;
-                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
-                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
-                    }));
+                        MessageBox.Show("Pa gen batiman ki nan kont-anket.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                        Dispatcher.Invoke(new Action(() =>
+                        {
+                            lbl_sde.Content = "";
+                            lbl_statut_transfert.Content = "";
+                            prg_trans_sc.Value = 0;
+                            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                            busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                            img_loading_ser.Visibility = Visibility.Hidden;
+                            btn_transfertr_sc.IsEnabled = true;
+                        }));
+                    }
+                    lbl_sde.Content = "";
+                    lbl_statut_transfert.Content = "";
+                    prg_trans_sc.Value = 0;
+                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+                    img_loading_ser.Visibility = Visibility.Hidden;
+                    btn_transfertr_sc.IsEnabled = true;
+                    //
                 }
-                else
-                {
-                    MessageBox.Show("Pa gen batiman ki nan kont-anket.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        lbl_sde.Content = "";
-                        lbl_statut_transfert.Content = "";
-                        prg_trans_sc.Value = 0;
-                        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
-                        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
-                        img_loading_ser.Visibility = Visibility.Hidden;
-                        btn_transfertr_sc.IsEnabled = true;
-                    }));
-                }
-                lbl_sde.Content = "";
-                lbl_statut_transfert.Content = "";
-                prg_trans_sc.Value = 0;
-                waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
-                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
-                img_loading_ser.Visibility = Visibility.Hidden;
-                btn_transfertr_sc.IsEnabled = true;
-
+                //               
                 #endregion
 
             }
@@ -940,7 +939,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
             }
         }
-
         private void lbSdes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try

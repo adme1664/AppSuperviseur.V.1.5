@@ -14,11 +14,13 @@ using System.Threading.Tasks;
 using Ht.Ihsil.Rgph.App.Superviseur.Json;
 using Ht.Ihsil.Rgph.App.Superviseur.services;
 using System.Globalization;
+using AutoMapper;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
 {
     public class ModelMapper
     {
+        string[] format = { "dd/MM/yyyy HH:mm:ss" };
         #region MAPPING SDE
         public static List<KeyValuePair<string, int>> MapToSdeDetail(Tbl_Sde s, int type)
         {
@@ -212,7 +214,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     Prenom = a.Prenom,
                     Sexe = a.Sexe,
                     Telephone = a.Telephone,
-                    AgentName = "" + a.Prenom 
+                    AgentName = "" + a.Prenom + "(" + a.CodeUtilisateur + ")" 
                 };
             }
             return new AgentModel();
@@ -249,6 +251,42 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         #endregion
 
         #region JSON MAPPER
+
+        public static ContreEnqueteJson MapToJson(ContreEnqueteModel model)
+        {
+            ContreEnqueteJson json = new ContreEnqueteJson();
+            json.batimentId = model.BatimentId.GetValueOrDefault();
+            json.contreEnqueteId = model.ContreEnqueteId;
+            json.dateDebut = model.DateDebut;
+            json.dateFin = model.DateFin;
+            SdeInformation sde = Utilities.getSdeInformation(model.SdeId);
+            json.deptId = sde.DeptId;
+            json.comId = sde.ComId;
+            json.districtId = sde.CodeDistrict;
+            json.typeContreEnqueteId = Convert.ToByte(model.TypeContreEnquete.GetValueOrDefault());
+            json.codeSuperviseur = ""+model.CodeSuperviseur.GetValueOrDefault();
+            json.districtId = model.CodeDistrict;
+            if (model.TypeContreEnquete == (int)Constant.TypeContrEnquete.LogementCollectif)
+            {
+                json.logeCId = model.LogeId.GetValueOrDefault();
+            }
+            if (model.TypeContreEnquete == (int)Constant.TypeContrEnquete.LogementInvididuelVide 
+                || model.TypeContreEnquete == (int)Constant.TypeContrEnquete.LogementIndividuelMenage
+                || model.TypeContreEnquete == (int)Constant.TypeContrEnquete.LogementOccupantAbsent)
+            {
+                json.logeIId = model.LogeId.GetValueOrDefault();
+            }
+            json.menageId = model.MenageId.GetValueOrDefault();
+            json.batimentId = model.BatimentId.GetValueOrDefault();
+            json.raisonId = Convert.ToByte(model.Raison);
+            json.sdeId = Utilities.getSdeFormatSent(model.SdeId);
+            json.termine = Convert.ToBoolean(model.Termine.GetValueOrDefault());
+            json.validate = Convert.ToBoolean(model.Validate);
+            json.nomsSuperviseur = model.NomSuperviseur;
+            json.statut = model.Statut.GetValueOrDefault();
+            return json;
+
+        }
         public static BatimentJson MapToJson(BatimentCEModel batiment)
         {
             if (batiment != null)
@@ -258,14 +296,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 batimentJson.deptId = batiment.DeptId;
                 batimentJson.comId = batiment.ComId;
                 batimentJson.vqseId = batiment.VqseId;
-                batimentJson.sdeId = Utilities.getSdeFormatSent(batiment.SdeId);
+                //batimentJson.sdeId = Utilities.getSdeFormatSent(batiment.SdeId);
+                batimentJson.sdeId = "0112-23090909";
                 batimentJson.zone = Convert.ToByte(batiment.Zone);
                 batimentJson.districtId = batiment.District;
                 batimentJson.qhabitation = batiment.Qhabitation;
                 batimentJson.qlocalite = batiment.Qlocalite;
                 batimentJson.qadresse = batiment.Qadresse;
                 batimentJson.qrec = batiment.Qrec;
-                batimentJson.qrgph = batiment.Qrgph;
+                batimentJson.qrgph = "32224234343";
                 batimentJson.qb1Etat = Convert.ToByte(batiment.Qb1Etat);
                 batimentJson.qb2Type = Convert.ToByte(batiment.Qb2Type);
                 batimentJson.qb3NombreEtage = Convert.ToByte(batiment.Qb3NombreEtage);
@@ -277,7 +316,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 batimentJson.qb8NbreLogeCollectif = Convert.ToByte(batiment.Qb8NbreLogeCollectif);
                 batimentJson.qb8NbreLogeIndividuel = Convert.ToByte(batiment.Qb8NbreLogeIndividuel);
                 batimentJson.statut = Convert.ToByte(batiment.Statut);
-                //batimentJson.dateEnvoi = DateTime.ParseExact(batiment.DateEnvoi, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
                 batimentJson.isValidated = Convert.ToBoolean(batiment.IsValidated);
                 batimentJson.dateDebutCollecte = batiment.DateDebutCollecte;
                 batimentJson.dateFinCollecte = batiment.DateFinCollecte;
@@ -304,15 +342,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 logementJson.isValidated = Convert.ToBoolean(logement.IsValidated);
                 logementJson.dateDebutCollecte = logement.DateDebutCollecte;
                 logementJson.dateFinCollecte = logement.DateFinCollecte;
-                
-                //if (logement.DateDebutCollecte != null)
-                //{
-                //    logementJson.dateDebutCollecte = logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateDebutCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
-                //}
-                //if (logement.DateFinCollecte != null)
-                //{
-                //    logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateFinCollecte, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
-                //}
                 logementJson.dureeSaisie = Convert.ToInt32(logement.DureeSaisie);
                 logementJson.isContreEnqueteMade = Convert.ToBoolean(logement.IsContreEnqueteMade);
                 return logementJson;
@@ -541,43 +570,25 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 batimentJson.qb8NbreLogeCollectif = Convert.ToByte(batiment.Qb8NbreLogeCollectif);
                 batimentJson.qb8NbreLogeIndividuel = Convert.ToByte(batiment.Qb8NbreLogeIndividuel);
                 batimentJson.statut = Convert.ToByte(batiment.Statut);
-                //batimentJson.dateEnvoi = DateTime.ParseExact(batiment.DateEnvoi, "ddd MMM dd HH:mm:ss EDT yyyy", null).ToString();
                 batimentJson.isValidated = Convert.ToBoolean(batiment.IsValidated);
                 batimentJson.isSynchroToAppSup = Convert.ToBoolean(batiment.IsSynchroToAppSup);
                 batimentJson.isSynchroToCentrale = Convert.ToBoolean(batiment.IsSynchroToCentrale);
-                //batimentJson.dateEnvoi = batiment.dateEnvoi;
-                batimentJson.dateDebutCollecte = batiment.DateDebutCollecte;
-                batimentJson.dateFinCollecte = batiment.DateFinCollecte;
-
-                    //string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                    //DateTime dateSaisieFirst = new DateTime();
-                    //foreach (string dateStringFormat in formatDates)
-                    //{
-                    //    if (DateTime.TryParseExact(batiment.DateDebutCollecte, dateStringFormat,
-                    //                      CultureInfo.InvariantCulture,
-                    //                      DateTimeStyles.None,
-                    //                      out dateSaisieFirst))
-                    //    {
-                    //        //batimentJson.dateDebutCollecte = DateTime.ParseExact(dateSaisieFirst.ToUniversalTime().ToString(), "yyyyMMddHHmmss", null).ToString();
-                    //        batimentJson.dateDebutCollecte = dateSaisieFirst.ToUniversalTime().ToString(@"MM/dd/yyyy h:mm:ss", CultureInfo.InvariantCulture);
-                    //    }
-                            
-                    //}
-
-                    //foreach (string dateStringFormat in formatDates)
-                    //{
-                    //    if (DateTime.TryParseExact(batiment.DateFinCollecte, dateStringFormat,
-                    //                      CultureInfo.InvariantCulture,
-                    //                      DateTimeStyles.None,
-                    //                      out dateSaisieFirst))
-                    //        batimentJson.dateFinCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                    //}
+                if (batiment.DateDebutCollecte != null && batiment.DateDebutCollecte!="")
+                {
+                    batimentJson.dateDebutCollecte = DateTime.ParseExact(batiment.DateDebutCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }
+                
+               if (batiment.DateFinCollecte != null && batiment.DateFinCollecte!="")
+                {
+                    batimentJson.dateFinCollecte = DateTime.ParseExact(batiment.DateFinCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }
                 batimentJson.dureeSaisie = Convert.ToInt32(batiment.DureeSaisie);
                 batimentJson.isFieldAllFilled = Convert.ToBoolean(batiment.IsFieldAllFilled);
                 batimentJson.isContreEnqueteMade = Convert.ToBoolean(batiment.IsContreEnqueteMade);
                 batimentJson.latitude = batiment.Latitude;
                 batimentJson.longitude = batiment.Longitude;
                 batimentJson.codeAgentRecenceur = batiment.CodeAgentRecenceur;
+                batimentJson.verified = Convert.ToBoolean(batiment.IsVerified);
                 return batimentJson;
             }
             return new BatimentJson();
@@ -606,33 +617,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 logementJson.qlin9NbreTotalMenage = Convert.ToByte(logement.Qlin9NbreTotalMenage);
                 logementJson.statut = Convert.ToByte(logement.Statut);
                 logementJson.isValidated = Convert.ToBoolean(logement.IsValidated);
-                //string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-
-                //DateTime dateSaisieFirst = new DateTime();
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(logement.DateDebutCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        logementJson.dateDebutCollecte = dateSaisieFirst.ToString();
-                //}
-
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(logement.DateFinCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        logementJson.dateFinCollecte = dateSaisieFirst.ToString();
-                //}
-                logementJson.dateDebutCollecte = logement.DateDebutCollecte;
-                logementJson.dateFinCollecte = logement.DateFinCollecte;
+                if (logement.DateDebutCollecte != null && logement.DateDebutCollecte != "")
+                {
+                    logementJson.dateDebutCollecte = DateTime.ParseExact(logement.DateDebutCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }
+                if (logement.DateFinCollecte != null && logement.DateFinCollecte != "")
+                {
+                    logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateFinCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }   
                 logementJson.dureeSaisie = Convert.ToInt32(logement.DureeSaisie);
                 logementJson.isFieldAllFilled = Convert.ToBoolean(logement.IsFieldAllFilled);
                 logementJson.isContreEnqueteMade = Convert.ToBoolean(logement.IsContreEnqueteMade);
                 logementJson.nbrTentative = Convert.ToByte(logement.NbrTentative);
                 logementJson.codeAgentRecenceur = logement.CodeAgentRecenceur;
+                logementJson.verified = Convert.ToBoolean(logement.IsVerified);
                 return logementJson;
             }
             return new LogementJson();
@@ -652,31 +650,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 logementJson.qlcTotalIndividus = Convert.ToByte(logement.QlcTotalIndividus);
                 logementJson.statut = Convert.ToByte(logement.Statut);
                 logementJson.isValidated = Convert.ToBoolean(logement.IsValidated);
-                //string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                //DateTime dateSaisieFirst = new DateTime();
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(logement.DateDebutCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        logementJson.dateDebutCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(logement.DateFinCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        logementJson.dateFinCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-                logementJson.dateDebutCollecte = logement.DateDebutCollecte;
-                logementJson.dateFinCollecte = logement.DateFinCollecte;
+                if (logement.DateDebutCollecte != null && logement.DateDebutCollecte != "")
+                {
+                    logementJson.dateDebutCollecte = DateTime.ParseExact(logement.DateDebutCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }
+                if (logement.DateFinCollecte != null && logement.DateFinCollecte != "")
+                {
+                    logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateFinCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }   
                 logementJson.dureeSaisie = Convert.ToInt32(logement.DureeSaisie);
                 logementJson.isFieldAllFilled = Convert.ToBoolean(logement.IsFieldAllFilled);
                 logementJson.isContreEnqueteMade = Convert.ToBoolean(logement.IsContreEnqueteMade);
                 logementJson.codeAgentRecenceur = logement.CodeAgentRecenceur;
+                logementJson.verified = Convert.ToBoolean(logement.IsVerified);
                 return logementJson;
             }
             return new LogementCJson();
@@ -705,32 +691,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 logementJson.qlin9NbreTotalMenage = Convert.ToByte(logement.Qlin9NbreTotalMenage);
                 logementJson.statut = Convert.ToByte(logement.Statut);
                 logementJson.isValidated = Convert.ToBoolean(logement.IsValidated);
-                //string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                //DateTime dateSaisieFirst = new DateTime();
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(logement.DateDebutCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        logementJson.dateDebutCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(logement.DateFinCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        logementJson.dateFinCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-                logementJson.dateDebutCollecte = logement.DateDebutCollecte;
-                logementJson.dateFinCollecte = logement.DateFinCollecte;
+                if (logement.DateDebutCollecte != null && logement.DateDebutCollecte != "")
+                {
+                    logementJson.dateDebutCollecte = DateTime.ParseExact(logement.DateDebutCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }
+                if (logement.DateFinCollecte != null && logement.DateFinCollecte != "")
+                {
+                    logementJson.dateFinCollecte = DateTime.ParseExact(logement.DateFinCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }                
                 logementJson.dureeSaisie = Convert.ToInt32(logement.DureeSaisie);
                 logementJson.isFieldAllFilled = Convert.ToBoolean(logement.IsFieldAllFilled);
                 logementJson.isContreEnqueteMade = Convert.ToBoolean(logement.IsContreEnqueteMade);
                 logementJson.nbrTentative = Convert.ToByte(logement.NbrTentative);
                 logementJson.codeAgentRecenceur = logement.CodeAgentRecenceur;
+                logementJson.verified = Convert.ToBoolean(logement.IsVerified);
+                
                 return logementJson;
             }
             return new LogementIsJson();
@@ -777,31 +752,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 menageJson.qd1NbreDecede = Convert.ToByte(menage.Qd1NbreDecede);
                 menageJson.statut = Convert.ToByte(menage.Statut);
                 menageJson.isValidated = Convert.ToBoolean(menage.IsValidated);
-                //string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                //DateTime dateSaisieFirst = new DateTime();
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(menage.DateDebutCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        menageJson.dateDebutCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(menage.DateFinCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        menageJson.dateFinCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-                menageJson.dateDebutCollecte = menage.DateDebutCollecte;
-                menageJson.dateFinCollecte = menage.DateFinCollecte;
+                if (menage.DateDebutCollecte != null && menage.DateDebutCollecte != "")
+                {
+                    menageJson.dateDebutCollecte = DateTime.ParseExact(menage.DateDebutCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }
+                if (menage.DateFinCollecte != null && menage.DateFinCollecte != "")
+                {
+                    menageJson.dateFinCollecte = DateTime.ParseExact(menage.DateFinCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }                
                 menageJson.dureeSaisie = Convert.ToInt32(menage.DureeSaisie);
                 menageJson.isFieldAllFilled = Convert.ToBoolean(menage.IsFieldAllFilled);
                 menageJson.isContreEnqueteMade = Convert.ToBoolean(menage.IsContreEnqueteMade);
                 menageJson.codeAgentRecenceur = menage.CodeAgentRecenceur;
+                menageJson.verified =Convert.ToBoolean( menage.IsVerified);
                 return menageJson;
             }
             return new MenageJson();
@@ -824,28 +787,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 emigreJson.qn2eDernierPaysResidence = Convert.ToByte(emigre.Qn2eDernierPaysResidence);
                 emigreJson.statut = Convert.ToByte(emigre.Statut);
                 emigreJson.isFieldAllFilled = Convert.ToBoolean(emigre.IsFieldAllFilled);
-                //string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                //DateTime dateSaisieFirst = new DateTime();
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(emigre.DateDebutCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        emigreJson.dateDebutCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(emigre.DateFinCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        emigreJson.dateFinCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-                emigreJson.dateFinCollecte = emigre.DateFinCollecte;
-                emigreJson.dateDebutCollecte = emigre.DateDebutCollecte;
+                if (emigre.DateDebutCollecte != null && emigre.DateDebutCollecte != "")
+                {
+                    emigreJson.dateDebutCollecte = DateTime.ParseExact(emigre.DateDebutCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }
+                if (emigre.DateFinCollecte != null && emigre.DateFinCollecte != "")
+                {
+                    emigreJson.dateFinCollecte = DateTime.ParseExact(emigre.DateFinCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                } 
                 emigreJson.codeAgentRecenceur = emigre.CodeAgentRecenceur;
+                emigreJson.verified = Convert.ToBoolean(emigre.IsVerified);
                 return emigreJson;
             }
             return new EmigreJson();
@@ -867,30 +818,18 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 decesJson.qd2c2CauseDeces = Convert.ToByte(deces.Qd2c2CauseDeces);
                 decesJson.statut = Convert.ToByte(deces.Statut);
                 decesJson.isFieldAllFilled = Convert.ToBoolean(deces.IsFieldAllFilled);
-                //string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                //DateTime dateSaisieFirst = new DateTime();
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(deces.DateDebutCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        decesJson.dateDebutCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(deces.DateFinCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        decesJson.dateFinCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-                decesJson.dateFinCollecte = deces.DateFinCollecte;
-                decesJson.dateDebutCollecte = deces.DateDebutCollecte;
+                if (deces.DateDebutCollecte != null && deces.DateDebutCollecte != "")
+                {
+                    decesJson.dateDebutCollecte = DateTime.ParseExact(deces.DateDebutCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }
+                if (deces.DateFinCollecte != null && deces.DateFinCollecte!="")
+                {
+                    decesJson.dateFinCollecte = DateTime.ParseExact(deces.DateFinCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                } 
                 decesJson.dureeSaisie = Convert.ToInt32(deces.DureeSaisie);
                 decesJson.isContreEnqueteMade = Convert.ToBoolean(deces.IsContreEnqueteMade);
                 decesJson.codeAgentRecenceur = deces.CodeAgentRecenceur;
+                decesJson.verified = Convert.ToBoolean(deces.IsVerified);
                 return decesJson;
             }
             return new DecesJson();
@@ -976,33 +915,41 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 individuJson.qf4DENeVivantVit = Convert.ToByte(individu.Qf4DENeVivantVit);
                 individuJson.statut = Convert.ToByte(individu.Statut);
                 individuJson.isFieldAllFilled = Convert.ToBoolean(individu.IsFieldAllFilled);
-                //string[] formatDates = { "ddd MMM dd HH:mm:ss 'GMT'zzz yyyy", "ddd MMM dd HH:mm:ss EDT yyyy" };
-                //DateTime dateSaisieFirst = new DateTime();
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(individu.DateDebutCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        individuJson.dateDebutCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss",CultureInfo.InvariantCulture);
-                //}
-
-                //foreach (string dateStringFormat in formatDates)
-                //{
-                //    if (DateTime.TryParseExact(individu.DateFinCollecte, dateStringFormat,
-                //                      CultureInfo.InvariantCulture,
-                //                      DateTimeStyles.None,
-                //                      out dateSaisieFirst))
-                //        individuJson.dateFinCollecte = dateSaisieFirst.ToUniversalTime().ToString("MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
-                //}
-                individuJson.dateFinCollecte = individu.DateFinCollecte;
-                individuJson.dateDebutCollecte = individu.DateDebutCollecte;
+                if (individu.DateDebutCollecte != null && individu.DateDebutCollecte!="")
+                {
+                    individuJson.dateDebutCollecte = DateTime.ParseExact(individu.DateDebutCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                }
+                if (individu.DateFinCollecte != null && individu.DateFinCollecte != "")
+                {
+                    individuJson.dateFinCollecte = DateTime.ParseExact(individu.DateFinCollecte, "MM/dd/yyyy HH:mm:ss tt", System.Globalization.CultureInfo.InvariantCulture).ToString();
+                } 
                 individuJson.dureeSaisie = Convert.ToInt32(individu.DureeSaisie);
                 individuJson.isContreEnqueteMade = Convert.ToBoolean(individu.IsContreEnqueteMade);
                 individuJson.codeAgentRecenceur = individu.CodeAgentRecenceur;
+                individuJson.verified = Convert.ToBoolean(individu.IsVerified);
                 return individuJson;
             }
             return new IndividuJson();
+        }
+
+        public static RapportFinalJson MapToJson(RapportFinalModel rpt)
+        {
+            RapportFinalJson rapport = new RapportFinalJson();
+            rapport.rapportFinalId = rpt.rapportFinalId;
+            rapport.repondantPrincipalId = rpt.repondantPrincipalId;
+            rapport.menageId = rpt.menageId;
+            rapport.logeId = rpt.logeId;
+            rapport.f_RepondantQuiAideId = rpt.f_RepondantQuiAideId;
+            rapport.f_IsVivreDansMenage = rpt.f_IsVivreDansMenage;
+            rapport.f_EsKeGenMounKiEde = rpt.f_EsKeGenMounKiEde;
+            rapport.dateFinCollecte = rpt.dateFinCollecte;
+            rapport.dateDebutCollecte = rpt.dateDebutCollecte;
+            rapport.codeAgentRecenceur = rpt.codeAgentRecenceur;
+            rapport.batimentId = rpt.batimentId;
+            rapport.aE_RepondantQuiAideId = rpt.aE_RepondantQuiAideId;
+            rapport.aE_IsVivreDansMenage = rpt.aE_IsVivreDansMenage;
+            rapport.aE_EsKeGenMounKiEde = rpt.aE_EsKeGenMounKiEde;
+            return rapport;
         }
         public static RapportPersonnelJson MapToJson(RapportPersonnelModel rpt)
         {
@@ -1256,7 +1203,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         #endregion
 
         #region FOR SQLITE SCHEMA
-
+        #region ENTITY TO MODEL
         public static QuestionModule MapToQuestioModule(tbl_question_module module)
         {
             QuestionModule questionModule = new QuestionModule();
@@ -1269,7 +1216,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return questionModule;
         }
-
         public static QuestionsModel MapToQuestionModel(tbl_question q)
         {
             QuestionsModel question = new QuestionsModel();
@@ -1295,8 +1241,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return questions;
         }
-
-
         public static List<QuestionModule> MapToListQuestionModule(List<tbl_question_module> modules)
         {
             List<QuestionModule> list = new List<QuestionModule>();
@@ -1311,7 +1255,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return list;
         }
-
         public LogementCollectifModel MapLogementCModel(LogementModel _logement)
         {
             return new LogementCollectifModel
@@ -1331,6 +1274,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             };
         }
 
+        
         public static BatimentModel MapToBatiment(tbl_batiment batiment)
         {
             if (batiment != null)
@@ -1371,7 +1315,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     IsContreEnqueteMade = Convert.ToBoolean(batiment.isContreEnqueteMade),
                     Latitude = batiment.latitude,
                     Longitude = batiment.longitude,
-                    CodeAgentRecenceur = batiment.codeAgentRecenceur
+                    CodeAgentRecenceur = batiment.codeAgentRecenceur,
+                    IsVerified=batiment.isVerified.GetValueOrDefault()
 
                 };
             }
@@ -1389,19 +1334,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     BatimentId = Convert.ToInt32(logement.batimentId),
                     SdeId = logement.sdeId,
                     QlCategLogement = Convert.ToByte(logement.qlCategLogement),
-                    Qlin1NumeroOrdre = Convert.ToInt32(logement.qlin1NumeroOrdre),
-                    Qlc1TypeLogement = Convert.ToInt32(logement.qlc1TypeLogement),
-                    QlcTotalIndividus = Convert.ToInt32(logement.qlcTotalIndividus),
-                    Qlc2bTotalGarcon = Convert.ToInt32(logement.qlc2bTotalGarcon),
-                    Qlc2bTotalFille = Convert.ToInt32(logement.qlc2bTotalFille),
-                    Qlin2StatutOccupation = Convert.ToInt32(logement.qlin2StatutOccupation),
-                    Qlin3ExistenceLogement = Convert.ToInt32(logement.qlin3ExistenceLogement),
-                    Qlin4TypeLogement = Convert.ToInt32(logement.qlin4TypeLogement),
-                    Qlin5MateriauSol = Convert.ToInt32(logement.qlin5MateriauSol),
-                    Qlin6NombrePiece = Convert.ToInt32(logement.qlin6NombrePiece),
-                    Qlin7NbreChambreACoucher = Convert.ToInt32(logement.qlin7NbreChambreACoucher),
-                    Qlin8NbreIndividuDepense = Convert.ToInt32(logement.qlin8NbreIndividuDepense),
-                    Qlin9NbreTotalMenage = Convert.ToInt32(logement.qlin9NbreTotalMenage),
+                    Qlin1NumeroOrdre = Convert.ToByte(logement.qlin1NumeroOrdre),
+                    Qlc1TypeLogement = Convert.ToByte(logement.qlc1TypeLogement),
+                    QlcTotalIndividus = Convert.ToByte(logement.qlcTotalIndividus),
+                    Qlc2bTotalGarcon = Convert.ToByte(logement.qlc2bTotalGarcon),
+                    Qlc2bTotalFille = Convert.ToByte(logement.qlc2bTotalFille),
+                    Qlin2StatutOccupation = Convert.ToByte(logement.qlin2StatutOccupation),
+                    Qlin3ExistenceLogement = Convert.ToByte(logement.qlin3ExistenceLogement),
+                    Qlin4TypeLogement = Convert.ToByte(logement.qlin4TypeLogement),
+                    Qlin5MateriauSol = Convert.ToByte(logement.qlin5MateriauSol),
+                    Qlin6NombrePiece = Convert.ToByte(logement.qlin6NombrePiece),
+                    Qlin7NbreChambreACoucher = Convert.ToByte(logement.qlin7NbreChambreACoucher),
+                    Qlin8NbreIndividuDepense = Convert.ToByte(logement.qlin8NbreIndividuDepense),
+                    Qlin9NbreTotalMenage = Convert.ToByte(logement.qlin9NbreTotalMenage),
                     Statut = Convert.ToByte(logement.statut),
                     IsValidated = Convert.ToBoolean(logement.isValidated),
                     DateDebutCollecte = logement.dateDebutCollecte,
@@ -1410,7 +1355,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     IsFieldAllFilled = Convert.ToBoolean(logement.isFieldAllFilled),
                     IsContreEnqueteMade = Convert.ToBoolean(logement.isContreEnqueteMade),
                     NbrTentative = Convert.ToByte(logement.nbrTentative),
-                    CodeAgentRecenceur = logement.codeAgentRecenceur
+                    CodeAgentRecenceur = logement.codeAgentRecenceur,
+                    IsVerified = logement.isVerified.GetValueOrDefault()
                 };
             }
             return new LogementModel();
@@ -1464,7 +1410,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     DureeSaisie = Convert.ToInt32(menage.dureeSaisie),
                     IsFieldAllFilled = Convert.ToBoolean(menage.isFieldAllFilled),
                     IsContreEnqueteMade = Convert.ToBoolean(menage.isContreEnqueteMade),
-                    CodeAgentRecenceur = menage.codeAgentRecenceur
+                    CodeAgentRecenceur = menage.codeAgentRecenceur,
+                    IsVerified = menage.isVerified.GetValueOrDefault()
 
                 };
             }
@@ -1494,6 +1441,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     DureeSaisie = Convert.ToInt32(deces.dureeSaisie),
                     IsContreEnqueteMade = Convert.ToBoolean(deces.isContreEnqueteMade),
                     CodeAgentRecenceur = deces.codeAgentRecenceur
+                    //IsVerified = deces.isVerified.GetValueOrDefault()
                 };
             }
             return new DecesModel();
@@ -1521,7 +1469,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     DateDebutCollecte = emigre.dateDebutCollecte,
                     DateFinCollecte = emigre.dateFinCollecte,
                     DureeSaisie = Convert.ToInt32(emigre.dureeSaisie),
-                    CodeAgentRecenceur = emigre.codeAgentRecenceur
+                    CodeAgentRecenceur = emigre.codeAgentRecenceur,
+                    IsVerified = emigre.isVerified.GetValueOrDefault()
                 };
             }
             return new EmigreModel();
@@ -1534,90 +1483,115 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             {
                 IndividuModel ind1 = new IndividuModel();
                 ind1.IndividuId = Convert.ToInt32(individu.individuId);
-                    ind1.MenageId = Convert.ToInt32(individu.menageId);
-                    ind1.LogeId = Convert.ToInt32(individu.logeId);
-                    ind1.BatimentId = Convert.ToInt32(individu.batimentId);
-                    ind1.SdeId = individu.sdeId;
-                    ind1.Q1NoOrdre = Convert.ToByte(individu.q1NoOrdre);
-                    ind1.Qp2APrenom = individu.qp2APrenom;
-                    ind1.Qp2BNom = individu.qp2BNom;
-                    ind1.Qp3LienDeParente = Convert.ToByte(individu.qp3LienDeParente);
-                    ind1.Qp3HabiteDansMenage = Convert.ToByte(individu.qp3HabiteDansMenage);
-                    ind1.Qp4Sexe = Convert.ToByte(individu.qp4Sexe);
-                    ind1.Qp5DateNaissanceJour = Convert.ToByte(individu.qp5DateNaissanceJour);
-                    ind1.Qp5DateNaissanceMois = Convert.ToByte(individu.qp5DateNaissanceMois);
-                    ind1.Qp5DateNaissanceAnnee = Convert.ToInt32(individu.Qp5DateNaissanceAnnee);
-                    ind1.Qp5bAge = Convert.ToInt32(individu.qp5bAge);
-                    ind1.Qp6religion = Convert.ToByte(individu.qp6religion);
-                    ind1.Qp6AutreReligion = individu.qp6AutreReligion;
-                    ind1.Qp7Nationalite = Convert.ToByte(individu.qp7Nationalite);
-                    ind1.Qp7PaysNationalite = individu.qp7PaysNationalite;
-                    ind1.Qp8MereEncoreVivante = Convert.ToByte(individu.qp8MereEncoreVivante);
-                    ind1.Qp9EstPlusAge = Convert.ToByte(individu.qp9EstPlusAge);
-                    ind1.Qp10LieuNaissance = Convert.ToByte(individu.qp10LieuNaissance);
-                    ind1.Qp10CommuneNaissance = individu.qp10CommuneNaissance;
-                    ind1.Qp10VqseNaissance = individu.qp10VqseNaissance;
-                    ind1.Qp10PaysNaissance = individu.qp10PaysNaissance;
-                    ind1.Qp11PeriodeResidence = Convert.ToByte(individu.qp11PeriodeResidence);
-                    ind1.Qp12DomicileAvantRecensement = Convert.ToByte(individu.qp12DomicileAvantRecensement);
-                    ind1.Qp12CommuneDomicileAvantRecensement = individu.qp12CommuneDomicileAvantRecensement;
-                    ind1.Qp12VqseDomicileAvantRecensement = individu.qp12VqseDomicileAvantRecensement;
-                    ind1.Qp12PaysDomicileAvantRecensement = individu.qp12PaysDomicileAvantRecensement;
-                    ind1.Qe1EstAlphabetise = Convert.ToByte(individu.qe1EstAlphabetise);
-                    ind1.Qe2FreqentationScolaireOuUniv = Convert.ToByte(individu.qe2FreqentationScolaireOuUniv);
-                    ind1.Qe3typeEcoleOuUniv = Convert.ToByte(individu.qe3typeEcoleOuUniv);
-                    ind1.Qe4aNiveauEtude = Convert.ToByte(individu.qe4aNiveauEtude);
-                    ind1.Qe4bDerniereClasseOUAneEtude = individu.qe4bDerniereClasseOUAneEtude;
-                    ind1.Qe5DiplomeUniversitaire = Convert.ToByte(individu.qe5DiplomeUniversitaire);
-                    ind1.Qe6DomaineEtudeUniversitaire = individu.qe6DomaineEtudeUniversitaire;
-                    ind1.Qaf1HandicapVoir = Convert.ToByte(individu.qaf1HandicapVoir);
-                    ind1.Qaf2HandicapEntendre = Convert.ToByte(individu.qaf2HandicapEntendre);
-                    ind1.Qaf3HandicapMarcher = Convert.ToByte(individu.qaf3HandicapMarcher);
-                    ind1.Qaf4HandicapSouvenir = Convert.ToByte(individu.qaf4HandicapSouvenir);
-                    ind1.Qaf5HandicapPourSeSoigner = Convert.ToByte(individu.qaf5HandicapPourSeSoigner);
-                    ind1.Qaf6HandicapCommuniquer = Convert.ToByte(individu.qaf6HandicapCommuniquer);
-                    ind1.Qt1PossessionTelCellulaire = Convert.ToByte(individu.qt1PossessionTelCellulaire);
-                    ind1.Qt2UtilisationInternet = Convert.ToByte(individu.qt2UtilisationInternet);
-                    ind1.Qem1DejaVivreAutrePays = Convert.ToByte(individu.qem1DejaVivreAutrePays);
-                    ind1.Qem1AutrePays = individu.qem1AutrePays;
-                    ind1.Qem2MoisRetour = Convert.ToByte(individu.qem2MoisRetour);
-                    ind1.Qem2AnneeRetour = Convert.ToInt32(individu.qem2AnneeRetour);
-                    ind1.Qsm1StatutMatrimonial = Convert.ToByte(individu.qsm1StatutMatrimonial);
-                    ind1.Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(individu.qa1ActEconomiqueDerniereSemaine);
-                    ind1.Qa2ActAvoirDemele1 = Convert.ToByte(individu.qa2ActAvoirDemele1);
-                    ind1.Qa2ActDomestique2 = Convert.ToByte(individu.qa2ActDomestique2);
-                    ind1.Qa2ActCultivateur3 = Convert.ToByte(individu.qa2ActCultivateur3);
-                    ind1.Qa2ActAiderParent4 = Convert.ToByte(individu.qa2ActAiderParent4);
-                    ind1.Qa2ActAutre5 = Convert.ToByte(individu.qa2ActAutre5);
-                    ind1.Qa3StatutEmploie = Convert.ToByte(individu.qa3StatutEmploie);
-                    ind1.Qa4SecteurInstitutionnel = Convert.ToByte(individu.qa4SecteurInstitutionnel);
-                    ind1.Qa5TypeBienProduitParEntreprise = individu.qa5TypeBienProduitParEntreprise;
-                    ind1.Qa5PreciserTypeBienProduitParEntreprise = individu.qa5PreciserTypeBienProduitParEntreprise;
-                    ind1.Qa6LieuActDerniereSemaine = Convert.ToByte(individu.qa6LieuActDerniereSemaine);
-                    ind1.Qa7FoncTravail = Convert.ToByte(individu.qa7FoncTravail);
-                    ind1.Qa8EntreprendreDemarcheTravail = Convert.ToByte(individu.qa8EntreprendreDemarcheTravail);
-                    ind1.Qa9VouloirTravailler = Convert.ToByte(individu.qa9VouloirTravailler);
-                    ind1.Qa10DisponibilitePourTravail = Convert.ToByte(individu.qa10DisponibilitePourTravail);
-                    ind1.Qa11RecevoirTransfertArgent = Convert.ToByte(individu.qa11RecevoirTransfertArgent);
-                    ind1.Qf1aNbreEnfantNeVivantM = Convert.ToInt32(individu.qf1aNbreEnfantNeVivantM);
-                    ind1.Qf1bNbreEnfantNeVivantF = Convert.ToInt32(individu.qf1bNbreEnfantNeVivantF);
-                    ind1.Qf2aNbreEnfantVivantM = Convert.ToInt32(individu.qf2aNbreEnfantVivantM);
-                    ind1.Qf2bNbreEnfantVivantF = Convert.ToInt32(individu.qf2bNbreEnfantVivantF);
-                    ind1.Qf3DernierEnfantJour = Convert.ToByte(individu.qf3DernierEnfantJour);
-                    ind1.Qf3DernierEnfantMois = Convert.ToByte(individu.qf3DernierEnfantMois);
-                    ind1.Qf3DernierEnfantAnnee = Convert.ToInt32(individu.qf3DernierEnfantAnnee);
-                    ind1.Qf4DENeVivantVit = Convert.ToByte(individu.qf4DENeVivantVit);
-                    ind1.Statut = Convert.ToByte(individu.statut);
-                    ind1.IsFieldAllFilled = Convert.ToBoolean(individu.isFieldAllFilled);
-                    ind1.DateDebutCollecte = individu.dateDebutCollecte;
-                    ind1.DateFinCollecte = individu.dateFinCollecte;
-                    ind1.DureeSaisie = Convert.ToInt32(individu.dureeSaisie);
-                    ind1.IsContreEnqueteMade = Convert.ToBoolean(individu.isContreEnqueteMade);
-                    ind1.CodeAgentRecenceur = individu.codeAgentRecenceur;
-                    return ind1;
+                ind1.MenageId = Convert.ToInt32(individu.menageId);
+                ind1.LogeId = Convert.ToInt32(individu.logeId);
+                ind1.BatimentId = Convert.ToInt32(individu.batimentId);
+                ind1.SdeId = individu.sdeId;
+                ind1.Q1NoOrdre = Convert.ToByte(individu.q1NoOrdre);
+                ind1.Qp2APrenom = individu.qp2APrenom;
+                ind1.Qp2BNom = individu.qp2BNom;
+                ind1.Qp3LienDeParente = Convert.ToByte(individu.qp3LienDeParente);
+                ind1.Qp3HabiteDansMenage = Convert.ToByte(individu.qp3HabiteDansMenage);
+                ind1.Qp4Sexe = Convert.ToByte(individu.qp4Sexe);
+                ind1.Qp5DateNaissanceJour = Convert.ToByte(individu.qp5DateNaissanceJour);
+                ind1.Qp5DateNaissanceMois = Convert.ToByte(individu.qp5DateNaissanceMois);
+                ind1.Qp5DateNaissanceAnnee = Convert.ToInt32(individu.Qp5DateNaissanceAnnee);
+                ind1.Qp5bAge = Convert.ToInt32(individu.qp5bAge);
+                ind1.Qp6religion = Convert.ToByte(individu.qp6religion);
+                ind1.Qp6AutreReligion = individu.qp6AutreReligion;
+                ind1.Qp7Nationalite = Convert.ToByte(individu.qp7Nationalite);
+                ind1.Qp7PaysNationalite = individu.qp7PaysNationalite;
+                ind1.Qp8MereEncoreVivante = Convert.ToByte(individu.qp8MereEncoreVivante);
+                ind1.Qp9EstPlusAge = Convert.ToByte(individu.qp9EstPlusAge);
+                ind1.Qp10LieuNaissance = Convert.ToByte(individu.qp10LieuNaissance);
+                ind1.Qp10CommuneNaissance = individu.qp10CommuneNaissance;
+                ind1.Qp10VqseNaissance = individu.qp10VqseNaissance;
+                ind1.Qp10PaysNaissance = individu.qp10PaysNaissance;
+                ind1.Qp11PeriodeResidence = Convert.ToByte(individu.qp11PeriodeResidence);
+                ind1.Qp12DomicileAvantRecensement = Convert.ToByte(individu.qp12DomicileAvantRecensement);
+                ind1.Qp12CommuneDomicileAvantRecensement = individu.qp12CommuneDomicileAvantRecensement;
+                ind1.Qp12VqseDomicileAvantRecensement = individu.qp12VqseDomicileAvantRecensement;
+                ind1.Qp12PaysDomicileAvantRecensement = individu.qp12PaysDomicileAvantRecensement;
+                ind1.Qe1EstAlphabetise = Convert.ToByte(individu.qe1EstAlphabetise);
+                ind1.Qe2FreqentationScolaireOuUniv = Convert.ToByte(individu.qe2FreqentationScolaireOuUniv);
+                ind1.Qe3typeEcoleOuUniv = Convert.ToByte(individu.qe3typeEcoleOuUniv);
+                ind1.Qe4aNiveauEtude = Convert.ToByte(individu.qe4aNiveauEtude);
+                ind1.Qe4bDerniereClasseOUAneEtude = individu.qe4bDerniereClasseOUAneEtude;
+                ind1.Qe5DiplomeUniversitaire = Convert.ToByte(individu.qe5DiplomeUniversitaire);
+                ind1.Qe6DomaineEtudeUniversitaire = individu.qe6DomaineEtudeUniversitaire;
+                ind1.Qaf1HandicapVoir = Convert.ToByte(individu.qaf1HandicapVoir);
+                ind1.Qaf2HandicapEntendre = Convert.ToByte(individu.qaf2HandicapEntendre);
+                ind1.Qaf3HandicapMarcher = Convert.ToByte(individu.qaf3HandicapMarcher);
+                ind1.Qaf4HandicapSouvenir = Convert.ToByte(individu.qaf4HandicapSouvenir);
+                ind1.Qaf5HandicapPourSeSoigner = Convert.ToByte(individu.qaf5HandicapPourSeSoigner);
+                ind1.Qaf6HandicapCommuniquer = Convert.ToByte(individu.qaf6HandicapCommuniquer);
+                ind1.Qt1PossessionTelCellulaire = Convert.ToByte(individu.qt1PossessionTelCellulaire);
+                ind1.Qt2UtilisationInternet = Convert.ToByte(individu.qt2UtilisationInternet);
+                ind1.Qem1DejaVivreAutrePays = Convert.ToByte(individu.qem1DejaVivreAutrePays);
+                ind1.Qem1AutrePays = individu.qem1AutrePays;
+                ind1.Qem2MoisRetour = Convert.ToByte(individu.qem2MoisRetour);
+                ind1.Qem2AnneeRetour = Convert.ToInt32(individu.qem2AnneeRetour);
+                ind1.Qsm1StatutMatrimonial = Convert.ToByte(individu.qsm1StatutMatrimonial);
+                ind1.Qa1ActEconomiqueDerniereSemaine = Convert.ToByte(individu.qa1ActEconomiqueDerniereSemaine);
+                ind1.Qa2ActAvoirDemele1 = Convert.ToByte(individu.qa2ActAvoirDemele1);
+                ind1.Qa2ActDomestique2 = Convert.ToByte(individu.qa2ActDomestique2);
+                ind1.Qa2ActCultivateur3 = Convert.ToByte(individu.qa2ActCultivateur3);
+                ind1.Qa2ActAiderParent4 = Convert.ToByte(individu.qa2ActAiderParent4);
+                ind1.Qa2ActAutre5 = Convert.ToByte(individu.qa2ActAutre5);
+                ind1.Qa3StatutEmploie = Convert.ToByte(individu.qa3StatutEmploie);
+                ind1.Qa4SecteurInstitutionnel = Convert.ToByte(individu.qa4SecteurInstitutionnel);
+                ind1.Qa5TypeBienProduitParEntreprise = individu.qa5TypeBienProduitParEntreprise;
+                ind1.Qa5PreciserTypeBienProduitParEntreprise = individu.qa5PreciserTypeBienProduitParEntreprise;
+                ind1.Qa6LieuActDerniereSemaine = Convert.ToByte(individu.qa6LieuActDerniereSemaine);
+                ind1.Qa7FoncTravail = Convert.ToByte(individu.qa7FoncTravail);
+                ind1.Qa8EntreprendreDemarcheTravail = Convert.ToByte(individu.qa8EntreprendreDemarcheTravail);
+                ind1.Qa9VouloirTravailler = Convert.ToByte(individu.qa9VouloirTravailler);
+                ind1.Qa10DisponibilitePourTravail = Convert.ToByte(individu.qa10DisponibilitePourTravail);
+                ind1.Qa11RecevoirTransfertArgent = Convert.ToByte(individu.qa11RecevoirTransfertArgent);
+                ind1.Qf1aNbreEnfantNeVivantM = Convert.ToInt32(individu.qf1aNbreEnfantNeVivantM);
+                ind1.Qf1bNbreEnfantNeVivantF = Convert.ToInt32(individu.qf1bNbreEnfantNeVivantF);
+                ind1.Qf2aNbreEnfantVivantM = Convert.ToInt32(individu.qf2aNbreEnfantVivantM);
+                ind1.Qf2bNbreEnfantVivantF = Convert.ToInt32(individu.qf2bNbreEnfantVivantF);
+                ind1.Qf3DernierEnfantJour = Convert.ToByte(individu.qf3DernierEnfantJour);
+                ind1.Qf3DernierEnfantMois = Convert.ToByte(individu.qf3DernierEnfantMois);
+                ind1.Qf3DernierEnfantAnnee = Convert.ToInt32(individu.qf3DernierEnfantAnnee);
+                ind1.Qf4DENeVivantVit = Convert.ToByte(individu.qf4DENeVivantVit);
+                ind1.Statut = Convert.ToByte(individu.statut);
+                ind1.IsFieldAllFilled = Convert.ToBoolean(individu.isFieldAllFilled);
+                ind1.DateDebutCollecte = individu.dateDebutCollecte;
+                ind1.DateFinCollecte = individu.dateFinCollecte;
+                ind1.DureeSaisie = Convert.ToInt32(individu.dureeSaisie);
+                ind1.IsContreEnqueteMade = Convert.ToBoolean(individu.isContreEnqueteMade);
+                ind1.CodeAgentRecenceur = individu.codeAgentRecenceur;
+                ind1.IsVerified = individu.isVerified.GetValueOrDefault();
+                return ind1;
             }
             return new IndividuModel();
         }
+
+        public static RapportFinalModel MapToRapportFinal(tbl_rapportfinal rpt)
+        {
+            RapportFinalModel rapport = new RapportFinalModel();
+            if (rpt != null)
+            {
+                rapport.rapportFinalId = rpt.rapportFinalId;
+                rapport.repondantPrincipalId = rpt.repondantPrincipalId;
+                rapport.menageId = rpt.menageId;
+                rapport.logeId = rpt.logeId;
+                rapport.f_RepondantQuiAideId = rpt.f_RepondantQuiAideId;
+                rapport.f_IsVivreDansMenage = rpt.f_IsVivreDansMenage;
+                rapport.f_EsKeGenMounKiEde = rpt.f_EsKeGenMounKiEde;
+                rapport.dateFinCollecte = rpt.dateFinCollecte;
+                rapport.dateDebutCollecte = rpt.dateDebutCollecte;
+                rapport.codeAgentRecenceur = rpt.codeAgentRecenceur;
+                rapport.batimentId = rpt.batimentId;
+                rapport.aE_RepondantQuiAideId = rpt.aE_RepondantQuiAideId;
+                rapport.aE_IsVivreDansMenage = rpt.aE_IsVivreDansMenage;
+                rapport.aE_EsKeGenMounKiEde = rpt.aE_EsKeGenMounKiEde;
+            }
+            return rapport;
+        }
+        
         public static List<BatimentModel> MapToListBatimentModel(List<tbl_batiment> listOfBatiment)
         {
             List<BatimentModel> listOfBatimentModel = new List<BatimentModel>();
@@ -1634,9 +1608,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                
             }
 
             return listOfBatimentModel;
@@ -1705,6 +1679,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         }
         public static List<IndividuModel> MapToListIndividu(List<tbl_individu> individus)
         {
+            Logger log = new Logger();
             List<IndividuModel> listOfIndividus = new List<IndividuModel>();
             try
             {
@@ -1717,9 +1692,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                log.Info("Error in mapping individu Message:" + ex.Message);
+                log.Info("Error in mapping individu: Source"+ex.Source);
             }
             return listOfIndividus;
         }
@@ -1779,37 +1755,140 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 model.MenageId = em.MenageId;
                 model.Statut = em.Statut;
             }
+            if (type.ToString() == Constant.OBJET_MODEL_RAPO_FINAL)
+            {
+                RapportFinalModel rpf = type as RapportFinalModel;
+                model.Name = "Rapo final";
+                model.Id = ""+rpf.rapportFinalId;
+
+            }
             return model;
         }
-
+        #endregion
         public static tbl_batiment MapTo_tbl_batiment(BatimentModel batiment)
         {
-            return new tbl_batiment
-            {
-                batimentId = Convert.ToInt32(batiment.BatimentId),
-                sdeId = batiment.SdeId,
-                isContreEnqueteMade = Convert.ToInt32(batiment.IsContreEnqueteMade),
-                isValidated = Convert.ToInt32(batiment.IsValidated)
 
-            };
+            tbl_batiment entity = new tbl_batiment();
+                entity.batimentId = Convert.ToInt32(batiment.BatimentId);
+                entity.deptId = batiment.DeptId;
+                entity.comId = batiment.ComId;
+                entity.vqseId = batiment.VqseId;
+                entity.sdeId = Utilities.getSdeFormatSent(batiment.SdeId);
+                entity.zone = Convert.ToByte(batiment.Zone);
+                entity.disctrictId = batiment.DistrictId;
+                entity.qhabitation = batiment.Qhabitation;
+                entity.qlocalite = batiment.Qlocalite;
+                entity.qadresse = batiment.Qadresse;
+                entity.qrec = batiment.Qrec;
+                entity.qrgph = batiment.Qrgph;
+                entity.qb1Etat = Convert.ToByte(batiment.Qb1Etat);
+                entity.qb2Type = Convert.ToByte(batiment.Qb2Type);
+                entity.qb3NombreEtage = Convert.ToByte(batiment.Qb3NombreEtage);
+                entity.qb4MateriauMur = Convert.ToByte(batiment.Qb4MateriauMur);
+                entity.qb5MateriauToit = Convert.ToByte(batiment.Qb5MateriauToit);
+                entity.qb6StatutOccupation = Convert.ToByte(batiment.Qb6StatutOccupation);
+                entity.qb7Utilisation1 = Convert.ToByte(batiment.Qb7Utilisation1);
+                entity.qb7Utilisation2 = Convert.ToByte(batiment.Qb7Utilisation2);
+                entity.qb8NbreLogeCollectif = Convert.ToByte(batiment.Qb8NbreLogeCollectif);
+                entity.qb8NbreLogeIndividuel = Convert.ToByte(batiment.Qb8NbreLogeIndividuel);
+                entity.statut = Convert.ToByte(batiment.Statut);
+                entity.isValidated = Convert.ToInt32(batiment.IsValidated);
+                entity.dateDebutCollecte = batiment.DateDebutCollecte;
+                entity.dateFinCollecte = batiment.DateFinCollecte;
+                entity.dateEnvoi = entity.dateEnvoi;                
+                entity.dureeSaisie = Convert.ToInt32(batiment.DureeSaisie);
+                entity.isContreEnqueteMade = Convert.ToInt32(batiment.IsContreEnqueteMade);
+                return entity;
+
+          
         }
-        public static tbl_logement MapTo_tbl_logement(LogementModel logment)
+        public static tbl_logement MapTo_tbl_logement(LogementModel logement)
         {
-            return new tbl_logement
+            tbl_logement entity = new tbl_logement();
+            if (logement != null)
             {
-                logeId = logment.LogeId,
-                isContreEnqueteMade = Convert.ToInt32(logment.IsContreEnqueteMade),
-                isValidated = Convert.ToInt32(logment.IsValidated)
-            };
+                entity.logeId = Convert.ToInt32(logement.LogeId);
+                entity.batimentId = Convert.ToInt32(logement.BatimentId);
+                entity.sdeId = Utilities.getSdeFormatSent(logement.SdeId);
+                entity.qlCategLogement = Convert.ToByte(logement.QlCategLogement);
+                entity.qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre);
+                entity.qlc1TypeLogement = Convert.ToByte(logement.Qlc1TypeLogement);
+                entity.qlc2bTotalGarcon = Convert.ToByte(logement.Qlc2bTotalGarcon);
+                entity.qlc2bTotalFille = Convert.ToByte(logement.Qlc2bTotalFille);
+                entity.qlcTotalIndividus = Convert.ToByte(logement.QlcTotalIndividus);
+                entity.qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
+                entity.qlin3ExistenceLogement = Convert.ToByte(logement.Qlin3ExistenceLogement);
+                entity.qlin4TypeLogement = Convert.ToByte(logement.Qlin4TypeLogement);
+                entity.qlin5MateriauSol = Convert.ToByte(logement.Qlin5MateriauSol);
+                entity.qlin6NombrePiece = Convert.ToByte(logement.Qlin6NombrePiece);
+                entity.qlin7NbreChambreACoucher = Convert.ToByte(logement.Qlin7NbreChambreACoucher);
+                entity.qlin8NbreIndividuDepense = Convert.ToByte(logement.Qlin8NbreIndividuDepense);
+                entity.qlin9NbreTotalMenage = Convert.ToByte(logement.Qlin9NbreTotalMenage);
+                entity.statut = Convert.ToByte(logement.Statut);
+                entity.isValidated = Convert.ToInt32(logement.IsValidated);
+
+                entity.dateDebutCollecte = logement.DateDebutCollecte;
+                entity.dateFinCollecte = logement.DateFinCollecte;
+                entity.dureeSaisie = Convert.ToInt32(logement.DureeSaisie);
+                entity.isFieldAllFilled = Convert.ToInt32(logement.IsFieldAllFilled);
+                entity.isContreEnqueteMade = Convert.ToInt32(logement.IsContreEnqueteMade);
+                entity.nbrTentative = Convert.ToByte(logement.NbrTentative);
+                entity.codeAgentRecenceur = logement.CodeAgentRecenceur;
+                entity.isVerified = Convert.ToInt32(logement.IsVerified);
+            }
+            return entity;
         }
         public static tbl_menage MapTo_tbl_menage(MenageModel menage)
         {
-            return new tbl_menage
+            tbl_menage entity = new tbl_menage();
+            if (menage != null)
             {
-                menageId = menage.MenageId,
-                isContreEnqueteMade = Convert.ToInt32(menage.IsContreEnqueteMade),
-                isValidated = Convert.ToInt32(menage.IsValidated)
-            };
+                entity.menageId = Convert.ToInt32(menage.MenageId);
+                entity.logeId = Convert.ToInt32(menage.LogeId);
+                entity.batimentId = Convert.ToInt32(menage.BatimentId);
+                entity.sdeId = Utilities.getSdeFormatSent(menage.SdeId);
+                entity.qm1NoOrdre = Convert.ToByte(menage.Qm1NoOrdre);
+                entity.qm2ModeJouissance = Convert.ToByte(menage.Qm2ModeJouissance);
+                entity.qm3ModeObtentionLoge = Convert.ToByte(menage.Qm3ModeObtentionLoge);
+                entity.qm4_1ModeAprovEauABoire = Convert.ToByte(menage.Qm4_1ModeAprovEauABoire);
+                entity.qm4_2ModeAprovEauAUsageCourant = Convert.ToByte(menage.Qm4_2ModeAprovEauAUsageCourant);
+                entity.qm5SrcEnergieCuisson1 = Convert.ToByte(menage.Qm5SrcEnergieCuisson1);
+                entity.qm5SrcEnergieCuisson2 = Convert.ToByte(menage.Qm5SrcEnergieCuisson2);
+                entity.qm6TypeEclairage = Convert.ToByte(menage.Qm6TypeEclairage);
+                entity.qm7ModeEvacDechet = Convert.ToByte(menage.Qm7ModeEvacDechet);
+                entity.qm8EndroitBesoinPhysiologique = Convert.ToByte(menage.Qm8EndroitBesoinPhysiologique);
+                entity.qm9NbreRadio1 = Convert.ToInt32(menage.Qm9NbreRadio1);
+                entity.qm9NbreTelevision2 = Convert.ToInt32(menage.Qm9NbreTelevision2);
+                entity.qm9NbreRefrigerateur3 = Convert.ToInt32(menage.Qm9NbreRefrigerateur3);
+                entity.qm9NbreFouElectrique4 = Convert.ToInt32(menage.Qm9NbreFouElectrique4);
+                entity.qm9NbreOrdinateur5 = Convert.ToInt32(menage.Qm9NbreOrdinateur5);
+                entity.qm9NbreMotoBicyclette6 = Convert.ToInt32(menage.Qm9NbreMotoBicyclette6);
+                entity.qm9NbreVoitureMachine7 = Convert.ToInt32(menage.Qm9NbreVoitureMachine7);
+                entity.qm9NbreBateau8 = Convert.ToInt32(menage.Qm9NbreBateau8);
+                entity.qm9NbrePanneauGeneratrice9 = Convert.ToInt32(menage.Qm9NbrePanneauGeneratrice9);
+                entity.qm9NbreMilletChevalBourique10 = Convert.ToInt32(menage.Qm9NbreMilletChevalBourique10);
+                entity.qm9NbreBoeufVache11 = Convert.ToInt32(menage.Qm9NbreBoeufVache11);
+                entity.qm9NbreCochonCabrit12 = Convert.ToInt32(menage.Qm9NbreCochonCabrit12);
+                entity.qm9NbreBeteVolaille13 = Convert.ToInt32(menage.Qm9NbreBeteVolaille13);
+                entity.qm10AvoirPersDomestique = Convert.ToByte(menage.Qm10AvoirPersDomestique);
+                entity.qm10TotalDomestiqueFille = Convert.ToByte(menage.Qm10TotalDomestiqueFille);
+                entity.qm10TotalDomestiqueGarcon = Convert.ToByte(menage.Qm10TotalDomestiqueGarcon);
+                entity.qm11TotalIndividuVivant = Convert.ToInt32(menage.Qm11TotalIndividuVivant);
+                entity.qn1Emigration = Convert.ToByte(menage.Qn1Emigration);
+                entity.qn1NbreEmigre = Convert.ToByte(menage.Qn1NbreEmigre);
+                entity.qd1Deces = Convert.ToByte(menage.Qd1Deces);
+                entity.qd1NbreDecede = Convert.ToByte(menage.Qd1NbreDecede);
+                entity.statut = Convert.ToByte(menage.Statut);
+                entity.isValidated = Convert.ToInt32(menage.IsValidated);
+                entity.dateDebutCollecte = menage.DateDebutCollecte;
+                entity.dateFinCollecte = menage.DateFinCollecte;
+                entity.dureeSaisie = Convert.ToInt32(menage.DureeSaisie);
+                entity.isFieldAllFilled = Convert.ToInt32(menage.IsFieldAllFilled);
+                entity.isContreEnqueteMade = Convert.ToInt32(menage.IsContreEnqueteMade);
+                entity.codeAgentRecenceur = menage.CodeAgentRecenceur;
+                entity.isVerified = Convert.ToInt32(menage.IsVerified);
+            }
+            return entity;
         }
 
         public static tbl_deces MapTo_tbl_deces(DecesModel deces)
@@ -1832,41 +1911,51 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
         #endregion
 
         #region Contre Enquete
-        public static ContreEnqueteModel MapToContreEnqueteModel(Tbl_ContreEnquete ce)
-        {
-            ContreEnqueteModel contreenquete = new ContreEnqueteModel();
-            if (ce != null)
-            {
-                 contreenquete.ContreEnqueteId = ce.ContreEnqueteId;
-                contreenquete.BatimentId = ce.BatimentId;
-                contreenquete.SdeId = ce.SdeId;
-                contreenquete.CodeDistrict = ce.CodeDistrict;
-                contreenquete.NomSuperviseur = ce.NomSuperviseur;
-                contreenquete.PrenomSuperviseur = ce.PrenomSuperviseur;
-                contreenquete.Raison = Convert.ToByte(ce.Raison.GetValueOrDefault());
-                contreenquete.Statut = Convert.ToByte(ce.Statut.GetValueOrDefault());
-                contreenquete.DateDebut = ce.DateDebut;
-                contreenquete.TypeContreEnquete = Convert.ToByte(ce.TypeContreEnquete.GetValueOrDefault());
-                contreenquete.DateFin = ce.DateFin;
-            }
-            return contreenquete;
-        }
-        public static Tbl_ContreEnquete MapToTblContreEnquete(ContreEnqueteModel model)
-        {
-            Tbl_ContreEnquete ce = new Tbl_ContreEnquete();
-            ce.BatimentId = model.BatimentId.GetValueOrDefault();
-            ce.SdeId = model.SdeId;
-            ce.CodeDistrict = model.CodeDistrict;
-            ce.NomSuperviseur = model.NomSuperviseur;
-            ce.PrenomSuperviseur = model.PrenomSuperviseur;
-            ce.Raison = model.Raison.GetValueOrDefault();
-            ce.Statut = model.Statut.GetValueOrDefault();
-            ce.DateDebut = model.DateDebut;
-            ce.DateFin = model.DateFin;
-            ce.TypeContreEnquete = model.TypeContreEnquete.GetValueOrDefault();
-            return ce;
 
+        public static ContreEnqueteModel MapToContreEnqueteModel(Tbl_ContreEnquete entity)
+        {
+            ContreEnqueteModel model = new ContreEnqueteModel();
+            model.ContreEnqueteId = entity.ContreEnqueteId;
+            model.BatimentId = entity.BatimentId;
+            model.LogeId = entity.LogeId;
+            model.MenageId = entity.MenageId;
+            model.CodeSuperviseur = entity.CodeSuperviseur;
+            model.CodeDistrict = entity.CodeDistrict;
+            model.DateDebut = entity.DateDebut;
+            model.DateFin = entity.DateFin;
+            model.IsTerminate = Convert.ToBoolean(entity.Statut);
+            model.TypeContreEnquete = Convert.ToInt32(entity.TypeContreEnquete);
+            model.Raison = Convert.ToInt32(entity.Raison);
+            model.SdeId = entity.SdeId;
+            model.NomSuperviseur = entity.NomSuperviseur;
+            model.PrenomSuperviseur = entity.PrenomSuperviseur;
+            model.Termine = entity.Termine.GetValueOrDefault();
+            model.Validate = entity.Validate.GetValueOrDefault();
+            model.Statut = Convert.ToInt32(entity.Statut.GetValueOrDefault());
+            return model;
         }
+        public static Tbl_ContreEnquete MapToTblContreEnquete(ContreEnqueteModel entity)
+        {
+            Tbl_ContreEnquete model = new Tbl_ContreEnquete();
+            model.ContreEnqueteId = entity.ContreEnqueteId;
+            model.BatimentId = entity.BatimentId;
+            model.LogeId = entity.LogeId;
+            model.MenageId = entity.MenageId;
+            model.CodeSuperviseur = entity.CodeSuperviseur;
+            model.CodeDistrict = entity.CodeDistrict;
+            model.DateDebut = entity.DateDebut;
+            model.DateFin = entity.DateFin;
+            model.TypeContreEnquete = Convert.ToInt32(entity.TypeContreEnquete);
+            model.Raison = Convert.ToInt32(entity.Raison);
+            model.SdeId = entity.SdeId;
+            model.NomSuperviseur = entity.NomSuperviseur;
+            model.PrenomSuperviseur = entity.PrenomSuperviseur;
+            model.Termine = entity.Termine.GetValueOrDefault();
+            model.Statut = entity.Statut;
+            model.Validate = entity.Validate.GetValueOrDefault();
+            return model;
+        }
+        
         public static List<ContreEnqueteModel> MapToListContreEnqueteModel(List<Tbl_ContreEnquete> ce)
         {
             List<ContreEnqueteModel> model = new List<ContreEnqueteModel>();
@@ -1877,6 +1966,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return model;
         }
+
+        //public static BatimentCEModel MapToBatimentCEModel(Tbl_BatimentCE entity)
+        //{
+        //    if (entity != null)
+        //    {
+        //        var config = new MapperConfiguration(cfg => cfg.CreateMap<Tbl_BatimentCE, BatimentCEModel>());
+        //        var mapper = config.CreateMapper();
+        //        return mapper.Map<Tbl_BatimentCE, BatimentCEModel>(entity);
+        //    }
+        //    else
+        //    {
+        //        return new BatimentCEModel
+        //        {
+        //            BatimentId = 0
+        //        };
+        //    }
+        //}
         public static BatimentCEModel MapToBatimentCEModel(Tbl_BatimentCE bat)
         {
             BatimentCEModel batModel = new BatimentCEModel();
@@ -1921,6 +2027,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
 
         }
+
+        //public static Tbl_BatimentCE MapToTbl_BatimentCE(BatimentCEModel entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<BatimentCEModel,Tbl_BatimentCE>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<BatimentCEModel, Tbl_BatimentCE>(entity);
+        //}
+
         public static Tbl_BatimentCE MapToTbl_BatimentCE(BatimentCEModel bat)
         {
             Tbl_BatimentCE batToSave = new Tbl_BatimentCE();
@@ -1968,6 +2082,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return bats;
         }
+
+
+        //public static LogementCEModel MapToLogementCEModel(Tbl_LogementCE entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<Tbl_LogementCE, LogementCEModel>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<Tbl_LogementCE, LogementCEModel>(entity);
+        //}
+
+        //public static Tbl_LogementCE MapToTbl_LogementCE(LogementCEModel entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<LogementCEModel,Tbl_LogementCE >());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<LogementCEModel, Tbl_LogementCE>(entity);
+        //}
 
         public static LogementCEModel MapToLogementCEModel(Tbl_LogementCE log)
         {
@@ -2028,6 +2157,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
 
         }
 
+        //public static MenageCEModel MapToMenageCEModel(Tbl_MenageCE entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<Tbl_MenageCE, MenageCEModel>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<Tbl_MenageCE, MenageCEModel>(entity);
+        //}
+        //public static Tbl_MenageCE MapToTbl_MenageCE( MenageCEModel entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<MenageCEModel,Tbl_MenageCE>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<MenageCEModel, Tbl_MenageCE>(entity);
+        //}
+
+
         public static MenageCEModel MapToMenageCEModel(Tbl_MenageCE _men)
         {
             MenageCEModel menage = new MenageCEModel();
@@ -2048,7 +2191,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 menage.IsContreEnqueteMade = Convert.ToBoolean(_men.IsContreEnqueteMade.GetValueOrDefault());
                 menage.IsValidated = Convert.ToBoolean(_men.IsValidated.GetValueOrDefault());
             }
-            
+
             return menage;
         }
         public static Tbl_MenageCE MapToTbl_MenageCE(MenageCEModel _men)
@@ -2071,7 +2214,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 menage.IsContreEnqueteMade = Convert.ToInt32(_men.IsContreEnqueteMade.GetValueOrDefault());
                 menage.IsValidated = Convert.ToInt32(_men.IsValidated.GetValueOrDefault());
             }
-            
+
             return menage;
         }
         public static List<MenageCEModel> MapToListMenageCEModel(List<Tbl_MenageCE> listOfMenages)
@@ -2085,6 +2228,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return _menages;
         }
+
+
+        //public static IndividuCEModel MapToIndividuCEModel(Tbl_IndividusCE entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<Tbl_IndividusCE, IndividuCEModel>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<Tbl_IndividusCE, IndividuCEModel>(entity);
+        //}
 
         public static IndividuCEModel MapToIndividuCEModel(Tbl_IndividusCE _ind)
         {
@@ -2137,9 +2288,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 individu.IsContreEnqueteMade = _ind.IsContreEnqueteMade.GetValueOrDefault();
                 individu.IsValidated = _ind.IsValidated.GetValueOrDefault();
             }
-            
+
             return individu;
         }
+
+        //public static Tbl_IndividusCE MapToTbl_IndividuCE(IndividuCEModel entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<IndividuCEModel,Tbl_IndividusCE>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<IndividuCEModel, Tbl_IndividusCE>(entity);
+        //}
 
         public static Tbl_IndividusCE MapToTbl_IndividuCE(IndividuCEModel _ind)
         {
@@ -2192,7 +2350,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 individu.IsContreEnqueteMade = _ind.IsContreEnqueteMade.GetValueOrDefault();
                 individu.IsValidated = _ind.IsValidated.GetValueOrDefault();
             }
-            
+
             return individu;
         }
 
@@ -2206,6 +2364,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return list;
         }
+
+
+        //public static DecesCEModel MapToDecesCEModel(Tbl_DecesCE entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<Tbl_DecesCE, DecesCEModel>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<Tbl_DecesCE, DecesCEModel>(entity);
+        //}
 
         public static DecesCEModel MapToDecesCEModel(Tbl_DecesCE _deces)
         {
@@ -2226,13 +2392,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 _dec.IsContreEnqueteMade = _deces.IsContreEnqueteMade.GetValueOrDefault();
                 _dec.IsValidated = _deces.IsValidated.GetValueOrDefault();
             }
-           
+
             return _dec;
         }
+
+        //public static Tbl_DecesCE MapToTbl_DecesCE(DecesCEModel entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<DecesCEModel,Tbl_DecesCE>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<DecesCEModel, Tbl_DecesCE>(entity);
+        //}
+
         public static Tbl_DecesCE MapToTbl_DecesCE(DecesCEModel _deces)
         {
             Tbl_DecesCE _dec = new Tbl_DecesCE();
-            if (_deces!=null)
+            if (_deces != null)
             {
                 _dec.Id = _deces.Id;
                 _dec.MenageId = _deces.MenageId;
@@ -2248,7 +2422,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 _dec.IsContreEnqueteMade = _deces.IsContreEnqueteMade.GetValueOrDefault();
                 _dec.IsValidated = _deces.IsValidated.GetValueOrDefault();
             }
-            
+
             return _dec;
         }
         public static List<DecesCEModel> MapToListDecesCEModel(List<Tbl_DecesCE> listOfDeces)
@@ -2261,6 +2435,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return list;
         }
+
+
+        //public static Tbl_EmigreCE MapToTbl_EmigreCE(EmigreCEModel entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<EmigreCEModel, Tbl_EmigreCE>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<EmigreCEModel, Tbl_EmigreCE>(entity);
+        //}
 
         public static Tbl_EmigreCE MapToTbl_EmigreCE(EmigreCEModel _emigre)
         {
@@ -2283,6 +2465,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
             }
             return _em;
         }
+
+        //public static EmigreCEModel MapToEmigreCEModel(Tbl_EmigreCE entity)
+        //{
+        //    var config = new MapperConfiguration(cfg => cfg.CreateMap<Tbl_EmigreCE,EmigreCEModel>());
+        //    var mapper = config.CreateMapper();
+        //    return mapper.Map<Tbl_EmigreCE, EmigreCEModel>(entity);
+        //}
 
         public static EmigreCEModel MapToEmigreCEModel(Tbl_EmigreCE _emigre)
         {

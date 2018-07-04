@@ -31,9 +31,32 @@
                                 <Image Width="16" Height="16" Source="/images/database.png" />
                                 <TextBlock Text="{Binding SdeId}" FontSize="11" FontWeight="Bold" VerticalAlignment="Center" Foreground="Black"/>
                             </StackPanel>
-                        </Border>
-                    </DataTemplate>
+                        </Border>                       
+                    </DataTemplate>                   
                 </ListBox.ItemTemplate>
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Verifye done sa yo sou SDE a" Name="verified" Click="verified_Click">
+                            <MenuItem.Icon>
+                                <Image>
+                                    <Image.Source>
+                                        <BitmapImage UriSource="/images/check.png" />
+                                    </Image.Source>
+                                </Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Header="Valide done sa yo sou SDE a" Name="validate" Click="validate_Click"  >
+                            <MenuItem.Icon>
+                                <Image>
+                                    <Image.Source>
+                                        <BitmapImage UriSource="/images/validate_check.png" />
+                                    </Image.Source>
+                                </Image>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+                
             </ListBox>
         </GroupBox>
         <!--</ScrollViewer>-->

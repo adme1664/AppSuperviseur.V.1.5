@@ -1,6 +1,7 @@
 ﻿using Ht.Ihsil.Rgph.App.Superviseur.Models;
 using Ht.Ihsil.Rgph.App.Superviseur.MVVM;
 using Ht.Ihsil.Rgph.App.Superviseur.services;
+using Ht.Ihsil.Rgph.App.Superviseur.utils;
 using Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete;
 using System;
 using System.Collections.Generic;
@@ -34,10 +35,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
         protected override void LoadChildren()
         {
             this.Children.Clear();
-            foreach(ContreEnqueteModel contreEnquete in _service_ce.searchContreEnquete(_sde.TypeContreEnquete,_sde.SdeId))
+            string sdeConvert = Utilities.getSdeFormatWithDistrict(_sde.SdeId);
+            foreach (ContreEnqueteModel contreEnquete in _service_ce.searchContreEnquete(_sde.TypeContreEnquete, sdeConvert))
             {
-                contreEnquete.SdeId = _sde.SdeId;
-                BatimentCEModel bat= _service_ce.getBatiment(contreEnquete.BatimentId.GetValueOrDefault(), contreEnquete.SdeId);
+                //contreEnquete.SdeId = _sde.SdeId;
+                BatimentCEModel bat = _service_ce.getBatiment(contreEnquete.BatimentId.GetValueOrDefault(), sdeConvert);
                 if (bat.IsContreEnqueteMade.GetValueOrDefault() == true)
                     contreEnquete.IsTerminate = true;
                 if (bat.IsValidated.GetValueOrDefault() == true)

@@ -4,7 +4,7 @@ using Ht.Ihsi.Rgph.DataAccess.Repositories;
 using Ht.Ihsi.Rgph.Logging.Logs;
 using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
-using Ht.Ihsil.Rgph.App.Superviseur.Schema;
+using Ht.Ihsil.Rgph.App.Superviseur.SchemaTest;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -112,6 +112,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                                     menageJson.individus = new List<IndividuJson>();
                                     menageJson.individus = ModelMapper.MapToListJson(indModels);
                                 }
+                                //Recherche des rapports sur les menages
+                                RapportFinalJson rapport = ModelMapper.MapToJson(GetRapportFinalModel(Convert.ToInt32(men.MenageId)));
+                                if (rapport != null)
+                                {
+                                    menageJson.rapport = new RapportFinalJson();
+                                    menageJson.rapport = rapport;
+                                }
                                 menages.Add(menageJson);
                                 logJson.menages.Add(menageJson);
                             }                            
@@ -175,8 +182,60 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return null;
         }
+        /// <summary>
+        /// Retourne les batiments termines
+        /// </summary>
+        /// <returns></returns>
+        public List<BatimentModel> GetAllBatimentModelTermine()
+        {
+            string methodName = "GetAllBatimentTermine";
+            try
+            {
+                return ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.statut == (int)Constant.StatutModule.Fini).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<BatimentModel>();
+        }
 
 
+        /// <summary>
+        /// Retourne les batiments  verifies
+        /// </summary>
+        /// <returns></returns>
+        public List<BatimentModel> GetAllBatimentVerifies()
+        {
+            string methodName = "GetAllBatimentVerifies";
+            try
+            {
+                return ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b =>b.isVerified==(int)Constant.StatutVerifie.Verifie).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<BatimentModel>();
+        }
+        /// <summary>
+        /// Retourne les batiments non verifies
+        /// </summary>
+        /// <returns></returns>
+        public List<BatimentModel> GetAllBatimentNonVerifies()
+        {
+            string methodName = "GetAllBatimentVerifies";
+            try
+            {
+                return ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.isVerified == (int)Constant.StatutVerifie.PasVerifie
+                    && b.statut==(int)Constant.StatutModule.Fini).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<BatimentModel>();
+        }
         /// <summary>
         /// Get all Batiments
         /// </summary>
@@ -681,11 +740,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         /// Retrouve les menages qui ne sont pas encore termines
         /// </summary>
         /// <returns></returns>
-        public List<MenageModel> GetAllMenageNotFinish()
+        public List<MenageModel> GetAllMenageNonTermine()
         {
             try
             {
-                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.isFieldAllFilled == 0).ToList());
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.statut!=(int)Constant.StatutModule.Fini).ToList());
             }
             catch (Exception ex)
             {
@@ -743,7 +802,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             {
                 log.Info("SqliteReader:/GetMenageByLogement" + ex.Message);
             }
-            return null;
+            return new List<MenageModel>();
         }
 
         /// <summary>
@@ -810,6 +869,30 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return null;
         }
 
+        /// <summary>
+        /// Retourne le rapport final par menage
+        /// </summary>
+        /// <param name="menageId"></param>
+        /// <returns></returns>
+        public List<MenageDetailsModel> GetRapportFinal(long menageId)
+        {
+            try
+            {
+                List<MenageDetailsModel> rpt = new List<MenageDetailsModel>();
+                RapportFinalModel rptFinal = ModelMapper.MapToRapportFinal(repository.MRapportFinalRepository.Find(r => r.menageId == menageId).FirstOrDefault());
+                if (rptFinal != null)
+                {
+                    MenageDetailsModel model= ModelMapper.MapToMenageDetails<RapportFinalModel>(rptFinal);
+                    rpt.Add(model);
+                    return rpt;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader:/GetDecesByMenageDetails" + ex.Message);
+            }
+            return null;
+        }
         /// <summary>
         /// Retourne les deces par menage selectionne
         /// </summary>
@@ -881,7 +964,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             {
                 log.Info("SqliteReader:/GetIndividuByLoge" + ex.Message);
             }
-            return null;
+            return new List<IndividuModel>();
         }
 
         /// <summary>
@@ -942,7 +1025,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         /// Retrouve les individus qui ne sont pas encore termines
         /// </summary>
         /// <returns></returns>
-        public List<IndividuModel> GetAllIndividuNotFinish()
+        public List<IndividuModel> GetAllIndividuNonTermine()
         {
             try
             {
@@ -954,7 +1037,41 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return new List<IndividuModel>();
         }
+        /// <summary>
+        /// Retourne les individus verifies
+        /// </summary>
+        /// <returns></returns>
+        public List<IndividuModel> GetAllIndividusVerifies()
+        {
+            string methodName = "GetAllIndividusVerifies";
+            try
+            {
+                return ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(i => i.isVerified == (int)Constant.StatutVerifie.Verifie).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader:/"+methodName+":" + ex.Message);
+            }
+            return new List<IndividuModel>();
+        }
 
+        /// <summary>
+        /// Retourne les individus non verifies
+        /// </summary>
+        /// <returns></returns>
+        public List<IndividuModel> GetAllIndividusNonVerifies()
+        {
+            string methodName = "GetAllIndividusNonVerifies";
+            try
+            {
+                return ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(i => i.isVerified == (int)Constant.StatutVerifie.PasVerifie).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader:/" + methodName + ":" + ex.Message);
+            }
+            return new List<IndividuModel>();
+        }
         /// <summary>
         /// Retourne tous les individus dans la SDE
         /// </summary>
@@ -1117,7 +1234,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         #endregion
 
                         #region Recherche des individus avec la variavle A5
-                        int typeBien = Convert.ToInt32(ind.Qa5TypeBienProduitParEntreprise);
+                        int typeBien=0;
+                        if(ind.Qa5TypeBienProduitParEntreprise!="")
+                            typeBien = Convert.ToInt32(ind.Qa5TypeBienProduitParEntreprise);
                         //A5 est codifie
                         if (typeBien < 40)
                         {
@@ -1154,6 +1273,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         }
                         #endregion
                     }
+                    _aCodififer.SommeP10PartiellementCodifie = _aCodififer.P10_2 + _aCodififer.P10_3;
+                    _aCodififer.SommeP12PartiellementCodifie = _aCodififer.P12_2 + _aCodififer.P12_3;
                     return _aCodififer;
                 }
             }
@@ -1170,6 +1291,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             {
                 Flag compteur = new Flag();
                 compteur.Individus = new List<IndividuModel>();
+                int numberOfProblemsTotal = 0;
                 foreach (IndividuModel ind in individus)
                 {
                     int numberOfProblems = 0;
@@ -1276,8 +1398,26 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         compteur.Flag13 += 1;
                         compteur.Individus.Add(ind);
                     }
+                    numberOfProblemsTotal += numberOfProblems;
                     #endregion
                 }
+                #region compteur pour les categories de menages
+                compteur.Total = numberOfProblemsTotal;
+                if (compteur.Total == 0)
+                    compteur.Flag_Aucun = 1;
+                if (compteur.Total >=1 && compteur.Total <= 4)
+                    compteur.Flag_1_4 = 1;
+                if (compteur.Total > 4 && compteur.Total <=14)
+                    compteur.Flag_5_14 = 1;
+                if (compteur.Total >= 15 && compteur.Total <=26)
+                    compteur.Flag_15_26 = 1;
+                if (compteur.Total >= 27 && compteur.Total <=47)
+                    compteur.Flag_27_47 = 1;
+                if (compteur.Total >=48 && compteur.Total <=70)
+                    compteur.Flag_48_70 = 1;
+                if (compteur.Total >=71 && compteur.Total <=130)
+                    compteur.Flag_71_130 = 1;
+                #endregion
                 return compteur;
 
             }
@@ -1291,6 +1431,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             string methodName = "Count2FlagAgeDateNaissance";
             List<IndividuModel> individusWithFlags = new List<IndividuModel>();
+            int numberOfProblemsTotal = 0;
             try
             {
                 List<IndividuModel> listOfIndividus = GetAllIndividus();
@@ -1337,7 +1478,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         compteur.Flag2 += 1;
                     compteur.Individus = new List<IndividuModel>();
                     compteur.Individus = individusWithFlags;
+                    numberOfProblemsTotal += numberOfProblems;
                 }
+                compteur.Total = numberOfProblemsTotal;
                 return compteur;
 
             }
@@ -1351,6 +1494,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             string methodName = "CountFlagFecondite";
             List<IndividuModel> individusWithFlags = new List<IndividuModel>();
+            int numberOfProblemsTotal = 0;
             try
             {
                 List<IndividuModel> listOfIndividus = GetAllIndividus();
@@ -1400,7 +1544,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         compteur.Flag3 += 1;
                     compteur.Individus = new List<IndividuModel>();
                     compteur.Individus = individusWithFlags;
+                    numberOfProblemsTotal += numberOfProblems;
                 }
+                compteur.Total = numberOfProblemsTotal;
                 return compteur;
 
             }
@@ -1413,6 +1559,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public Flag CountFlagEmploi()
         {
             string methodName = "CountFlagEmploi";
+            int numberOfProblemsTotal = 0;
             List<IndividuModel> individusWithFlags = new List<IndividuModel>();
             try
             {
@@ -1463,7 +1610,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                         compteur.Flag3 += 1;
                     compteur.Individus = new List<IndividuModel>();
                     compteur.Individus = individusWithFlags;
+                    numberOfProblemsTotal += numberOfProblems;
                 }
+                compteur.Total = numberOfProblemsTotal;
                 return compteur;
 
             }
@@ -1473,6 +1622,268 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return new Flag();
         }
+        public Flag getIndividuWithP10()
+        {
+            string methodName = "getIndividuWithP10";
+            List<IndividuModel> individusCodification = new List<IndividuModel>();
+            try
+            {
+                List<IndividuModel> listOfIndividus = GetAllIndividus();
+                Flag compteur = new Flag();
+                foreach (IndividuModel ind in listOfIndividus)
+                {
+                    #region Recherche des individus avec la P10
+                        //P10=1
+                    //if (ind.Qp10LieuNaissance == 1 && ind.Statut == (int)Constant.StatutModule.Fini)
+                    //{
+                    //    if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                    //    {
+                    //        //Verifie si l'individu existe deja dans la liste
+                    //        if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                    //        {
+                    //            individusCodification.Add(ind);
+                    //        }
+                    //    }
+                    //}
+                    //p10=2
+                    if (ind.Qp10LieuNaissance == 2 && ind.Statut == (int)Constant.StatutModule.Fini)
+                    {
+                        if (ind.Qp10CommuneNaissance == Constant.PA_KONNEN_KOMIN_OU_PEYI || ind.Qp10VqseNaissance == Constant.PA_KONNEN_SEKSYON_KOMINAL)
+                        {
+                            if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                            {
+                                //Verifie si l'individu existe deja dans la liste
+                                if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                                {
+                                    individusCodification.Add(ind);
+                                }
+                            }
+                        }
+
+                    }
+                    //p10=3
+                    if (ind.Qp10LieuNaissance == 3 && ind.Statut == (int)Constant.StatutModule.Fini)
+                    {
+                        if (ind.Qp10PaysNaissance == Constant.PA_KONNEN_KOMIN_OU_PEYI)
+                        {
+                            if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                            {
+                                //Verifie si l'individu existe deja dans la liste
+                                if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                                {
+                                    individusCodification.Add(ind);
+                                }
+                            }
+                        }
+                    }
+                    //p10=4
+                    if (ind.Qp10LieuNaissance == 4 && ind.Statut == (int)Constant.StatutModule.Fini)
+                    {
+                        if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                        {
+                            //Verifie si l'individu existe deja dans la liste
+                            if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                            {
+                                individusCodification.Add(ind);
+                            }
+                        }
+                    }
+                    #endregion
+                }
+                compteur.Individus = new List<IndividuModel>();
+                compteur.Individus = individusCodification;
+                return compteur;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new Flag();
+        }
+        public Flag getIndividuWithP12()
+        {
+            string methodName = "getIndividuWithP12";
+            List<IndividuModel> individusCodification = new List<IndividuModel>();
+            try
+            {
+                List<IndividuModel> listOfIndividus = GetAllIndividus();
+                Flag compteur = new Flag();
+                foreach (IndividuModel ind in listOfIndividus)
+                {
+                    #region Recherche des individus avec la variable P12
+                    //p12=1
+                    //if (ind.Qp12DomicileAvantRecensement == 1 && ind.Statut == (int)Constant.StatutModule.Fini)
+                    //{
+                    //    if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                    //    {
+                    //        //Verifie si l'individu existe deja dans la liste
+                    //        if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                    //        {
+                    //            individusCodification.Add(ind);
+                    //        }
+                    //    }
+                    //}
+                    //p12=2
+                    if (ind.Qp12DomicileAvantRecensement == 2 && ind.Statut == (int)Constant.StatutModule.Fini)
+                    {
+                        if (ind.Qp12CommuneDomicileAvantRecensement == Constant.PA_KONNEN_KOMIN_OU_PEYI || ind.Qp12VqseDomicileAvantRecensement == Constant.PA_KONNEN_SEKSYON_KOMINAL)
+                        {
+                            if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                            {
+                                //Verifie si l'individu existe deja dans la liste
+                                if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                                {
+                                    individusCodification.Add(ind);
+                                }
+                            }
+                        }
+                    }
+                    //p12=3
+                    if (ind.Qp12DomicileAvantRecensement == 3 && ind.Statut == (int)Constant.StatutModule.Fini)
+                    {
+                        if (ind.Qp12PaysDomicileAvantRecensement == Constant.PA_KONNEN_KOMIN_OU_PEYI)
+                        {
+                            if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                            {
+                                //Verifie si l'individu existe deja dans la liste
+                                if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                                {
+                                    individusCodification.Add(ind);
+                                }
+                            }
+                        }
+                    }
+                    //p12=4
+                    if (ind.Qp12DomicileAvantRecensement == 4 && ind.Statut == (int)Constant.StatutModule.Fini)
+                    {
+                        if (GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.Fini || GetBatimentbyId(ind.BatimentId).Statut == (int)Constant.StatutModule.PasFini)
+                        {
+                            //Verifie si l'individu existe deja dans la liste
+                            if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                            {
+                                individusCodification.Add(ind);
+                            }
+                        }
+                    }
+                    #endregion
+                }
+                compteur.Individus = new List<IndividuModel>();
+                compteur.Individus = individusCodification;
+                return compteur;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new Flag();
+        }
+        public Flag getIndividuWithA5()
+        {
+           List<IndividuModel> individusCodification = new List<IndividuModel>();
+           string methodName = "getIndividuWithA5";
+           try
+           {
+               List<IndividuModel> listOfIndividus = GetAllIndividus();
+               Flag compteur = new Flag();
+
+               foreach (IndividuModel ind in listOfIndividus)
+               {
+                   #region Recherche des individus avec la variavle A5
+                   int typeBien=0;
+                   if (ind.Qa5TypeBienProduitParEntreprise != "")
+                   {
+                       typeBien = Convert.ToInt32(ind.Qa5TypeBienProduitParEntreprise);
+                   }
+                   
+                   ////A5 est codifie
+                   //if (typeBien < 40)
+                   //{
+                   //    //Verifie si l'individu existe deja dans la liste
+                   //    if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                   //    {
+                   //        individusCodification.Add(ind);
+                   //    }
+                   //}
+                   //A5 =autre
+                   if (typeBien == 40)
+                   {
+                       //Verifie si l'individu existe deja dans la liste
+                       if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                       {
+                           individusCodification.Add(ind);
+                       }
+                   }
+                   //A5 ne sait pas
+                   if (typeBien == 41)
+                   {
+                       //Verifie si l'individu existe deja dans la liste
+                       if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                       {
+                           individusCodification.Add(ind);
+                       }
+                   }
+                   #endregion
+               }
+               compteur.Individus = new List<IndividuModel>();
+               compteur.Individus = individusCodification;
+               return compteur;
+           }
+           catch (Exception ex)
+           {
+               log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+           }
+           return new Flag();
+        }
+        public Flag getIndividuWithA7()
+        {
+            List<IndividuModel> individusCodification = new List<IndividuModel>();
+            string methodName = "getIndividuWithA7";
+            try
+            {
+                List<IndividuModel> listOfIndividus = GetAllIndividus();
+                Flag compteur = new Flag();
+                foreach (IndividuModel ind in listOfIndividus)
+                {
+                    #region Recherche des individus avec la variavle A7
+                    //int typeActivite = 0;
+                    int typeActivite = Convert.ToInt32(ind.Qa7FoncTravail);
+                    ////A7 est bien codifiee
+                    //if (typeActivite < 132)
+                    //{
+                    //    _aCodififer.A7Codifie += 1;
+                    //}
+                    //A7 est codifiee a autre
+                    if (typeActivite == 132)
+                    {
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                        {
+                            individusCodification.Add(ind);
+                        }
+                    }
+                    //A7 est codifiee a ne sait pas
+                    if (typeActivite == 133)
+                    {
+                        //Verifie si l'individu existe deja dans la liste
+                        if (Utilities.isIndividuExist(individusCodification, ind) == false)
+                        {
+                            individusCodification.Add(ind);
+                        }
+                    }
+                    #endregion
+                }
+                compteur.Individus = new List<IndividuModel>();
+                compteur.Individus = individusCodification;
+                return compteur;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new Flag();
+        }
+
+
 
         /// <summary>
         /// Return the location of an individu in a SDE
@@ -1484,7 +1895,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             string methodName = "locateIndividu";
             try
             {
-                log.Info("Inside:" + methodName);
                 BatimentModel bat = GetBatimentbyId(individu.BatimentId);
                 LogementModel logement = GetLogementById(individu.LogeId);
                 MenageModel menage = GetMenageById(individu.MenageId);
@@ -1503,6 +1913,44 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region Retrieving data for LOGEMENT
+
+        /// <summary>
+        /// Retourne les logements verifies
+        /// </summary>
+        /// <returns></returns>
+        public List<LogementModel> GetAllLogementsIndVerifies()
+        {
+            string methodName = "GetAllLogementsVerifies";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.isVerified == (int)Constant.StatutVerifie.Verifie
+                    && l.statut == (int)Constant.StatutModule.Fini && l.qlCategLogement == (int)Constant.TypeLogement.Endividyel).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader:/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        /// <summary>
+        /// Retourne les logements non verifies
+        /// </summary>
+        /// <returns></returns>
+        public List<LogementModel> GetAllLogementsIndNonVerifies()
+        {
+            string methodName = "GetAllLogementsNonVerifies";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.isVerified == (int)Constant.StatutVerifie.PasVerifie
+                    && l.statut==(int)Constant.StatutModule.Fini && l.qlCategLogement==(int)Constant.TypeLogement.Endividyel).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader:/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
         /// <summary>
         /// Retourne tous les logements dans un batiment
         /// </summary>
@@ -1585,11 +2033,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         /// Retourne les logements qui ne sont pas encore termines
         /// </summary>
         /// <returns></returns>
-        public List<LogementModel> GetAllLogementIndNotFinish()
+        public List<LogementModel> GetAllLogementIndNonTermines()
         {
             try
             {
-                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.isFieldAllFilled == 0).ToList());
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.statut != (int)Constant.StatutModule.Fini).ToList());
             }
             catch (Exception ex)
             {
@@ -1765,7 +2213,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MEmigreRepository.Find(em => em.qn2bSexe == Constant.FEMININ).ToList().Count();
+                return repository.MEmigreRepository.Find(em => em.qn2bSexe == (int)Constant.Sexe.Fi).ToList().Count();
             }
             catch (Exception)
             {
@@ -1779,7 +2227,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
             try
             {
-                return repository.MEmigreRepository.Find(em => em.qn2bSexe == Constant.MASCULIN).ToList().Count();
+                return repository.MEmigreRepository.Find(em => em.qn2bSexe == (int)Constant.Sexe.Gason).ToList().Count();
             }
             catch (Exception)
             {
@@ -1805,7 +2253,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                List<tbl_deces> list = repository.MDecesRepository.Find(dc => dc.qd2aSexe == Constant.FEMININ).ToList();
+                List<tbl_deces> list = repository.MDecesRepository.Find(dc => dc.qd2aSexe == (int)Constant.Sexe.Fi).ToList();
                 return list.Count();
 
             }
@@ -1821,7 +2269,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MDecesRepository.Find(dc => dc.qd2aSexe == Constant.MASCULIN).Count();
+                return repository.MDecesRepository.Find(dc => dc.qd2aSexe == (int)Constant.Sexe.Gason).Count();
             }
             catch (Exception)
             {
@@ -1849,7 +2297,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(ind => ind.qp4Sexe == Constant.FEMININ).Count();
+                return repository.MIndividuRepository.Find(ind => ind.qp4Sexe == (int)Constant.Sexe.Fi).Count();
 
             }
             catch (Exception ex)
@@ -1863,7 +2311,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(ind => ind.qp4Sexe == Constant.MASCULIN).Count();
+                return repository.MIndividuRepository.Find(ind => ind.qp4Sexe == (int)Constant.Sexe.Gason).Count();
 
             }
             catch (Exception ex)
@@ -1891,7 +2339,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MLogementRepository.Find(lg => lg.qlCategLogement == Constant.TYPE_LOJMAN_ENDIVIDYEL).Count();
+                return repository.MLogementRepository.Find(lg => lg.qlCategLogement ==(int)Constant.TypeLogement.Endividyel).Count();
 
             }
             catch (Exception)
@@ -2220,7 +2668,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 DateTime dateSaisieFirst = new DateTime();
                 DateTime dateSaisieLast = new DateTime();
                 dateSaisieFirst = Convert.ToDateTime(firstIndividu.DateDebutCollecte);
-                dateSaisieLast = Convert.ToDateTime(lastIndividu.DateFinCollecte);
+                dateSaisieLast = Convert.ToDateTime(lastIndividu.DateDebutCollecte);
                 double totalOfDays = (dateSaisieLast - dateSaisieFirst).TotalDays;
                 totalOfDays = Math.Truncate(totalOfDays);
                 if (totalOfDays == 0)
@@ -2276,7 +2724,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qp5bAge < 1 ).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge < 1).Count();
+                //< 1 && i.isVerified == (int)Constant.StatutVerifie.PasVerifie
             }
             catch (Exception ex)
             {
@@ -2293,7 +2742,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 18 && i.qp5bAge<Constant.AGE_PA_KONNEN).Count();
+                return repository.MIndividuRepository.Find(i => i.qp5bAge >= 18 && i.qp5bAge<Constant.AGE_PA_KONNEN ).Count();
             }
             catch (Exception)
             {
@@ -2378,12 +2827,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             {
                 int nbLogementCollectif = 0;
                 //On recherche les logements collectifs avant et apres on fait le total
-                List<LogementModel> listOfLogementsCollectifs = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == 0).ToList());
+                List<LogementModel> listOfLogementsCollectifs = ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Kolektif).ToList());
                 if (listOfLogementsCollectifs != null)
                 {
                     foreach (LogementModel lgc in listOfLogementsCollectifs)
                     {
-                        nbLogementCollectif = nbLogementCollectif + lgc.QlcTotalIndividus+lgc.Qlc2bTotalGarcon+lgc.Qlc2bTotalFille;
+                        nbLogementCollectif = nbLogementCollectif + lgc.QlcTotalIndividus;
+                        //+lgc.Qlc2bTotalGarcon+lgc.Qlc2bTotalFille
                     }
                     return nbLogementCollectif;
                 }
@@ -2404,9 +2854,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qaf2HandicapEntendre > 1 || i.qaf3HandicapMarcher > 1 ||
+                return repository.MIndividuRepository.Find(i=> i.qaf2HandicapEntendre > 1 || i.qaf3HandicapMarcher > 1 ||
                                                            i.qaf1HandicapVoir > 1 || i.qaf4HandicapSouvenir > 1 ||
-                                                           i.qaf5HandicapPourSeSoigner > 1 || i.qaf6HandicapCommuniquer > 1).Count();
+                                                           i.qaf5HandicapPourSeSoigner > 1 || i.qaf6HandicapCommuniquer > 1
+                                                           ).Count();
             }
             catch (Exception ex)
             {
@@ -2423,7 +2874,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return repository.MIndividuRepository.Find(i => i.qp3LienDeParente == 1 && i.qp4Sexe == 2).Count();
+                return repository.MIndividuRepository.Find(i => i.qp3LienDeParente == 1 && i.qp4Sexe == (int) Constant.Sexe.Fi).Count();
             }
             catch (Exception ex)
             {
@@ -2684,7 +3135,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             try
             {
                 List<IndividuModel> individus = new List<IndividuModel>();
-                individus = ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(i => i.menageId != 0).ToList());
+                individus = ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(i => i.menageId != 0 ).ToList());
                 return individus;
             }
             catch (Exception ex)
@@ -2699,7 +3150,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         {
             try
             {
-                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.qm11TotalIndividuVivant == 1).ToList());
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.qm11TotalIndividuVivant == 1 ).ToList());
             }
             catch (Exception ex)
             {
@@ -2754,9 +3205,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             try
             {
                 double ind = GetAllIndividusInMenage().Count;
-                log.Info("Ind:" + ind);
                 double men = GetAllMenages().Count;
-                log.Info("Men:" + men);
                 double res = ind / men;
                 return res ;
             }
@@ -3114,31 +3563,51 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #region GEOGRAPHIQUES
         public tbl_pays getpays(string codePays)
         {
-            return repository.MPayspository.Find(p => p.CodePays == codePays).FirstOrDefault();
+            if (codePays != "" && codePays != null)
+            {
+                return repository.MPayspository.Find(p => p.CodePays == codePays).FirstOrDefault();
+            }
+            return new tbl_pays();
         }
 
         public tbl_departement getDepartement(string deptId)
         {
-            return repository.MDepartementRepository.Find(p => p.DeptId == deptId).FirstOrDefault();
+            if (deptId != "" && deptId != null)
+            {
+                return repository.MDepartementRepository.Find(p => p.DeptId == deptId).FirstOrDefault();
+            }
+            return new tbl_departement();
         }
 
         public tbl_commune getCommune(string comId)
         {
-            string[] com = comId.Split('-');
-            string code = com[0];
-            return repository.MCommuneRepository.Find(c => c.ComId == code).FirstOrDefault();
+            if (comId != "" && comId != null)
+            {
+                string[] com = comId.Split('-');
+                string code = com[0];
+                return repository.MCommuneRepository.Find(c => c.ComId == code).FirstOrDefault();
+            }
+            return new tbl_commune();
         }
 
         public tbl_vqse getVqse(string vqse)
         {
-            return repository.MVqseRepository.Find(c => c.VqseId == vqse).FirstOrDefault();
+            if (vqse != "" && vqse != null)
+            {
+                return repository.MVqseRepository.Find(c => c.VqseId == vqse).FirstOrDefault();
+            }
+            return new tbl_vqse();
         }
         #endregion
 
         #region DOMAINES
         public tbl_domaine_etude getDomaine(string domaineId)
         {
-            return repository.MDomaineEtudeRepository.Find(d => d.Code == domaineId).FirstOrDefault();
+            if (domaineId != "" && domaineId != null)
+            {
+                return repository.MDomaineEtudeRepository.Find(d => d.Code == domaineId).FirstOrDefault();
+            }
+            return new tbl_domaine_etude();
         }
         #endregion
 
@@ -3243,9 +3712,623 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         }
         #endregion
 
+        #region RETRIEVING FOR MENAGES
+        public List<MenageModel> GetAllMenage_1_Personne()
+        {
+             string methodName="GetAllMenage_1_Personne";
+             try
+             {
+                 return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.qm11TotalIndividuVivant == 1).ToList());
+             }
+             catch (Exception ex)
+             {
+                 log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+             }
+             return new List<MenageModel>();
+        }
 
+        public List<MenageModel> GetAllMenage_2_3_Personnes()
+        {
+            string methodName = "GetAllMenage_2_3_Personnes";
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.qm11TotalIndividuVivant == 2 || m.qm11TotalIndividuVivant==3).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<MenageModel>();
+        }
 
+        public List<MenageModel> GetAllMenage_4_5_Personnes()
+        {
+            string methodName = "GetAllMenage_4_5_Personnes";
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.qm11TotalIndividuVivant == 4 || m.qm11TotalIndividuVivant == 5).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<MenageModel>();
+        }
 
+        public List<MenageModel> GetAllMenage_6_Personnes()
+        {
+            string methodName = "GetAllMenage_6_Personnes";
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.qm11TotalIndividuVivant >= 6).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<MenageModel>();
+        }
        
+        public Flag compteurFlagParMenages(List<MenageModel> menages)
+        {
+            string methodName = "compteurFlagParMenages";
+            Flag flagMenage = new Flag();
+            try
+            {
+                if (menages != null)
+                {
+                    foreach (MenageModel menage in menages)
+                    {
+                        List<IndividuModel> individus = GetIndividuByMenage(menage.MenageId);
+                        if (individus != null)
+                        {
+                            Flag flg = new Flag();
+                            flg = CountTotalFlag(individus);
+                            flagMenage.Flag_Aucun += flg.Flag_Aucun;
+                            flagMenage.Flag_1_4 += flg.Flag_1_4;
+                            flagMenage.Flag_5_14 += flg.Flag_5_14;
+                            flagMenage.Flag_15_26 += flg.Flag_15_26;
+                            flagMenage.Flag_27_47 += flg.Flag_27_47;
+                            flagMenage.Flag_48_70 += flg.Flag_48_70;
+                            flagMenage.Flag_71_130 += flg.Flag_71_130;
+                        }                      
+                    }
+                    return flagMenage;
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return flagMenage;
+        }
+        
+        /// <summary>
+        /// Retourne les menages verifies
+        /// </summary>
+        /// <returns></returns>
+        public List<MenageModel> GetAllMenagesVerifies()
+        {
+            string methodName = "GetAllMenagesVerifies";
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.isVerified == (int)Constant.StatutVerifie.Verifie).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<MenageModel>();
+        }
+
+        /// <summary>
+        /// Retourne les menages non verifies
+        /// </summary>
+        /// <returns></returns>
+        public List<MenageModel> GetAllMenagesNonVerifies()
+        {
+
+            string methodName = "GetAllMenagesNonVerifies";
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.isVerified == (int)Constant.StatutVerifie.PasVerifie).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<MenageModel>();
+        }
+        #endregion
+
+
+        #region VERIFICATION
+        /// <summary>
+        /// Retourne les batiments qui sont valides
+        /// </summary>
+        /// <returns></returns>
+        public List<BatimentModel> GetAllBatimentModelValide()
+        {
+            string methodName = "GetAllBatimentModelValide";
+            try
+            {
+                return ModelMapper.MapToListBatimentModel( repository.MBatimentRepository.Find(b => b.isValidated == (int)Constant.StatutValide.Valide).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<BatimentModel>();
+        }
+
+        public List<LogementModel> GetAllLogementsIndTermines()
+        {
+            string methodName = "GetAllLogementsIndTermines";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Endividyel
+                    && l.statut==(int)Constant.StatutModule.Fini).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<LogementModel> GetAllLogementsIndValides()
+        {
+            string methodName = "GetAllLogementsIndValides";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Endividyel
+                    && l.isValidated == (int)Constant.StatutValide.Valide).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<LogementModel> GetAllLogementsColVerifies()
+        {
+            string methodName = "GetAllLogementsColVerifies";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Kolektif
+                    && l.isVerified == (int)Constant.StatutVerifie.Verifie && l.statut == (int)Constant.StatutModule.Fini).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<LogementModel> GetAllLogementsColNonVerifies()
+        {
+            string methodName = "GetAllLogementsColNonVerifies";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Kolektif
+                    && l.isVerified == (int)Constant.StatutVerifie.PasVerifie ).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<LogementModel> GetAllLogementsColTermines()
+        {
+            string methodName = "GetAllLogementsColTermines";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Kolektif
+                    && l.statut == (int)Constant.StatutModule.Fini).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<MenageModel> GetAllMenageTermine()
+        {
+            string methodName = "GetAllMenageTermine";
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.statut == (int)Constant.StatutModule.Fini).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<MenageModel>();
+        }
+
+        public List<MenageModel> GetAllMenageValides()
+        {
+            string methodName = "GetAllMenageValides";
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.statut == (int)Constant.StatutModule.Fini
+                    && m.isValidated==(int)Constant.StatutValide.Valide).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<MenageModel>();
+        }
+
+        public List<IndividuModel> GetAllIndividuTermine()
+        {
+            string methodName = "GetAllIndividuTermine";
+            try
+            {
+                return ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(i => i.statut == (int)Constant.StatutModule.Fini).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<IndividuModel>();
+        }
+
+        public List<IndividuModel> GetAllIndividuValide()
+        {
+            string methodName = "GetAllIndividuValide";
+            try
+            {
+                return ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(i => i.statut == (int)Constant.StatutModule.Fini
+                    && i.statut == (int)Constant.StatutValide.Valide).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<IndividuModel>();
+        }
+
+        public List<LogementModel> GetAllLogementsColNonTermines()
+        {
+            string methodName = "GetAllLogementsColNonTermines";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Kolektif
+                    && l.statut == (int)Constant.StatutModule.PasFini).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<LogementModel> GetAllLogementsColValides()
+        {
+            string methodName = "GetAllLogementsColValides";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Kolektif
+                    && l.statut == (int)Constant.StatutModule.Fini && l.isValidated==(int)Constant.StatutValide.Valide).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<LogementModel> GetAllLogementsCollectifs()
+        {
+            string methodName = "GetAllLogementsCollectifs";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Kolektif).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<LogementModel> GetAllLogementsIndividuels()
+        {
+            string methodName = "GetAllLogementsIndividuels";
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlCategLogement == (int)Constant.TypeLogement.Endividyel).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<LogementModel>();
+        }
+
+
+        public List<IndividuModel> GetAllIndividuNonVerifie()
+        {
+            string methodName = "GetAllIndividuNonVerifie";
+            try
+            {
+                return ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(i => i.statut == (int)Constant.StatutModule.Fini
+                    && i.isVerified == (int)Constant.StatutVerifie.PasVerifie).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<IndividuModel>();
+        }
+
+        public List<IndividuModel> GetAllIndividuVerifie()
+        {
+            string methodName = "GetAllIndividuVerifie";
+            try
+            {
+                return ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(i => i.statut == (int)Constant.StatutModule.Fini
+                    && i.isVerified == (int)Constant.StatutVerifie.Verifie).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<IndividuModel>();
+        }
+        #endregion
+        public BatimentDataMobile GetAllBatiments()
+        {
+            string methodName = "GetAllBatiments";
+            List<BatimentModel> batiments = new List<BatimentModel>();
+            BatimentDataMobile data = new BatimentDataMobile();
+            try
+            {                
+                List<BatimentModel> listsOfBatimentModels = GetAllBatimentModel();
+                foreach (BatimentModel bat in listsOfBatimentModels)
+                {
+                    //Recherche de logement pour un batiment
+                    #region RECHERCHE DE LOGEMENTS
+                    bat.Logement = new List<LogementModel>();
+                    List<LogementModel> logements = GetAllLogementsByBatiment(bat.BatimentId);
+                    if (logements.Count != 0)
+                    {
+                        foreach (LogementModel logm in logements)
+                        {
+                            //Si c'est un logement individuel
+                            if (logm.QlCategLogement == (int)Constant.TypeLogement.Endividyel)
+                            {
+                                logm.Menages = new List<MenageModel>();
+                                List<MenageModel> menages = GetMenageByLogement(logm.LogeId);
+                                if (menages.Count != 0)
+                                {
+                                    foreach (MenageModel men in menages)
+                                    {
+                                        List<DecesModel> deces = GetDecesByMenage(men.MenageId);
+                                        List<EmigreModel> emigres = GetEmigrebyMenage(men.MenageId);
+                                        List<IndividuModel> individus = GetIndividuByMenage(men.MenageId);
+                                        //Ajout des individus
+                                        men.Individus = new List<IndividuModel>();
+                                        men.Individus = individus;
+                                        //Ajout des deces
+                                        men.Deces = new List<DecesModel>();
+                                        men.Deces = deces;
+                                        //Ajout des emigres
+                                        men.Emigre = new List<EmigreModel>();
+                                        men.Emigre = emigres;
+                                        //Ajout du menage dans le logemnet
+                                        logm.Menages.Add(men);
+                                        bat.Logement.Add(logm);
+                                        batiments.Add(bat);
+                                    }
+                                }
+                                else
+                                {
+                                    bat.Logement.Add(logm);
+                                    batiments.Add(bat);
+                                }
+                            }
+                                //Si c'est logement collectif
+                            else
+                            {
+                                List<IndividuModel> inds = new List<IndividuModel>();
+                                inds = GetIndividuByLoge(logm.LogeId);
+                                if(inds!=null)
+                                {
+                                    logm.Individus = new List<IndividuModel>();
+                                    logm.Individus = inds;
+                                }
+                                bat.Logement.Add(logm);
+                                batiments.Add(bat);
+                            }
+                        }
+                    }
+                        //Si le batiment est vide
+                    else
+                    {
+                        batiments.Add(bat);
+                    }
+                    
+                    #endregion
+                   
+                }
+                data.Batiments = new List<BatimentModel>();
+                data.Batiments = batiments;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return data;
+        }
+
+
+        public RapportFinalModel GetRapportFinal(int menageId)
+        {
+            if (menageId != 0)
+            {
+                return ModelMapper.MapToRapportFinal(repository.MRapportFinalRepository.Find(r => r.rapportFinalId == menageId).FirstOrDefault());
+            }
+            return new RapportFinalModel();
+        }
+
+
+        public List<EmigreModel> GetEmigrebyMenage(long menageId)
+        {
+            string methodName = "GetEmigrebyMenage";
+            try
+            {
+               return ModelMapper.MapToListEmigre( repository.MEmigreRepository.Find(e => e.menageId == menageId).ToList());
+            }
+            catch (Exception ex)
+            {
+                log.Info("SqliteReader/" + methodName + ":" + ex.Message);
+            }
+            return new List<EmigreModel>();
+        }
+
+
+        public List<RapportFinalModel> searchRapportFinal(int menageId)
+        {
+            //if (menageId != 0)
+            //{
+            //    return ModelMapper.MapToList(repository.MRapportFinalRepository.Find(r => r.rapportFinalId == menageId).ToList());
+            //}
+            //return new RapportFinalModel();
+            return null;
+        }
+
+
+        public RapportFinalModel GetRapportFinalModel(int menageId)
+        {
+            if (menageId != 0)
+            {
+                return ModelMapper.MapToRapportFinal(repository.MRapportFinalRepository.Find(r => r.rapportFinalId == menageId).FirstOrDefault());
+            }
+            return new RapportFinalModel();
+        }
+     
+        public List<BatimentModel> GetBatimentByRec(string qrec)
+        {
+            try
+            {
+                return ModelMapper.MapToListBatimentModel(repository.MBatimentRepository.Find(b => b.qrec == qrec).ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<BatimentModel>();
+        }
+
+
+        public List<LogementModel> GetLogementsByNoOrdre(long batimentId,long numOrdre)
+        {
+            try
+            {
+                return ModelMapper.MapToListLogementModel(repository.MLogementRepository.Find(l => l.qlin1NumeroOrdre == numOrdre && l.batimentId==batimentId).ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<LogementModel>();
+        }
+
+        public List<MenageModel> GetMenagebyNumOrdre(long batiment,long logementId,long numOrdre)
+        {
+            try
+            {
+                return ModelMapper.MapToListMenageModel(repository.MMenageRepository.Find(m => m.qm1NoOrdre == numOrdre
+                    && m.batimentId==batiment
+                    && m.logeId==logementId).ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<MenageModel>();
+        }
+
+        public List<EmigreModel> GetEmigrebyNumOrdre(long batiment, long logementId,long menageId,long numOrdre)
+        {
+            try
+            {
+                return ModelMapper.MapToListEmigre(repository.MEmigreRepository.Find(e => e.qn1numeroOrdre == numOrdre
+                    && e.logeId == logementId
+                    && e.batimentId == batiment
+                    && e.menageId == menageId).ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<EmigreModel>();
+        }
+
+        public List<DecesModel> GetDecesbyNumOrdre(long batiment, long logementId, long menageId, long numOrdre)
+        {
+            try
+            {
+                return ModelMapper.MapToListDeces(repository.MDecesRepository.Find(e => e.qd2NoOrdre == numOrdre
+                    && e.logeId == logementId
+                    && e.batimentId == batiment
+                    && e.menageId == menageId).ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<DecesModel>();
+        }
+
+        public List<IndividuModel> GetIndividuByNumOrdre(long batiment, long logementId,long menageId,long numOrdre)
+        {
+            try
+            {
+                return ModelMapper.MapToListIndividu(repository.MIndividuRepository.Find(e => e.q1NoOrdre == numOrdre 
+                    && e.logeId==logementId
+                    && e.batimentId==batiment
+                    && e.menageId==menageId).ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<IndividuModel>();
+        }
+
+
+        public List<DecesModel> GetAllDeces()
+        {
+            try
+            {
+                return ModelMapper.MapToListDeces(repository.MDecesRepository.Find().ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<DecesModel>();
+        }
+
+        public List<EmigreModel> GetAllEmigres()
+        {
+            try
+            {
+                return ModelMapper.MapToListEmigre(repository.MEmigreRepository.Find().ToList());
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return new List<EmigreModel>();
+        }
     }
 }

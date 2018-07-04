@@ -26,18 +26,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
     /// </summary>
     public partial class MainWindow1 : DXRibbonWindow
     {
+        string pathDefaultConfigurationFile = AppDomain.CurrentDomain.BaseDirectory + @"App_data\";
+        string file = "";
+        XmlUtils configuration = null;
         public MainWindow1()
         {
             InitializeComponent();
+            file = pathDefaultConfigurationFile + "contreenquete.xml";
+            configuration = new XmlUtils(file);
             TextModel model = null;
-            if (Users.users.Profile == "7")
+            if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
             {
                 page_configuration.IsEnabled = false;
                 bbi_avances.IsVisible = false;
                 bbi_agents.IsVisible = false;
                 txt_connecteduser.Text = "" + Users.users.Nom + " " + Users.users.Prenom + " (Superviseur)";
             }
-            if (Users.users.Profile == "6")
+            if (Users.users.Profile == Constant.PROFIL_ASTIC.ToString())
             {
                 rpc_transfert.IsEnabled = false;
                 rpc_rpt_personnel.IsEnabled = false;
@@ -87,7 +92,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
         {
             if (main_ribbon.SelectedPage == page_SDE)
             {
-                if (Users.users.Profile == "7")
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
                 {
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     frm_view_verification verification = new frm_view_verification();
@@ -98,7 +103,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             }
             if (main_ribbon.SelectedPage == page_transfret)
             {
-                if (Users.users.Profile == "7")
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
                 {
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     Frm_view_transfert frm_transfert = new Frm_view_transfert(this);
@@ -110,7 +115,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             }
             if (main_ribbon.SelectedPage == page_contreneuqete)
             {
-                if (Users.users.Profile == "7")
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
                 {
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.BatimentVide);
@@ -122,7 +127,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             }
             if (main_ribbon.SelectedPage == page_rapports)
             {
-                if (Users.users.Profile == "7")
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
                 {
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     frm_rapports rapports = new frm_rapports();
@@ -134,7 +139,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             }
             if (main_ribbon.SelectedPage == page_configuration)
             {
-                if (Users.users.Profile == "7")
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
                 {
                     main_grid.Dispatcher.BeginInvoke((Action)(() => main_grid.Children.Clear()));
                 }
@@ -144,22 +149,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
 
         public void deselectedBarItem()
         {
-            //bbi_agents.Dispatcher.BeginInvoke((Action)(() => bbi_agents.IsChecked = false));
-            //bbi_agents.IsChecked = false;
-            //bbi_avances.IsChecked = false;
-            //bbi_batiman_vid.IsChecked = false;
-            //bbi_lojman_kolektif.IsChecked = false;
-            //bbi_lojman_okipe.IsChecked = false;
-            //bbi_lojman_vid.IsChecked = false;
-            //bbi_menaj.IsChecked = false;
-            //bbi_retour.IsChecked = false;
-            //bbi_synchronisation.IsChecked = false;
-            //bbi_verification.IsChecked = false;
-            //bbi_visualisation.IsChecked = false;
-            //rpc_rpt_deroulement_collecte.IsChecked = false;
-            //rpc_rpt_personnel.IsChecked = false;
-            //rpc_rpt_personnel.IsChecked = false;
-            //rpc_rpt_tronc.IsChecked = false; 
             bbi_agents.Dispatcher.BeginInvoke((Action)(() => bbi_agents.IsChecked = false));
             bbi_avances.Dispatcher.BeginInvoke((Action)(() => bbi_avances.IsChecked = false));
             bbi_batiman_vid.Dispatcher.BeginInvoke((Action)(() => bbi_batiman_vid.IsChecked = false));
@@ -197,7 +186,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             deselectedBarItem();
             bbi_visualisation.Dispatcher.BeginInvoke((Action)(() => bbi_visualisation.IsChecked = true));
             main_grid_1.IsSplashScreenShown = true;
-            frm_visualisation frm_visualisation = new frm_visualisation();
+            frm_visualisation frm_visualisation = new frm_visualisation();      
             Utilities.showControl(frm_visualisation, main_grid);
             main_grid_1.IsSplashScreenShown = false;
             bbi_visualisation.Focus();
@@ -379,8 +368,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                     }
                 }
             }
-        }
-
-       
+        }       
     }
 }

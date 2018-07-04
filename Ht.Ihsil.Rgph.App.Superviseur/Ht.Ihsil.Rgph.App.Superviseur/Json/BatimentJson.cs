@@ -48,6 +48,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public string dateDebut { get; set; }
         public string dateFin { get; set; }
         public string contreEnqueteStatut { get; set; }
+        public bool verified { get; set; }
         public List<LogementCJson> logementCs { get; set; }
         public List<LogementIsJson> logementIs { get; set; }
     }

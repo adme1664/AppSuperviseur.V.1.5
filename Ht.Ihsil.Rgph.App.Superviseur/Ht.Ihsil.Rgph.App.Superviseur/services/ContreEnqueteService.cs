@@ -73,13 +73,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         #endregion
 
         #region CONTRE-ENQUETE METHODS
-        public void saveContreEnquete(ContreEnqueteModel ce)
+        public ContreEnqueteModel saveContreEnquete(ContreEnqueteModel ce)
         {
             try
             {
                 if (Utils.IsNotNull(ce))
                 {
-                    daoCE.saveContreEnquete(ModelMapper.MapToTblContreEnquete(ce));
+                    return ModelMapper.MapToContreEnqueteModel(daoCE.saveContreEnquete(ModelMapper.MapToTblContreEnquete(ce)));
                 }
             }
             catch (Exception ex)
@@ -87,6 +87,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                 log.Info("<>=======================Erreur/saveContreEnquete:" + ex.Message);
                 log.Info("<>=======================Erreur/saveContreEnquete:" + ex.InnerException);
             }
+            return new ContreEnqueteModel();
         }
 
         
@@ -102,6 +103,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                 c.DateDebut = ce.DateDebut;
                 c.DateFin = ce.DateFin;
                 c.Raison = ce.Raison;
+                c.LogeId = ce.LogeId;
+                c.BatimentId = ce.BatimentId;
+                c.MenageId = ce.MenageId;
+                c.Termine = ce.Termine;
+                c.Validate = ce.Validate;
+                c.Statut = ce.Statut;
                 return daoCE.updateContreEnquete(c);
 
 
@@ -611,6 +618,144 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     }
                     //
                 }
+                return batiments;
+            }
+            catch (Exception ex)
+            {
+                log.Info("Error:" + ex.Message);
+            }
+            return new List<Json.BatimentJson>();
+        }
+
+
+        public List<BatimentJson> getBatimentCEInJsonByContrEnqueteId(string sdeId, int contreEnqueteId)
+        {
+            try
+            {
+                List<BatimentJson> batiments = new List<BatimentJson>();
+                BatimentCEModel batimentContreEnquete = searchBatimentByCE(contreEnqueteId,sdeId);
+                //
+                BatimentJson batiment = ModelMapper.MapToJson(batimentContreEnquete);
+                //Recherche du type de contreenquete
+                ContreEnqueteModel contreEnquete = ModelMapper.MapToContreEnqueteModel(daoCE.getContreEnquete(Convert.ToInt32(batiment.batimentId), sdeId));
+                if (contreEnquete != null)
+                {
+                    batiment.typeContreEnquete = contreEnquete.TypeContreEnquete.GetValueOrDefault();
+                    batiment.raison = "" + contreEnquete.Raison.GetValueOrDefault();
+                    //Recherche en fonction du type de contreenquete (Batiment Vide)
+                    if (batiment.typeContreEnquete == (long)Constant.TypeContrEnquete.BatimentVide)
+                    {
+                        batiments.Add(batiment);
+                    }
+                    //Batiment avec Logement Collectif
+                    if (batiment.typeContreEnquete == (long)Constant.TypeContrEnquete.LogementCollectif)
+                    {
+                        List<LogementCJson> logementsCollectifs = new List<LogementCJson>();
+                        List<LogementCEModel> logCES = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), sdeId, Constant.TYPE_LOJMAN_KOLEKTIF));
+                        foreach (LogementCEModel logmnt in logCES)
+                        {
+                            LogementCJson logjson = ModelMapper.MapToCLJson(logmnt);
+                            //Recherche des individus dans les logements collectifs
+                            List<IndividuJson> individusJson = new List<IndividuJson>();
+                            List<IndividuCEModel> individusLogC = ModelMapper.MapToListIndividuCEModel(daoCE.searchAllIndividuCE(logjson.logeId));
+                            foreach (IndividuCEModel indCe in individusLogC)
+                            {
+                                IndividuJson indJson = ModelMapper.MapToJson(indCe);
+                                individusJson.Add(indJson);
+                            }
+                            logjson.individus = new List<IndividuJson>();
+                            logjson.individus = individusJson;
+                            logementsCollectifs.Add(logjson);
+                        }
+                        batiment.logementCs = new List<LogementCJson>();
+                        batiment.logementCs = logementsCollectifs;
+                        batiments.Add(batiment);
+                    }
+                    //Batiment avec Logement individuel vide
+                    if (batiment.typeContreEnquete == (long)Constant.TypeContrEnquete.LogementInvididuelVide)
+                    {
+                        List<LogementIsJson> logementsIndividuels = new List<LogementIsJson>();
+                        List<LogementCEModel> logIs = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), sdeId, Constant.TYPE_LOJMAN_ENDIVIDYEL));
+                        foreach (LogementCEModel logmntI in logIs)
+                        {
+                            if (logmntI.Qlin9NbreTotalMenage.GetValueOrDefault() == 0)
+                            {
+                                LogementIsJson lgJson = ModelMapper.MapToILJson(logmntI);
+                                logementsIndividuels.Add(lgJson);
+                            }
+                        }
+                        batiment.logementIs = new List<LogementIsJson>();
+                        batiment.logementIs = logementsIndividuels;
+                        batiments.Add(batiment);
+                    }
+                    //batiment avec logement dont occupant absent
+                    if (batiment.typeContreEnquete == (long)Constant.TypeContrEnquete.LogementInvididuelVide)
+                    {
+                        List<LogementIsJson> logementsIndividuels = new List<LogementIsJson>();
+                        List<LogementCEModel> logIs = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), sdeId, Constant.TYPE_LOJMAN_ENDIVIDYEL));
+                        foreach (LogementCEModel logmntI in logIs)
+                        {
+                            if (logmntI.Qlin2StatutOccupation.GetValueOrDefault() != 3)
+                            {
+                                LogementIsJson lgJson = ModelMapper.MapToILJson(logmntI);
+                                logementsIndividuels.Add(lgJson);
+                            }
+                        }
+                        batiment.logementIs = new List<LogementIsJson>();
+                        batiment.logementIs = logementsIndividuels;
+                        batiments.Add(batiment);
+                    }
+                    //Batiment avec logement individuel, menage, deces, individu
+                    if (batiment.typeContreEnquete == (long)Constant.TypeContrEnquete.LogementIndividuelMenage)
+                    {
+                        List<LogementIsJson> logementsIndividuels = new List<LogementIsJson>();
+                        List<LogementCEModel> logIs = ModelMapper.MapToListLogementCEModel(daoCE.searchLogByBatimentAndTypeLog(Convert.ToInt32(batiment.batimentId), sdeId, Constant.TYPE_LOJMAN_ENDIVIDYEL));
+                        foreach (LogementCEModel logmntI in logIs)
+                        {
+                            if (logmntI.Qlin9NbreTotalMenage.GetValueOrDefault() != 0)
+                            {
+                                LogementIsJson logJson = ModelMapper.MapToILJson(logmntI);
+                                List<MenageJson> menagesJsons = new List<MenageJson>();
+                                List<MenageCEModel> menages = ModelMapper.MapToListMenageCEModel(daoCE.searchAllMenageCE(logmntI.LogeId, logmntI.BatimentId, sdeId));
+                                foreach (MenageCEModel menage in menages)
+                                {
+                                    MenageJson menageJson = ModelMapper.MapToJson(menage);
+                                    //Ajout des deces
+                                    List<DecesJson> decesJsons = new List<DecesJson>();
+                                    List<DecesCEModel> deces = ModelMapper.MapToListDecesCEModel(daoCE.searchAllDecesCE(menage.BatimentId, menage.LogeId, sdeId, menage.MenageId));
+                                    foreach (DecesCEModel dec in deces)
+                                    {
+                                        DecesJson decesJson = ModelMapper.MapToJson(dec);
+                                        decesJsons.Add(decesJson);
+                                    }
+                                    menageJson.deces = new List<DecesJson>();
+                                    menageJson.deces = decesJsons;
+
+                                    //Ajout des individus
+                                    List<IndividuJson> individusJsons = new List<IndividuJson>();
+                                    List<IndividuCEModel> individus = ModelMapper.MapToListIndividuCEModel(daoCE.searchAllIndividuCE(menage.BatimentId, menage.LogeId, sdeId, menage.MenageId));
+                                    foreach (IndividuCEModel ind in individus)
+                                    {
+                                        IndividuJson indJson = ModelMapper.MapToJson(ind);
+                                        individusJsons.Add(indJson);
+                                    }
+                                    menageJson.individus = new List<IndividuJson>();
+                                    menageJson.individus = individusJsons;
+                                    menagesJsons.Add(menageJson);
+                                }
+                                logJson.menages = new List<MenageJson>();
+                                logJson.menages = menagesJsons;
+                                logementsIndividuels.Add(logJson);
+                            }
+                        }
+                        batiment.logementIs = new List<LogementIsJson>();
+                        batiment.logementIs = logementsIndividuels;
+                        batiments.Add(batiment);
+                    }
+                }
+                //
+                //
+                
                 return batiments;
             }
             catch (Exception ex)
@@ -1313,9 +1458,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         }
         #endregion       
 
-        public List<BatimentModel> searchBatimentByCE(int contreEnqueteId, string sdeId)
+        public BatimentCEModel searchBatimentByCE(int contreEnqueteId, string sdeId)
         {
-            throw new NotImplementedException();
+            ContreEnqueteModel contreEnquete = getContreEnquete(contreEnqueteId, sdeId);
+            if (contreEnquete != null)
+            {
+                return getBatiment(contreEnquete.BatimentId.GetValueOrDefault(), sdeId);
+            }
+            return new BatimentCEModel();
         }
 
         #region RAPPORT DEROULEMENT COLLECTE
@@ -1500,6 +1650,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             { // synchronize
                 return random.Next(min, max);
             }
-        }      
+        }
+
+
     }
 }

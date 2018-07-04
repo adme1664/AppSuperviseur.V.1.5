@@ -94,10 +94,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             try
             {
                 SdeInformation sde = new SdeInformation();
-                sde.DeptId = "0" + sdeId.Substring(0, 1);
-                sde.ComId = "0" + sdeId.Substring(0, 3);
-                sde.VqseId = "0" + sdeId.Substring(0, 6);
-                if (sdeId.Substring(4, 2) == "90")
+                string zone = "";
+                if (sdeId.Length == 15)
+                {
+                    sde.DeptId = sdeId.Substring(0, 2);
+                    sde.ComId = sdeId.Substring(0, 4);
+                    sde.VqseId =  sdeId.Substring(0, 7);
+                    zone = sdeId.Substring(5, 2); 
+                }
+                                               
+                if (zone == "90")
                 {
                     sde.Zone = Constant.SDE_ZONE_URBAINE;
                 }
@@ -113,19 +119,35 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         }
         public static string getSdeFormatSent(string sdeId)
         {
-            string[] splits = sdeId.Split('-');
-            string convertSde = "0" + splits[0] + "-" + splits[1] + "-" + splits[2];
-            //SdeInformation sde = getSdeInformation(sdeId);
-            //return "0" + sde.ComId + "-" + sde.DeptId + "-" + sde.VqseId;
+            string convertSde = "";
+            if (sdeId.Length < 15)
+            {
+                string[] splits = sdeId.Split('-');
+                convertSde = "0" + splits[0] + "-" + splits[1] + "-" + splits[2];
+            }
+            else
+            {
+                string[] splits = sdeId.Split('-');
+                convertSde = "" + splits[0] + "-" + splits[1] + "-" + splits[2];
+            }
             return convertSde;
         }
         public static string getSdeFormatWithDistrict(string sdeId)
         {
-            string[] splits = sdeId.Split('-');
-            string convertSde = "0" + splits[0] + "-" + splits[1] + "-" + splits[2] + "-" + splits[3];
+            if (sdeId.Length <=14)
+            {
+                string[] splits = sdeId.Split('-');
+                string convertSde = "0" + splits[0] + "-" + splits[1] + "-" + splits[2] + "-" + splits[3];
+                return convertSde;
+            }
+            else
+            {
+                return sdeId;
+            }
+            
             //SdeInformation sde = getSdeInformation(sdeId);
             //return "0" + sde.ComId + "-" + sde.DeptId + "-" + sde.VqseId;
-            return convertSde;
+            //return null;
         }
         public static string getGeoInformation(string sdeId)
         {
@@ -379,7 +401,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         /// <param name="nbreACalculer"></param>
         /// <param name="nbreTotal"></param>
         /// <returns></returns>
-        public static double getPourcentage(int nbreACalculer, int nbreTotal)
+        public static double  getPourcentage(double nbreACalculer, int nbreTotal)
         {
             double percent = 0;
             try
@@ -389,7 +411,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     return percent;
                 }
                 else
-                    percent = (nbreACalculer * 100) / nbreTotal;
+                {
+                    double number = Math.Round(((nbreACalculer * 100) / nbreTotal),2);
+                    percent =Convert.ToDouble( number);
+                }
 
             }
             catch (Exception)
@@ -420,6 +445,22 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 ProviderConnectionString = new SqlConnectionStringBuilder
                 {
                     DataSource = path + sdeID + ".SQLITE"
+                }.ConnectionString
+
+
+            }.ConnectionString;
+            return connectionString;
+
+        }
+        public static string getConnectionString2(string path, string fileName)
+        {
+            string connectionString = new EntityConnectionStringBuilder
+            {
+                Metadata = "res://*/Entities.MobileEntities.MobileDataEntities.csdl|res://*/Entities.MobileEntities.MobileDataEntities.ssdl|res://*/Entities.MobileEntities.MobileDataEntities.msl",
+                Provider = "System.Data.SQLite.EF6",
+                ProviderConnectionString = new SqlConnectionStringBuilder
+                {
+                    DataSource = path + fileName
                 }.ConnectionString
 
 
@@ -488,6 +529,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                     rpt = new RapportFlagModel();
                     rpt.ID = lastId + 1;
                     rpt.Type = reader.locateIndividu(ind);
+                    rpt.Individu = ind;
                     rpt.ParentID = lastParentId;
                     lastId = rpt.ID;
                     rapports.Add(rpt);
@@ -509,6 +551,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     rpt = new RapportFlagModel();
                     rpt.ID = lastId + 1;
+                    rpt.Individu = ind;
                     rpt.Type = reader.locateIndividu(ind);
                     rpt.ParentID = lastParentId;
                     lastId = rpt.ID;
@@ -530,6 +573,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     rpt = new RapportFlagModel();
                     rpt.ID = lastId + 1;
+                    rpt.Individu = ind;
                     rpt.Type = reader.locateIndividu(ind);
                     rpt.ParentID = lastParentId;
                     lastId = rpt.ID;
@@ -551,6 +595,124 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     rpt = new RapportFlagModel();
                     rpt.ID = lastId + 1;
+                    rpt.Individu = ind;
+                    rpt.Type = reader.locateIndividu(ind);
+                    rpt.ParentID = lastParentId;
+                    lastId = rpt.ID;
+                    rapports.Add(rpt);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return rapports;
+        }
+
+        //affichage des individus pour la codification
+        public static List<RapportFlagModel> getListOfIndividuCodification(string path, string sdeId)
+        {
+            List<RapportFlagModel> rapports = new List<RapportFlagModel>();
+            RapportFlagModel rpt = null;
+            int lastParentId = 0;
+            int lastId = 0;
+            int firstParentId = 0;
+            Flag individuCodification = new Flag();
+            try
+            {
+                ISqliteReader reader = new SqliteReader(getConnectionString(path, sdeId));
+                //Ajout du premier noeud
+                rpt = new RapportFlagModel();
+                rpt.ID = 1;
+                rpt.ParentID = 0;
+                rpt.Type = "Ensemble d'individus ayant des variables à codfier";
+                firstParentId = rpt.ParentID;
+                lastId = rpt.ID;
+                lastParentId = rpt.ParentID;
+                rapports.Add(rpt);
+                individuCodification = reader.getIndividuWithP10();
+                //Ajout flag pour la population totale
+                rpt = new RapportFlagModel();
+                rpt.ID = lastId + 1;
+                rpt.ParentID = lastParentId;
+                rpt.Type = "1- P10/ Lieu de naissance";
+                rpt.Total = individuCodification.Individus.Count;
+                rapports.Add(rpt);
+                lastId = rpt.ID;
+                lastParentId = rpt.ID;
+                foreach (IndividuModel ind in individuCodification.Individus)
+                {
+                    rpt = new RapportFlagModel();
+                    rpt.ID = lastId + 1;
+                    rpt.Type = reader.locateIndividu(ind);
+                    rpt.Individu = ind;
+                    rpt.ParentID = lastParentId;
+                    lastId = rpt.ID;
+                    rapports.Add(rpt);
+                }
+                //
+                //Ajout population de 13 flags et plus
+                rpt = new RapportFlagModel();
+                rpt.ID = lastId + 1;
+                rpt.ParentID = firstParentId;
+                rpt.Type = "2- P12/ de residence";
+                lastId = rpt.ID;
+                lastParentId = rpt.ID;
+                individuCodification = new Flag();
+                individuCodification = reader.getIndividuWithP12();
+                rpt.Total = individuCodification.Individus.Count;
+                rapports.Add(rpt);
+                //Ajout des individus se trouvant dans cette categorie
+                foreach (IndividuModel ind in individuCodification.Individus)
+                {
+                    rpt = new RapportFlagModel();
+                    rpt.ID = lastId + 1;
+                    rpt.Individu = ind;
+                    rpt.Type = reader.locateIndividu(ind);
+                    rpt.ParentID = lastParentId;
+                    lastId = rpt.ID;
+                    rapports.Add(rpt);
+                }
+                //Ajout flag fecondite
+                rpt = new RapportFlagModel();
+                rpt.ID = lastId + 1;
+                rpt.ParentID = firstParentId;
+                rpt.Type = "3- A5/ Branche d'activite";
+                lastId = rpt.ID;
+                lastParentId = rpt.ID;
+                individuCodification = new Flag();
+                individuCodification = reader.getIndividuWithA5();
+                rpt.Total = individuCodification.Individus.Count;
+                rapports.Add(rpt);
+                //Ajout des individus se trouvant dans cette categorie
+                foreach (IndividuModel ind in individuCodification.Individus)
+                {
+                    rpt = new RapportFlagModel();
+                    rpt.ID = lastId + 1;
+                    rpt.Individu = ind;
+                    rpt.Type = reader.locateIndividu(ind);
+                    rpt.ParentID = lastParentId;
+                    lastId = rpt.ID;
+                    rapports.Add(rpt);
+                }
+                //Ajout flag emploi
+                rpt = new RapportFlagModel();
+                rpt.ID = lastId + 1;
+                rpt.ParentID = firstParentId;
+                rpt.Type = "4- A7/ Occupation";
+                lastId = rpt.ID;
+                lastParentId = rpt.ID;
+                individuCodification = new Flag();
+                individuCodification = reader.getIndividuWithA7();
+                rpt.Total = individuCodification.Individus.Count;
+                rapports.Add(rpt);
+                //Ajout des individus se trouvant dans cette categorie
+                foreach (IndividuModel ind in individuCodification.Individus)
+                {
+                    rpt = new RapportFlagModel();
+                    rpt.ID = lastId + 1;
+                    rpt.Individu = ind;
                     rpt.Type = reader.locateIndividu(ind);
                     rpt.ParentID = lastParentId;
                     lastId = rpt.ID;
@@ -1313,7 +1475,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
 
             //Ajout de la branche logement
-            List<LogementModel> logementsPartiellesRemplis = service.Sr.GetAllLogementIndNotFinish();
+            List<LogementModel> logementsPartiellesRemplis = service.Sr.GetAllLogementIndNonTermines();
             int nbreLogementTotalPR = logementsPartiellesRemplis.Count();
             report = new TableVerificationModel();
             report.ID = lastId + 1;
@@ -1341,7 +1503,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             //
             //Ajout de la branche Menage
-            List<MenageModel> menagesPartiellesRemplis = service.Sr.GetAllMenageNotFinish();
+            List<MenageModel> menagesPartiellesRemplis = service.Sr.GetAllMenageNonTermine();
             int nbreMenagesPartiellesRemplis = menagesPartiellesRemplis.Count();
             report = new TableVerificationModel();
             report.ID = lastId + 1;
@@ -1369,7 +1531,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             //
             //Ajout de la branche INDIVIDUS
-            List<IndividuModel> individusPartiellesRemplis = service.Sr.GetAllIndividuNotFinish();
+            List<IndividuModel> individusPartiellesRemplis = service.Sr.GetAllIndividuNonTermine();
             int nbreindividusPartiellesRemplis = individusPartiellesRemplis.Count();
             report = new TableVerificationModel();
             report.ID = lastId + 1;
@@ -1753,9 +1915,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 nbreTotalIndividus += service.GetAllIndividus().Count;
                 nbreTotalLogement += service.GetAllLogements().Count;
                 nbreTotalMenages += service.GetAllMenages().Count;
-                nbreLogements = nbreLogements + service.GetAllLogementIndNotFinish().Count;
-                nbreMenages += service.GetAllMenageNotFinish().Count;
-                nbreIndividus += service.GetAllIndividuNotFinish().Count;
+                nbreLogements = nbreLogements + service.GetAllLogementIndNonTermines().Count;
+                nbreMenages += service.GetAllMenageNonTermine().Count;
+                nbreIndividus += service.GetAllIndividuNonTermine().Count;
                 nbreLogementsOccupantsAbsents += service.GetAllLogementOccupantAbsent().Count;
                 notFinishObject += (nbreLogements + nbreMenages + nbreIndividus);
             }
@@ -1808,9 +1970,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             foreach (SdeModel sd in listOfSdes)
             {
                 service = new SqliteReader(Utilities.getConnectionString(path, sd.SdeId));
-                logements = service.GetAllLogementIndNotFinish();
-                menages = service.GetAllMenageNotFinish();
-                individus = service.GetAllIndividuNotFinish();
+                logements = service.GetAllLogementIndNonTermines();
+                menages = service.GetAllMenageNonTermine();
+                individus = service.GetAllIndividuNonTermine();
                 report = new TableVerificationModel();
                 report.Type = "" + sd.SdeId;
                 report.ID = lastId + 1;
@@ -1955,7 +2117,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             foreach (SdeModel sd in listOfSdes)
             {
                 service = new SqliteReader(Utilities.getConnectionString(path, sd.SdeId));
-                menages = service.GetAllMenageNotFinish();
+                menages = service.GetAllMenageNonTermine();
                 report = new TableVerificationModel();
                 report.Type = "" + sd.SdeId;
                 report.ID = lastId + 1;
@@ -2101,7 +2263,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             {
                 service = new SqliteReader(Utilities.getConnectionString(path, sd.SdeId));
                 individus = new List<IndividuModel>();
-                individus = service.GetAllIndividuNotFinish();
+                individus = service.GetAllIndividuNonTermine();
                 report = new TableVerificationModel();
                 report.Type = "" + sd.SdeId;
                 report.ID = lastId + 1;
@@ -2948,6 +3110,42 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #endregion
 
+        /// <summary>
+        /// Retourne le score en fonction de la question
+        /// </summary>
+        /// <param name="score"></param>
+        /// <param name="reponse"></param>
+        /// <param name="type_question"></param>
+        /// <returns></returns>
+        public static int getScore(int score, ReponseModel reponse,int type_question)
+        {
+            int note=0;
+            if (reponse != null)
+            {
+                if (type_question == (int)Constant.RapportTypeQuestion.question_4)
+                {
+                    if (Convert.ToInt32(reponse.CodeReponse) == 1)
+                        note= score+2;
+                    if (Convert.ToInt32(reponse.CodeReponse) == 2)
+                        note = score + 0;
+                    if (Convert.ToInt32(reponse.CodeReponse) == 3)
+                        note = score + 1;
+                    if (Convert.ToInt32(reponse.CodeReponse) == 4)
+                        note = score - 1;
+                }
+                else
+                {
+                    if (Convert.ToInt32(reponse.CodeReponse) == 1)
+                        note = score + 1;
+                    if (Convert.ToInt32(reponse.CodeReponse) == 2)
+                        note = score;
+                    if (Convert.ToInt32(reponse.CodeReponse) == 3)
+                        note = score + 2;
+                }
+                return note;
+            }
+            return 0;
+        }
 
     }
 }

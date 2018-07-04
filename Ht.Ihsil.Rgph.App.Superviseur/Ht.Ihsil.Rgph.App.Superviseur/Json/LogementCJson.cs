@@ -30,5 +30,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public string longitude { get; set; }
         public string codeAgentRecenceur { get; set; }
         public List<IndividuJson> individus { get; set; }
+        public bool verified { get; set; }
     }
 }

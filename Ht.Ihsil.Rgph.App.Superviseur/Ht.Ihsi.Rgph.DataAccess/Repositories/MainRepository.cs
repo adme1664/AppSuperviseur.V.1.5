@@ -386,6 +386,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
         private GenericRepository<tbl_categorie_question> _mCategorieQuestionRepository;
         private GenericRepository<tbl_personnel> _mPersonnelRepository;
         private GenericRepository<tbl_rapportrar> _mRapportARRepository;
+        private GenericRepository<tbl_rapportfinal> _mRapportFinalRepository;
         #endregion
 
         #region PROPERTIES MOBILE
@@ -399,6 +400,18 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
                     _mRapportARRepository = new GenericRepository<tbl_rapportrar>(this._genericContext);
                 }
                 return this._mRapportARRepository;
+            }
+
+        }
+        public GenericRepository<tbl_rapportfinal> MRapportFinalRepository
+        {
+            get
+            {
+                if (this._mRapportFinalRepository == null)
+                {
+                    _mRapportFinalRepository = new GenericRepository<tbl_rapportfinal>(this._genericContext);
+                }
+                return this._mRapportFinalRepository;
             }
 
         }

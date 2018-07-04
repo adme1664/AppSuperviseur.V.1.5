@@ -11,7 +11,7 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
    {
 
         #region CONTREENQUETE
-       void saveContreEnquete(Tbl_ContreEnquete ce);
+       Tbl_ContreEnquete saveContreEnquete(Tbl_ContreEnquete ce);
        bool updateContreEnquete(Tbl_ContreEnquete ce);
        Tbl_ContreEnquete getContreEnquete(int batimentId, string sdeId);
        Tbl_ContreEnquete getContreEnquete(long id, string sdeId);

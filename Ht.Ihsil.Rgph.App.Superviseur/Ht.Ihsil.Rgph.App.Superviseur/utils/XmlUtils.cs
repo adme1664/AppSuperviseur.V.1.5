@@ -48,6 +48,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return null;
         }
+
         public string getAdrServer()
         {
             if (element != null)
@@ -104,6 +105,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return false;
         }
+        public bool updateSemaineContreEnquete(int id, string statut)
+        {
+            if (element != null)
+            {
+                XElement semaines = element.Element("contreenquete");
+                foreach (var s in semaines.Elements("semaine"))
+                {
+                    if ((int)s.Attribute("id") == id)
+                    {
+                        s.SetAttributeValue("value", statut);
+                    }                    
+                }
+                element.Save(uri);
+                return true;
+            }
+            return false;
+        }
 
         public static string GetXMLFromObject(object o)
         {
@@ -129,6 +147,28 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 sw.Close();
                 tw.Close();
             }
+        }
+
+        public List<KeyValue> getSemaineOfContreEnquete()
+        {
+            List<KeyValue> listof = new List<KeyValue>();
+            try
+            {
+                if (element != null)
+                {
+                    XElement contreEnquete = element.Element("contreenquete");
+                    foreach (var c in contreEnquete.Elements("semaine"))
+                    {
+                        KeyValue val = new KeyValue((int)c.Attribute("id"), (string)c.Attribute("value"));
+                        listof.Add(val);
+                    }
+                }
+            }
+            catch(Exception)
+            {
+
+            }
+            return listof;
         }
 
         #region RAPPORT DEROULEMENT COLLECTE

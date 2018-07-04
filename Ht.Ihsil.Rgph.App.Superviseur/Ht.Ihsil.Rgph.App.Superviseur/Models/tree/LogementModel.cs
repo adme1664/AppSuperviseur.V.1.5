@@ -35,6 +35,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public bool IsContreEnqueteMade { get; set; }
         public short NbrTentative { get; set; }
         public string CodeAgentRecenceur { get; set; }
+        public long IsVerified { get; set; }
 
 
 
@@ -42,6 +43,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public string Header { get; set; }
         public string RecBatiment { get; set; }
         public List<MenageModel> Menages { get; set; }
+        public List<IndividuModel> Individus { get; set; }
         public int TypeContreEnquete { get; set; }
    }
 }

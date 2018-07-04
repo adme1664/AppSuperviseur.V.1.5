@@ -1,5 +1,6 @@
 ﻿using Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities;
 using Ht.Ihsi.Rgph.Logging.Logs;
+using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
 using Ht.Ihsil.Rgph.App.Superviseur.services;
 using Ht.Ihsil.Rgph.App.Superviseur.utils;
@@ -32,7 +33,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
     public partial class frm_pop_up_transfert : Window
     {
         private static string MAIN_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Data\Databases\";
-        private static string TEMP_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Temp\";
+        private static string TEMP_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Temp";
         private static string BACKUP_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Backup\";
         private static string APP_DIRECTORY_PATH = AppDomain.CurrentDomain.BaseDirectory;
         private static string CLASSNAME = "frm_pop_up_transfert";
@@ -40,6 +41,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         BackgroundWorker bckw;
         SqliteDataReaderService service;
         ISqliteReader reader = null;
+        ISqliteDataWriter writer = null;
         IMdfService mdfService;
         Logger log;
         ConfigurationService settings = null;
@@ -62,7 +64,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             log = new Logger();
             mdfService = new MdfService();
             typeTransfert = type;
-            if(typeTransfert==Constant.TRANSFERT_MOBILE)
+            if (typeTransfert == Constant.TRANSFERT_MOBILE)
                 grpTransfert.Dispatcher.BeginInvoke((Action)(() => grpTransfert.Header = "Transfè k ap fèt sou odinatè sipèvizè a."));
             else
             {
@@ -125,25 +127,57 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             //
                             if (Directory.GetDirectories(TEMP_DATABASE_PATH).Length != 0)
                             {
-                                TEMP_DATABASE_PATH = TEMP_DATABASE_PATH + @"\\rgph_db";
+                                TEMP_DATABASE_PATH = TEMP_DATABASE_PATH + @"\rgph_db\";
                             }
 
                             //
                             string[] files = Directory.GetFiles(TEMP_DATABASE_PATH);
+                            
                             foreach (string f in files)
                             {
-                                string fileName = System.IO.Path.GetFileName(f);
+                                string fileName = "temp";
+                                //Creation d'un repoertoire data dans temp
+                                string tempData = TEMP_DATABASE_PATH + @"\data\";
+                                if (!Directory.Exists(tempData))
+                                {
+                                    Directory.CreateDirectory(tempData);
+                                }
+                                //
+                                string tempFileName = System.IO.Path.Combine(tempData, fileName + ".SQLITE");
+                                System.IO.File.Copy(f, tempFileName, true);
+                                
                                 string destFileName = System.IO.Path.Combine(db_backup, fileName + "_" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".SQLITE");
+                                //Get all the data in the temporary database 
+                                reader = new SqliteReader(Utilities.getConnectionString(tempData, fileName));
+                                List<BatimentModel> batimentsFromMobile = reader.GetAllBatimentModel();
+                                //BatimentDataMobile data = reader.GetAllBatiments();
+                                ISqliteReader readerFromSde = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeId));
+                                List<BatimentModel> batimentsVerifiedFromSde = readerFromSde.GetAllBatimentVerifies();
+                                //Create the writer to write in sqlite file
+                                writer = new SqliteDataWriter(tempData, fileName);
+                                foreach (BatimentModel bat in batimentsFromMobile)
+                                {
+                                    if (Utilities.isBatimentExistInList(batimentsVerifiedFromSde, bat) == true)
+                                    writer.changeToVerified<BatimentModel>(bat, bat.SdeId,tempData);
+                                }
+                                //
                                 System.IO.File.Copy(f, destFileName, true);
                                 if (!Directory.Exists(MAIN_DATABASE_PATH))
                                 {
                                     Directory.CreateDirectory(MAIN_DATABASE_PATH);
                                 }
                                 destFileName = System.IO.Path.Combine(MAIN_DATABASE_PATH, sdeId + ".SQLITE");
+                                FileInfo file = new FileInfo(destFileName);
+                                log.Info("Length:" + file.Length);
                                 if (!System.IO.File.Exists(destFileName))
                                 {
                                     System.IO.File.Move(f, destFileName);
                                 }
+                                //else
+                                //{
+                                //    //Mise a jour sur fichier
+                                //    updateDataInFile(data,sdeId);
+                                //}
                                 else
                                 {
                                     System.IO.File.Copy(f, destFileName, true);
@@ -181,10 +215,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             }
 
                             //
+                            //Envoie du fichier vers la tablete apres les modifications et les ajouts
+                            //pushFile();
+                            //
                             prgb_trans_pda.Dispatcher.BeginInvoke((Action)(() => prgb_trans_pda.Value = 100));
                             lbl_trans.Dispatcher.BeginInvoke((Action)(() => lbl_trans.Content = "Transfè a fini. "));
-                            this.Dispatcher.BeginInvoke((Action)(() =>  this.Close()));
-                         }
+                            this.Dispatcher.BeginInvoke((Action)(() => this.Close()));
+                        }
                         else
                         {
                             MessageBox.Show(Constant.MSG_FICHIER_PAS_COPIE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -231,7 +268,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             }
             catch (Exception ex)
             {
-                log.Info("Classname/"+CLASSNAME+"/Method/"+methodName+"=>Error:" + ex.Message);
+                log.Info("Classname/" + CLASSNAME + "/Method/" + methodName + "=>Error:" + ex.Message);
             }
             finally
             {
@@ -366,7 +403,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         t = new Thread(ths);
                         t.Start();
                     }
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -425,6 +462,118 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     if (!proc.HasExited)
                     {
                         proc.Kill();
+                    }
+                }
+            }
+        }
+
+        public void updateDataInFile(BatimentDataMobile data, string sdeId)
+        {
+            reader = new SqliteReader(Utilities.getConnectionString(Users.users.DatabasePath, sdeId));
+            List<BatimentModel> batimentsAlreadySaves = reader.GetAllBatimentModel();
+            foreach (BatimentModel b in data.Batiments)
+            {
+                if (Utilities.isBatimentExistInList(batimentsAlreadySaves, b) == false)
+                {
+                    bool result = writer.insertBatiment(EntityMapper.mapTo(b));
+                    if (result == true)
+                    {
+                        if (b.Logement != null)
+                        {
+                            foreach (LogementModel lg in b.Logement)
+                            {
+                                result = writer.insertLogement(EntityMapper.mapTo(lg));
+                                if (result == true)
+                                {
+                                    //Si c'est logement individuel
+                                    if (lg.Menages != null)
+                                    {
+                                        foreach (MenageModel m in lg.Menages)
+                                        {
+                                            result = writer.insertMenage(EntityMapper.mapTo(m));
+                                            if (result == true)
+                                            {
+                                                foreach (EmigreModel em in m.Emigre)
+                                                {
+                                                    writer.insertEmigre(em);
+                                                }
+                                                foreach (DecesModel dec in m.Deces)
+                                                {
+                                                    writer.insertDeces(dec);
+                                                }
+                                                foreach (IndividuModel ind in m.Individus)
+                                                {
+                                                    writer.insertIndividu(ind);
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        if (lg.Individus != null)
+                                        {
+                                            foreach (IndividuModel ind in lg.Individus)
+                                            {
+                                                writer.insertIndividu(ind);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //Si on modifie les batiments
+                else
+                {
+                    bool result = writer.updateBatiment(EntityMapper.mapTo(b));
+                    if (result == true)
+                    {
+                        if (b.Logement != null)
+                        {
+                            foreach (LogementModel lg in b.Logement)
+                            {
+                                result = writer.updateLogement(EntityMapper.mapTo(lg));
+                                if (result == true)
+                                {
+                                    //Si c'est logement individuel
+                                    if (lg.Menages != null)
+                                    {
+                                        foreach (MenageModel m in lg.Menages)
+                                        {
+                                            result = writer.updateMenage(EntityMapper.mapTo(m));
+                                            if (result == true)
+                                            {
+                                                foreach (EmigreModel em in m.Emigre)
+                                                {
+                                                    writer.updateEmigre(em);
+                                                }
+                                                foreach (DecesModel dec in m.Deces)
+                                                {
+                                                    writer.updateDeces(dec);
+                                                }
+                                                foreach (IndividuModel ind in m.Individus)
+                                                {
+                                                    writer.updateIndividu(ind);
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        if (lg.Individus != null)
+                                        {
+                                            foreach (IndividuModel ind in lg.Individus)
+                                            {
+                                                writer.updateIndividu(ind);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

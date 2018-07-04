@@ -26,6 +26,7 @@ using System.Threading;
 using Ht.Ihsil.Rgph.App.Superviseur.Exceptions;
 using Ht.Ihsil.Rgph.App.Superviseur.Mapper;
 using Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete;
+using System.IO;
 
 namespace Ht.Ihsil.Rgph.App.Superviseur.views
 {
@@ -48,6 +49,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         TreeViewItem getTreeviewItem;
         string raison = "";
         bool isButtonValidateClick = false;
+        string pathDefaultConfigurationFile = AppDomain.CurrentDomain.BaseDirectory + @"App_data\";
+        string file = "";
+        XmlUtils configuration = null;
+        ISqliteReader reader = null;
+        ISqliteDataWriter writer = null;
+        string sde;
         #endregion
 
         #region PROPERTIES
@@ -72,6 +79,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             model = new TreeViewModel(sdeModel);
             base.DataContext = model;
             sw = new SqliteDataWriter();
+            file = pathDefaultConfigurationFile + "contreenquete.xml";
+            configuration = new XmlUtils(file);
+
         }
         #endregion
 
@@ -310,10 +320,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 ce.NomSuperviseur = Users.users.Nom;
                                 ce.PrenomSuperviseur = Users.users.Prenom;
                                 ce.ModelTirage = 1;
-                                ce.CodeDistrict = "007-098-789";
+                                ce.CodeDistrict = batItem.DistrictId;
                                 ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.BatimentVide);
                                 ce.DateDebut = DateTime.Now.ToString();
-                                ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
+                                ce.Statut = (int)Constant.StatutContreEnquete.Selectionee;
+                                //ce.CodeSuperviseur = Users.users.CodeUtilisateur;
                                 service_ce.saveContreEnquete(ce);
                                 BatimentCEModel bat = new BatimentCEModel();
                                 bat.BatimentId = Convert.ToInt32(batItem.BatimentId);
@@ -400,16 +411,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             if (service_ce.isBatimentExist(Convert.ToInt32(batiment.BatimentId), batiment.SdeId) == false)
                             {
                                 BatimentCEModel b = new BatimentCEModel();
-                                ContreEnqueteModel ce = new ContreEnqueteModel();
-                                ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                ce.SdeId = batiment.SdeId;
-                                ce.NomSuperviseur = Users.users.Nom;
-                                ce.PrenomSuperviseur = Users.users.Prenom;
-                                ce.ModelTirage = 1;
-                                ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementCollectif);
-                                ce.DateDebut = DateTime.Now.ToString();
-                                ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
-                                service_ce.saveContreEnquete(ce);
                                 b.BatimentId = Convert.ToInt32(batiment.BatimentId);
                                 b.SdeId = batiment.SdeId;
                                 b.Qrgph = batiment.Qrgph;
@@ -434,7 +435,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                         log.Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
                                         log.Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre);
                                         service_ce.saveLogementCE(log);
-
+                                        //Creation de la contreenquete
+                                        ContreEnqueteModel ce = new ContreEnqueteModel();
+                                        ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                        ce.LogeId = log.LogeId;
+                                        ce.SdeId = batiment.SdeId;
+                                        ce.NomSuperviseur = Users.users.Nom;
+                                        ce.PrenomSuperviseur = Users.users.Prenom;
+                                        ce.ModelTirage = 1;
+                                        ce.CodeDistrict = batiment.DistrictId;
+                                        ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementCollectif);
+                                        ce.DateDebut = DateTime.Now.ToString();
+                                        //ce.Termine = (int)Constant.StatutContreEnquete.Non_Effectue;
+                                        ce.Statut = (int)Constant.StatutContreEnquete.Selectionee;
+                                        ce = service_ce.saveContreEnquete(ce);
+                                        //Si le logement contient des individus
                                         if (logement.QlcTotalIndividus != 0)
                                         {
                                             List<IndividuModel> listOfInds = service.Sr.GetIndividuByLoge(logement.LogeId);
@@ -536,42 +551,56 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             {
                                 if (Convert.ToInt32(batiment.BatimentId) != 0)
                                 {
-                                        BatimentCEModel b = new BatimentCEModel();
-                                        ContreEnqueteModel ce = new ContreEnqueteModel();
-                                        ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                        ce.SdeId = batiment.SdeId;
-                                        ce.NomSuperviseur = Users.users.Nom;
-                                        ce.PrenomSuperviseur = Users.users.Prenom;
-                                        ce.ModelTirage = 1;
-                                        ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementInvididuelVide);
-                                        ce.DateDebut = DateTime.Now.ToString();
-                                        ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
-                                        service_ce.saveContreEnquete(ce);
-                                        b.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                        b.SdeId = batiment.SdeId;
-                                        b.Qrgph = batiment.Qrgph;
-                                        b.Qrec = batiment.Qrec;
-                                        b.Qhabitation = batiment.Qhabitation;
-                                        b.Qlocalite = batiment.Qlocalite;
-                                        b.DeptId = batiment.DeptId;
-                                        b.District = batiment.DistrictId;
-                                        b.ComId = batiment.ComId;
-                                        b.VqseId = batiment.VqseId;
-                                        service_ce.saveBatiment(b);
-                                        if (batiment.Logement.Count() != 0)
+                                    BatimentCEModel b = new BatimentCEModel();
+                                    //ContreEnqueteModel ce = new ContreEnqueteModel();
+                                    //ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                    //ce.SdeId = batiment.SdeId;
+                                    //ce.NomSuperviseur = Users.users.Nom;
+                                    //ce.PrenomSuperviseur = Users.users.Prenom;
+                                    //ce.ModelTirage = 1;
+                                    //ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementInvididuelVide);
+                                    //ce.DateDebut = DateTime.Now.ToString();
+                                    //ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
+                                    //service_ce.saveContreEnquete(ce);
+                                    b.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                    b.SdeId = batiment.SdeId;
+                                    b.Qrgph = batiment.Qrgph;
+                                    b.Qrec = batiment.Qrec;
+                                    b.Qhabitation = batiment.Qhabitation;
+                                    b.Qlocalite = batiment.Qlocalite;
+                                    b.DeptId = batiment.DeptId;
+                                    b.District = batiment.DistrictId;
+                                    b.ComId = batiment.ComId;
+                                    b.VqseId = batiment.VqseId;
+                                    service_ce.saveBatiment(b);
+                                    if (batiment.Logement.Count() != 0)
+                                    {
+                                        foreach (LogementModel logement in batiment.Logement)
                                         {
-                                            foreach (LogementModel logement in batiment.Logement)
-                                            {
-                                                LogementCEModel log = new LogementCEModel();
-                                                log.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                                log.SdeId = batiment.SdeId;
-                                                log.LogeId = logement.LogeId;
-                                                log.QlCategLogement = Convert.ToByte(logement.QlCategLogement);
-                                                log.Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
-                                                log.Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre.ToString());
-                                                service_ce.saveLogementCE(log);
-                                            }
-                                        }                                   
+                                            LogementCEModel log = new LogementCEModel();
+                                            log.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                            log.SdeId = batiment.SdeId;
+                                            log.LogeId = logement.LogeId;
+                                            log.QlCategLogement = Convert.ToByte(logement.QlCategLogement);
+                                            log.Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
+                                            log.Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre.ToString());
+                                            service_ce.saveLogementCE(log);
+                                            //Creation de la contreenquete
+                                            ContreEnqueteModel ce = new ContreEnqueteModel();
+                                            ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                            ce.LogeId = log.LogeId;
+                                            ce.SdeId = batiment.SdeId;
+                                            ce.NomSuperviseur = Users.users.Nom;
+                                            ce.PrenomSuperviseur = Users.users.Prenom;
+                                            ce.ModelTirage = 1;
+                                            ce.CodeDistrict = batiment.DistrictId;
+                                            ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementInvididuelVide);
+                                            ce.DateDebut = DateTime.Now.ToString();
+                                            //ce.Termine = (int)Constant.StatutContreEnquete.Selectionee;
+                                            ce.Statut = (int)Constant.StatutContreEnquete.Selectionee;
+                                            ce = service_ce.saveContreEnquete(ce);
+                                        }
+                                    }
                                 }
                                 resultat = true;
                             }
@@ -650,42 +679,56 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             {
                                 //if (service_ce.isBatimentExist(Convert.ToInt32(batiment.BatimentId), batiment.SdeId) == false)
                                 //{
-                                    BatimentCEModel b = new BatimentCEModel();
-                                    ContreEnqueteModel ce = new ContreEnqueteModel();
-                                    ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                    ce.SdeId = batiment.SdeId;
-                                    ce.NomSuperviseur = Users.users.Nom;
-                                    ce.PrenomSuperviseur = Users.users.Prenom;
-                                    ce.ModelTirage = 1;
-                                    ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementOccupantAbsent);
-                                    ce.DateDebut = DateTime.Now.ToString();
-                                    ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
-                                    service_ce.saveContreEnquete(ce);
-                                    b.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                    b.SdeId = batiment.SdeId;
-                                    b.Qrgph = batiment.Qrgph;
-                                    b.Qrec = batiment.Qrec;
-                                    b.Qhabitation = batiment.Qhabitation;
-                                    b.Qlocalite = batiment.Qlocalite;
-                                    b.DeptId = batiment.DeptId;
-                                    b.District = batiment.DistrictId;
-                                    b.ComId = batiment.ComId;
-                                    b.VqseId = batiment.VqseId;
-                                    service_ce.saveBatiment(b);
-                                    if (batiment.Logement.Count() != 0)
+                                BatimentCEModel b = new BatimentCEModel();
+                                //ContreEnqueteModel ce = new ContreEnqueteModel();
+                                //ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                //ce.SdeId = batiment.SdeId;
+                                //ce.NomSuperviseur = Users.users.Nom;
+                                //ce.PrenomSuperviseur = Users.users.Prenom;
+                                //ce.ModelTirage = 1;
+                                //ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementOccupantAbsent);
+                                //ce.DateDebut = DateTime.Now.ToString();
+                                //ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
+                                //service_ce.saveContreEnquete(ce);
+                                b.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                b.SdeId = batiment.SdeId;
+                                b.Qrgph = batiment.Qrgph;
+                                b.Qrec = batiment.Qrec;
+                                b.Qhabitation = batiment.Qhabitation;
+                                b.Qlocalite = batiment.Qlocalite;
+                                b.DeptId = batiment.DeptId;
+                                b.District = batiment.DistrictId;
+                                b.ComId = batiment.ComId;
+                                b.VqseId = batiment.VqseId;
+                                service_ce.saveBatiment(b);
+                                if (batiment.Logement.Count() != 0)
+                                {
+                                    foreach (LogementModel logement in batiment.Logement)
                                     {
-                                        foreach (LogementModel logement in batiment.Logement)
-                                        {
-                                            LogementCEModel log = new LogementCEModel();
-                                            log.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                            log.SdeId = batiment.SdeId;
-                                            log.LogeId = logement.LogeId;
-                                            log.QlCategLogement = Convert.ToByte(logement.QlCategLogement);
-                                            log.Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
-                                            log.Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre.ToString());
-                                            service_ce.saveLogementCE(log);
-                                        }
+                                        LogementCEModel log = new LogementCEModel();
+                                        log.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                        log.SdeId = batiment.SdeId;
+                                        log.LogeId = logement.LogeId;
+                                        log.QlCategLogement = Convert.ToByte(logement.QlCategLogement);
+                                        log.Qlin2StatutOccupation = Convert.ToByte(logement.Qlin2StatutOccupation);
+                                        log.Qlin1NumeroOrdre = Convert.ToByte(logement.Qlin1NumeroOrdre.ToString());
+                                        service_ce.saveLogementCE(log);
+                                        //Creation de la contreenquete
+                                        ContreEnqueteModel ce = new ContreEnqueteModel();
+                                        ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                        ce.LogeId = log.LogeId;
+                                        ce.SdeId = batiment.SdeId;
+                                        ce.NomSuperviseur = Users.users.Nom;
+                                        ce.PrenomSuperviseur = Users.users.Prenom;
+                                        ce.ModelTirage = 1;
+                                        ce.CodeDistrict = batiment.DistrictId;
+                                        ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementOccupantAbsent);
+                                        ce.DateDebut = DateTime.Now.ToString();
+                                        //ce.Termine = (int)Constant.StatutContreEnquete.Selectionee;
+                                        ce.Statut = (int)Constant.StatutContreEnquete.Selectionee;
+                                        ce = service_ce.saveContreEnquete(ce);
                                     }
+                                }
                                 //}
                                 //else
                                 //{
@@ -734,9 +777,203 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             bckw.RunWorkerAsync();
         }
 
-        private void cm_batiments_menaj_Click(object sender, RoutedEventArgs e)
+        #region BATIMAN KI GEN MENNAJ
+        //private void cm_batiments_menaj_Click(object sender, RoutedEventArgs e)
+        //{
+        //    bool resultat = false;
+        //    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = true));
+        //    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "N'ap chèche batiman ki gen lojman ak menaj ladanl."));
+        //    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = true));
+        //    if (GetTreeviewItem == null)
+        //    {
+        //        MessageBox.Show("Ou dwe chwazi yon SDE.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        //        busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+        //        waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+        //    }
+        //    else
+        //    {
+        //        SdeViewModel _sde = GetTreeviewItem.DataContext as SdeViewModel;
+        //        List<BatimentModel> listOfBat = new List<BatimentModel>();
+        //        bckw = new BackgroundWorker { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+        //        bckw.DoWork += (s, args) =>
+        //        {
+        //            for (int i = 0; i <= 100; i += 10)
+        //            {
+        //                Thread.Sleep(1000);
+        //                bckw.ReportProgress(i);
+        //            }
+        //        };
+        //        bckw.ProgressChanged += (s, args) =>
+        //        {
+        //            if (args.ProgressPercentage == 20)
+        //            {
+        //                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Rechèch la ap fèt"));
+        //                service_ce = new ContreEnqueteService(_sde.SdeName);
+        //                listOfBat = service_ce.getBatimentWithLogInd();
+        //            }
+        //            if (args.ProgressPercentage == 30)
+        //            {
+        //                try
+        //                {
+        //                    if (listOfBat.Count < 3)
+        //                    {
+        //                        throw new MessageException("Pa gen ase batiman. Dwe gen pou pi piti 3 batiman.");
+        //                    }
+        //                    foreach (BatimentModel batiment in listOfBat)
+        //                    {
+        //                        if (Convert.ToInt32(batiment.BatimentId) != 0)
+        //                        {
+        //                            //if (service_ce.isBatimentExist(Convert.ToInt32(batiment.BatimentId), batiment.SdeId) == false)
+        //                            //{
+        //                                BatimentCEModel b = new BatimentCEModel();                                        
+        //                                b.BatimentId = Convert.ToInt32(batiment.BatimentId);
+        //                                b.SdeId = batiment.SdeId;
+        //                                b.Qrgph = batiment.Qrgph;
+        //                                b.Qrec = batiment.Qrec;
+        //                                b.Qadresse = batiment.Qadresse;
+        //                                b.Qhabitation = batiment.Qhabitation;
+        //                                b.Qlocalite = batiment.Qlocalite;
+        //                                service_ce.saveBatiment(b);
+        //                                if (batiment.Logement.Count() != 0)
+        //                                {
+        //                                    foreach (LogementModel logement in batiment.Logement)
+        //                                    {
+        //                                        LogementCEModel log = new LogementCEModel();
+        //                                        log.BatimentId = Convert.ToInt32(batiment.BatimentId);
+        //                                        log.SdeId = batiment.SdeId;
+        //                                        log.LogeId = logement.LogeId;
+        //                                        log.QlCategLogement = Convert.ToInt32(logement.QlCategLogement);
+        //                                        log.Qlin2StatutOccupation = Convert.ToInt32(logement.Qlin2StatutOccupation);
+        //                                        log.Qlin1NumeroOrdre = Convert.ToInt32(logement.Qlin1NumeroOrdre);
+        //                                        service_ce.saveLogementCE(log);
+        //                                        if (logement.Menages.Count() != 0)
+        //                                        {
+        //                                            foreach (MenageModel menages in logement.Menages)
+        //                                            {
+        //                                                MenageCEModel _men = new MenageCEModel();
+        //                                                _men.BatimentId = menages.BatimentId;
+        //                                                _men.SdeId = menages.SdeId;
+        //                                                _men.Qm1NoOrdre = Convert.ToInt32(menages.Qm1NoOrdre);
+        //                                                _men.MenageId = menages.MenageId;
+        //                                                _men.LogeId = menages.LogeId;
+        //                                                service_ce.saveMenageCE(_men);
+        //                                                //Creation de la contreenquete
+        //                                                ContreEnqueteModel ce = new ContreEnqueteModel();
+        //                                                ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
+        //                                                ce.LogeId = log.LogeId;
+        //                                                ce.MenageId = menages.MenageId;
+        //                                                ce.SdeId = batiment.SdeId;
+        //                                                ce.NomSuperviseur = Users.users.Nom;
+        //                                                ce.PrenomSuperviseur = Users.users.Prenom;
+        //                                                ce.ModelTirage = 1;
+        //                                                ce.CodeDistrict = batiment.DistrictId;
+        //                                                ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.BatimentVide);
+        //                                                ce.DateDebut = DateTime.Now.ToString();
+        //                                                ce.Termine = (int)Constant.StatutContreEnquete.Non_Termine;
+        //                                                ce = service_ce.saveContreEnquete(ce);
+
+        //                                                if (menages.Deces.Count() >= 1)
+        //                                                {
+        //                                                    foreach (DecesModel _deces in menages.Deces)
+        //                                                    {
+        //                                                        DecesCEModel _dec = new DecesCEModel();
+        //                                                        _dec.BatimentId = _deces.BatimentId;
+        //                                                        _dec.LogeId = _deces.LogeId;
+        //                                                        _dec.MenageId = _deces.MenageId;
+        //                                                        _dec.SdeId = menages.SdeId;
+        //                                                        _dec.Qd2NoOrdre = Convert.ToInt32(_deces.Qd2NoOrdre);
+        //                                                        _dec.DecesId = _deces.DecesId;
+        //                                                        service_ce.saveDecesCE(_dec);
+        //                                                    }
+        //                                                }
+        //                                                if (menages.Individus.Count() >= 1)
+        //                                                {
+        //                                                    foreach (IndividuModel _ind in menages.Individus)
+        //                                                    {
+        //                                                        IndividuCEModel ind = new IndividuCEModel();
+        //                                                        ind.BatimentId = _ind.BatimentId;
+        //                                                        ind.LogeId = _ind.LogeId;
+        //                                                        ind.SdeId = menages.SdeId;
+        //                                                        ind.MenageId = _ind.MenageId;
+        //                                                        ind.Qp1NoOrdre = Convert.ToInt32(_ind.Q1NoOrdre);
+        //                                                        ind.IndividuId = _ind.IndividuId;
+        //                                                        ind.Q2Nom = _ind.Qp2BNom;
+        //                                                        ind.Q3Prenom = _ind.Qp2APrenom;
+        //                                                        ind.Q5bAge = Convert.ToInt32(_ind.Qp5bAge);
+        //                                                        ind.Q2Nom = _ind.Qp2BNom;
+        //                                                        ind.Q3Prenom = _ind.Qp2APrenom;
+        //                                                        ind.Q3LienDeParente = Convert.ToInt32(_ind.Qp3LienDeParente);
+        //                                                        service_ce.saveIndividuCE(ind);
+        //                                                    }
+        //                                                }
+        //                                            }
+        //                                        }
+        //                                    }
+        //                                }
+        //                            //}
+        //                            //else
+        //                            //{
+        //                            //    MessageBox.Show("Ou gentan chwazi batiman sa yo.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        //                            //    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+        //                            //    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+        //                            //    resultat = false;
+        //                            //    break;
+        //                            //}
+        //                        }
+        //                        //resultat = false;
+        //                    }
+        //                    resultat = true;
+
+        //                }
+        //                catch (MessageException ex)
+        //                {
+        //                    MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        //                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+        //                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    resultat = false;
+        //                    log.Info("Error:" + ex.Message);
+        //                }
+        //                if (resultat == true)
+        //                {
+        //                    MessageBox.Show("Batiman yo anregistre avek siske.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+        //                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+        //                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+        //                }
+        //                else
+        //                {
+        //                    MessageBox.Show("Gen yon erè pandan operasyon an.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        //                    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+        //                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+        //                }
+
+        //            }
+        //        };
+        //        bckw.RunWorkerCompleted += (s, args) =>
+        //        {
+        //            if (args.Error != null)
+        //            {
+        //                MessageBox.Show("Gen yon erè pandan operasyon an.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+        //            }
+        //            busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+        //            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+        //        };
+        //        bckw.RunWorkerAsync();
+        //    }
+
+        //}
+        #endregion
+
+        private void semen1_Click(object sender, RoutedEventArgs e)
+        {
+            contreEnqueteLogementIndividuel(1, "false");
+        }
+        public void contreEnqueteLogementIndividuel(int id, string statut)
         {
             bool resultat = false;
+            List<BatimentModel> listOfBatimentNotInContreEnquete = new List<BatimentModel>();
             busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = true));
             busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "N'ap chèche batiman ki gen lojman ak menaj ladanl."));
             waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = true));
@@ -766,114 +1003,134 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                         busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "Rechèch la ap fèt"));
                         service_ce = new ContreEnqueteService(_sde.SdeName);
                         listOfBat = service_ce.getBatimentWithLogInd();
+
+                        //Verifier si les batiments sont deja selectionnes dans une contreenquete
+                        foreach (BatimentModel batiment in listOfBat)
+                        {
+                            if (service_ce.isBatimentExist(Convert.ToInt32(batiment.BatimentId), batiment.SdeId) == false)
+                            {
+                                listOfBatimentNotInContreEnquete.Add(batiment);
+                            }
+                        }
+
                     }
                     if (args.ProgressPercentage == 30)
                     {
                         try
                         {
-                            if (listOfBat.Count < 10)
+                            if (listOfBatimentNotInContreEnquete.Count < 3)
                             {
-                                throw new MessageException("Pa gen ase batiman. Dwe gen pou pi piti 10 batiman.");
+                                throw new MessageException("Pa gen ase batiman. Dwe gen pou pi piti 3 batiman.");
                             }
-                            foreach (BatimentModel batiment in listOfBat)
+                            foreach (BatimentModel batiment in listOfBatimentNotInContreEnquete)
                             {
                                 if (Convert.ToInt32(batiment.BatimentId) != 0)
                                 {
                                     //if (service_ce.isBatimentExist(Convert.ToInt32(batiment.BatimentId), batiment.SdeId) == false)
                                     //{
-                                        BatimentCEModel b = new BatimentCEModel();
-                                        ContreEnqueteModel ce = new ContreEnqueteModel();
-                                        ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                        ce.SdeId = batiment.SdeId;
-                                        ce.NomSuperviseur = Users.users.Nom;
-                                        ce.PrenomSuperviseur = Users.users.Prenom;
-                                        ce.ModelTirage = 1;
-                                        ce.TypeContreEnquete = Convert.ToInt32(Constant.TypeContrEnquete.LogementIndividuelMenage);
-                                        ce.DateDebut = DateTime.Now.ToString();
-                                        ce.Statut = (int)Constant.StatutContreEnquete.Non_Termine;
-                                        service_ce.saveContreEnquete(ce);
-                                        b.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                        b.SdeId = batiment.SdeId;
-                                        b.Qrgph = batiment.Qrgph;
-                                        b.Qrec = batiment.Qrec;
-                                        b.Qadresse = batiment.Qadresse;
-                                        b.Qhabitation = batiment.Qhabitation;
-                                        b.Qlocalite = batiment.Qlocalite;
-                                        service_ce.saveBatiment(b);
-                                        if (batiment.Logement.Count() != 0)
+                                    BatimentCEModel b = new BatimentCEModel();
+                                    b.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                    b.SdeId = Utilities.getSdeFormatWithDistrict(_sde.SdeName);
+                                    b.Qrgph = batiment.Qrgph;
+                                    b.Qrec = batiment.Qrec;
+                                    b.Qadresse = batiment.Qadresse;
+                                    b.Qhabitation = batiment.Qhabitation;
+                                    b.Qlocalite = batiment.Qlocalite;
+                                    service_ce.saveBatiment(b);
+                                    if (batiment.Logement.Count() != 0)
+                                    {
+                                        foreach (LogementModel logement in batiment.Logement)
                                         {
-                                            foreach (LogementModel logement in batiment.Logement)
+                                            LogementCEModel log = new LogementCEModel();
+                                            log.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                            log.SdeId = Utilities.getSdeFormatWithDistrict(_sde.SdeName);
+                                            log.LogeId = logement.LogeId;
+                                            log.QlCategLogement = Convert.ToInt32(logement.QlCategLogement);
+                                            log.Qlin2StatutOccupation = Convert.ToInt32(logement.Qlin2StatutOccupation);
+                                            log.Qlin1NumeroOrdre = Convert.ToInt32(logement.Qlin1NumeroOrdre);
+                                            service_ce.saveLogementCE(log);
+                                            if (logement.Menages.Count() != 0)
                                             {
-                                                LogementCEModel log = new LogementCEModel();
-                                                log.BatimentId = Convert.ToInt32(batiment.BatimentId);
-                                                log.SdeId = batiment.SdeId;
-                                                log.LogeId = logement.LogeId;
-                                                log.QlCategLogement = Convert.ToInt32(logement.QlCategLogement);
-                                                log.Qlin2StatutOccupation = Convert.ToInt32(logement.Qlin2StatutOccupation);
-                                                log.Qlin1NumeroOrdre = Convert.ToInt32(logement.Qlin1NumeroOrdre);
-                                                service_ce.saveLogementCE(log);
-                                                if (logement.Menages.Count() != 0)
+                                                foreach (MenageModel menages in logement.Menages)
                                                 {
-                                                    foreach (MenageModel menages in logement.Menages)
+                                                    MenageCEModel _men = new MenageCEModel();
+                                                    _men.BatimentId = menages.BatimentId;
+                                                    _men.SdeId = Utilities.getSdeFormatWithDistrict(_sde.SdeName);
+                                                    _men.Qm1NoOrdre = Convert.ToInt32(menages.Qm1NoOrdre);
+                                                    _men.MenageId = menages.MenageId;
+                                                    _men.LogeId = menages.LogeId;
+                                                    service_ce.saveMenageCE(_men);
+                                                    //Creation de la contreenquete
+                                                    ContreEnqueteModel ce = new ContreEnqueteModel();
+                                                    ce.BatimentId = Convert.ToInt32(batiment.BatimentId);
+                                                    ce.LogeId = log.LogeId;
+                                                    ce.MenageId = menages.MenageId;
+                                                    ce.SdeId = Utilities.getSdeFormatWithDistrict(_sde.SdeName);
+                                                    ce.NomSuperviseur = Users.users.Nom;
+                                                    ce.PrenomSuperviseur = Users.users.Prenom;
+                                                    ce.ModelTirage = 1;
+                                                    ce.CodeDistrict = batiment.DistrictId;
+                                                    ce.Statut = 1;
+                                                    ce.TypeContreEnquete = Convert.ToByte(Constant.TypeContrEnquete.LogementIndividuelMenage);
+                                                    ce.DateDebut = DateTime.Now.ToString();
+                                                    //ce.Termine = (int)Constant.StatutContreEnquete.Selectionee;
+                                                    ce.Statut = (int)Constant.StatutContreEnquete.Selectionee;
+                                                    ce = service_ce.saveContreEnquete(ce);
+
+                                                    if (menages.Deces.Count() >= 1)
                                                     {
-                                                        MenageCEModel _men = new MenageCEModel();
-                                                        _men.BatimentId = menages.BatimentId;
-                                                        _men.SdeId = menages.SdeId;
-                                                        _men.Qm1NoOrdre = Convert.ToInt32(menages.Qm1NoOrdre);
-                                                        _men.MenageId = menages.MenageId;
-                                                        _men.LogeId = menages.LogeId;
-                                                        service_ce.saveMenageCE(_men);
-                                                        if (menages.Desces.Count() >= 1)
+                                                        foreach (DecesModel _deces in menages.Deces)
                                                         {
-                                                            foreach (DecesModel _deces in menages.Desces)
-                                                            {
-                                                                DecesCEModel _dec = new DecesCEModel();
-                                                                _dec.BatimentId = _deces.BatimentId;
-                                                                _dec.LogeId = _deces.LogeId;
-                                                                _dec.MenageId = _deces.MenageId;
-                                                                _dec.SdeId = menages.SdeId;
-                                                                _dec.Qd2NoOrdre = Convert.ToInt32(_deces.Qd2NoOrdre);
-                                                                _dec.DecesId = _deces.DecesId;
-                                                                service_ce.saveDecesCE(_dec);
-                                                            }
+                                                            DecesCEModel _dec = new DecesCEModel();
+                                                            _dec.BatimentId = _deces.BatimentId;
+                                                            _dec.LogeId = _deces.LogeId;
+                                                            _dec.MenageId = _deces.MenageId;
+                                                            _dec.SdeId = Utilities.getSdeFormatWithDistrict(_sde.SdeName);
+                                                            _dec.Qd2NoOrdre = Convert.ToInt32(_deces.Qd2NoOrdre);
+                                                            _dec.DecesId = _deces.DecesId;
+                                                            service_ce.saveDecesCE(_dec);
                                                         }
-                                                        if (menages.Individus.Count() >= 1)
+                                                    }
+                                                    if (menages.Individus.Count() >= 1)
+                                                    {
+                                                        foreach (IndividuModel _ind in menages.Individus)
                                                         {
-                                                            foreach (IndividuModel _ind in menages.Individus)
-                                                            {
-                                                                IndividuCEModel ind = new IndividuCEModel();
-                                                                ind.BatimentId = _ind.BatimentId;
-                                                                ind.LogeId = _ind.LogeId;
-                                                                ind.SdeId = menages.SdeId;
-                                                                ind.MenageId = _ind.MenageId;
-                                                                ind.Qp1NoOrdre = Convert.ToInt32(_ind.Q1NoOrdre);
-                                                                ind.IndividuId = _ind.IndividuId;
-                                                                ind.Q2Nom = _ind.Qp2BNom;
-                                                                ind.Q3Prenom = _ind.Qp2APrenom;
-                                                                ind.Q5bAge = Convert.ToInt32(_ind.Qp5bAge);
-                                                                ind.Q2Nom = _ind.Qp2BNom;
-                                                                ind.Q3Prenom = _ind.Qp2APrenom;
-                                                                ind.Q3LienDeParente = Convert.ToInt32(_ind.Qp3LienDeParente);
-                                                                service_ce.saveIndividuCE(ind);
-                                                            }
+                                                            IndividuCEModel ind = new IndividuCEModel();
+                                                            ind.BatimentId = _ind.BatimentId;
+                                                            ind.LogeId = _ind.LogeId;
+                                                            ind.SdeId = Utilities.getSdeFormatWithDistrict(_sde.SdeName);
+                                                            ind.MenageId = _ind.MenageId;
+                                                            ind.Qp1NoOrdre = Convert.ToInt32(_ind.Q1NoOrdre);
+                                                            ind.IndividuId = _ind.IndividuId;
+                                                            ind.Q2Nom = _ind.Qp2BNom;
+                                                            ind.Q3Prenom = _ind.Qp2APrenom;
+                                                            ind.Q5bAge = Convert.ToInt32(_ind.Qp5bAge);
+                                                            ind.Q2Nom = _ind.Qp2BNom;
+                                                            ind.Q3Prenom = _ind.Qp2APrenom;
+                                                            ind.Q3LienDeParente = Convert.ToInt32(_ind.Qp3LienDeParente);
+                                                            service_ce.saveIndividuCE(ind);
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-                                    //}
-                                    //else
-                                    //{
-                                    //    MessageBox.Show("Ou gentan chwazi batiman sa yo.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                                    //    busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
-                                    //    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
-                                    //    resultat = false;
-                                    //    break;
-                                    //}
+                                    }
+
                                 }
-                                //resultat = false;
                             }
                             resultat = true;
+                            if (resultat == true)
+                            {
+                                configuration.updateSemaineContreEnquete(id, statut);
+                                if (id == 1)
+                                    _sde.Semaine1 = false;
+                                if (id == 2)
+                                    _sde.Semaine2 = false;
+                                if (id == 3)
+                                    _sde.Semaine3 = false;
+                            }
+
+
                         }
                         catch (MessageException ex)
                         {
@@ -912,17 +1169,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 };
                 bckw.RunWorkerAsync();
             }
-            //}
-            //catch (MessageException ex)
-            //{
-            //    MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
+        }
 
+        private void semen2_Click(object sender, RoutedEventArgs e)
+        {
+            contreEnqueteLogementIndividuel(2, "false");
+        }
 
+        private void semen3_Click(object sender, RoutedEventArgs e)
+        {
+            contreEnqueteLogementIndividuel(3, "false");
         }
         #endregion
 
@@ -1124,7 +1380,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             model.SdeId = menageDetails.Menage.SdeId;
                             model.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
                             model.IsFieldAllFilled = false;
-                            
+
                             result = sw.changeStatus<DecesModel>(model, model.SdeId);
                             //On garde une historique du retour;
                             confService = new ConfigurationService();
@@ -1150,7 +1406,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                             model.SdeId = menageDetails.Menage.SdeId;
                             model.Statut = Convert.ToByte(Constant.STATUT_MODULE_KI_MAL_RANPLI_2);
                             model.IsFieldAllFilled = false;
-                           
+
                             result = sw.changeStatus<EmigreModel>(model, model.SdeId);
                             //On garde une historique du retour;
                             confService = new ConfigurationService();
@@ -1293,6 +1549,124 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         {
 
         }
+
+        private void cm_duplicate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.GetTreeviewItem != null)
+                {
+                    SdeViewModel _sde = GetTreeviewItem.DataContext as SdeViewModel;
+                    reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, _sde.Sde.SdeId));
+                    writer = new SqliteDataWriter(_sde.Sde.SdeId);
+                    List<BatimentModel> batiments = reader.GetAllBatimentModel();
+                    foreach (BatimentModel b in batiments)
+                    {
+                        List<BatimentModel> batsDuplicate = reader.GetBatimentByRec(b.Qrec);
+                        if (batsDuplicate.Count >= 2)
+                        {
+                            for (int i = 1; i < batsDuplicate.Count; i++)
+                            {
+                                BatimentModel bd = batsDuplicate.ElementAt<BatimentModel>(i);
+                                bool result = writer.deleteBatiment(EntityMapper.mapTo(bd));
+                                if (result == true)
+                                    log.Info(" Batiment "+b.BatimentId+"Duplicate erase");
+                            }
+                        }
+                    }
+                    //Supprimer les logements
+                    List<LogementModel> logements = reader.GetAllLogements();
+                    foreach (LogementModel lg in logements)
+                    {
+                        List<LogementModel> logsDuplicate = reader.GetLogementsByNoOrdre(lg.BatimentId,lg.Qlin1NumeroOrdre);
+                        if (logsDuplicate.Count >= 2)
+                        {
+                            log.Info("Nombre pour batiments " + lg.BatimentId + ":" + logsDuplicate.Count);
+                            for (int i = 1; i < logsDuplicate.Count; i++)
+                            {
+                                LogementModel l = logsDuplicate.ElementAt<LogementModel>(i);
+                                bool result = writer.deleteLogement(EntityMapper.mapTo(l));
+                                if (result == true)
+                                    log.Info(" Batiement/"+l.BatimentId+"Logement/" + l.Qlin1NumeroOrdre + "Duplicate erase");
+                            }
+                        }
+                    }
+                    //Supprimer les menages
+                    List<MenageModel> menages = reader.GetAllMenages();
+                    foreach (MenageModel mn in menages)
+                    {
+                        List<MenageModel> menagesDuplicate = reader.GetMenagebyNumOrdre(mn.BatimentId,mn.LogeId,mn.Qm1NoOrdre);
+                        if (menagesDuplicate.Count >= 2)
+                        {
+                            log.Info("Nombre pour batiments " + mn.BatimentId + ":" + menagesDuplicate.Count);
+                            for (int i = 1; i < menagesDuplicate.Count; i++)
+                            {
+                                MenageModel l = menagesDuplicate.ElementAt<MenageModel>(i);
+                                bool result = writer.deleteMenage(EntityMapper.mapTo(l));
+                                if (result == true)
+                                    log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId +"Menage:"+l.Qm1NoOrdre);
+                            }
+                        }
+                    }
+                    //Supprimer les deces
+                    List<DecesModel> deces = reader.GetAllDeces();
+                    foreach (DecesModel dec in deces)
+                    {
+                        List<DecesModel> decesDuplicate = reader.GetDecesbyNumOrdre(dec.BatimentId,dec.LogeId,dec.MenageId,dec.Qd2NoOrdre);
+                        if (decesDuplicate.Count >= 2)
+                        {
+                            log.Info("Nombre pour batiments " + dec.BatimentId + ":" + decesDuplicate.Count);
+                            for (int i = 1; i < decesDuplicate.Count; i++)
+                            {
+                                DecesModel l = decesDuplicate.ElementAt<DecesModel>(i);
+                                bool result = writer.deleteDeces(EntityMapper.mapTo(l));
+                                if (result == true)
+                                    log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.MenageId+"Deces:"+l.Qd2NoOrdre);
+                            }
+                        }
+                    }
+                    //Supprimer les emigres
+                    List<EmigreModel> emigres = reader.GetAllEmigres();
+                    foreach (EmigreModel em in emigres)
+                    {
+                        List<EmigreModel> emigreDuplicate = reader.GetEmigrebyNumOrdre(em.BatimentId, em.LogeId, em.MenageId, em.Qn1numeroOrdre);
+                        if (emigreDuplicate.Count >= 2)
+                        {
+                            log.Info("Nombre pour batiments " + em.BatimentId + ":" + emigreDuplicate.Count);
+                            for (int i = 1; i < emigreDuplicate.Count; i++)
+                            {
+                                EmigreModel l = emigreDuplicate.ElementAt<EmigreModel>(i);
+                                bool result = writer.deleteEmigre(EntityMapper.mapTo(l));
+                                if (result == true)
+                                    log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.MenageId + "Emigre:" + l.Qn1numeroOrdre);
+                            }
+                        }
+                    }
+                    //Supprimer les individus
+                    List<IndividuModel> individus = reader.GetAllIndividus();
+                    foreach (IndividuModel ind in individus)
+                    {
+                        List<IndividuModel> individuDuplicate = reader.GetIndividuByNumOrdre(ind.BatimentId, ind.LogeId, ind.MenageId, ind.Q1NoOrdre);
+                        if (individuDuplicate.Count >= 2)
+                        {
+                            log.Info("Nombre pour batiments " + ind.BatimentId + ":" + individuDuplicate.Count);
+                            for (int i = 1; i < individuDuplicate.Count; i++)
+                            {
+                                IndividuModel l = individuDuplicate.ElementAt<IndividuModel>(i);
+                                bool result = writer.deleteIndividu(EntityMapper.mapTo(l));
+                                if (result == true)
+                                    log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.MenageId + "Individu:" + l.Q1NoOrdre);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
     }
 
 }

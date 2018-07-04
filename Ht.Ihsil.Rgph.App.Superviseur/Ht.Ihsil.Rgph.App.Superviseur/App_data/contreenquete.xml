@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<contreenquetes>
+  <contreenquete>
+    <semaine id="1" value="true"></semaine>
+    <semaine id="2" value="true"></semaine>
+    <semaine id="3" value="true"></semaine>
+  </contreenquete>
+</contreenquetes>

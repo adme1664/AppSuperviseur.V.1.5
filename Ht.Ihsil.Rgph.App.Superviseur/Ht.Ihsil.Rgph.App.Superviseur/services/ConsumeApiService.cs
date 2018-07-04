@@ -24,6 +24,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
            conf = new XmlUtils(file);
            string serverAdress = conf.getAdrServer();
            string url ="http://"+serverAdress+":8080/rgph/api/v1/management/";
+           //string url = "http://localhost:8082/rgph/api/v1/management/";
            client.BaseAddress = new Uri(url);
            client.DefaultRequestHeaders.Accept.Clear();
            client.DefaultRequestHeaders.Accept.Add(

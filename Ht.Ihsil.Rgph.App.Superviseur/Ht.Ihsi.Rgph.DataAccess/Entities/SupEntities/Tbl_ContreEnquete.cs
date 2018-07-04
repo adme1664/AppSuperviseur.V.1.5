@@ -25,5 +25,10 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.SupEntities
         public string DateFin { get; set; }
         public Nullable<long> Raison { get; set; }
         public Nullable<long> Statut { get; set; }
+        public Nullable<long> LogeId { get; set; }
+        public Nullable<long> MenageId { get; set; }
+        public Nullable<long> Termine { get; set; }
+        public Nullable<long> Validate { get; set; }
+        public Nullable<long> CodeSuperviseur { get; set; }
     }
 }

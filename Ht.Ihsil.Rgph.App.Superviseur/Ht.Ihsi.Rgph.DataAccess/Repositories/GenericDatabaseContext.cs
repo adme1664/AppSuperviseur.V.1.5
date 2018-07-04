@@ -32,7 +32,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
         public virtual DbSet<tbl_question> tbl_question { get; set; }
         public virtual DbSet<tbl_question_module> tbl_question_module { get; set; }
         public virtual DbSet<tbl_question_reponse> tbl_question_reponse { get; set; }
-        //public virtual DbSet<tbl_reponse> tbl_reponse { get; set; }
+        public virtual DbSet<tbl_rapportfinal> tbl_rapportfinal { get; set; }
+        public virtual DbSet<tbl_rapportrar> tbl_rapportrar { get; set; }
         public virtual DbSet<tbl_vqse> tbl_vqse { get; set; }
     }
 }

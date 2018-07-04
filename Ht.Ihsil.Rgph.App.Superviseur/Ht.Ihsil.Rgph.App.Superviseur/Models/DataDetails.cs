@@ -35,6 +35,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
             this.kesyon = q;
             this.repons = r;
         }
+        public DataDetails()
+        {
+
+        }
         public DataDetails(string q, string r,string k)
         {
             this.kesyon = q;

@@ -98,7 +98,7 @@
                                                         </Image>
                                                     </MenuItem.Icon>
                                                 </MenuItem>
-                                                <MenuItem Header="Chèche batiman ki gen menaj ki gen moun pou kont-ankèt" Name="cm_batiments_menaj" FontSize="12" FontWeight="Bold" Click="cm_batiments_menaj_Click">
+                                                <MenuItem Header="Chèche batiman ki gen menaj ki gen moun pou kont-ankèt"  Name="cm_batiments_menaj" FontSize="12" FontWeight="Bold">
                                                     <MenuItem.Icon>
                                                         <Image>
                                                             <Image.Source>
@@ -106,8 +106,20 @@
                                                             </Image.Source>
                                                         </Image>
                                                     </MenuItem.Icon>
+                                                    <MenuItem Header="Pou semènn 1" Name="semen1"  FontSize="12" Click="semen1_Click" IsEnabled="{Binding Path=Semaine1}" ></MenuItem>
+                                                    <MenuItem Header="Pou semènn 2" Name="semen2"  FontSize="12" Click="semen2_Click" IsEnabled="{Binding Path=Semaine2}"></MenuItem>
+                                                    <MenuItem Header="Pou semènn 3" Name="semen3"  FontSize="12" Click="semen3_Click" IsEnabled="{Binding Path=Semaine3}"></MenuItem>
                                                 </MenuItem>
                                                 <MenuItem Header="Transfere Sde a sou tablèt la" FontSize="12" FontWeight="Bold" Name="cm_transfert" Click="cm_transfert_Click">
+                                                    <MenuItem.Icon>
+                                                        <Image>
+                                                            <Image.Source>
+                                                                <BitmapImage UriSource="/images/trans1.png" />
+                                                            </Image.Source>
+                                                        </Image>
+                                                    </MenuItem.Icon>
+                                                </MenuItem>
+                                                <MenuItem Header="Korije batiman ki repete yo" FontSize="12" FontWeight="Bold" Name="cm_duplicate" Click="cm_duplicate_Click">
                                                     <MenuItem.Icon>
                                                         <Image>
                                                             <Image.Source>
@@ -288,6 +300,7 @@
     </xctk:BusyIndicator>
 
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         <Style x:Key="GridSplitterPreviewStyle" >
             <Setter Property="Control.Template">
                 <Setter.Value>

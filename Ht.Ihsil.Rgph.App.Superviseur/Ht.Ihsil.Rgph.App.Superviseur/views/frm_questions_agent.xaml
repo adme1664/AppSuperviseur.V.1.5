@@ -65,8 +65,8 @@
                     </Grid>
 
                 </GroupBox>
-                <Button HorizontalAlignment="Left" Name="btn_save" ToolTip="Enregistrer" Margin="0,447,0,0" VerticalAlignment="Top" Width="93" Height="31" Click="btn_save_Click">
-                    <Image Source="/images/save.png" x:Name="img_save" />
+                <Button HorizontalAlignment="Left" Name="btn_save" ToolTip="Enregistrer" Margin="0,447,0,0" VerticalAlignment="Top" Width="137" Height="31" Click="btn_save_Click" Content="Score">
+                    <!--<Image Source="/images/save.png" x:Name="img_save" />-->
                 </Button>
             </Grid>
 

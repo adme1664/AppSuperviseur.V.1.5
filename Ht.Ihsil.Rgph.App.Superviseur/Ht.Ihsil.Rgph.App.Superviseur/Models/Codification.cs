@@ -25,16 +25,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public int P12_2 { get; set; }
         public int P12_3 { get; set; }
         public int P12_4 { get; set; }
-
-        public int sommeP10PartiellementCodifie()
-        {
-            return P10_2 + P10_3;
-        }
-        public int sommeP12PartiellementCodifie()
-        {
-            return P12_2 + P12_3;
-        }
-
-        
+        public int SommeP10PartiellementCodifie { get;set;}
+        public int SommeP12PartiellementCodifie { get; set; }
+         
     }
 }

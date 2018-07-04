@@ -69,7 +69,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels.ContreEnquete
        protected override void LoadChildren()
        {
            this.Children.Clear();
-           BatimentCEModel bat = _service_ce.getBatiment(_contreEnquete.BatimentId.GetValueOrDefault(), _contreEnquete.SdeId);
+           string sde = Utilities.getSdeFormatWithDistrict(_contreEnquete.SdeId);
+           BatimentCEModel bat = _service_ce.getBatiment(_contreEnquete.BatimentId.GetValueOrDefault(), sde);
            bat.TypeContreEnquete = _contreEnquete.TypeContreEnquete.GetValueOrDefault();
            base.Children.Add(new BatimentCEViewModel(bat, this)); 
        }

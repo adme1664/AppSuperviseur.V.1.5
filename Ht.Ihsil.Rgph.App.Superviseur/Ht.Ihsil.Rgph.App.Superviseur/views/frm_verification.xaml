@@ -16,6 +16,8 @@
         </Style>
     </UserControl.Resources>
     <Grid>
+        <dx:LoadingDecorator Name="decorator" IsSplashScreenShown="false" SplashScreenLocation="CenterScreen">
+        </dx:LoadingDecorator>
         <!-- Height="643.55" Width="700"-->
         <dx:DXTabControl>
             <dx:DXTabItem Header="Tableau de bord">
@@ -265,9 +267,9 @@
                                         <dxg:TreeListView.RowCellMenuCustomizations>
                                             <dxb:BarButtonItem Name="deleteRowItem" Content="Supprimer" />
                                         </dxg:TreeListView.RowCellMenuCustomizations>
-                                    </dxg:TreeListView>                                    
+                                    </dxg:TreeListView>
                                 </dxg:TreeListControl.View>
-                                
+
                                 <dxg:TreeListControl.Columns>
                                 </dxg:TreeListControl.Columns>
                             </dxg:TreeListControl>
@@ -591,7 +593,6 @@
                                             <dxc:Legend />
                                         </dxc:ChartControl.Legend>
                                         <dxc:ChartControl.Titles>
-                                            <dxc:Title Dock="Top" HorizontalAlignment="Center">Graphique</dxc:Title>
                                             <dxc:Title Dock="Top" HorizontalAlignment="Center" FontSize="16">Distribution (%) des individus (par groupe de population) 
 selon le nombre de problèmes comptabilisés (flags),
 en fonction du nombre total de problèmes spécifié par groupe
@@ -603,7 +604,7 @@ en fonction du nombre total de problèmes spécifié par groupe
                                         <Grid>
                                             <dxg:TreeListControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row" Name="gridFlag" AutoGeneratingColumn="gridFlag_AutoGeneratingColumn">
                                                 <dxg:TreeListControl.View>
-                                                    <dxg:TreeListView NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListView2" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"   AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD"/>
+                                                    <dxg:TreeListView NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListView2" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"   AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD" RowDoubleClick="treeListView2_RowDoubleClick" />
                                                 </dxg:TreeListControl.View>
                                             </dxg:TreeListControl>
 
@@ -616,7 +617,11 @@ en fonction du nombre total de problèmes spécifié par groupe
                     <dx:DXTabItem Header="Vérification de la codification" Name="tabCodification" GotFocus="tabCodification_GotFocus">
                         <GroupBox Header="Codification">
                             <Grid>
-                                <dxc:ChartControl Name="chartControl1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="203*"/>
+                                    <RowDefinition Height="97*"/>
+                                </Grid.RowDefinitions>
+                                <dxc:ChartControl Name="chartControl1" Grid.Row="0">
                                     <dxc:ChartControl.Diagram>
                                         <dxc:XYDiagram2D>
                                             <dxc:XYDiagram2D.Series>
@@ -640,22 +645,8 @@ en fonction du nombre total de problèmes spécifié par groupe
 
                                                     </dxc:BarFullStackedSeries2D.PointOptions>
                                                 </dxc:BarFullStackedSeries2D>
-                                                <dxc:BarFullStackedSeries2D Name="partiellementPreCodifieAutre" DisplayName="Partiellement Pré-Codifié (Autre)">
-                                                    <dxc:BarFullStackedSeries2D.Model>
-                                                        <dxc:Quasi3DBar2DModel />
-                                                    </dxc:BarFullStackedSeries2D.Model>
-                                                    <dxc:BarFullStackedSeries2D.Label>
-                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}" Visible="True" />
-                                                    </dxc:BarFullStackedSeries2D.Label>
-                                                    <dxc:BarFullStackedSeries2D.PointOptions>
-
-                                                        <dxc:PointOptions>
-                                                            <dxc:PointOptions.ValueNumericOptions>
-                                                                <dxc:NumericOptions Format="Percent" Precision="0"  />
-                                                            </dxc:PointOptions.ValueNumericOptions>
-                                                        </dxc:PointOptions>
-                                                    </dxc:BarFullStackedSeries2D.PointOptions>
-                                                </dxc:BarFullStackedSeries2D>
+                                                
+                                                <!--
                                                 <dxc:BarFullStackedSeries2D Name="pasDuToutPreCodifieAutre" DisplayName="Pas du tout Pré-Codifié (Autre)">
                                                     <dxc:BarFullStackedSeries2D.Model>
                                                         <dxc:Quasi3DBar2DModel />
@@ -671,7 +662,7 @@ en fonction du nombre total de problèmes spécifié par groupe
                                                             </dxc:PointOptions.ValueNumericOptions>
                                                         </dxc:PointOptions>
                                                     </dxc:BarFullStackedSeries2D.PointOptions>
-                                                </dxc:BarFullStackedSeries2D>
+                                                </dxc:BarFullStackedSeries2D>-->
                                                 <dxc:BarFullStackedSeries2D Name="partiellementPreCodifie" DisplayName="Partiellement Pré-Codifié">
                                                     <dxc:BarFullStackedSeries2D.Model>
                                                         <dxc:Quasi3DBar2DModel />
@@ -704,6 +695,22 @@ en fonction du nombre total de problèmes spécifié par groupe
                                                         </dxc:PointOptions>
                                                     </dxc:BarFullStackedSeries2D.PointOptions>
                                                 </dxc:BarFullStackedSeries2D>
+                                                <dxc:BarFullStackedSeries2D Name="partiellementPreCodifieAutre" DisplayName="Partiellement Pré-Codifié (Autre)">
+                                                    <dxc:BarFullStackedSeries2D.Model>
+                                                        <dxc:Quasi3DBar2DModel />
+                                                    </dxc:BarFullStackedSeries2D.Model>
+                                                    <dxc:BarFullStackedSeries2D.Label>
+                                                        <dxc:SeriesLabel Indent="20" ConnectorThickness="1" ResolveOverlappingMode="Default" TextPattern="{}{VP:P0}" Visible="True" />
+                                                    </dxc:BarFullStackedSeries2D.Label>
+                                                    <dxc:BarFullStackedSeries2D.PointOptions>
+
+                                                        <dxc:PointOptions>
+                                                            <dxc:PointOptions.ValueNumericOptions>
+                                                                <dxc:NumericOptions Format="Percent" Precision="0"  />
+                                                            </dxc:PointOptions.ValueNumericOptions>
+                                                        </dxc:PointOptions>
+                                                    </dxc:BarFullStackedSeries2D.PointOptions>
+                                                </dxc:BarFullStackedSeries2D>
                                             </dxc:XYDiagram2D.Series>
                                         </dxc:XYDiagram2D>
                                     </dxc:ChartControl.Diagram>
@@ -711,16 +718,25 @@ en fonction du nombre total de problèmes spécifié par groupe
                                         <dxc:Legend />
                                     </dxc:ChartControl.Legend>
                                     <dxc:ChartControl.Titles>
-                                        <dxc:Title Dock="Top" HorizontalAlignment="Center">Graphique</dxc:Title>
                                         <dxc:Title Dock="Top" HorizontalAlignment="Center" FontSize="16">Distribution des individus avec variables à codifier selon le degré de pré-codification</dxc:Title>
                                         <dxc:Title Dock="Bottom" HorizontalAlignment="Right" FontSize="12" Foreground="Silver" Margin="0,10,0,0">IHSI</dxc:Title>
                                     </dxc:ChartControl.Titles>
 
                                 </dxc:ChartControl>
+                                <GroupBox Header="Nombres d'individus" Grid.Row="1">
+                                    <Grid>
+                                        <dxg:TreeListControl AutoGenerateColumns="AddNew" EnableSmartColumnsGeneration="True" SelectionMode="Row" Name="gridFlagCodification" AutoGeneratingColumn="gridFlag_AutoGeneratingColumn">
+                                            <dxg:TreeListControl.View>
+                                                <dxg:TreeListView NavigationStyle="Row"  AllowPerPixelScrolling="True" TreeLineStyle="Solid" ShowTotalSummary="True" Name="treeListViewCodification" KeyFieldName="ID" ParentFieldName="ParentID" OpacityMask="#FF6EB6F1" AllowEditing="False"   AllowScrollAnimation="True" AutoWidth="True" WaitIndicatorType="Panel" AlternateRowBackground="#FFBEE9FD" RowDoubleClick="treeListView2_RowDoubleClick" />
+                                            </dxg:TreeListControl.View>
+                                        </dxg:TreeListControl>
+
+                                    </Grid>
+                                </GroupBox>
                             </Grid>
                         </GroupBox>
                     </dx:DXTabItem>
-                    <dx:DXTabItem Header="Compteurs de flags par taille de menage" Name="tabFlagMenage">
+                    <dx:DXTabItem Header="Compteurs de flags par taille de menage" Name="tabFlagMenage" GotFocus="tabFlagMenage_GotFocus">
                         <GroupBox Header="Tableau Tailles de menages">
                             <Grid>
                                 <dxc:ChartControl Name="chartControlTailleMenage">
@@ -850,7 +866,6 @@ en fonction du nombre total de problèmes spécifié par groupe
                                         <dxc:Legend />
                                     </dxc:ChartControl.Legend>
                                     <dxc:ChartControl.Titles>
-                                        <dxc:Title Dock="Top" HorizontalAlignment="Center">Graphique</dxc:Title>
                                         <dxc:Title Dock="Top" HorizontalAlignment="Center" FontSize="16">Distribution des ménages selon le nombre de problèmes comptabilisés pat taille de ménage</dxc:Title>
                                         <dxc:Title Dock="Bottom" HorizontalAlignment="Right" FontSize="12" Foreground="Silver" Margin="0,10,0,0">IHSI</dxc:Title>
                                     </dxc:ChartControl.Titles>

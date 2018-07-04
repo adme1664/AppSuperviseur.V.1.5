@@ -22,6 +22,15 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public int Flag11 { get; set; }
         public int Flag12 { get; set; }
         public int Flag13 { get; set; }
+        public int Flag_1_4 { get; set; }
+        public int Flag_5_14 { get; set; }
+        public int Flag_15_26 { get; set; }
+        public int Flag_27_47 { get; set; }
+        public int Flag_48_70 { get; set; }
+        public int Flag_71_130 { get; set; }
+        public int Flag_Aucun { get; set; }
+
+        public int Total { get; set; }
         public List<IndividuModel> Individus { get; set; }
 
     }

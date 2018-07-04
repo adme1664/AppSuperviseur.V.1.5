@@ -45,9 +45,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             service = new ConfigurationService();
             DataContext = this;
             lbAgents.ItemsSource = service.searchAllAgents();
-            btn_save_tab.IsEnabled = false;
-            //List<MaterielModel> listOf = ModelMapper.MapToList(service.SearchMateriels());
-            //gridTablette.ItemsSource=listOf;
+            btn_save_tab.IsEnabled = false;           
         }
 
         private void btn_synch_Click(object sender, RoutedEventArgs e)
@@ -94,16 +92,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 person.nom = agentModel.Nom;
                                 person.nomUtilisateur = agentModel.Username;
                                 person.motDePasse = agentModel.Password;
-                                string profil = person.nomUtilisateur.Substring(0, 3);
-                                if (profil == "008")
-                                {
-                                    person.ProfileId = Constant.PROFIL_AGENT_RECENSEUR;
-
-                                }
-                                if (profil == "007")
-                                {
-                                    person.ProfileId = Constant.PROFIL_SUPERVISEUR;
-                                }
+                                
+                                person.ProfileId = Constant.PROFIL_AGENT_RECENSEUR_MOBILE;
                                 person.estActif = 1;
                                 person.sexe = agentModel.Sexe;
                                 person.email = agentModel.Email;
@@ -111,6 +101,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 person.deptId = sde.DeptId;
                                 person.vqseId = sde.VqseId;
                                 person.zone = sde.Zone;
+                                person.codeDistrict = sde.CodeDistrict;
                                 person.motDePasse = "passpass";
                                 service.savePersonne(person);
                                 Tbl_Materiels mat = service.getMateriels(devInfo.Serial);
@@ -193,17 +184,17 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         {
             try
             {
+                agentModel = new AgentModel();
                 ListBox ltb = e.OriginalSource as ListBox;
-                AgentModel agent=ltb.SelectedItems.OfType<AgentModel>().FirstOrDefault();
-                agentModel = agent;
-                sdeModel = service.getSdeByAgent(agent.AgentId);
+                agentModel = ltb.SelectedItems.OfType<AgentModel>().FirstOrDefault();
+                sdeModel = service.getSdeByAgent(agentModel.AgentId);
                 List<SdeModel> sdes=new List<SdeModel>();
                 sdes.Add(sdeModel);
                 lbSdes.ItemsSource = sdes;
                 List<AgentModel> agents = new List<AgentModel>();
-                agents.Add(agent);
+                agents.Add(agentModel);
                 List<MaterielModel> materielForAgent=new List<MaterielModel>();
-                MaterielModel materiel = ModelMapper.MapToMateriel(service.getMaterielByAgent(agent.AgentId));
+                MaterielModel materiel = ModelMapper.MapToMateriel(service.getMaterielByAgent(agentModel.AgentId));
                 if (materiel.MaterielId != 0)
                 {
                     //Activer ou desactiver le bouton configurer si le materiel est deja configurer
@@ -291,7 +282,6 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                                 mat.Imei = devInfo.Imei;
                                 mat.AgentId = this.agentModel.AgentId;
                                 bool result = service.saveMateriels(mat);
-
                                 if (!Directory.Exists(TEMP_DATABASE_PATH))
                                 {
                                     Directory.CreateDirectory(TEMP_DATABASE_PATH);

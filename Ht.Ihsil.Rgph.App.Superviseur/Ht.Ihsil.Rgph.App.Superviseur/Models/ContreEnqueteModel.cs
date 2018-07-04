@@ -23,6 +23,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public string ContreEnqueteName { get; set; }
         public bool IsTerminate { get; set; }
         public bool IsValidate { get; set; }
+        public Nullable<long> LogeId { get; set; }
+        public Nullable<long> MenageId { get; set; }
+        public Nullable<long> Termine { get; set; }
+        public Nullable<long> Validate { get; set; }
+        public Nullable<long> CodeSuperviseur { get; set; }
 
     }
 }

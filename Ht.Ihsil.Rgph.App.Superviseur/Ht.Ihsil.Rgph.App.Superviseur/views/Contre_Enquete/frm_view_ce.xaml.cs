@@ -153,6 +153,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             LogementModel _mLogement = null;
             EmigreModel _mEmigre = null;
             DecesModel _mDeces = null;
+            RapportFinalModel _rapo = null;
             MenageDetailsModel detailsModel = null;
             string libele = null;
             ISqliteReader reader = new SqliteReader(Utilities.getConnectionString(Users.users.DatabasePath,sdeId));
@@ -195,6 +196,19 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     libele = "#SDE:" + _mIndividu.SdeId + "/Batiman:" + _mIndividu.BatimentId.ToString() + "/Lojman:" + _mIndividu.LogeId.ToString() + "/Menaj:" + _mIndividu.MenageId.ToString() + "/Endividi:" + _mIndividu.Q1NoOrdre.ToString();
                     reponses = DataDetailsMapper.MapToMobile<IndividuModel>(_mIndividu, sdeId);
                 }
+                if (detailsModel.Type == Constant.CODE_TYPE_RAPO)
+                {
+                    _rapo = reader.GetRapportFinal(Convert.ToInt32(detailsModel.Id));
+                    _mMenage = reader.GetMenageById(detailsModel.MenageId);
+                    libele = "#SDE:" + _mMenage.SdeId + "/Batiman:" + _mMenage.BatimentId.ToString() + "/Lojman:" + _mMenage.LogeId.ToString() + "/Menaj:" + _mMenage.Qm1NoOrdre.ToString() + "/Rapo:" + _rapo.rapportFinalId;
+                    reponses = DataDetailsMapper.RapportFinal(_rapo,sdeId);
+                }
+            }
+            if (obj.ToString() == Constant.OBJET_MODEL_INDIVIDU)
+            {
+                _mIndividu=obj as IndividuModel;
+                libele = "#SDE:" + _mIndividu.SdeId + "/Batiman:" + _mIndividu.BatimentId.ToString() + "/Lojman:" + _mIndividu.LogeId.ToString() + "/Menaj:" + _mIndividu.MenageId.ToString() + "/Endividi:" + _mIndividu.Q1NoOrdre.ToString();
+                reponses = DataDetailsMapper.MapToMobile<IndividuModel>(_mIndividu, sdeId);
             }
             
             string kategori = reponses.ElementAt(0).Kategori;

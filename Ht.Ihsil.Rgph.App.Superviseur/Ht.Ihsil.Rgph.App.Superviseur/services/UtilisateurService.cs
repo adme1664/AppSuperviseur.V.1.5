@@ -58,7 +58,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
 
         public bool isSuperviseurAccountExist()
         {
-            if (dao.getRepository().UtilisateurRepository.Find(u => u.ProfileId == 7).Count() > 0) return true;
+            if (dao.getRepository().UtilisateurRepository.Find(u => u.ProfileId ==Constant.PROFIL_SUPERVISEUR_SUPERVISION).Count() > 0) return true;
             return false;
        
         }

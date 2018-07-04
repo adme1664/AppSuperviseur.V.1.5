@@ -285,7 +285,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                 daoSettings.getRepository().Save();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
             }

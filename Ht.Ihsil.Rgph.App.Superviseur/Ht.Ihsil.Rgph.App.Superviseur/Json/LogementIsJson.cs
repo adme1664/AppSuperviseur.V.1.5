@@ -34,7 +34,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public bool isContreEnqueteMade { get; set; }
         public short nbrTentative { get; set; }
         public string codeAgentRecenceur { get; set; }
-
+        public bool verified { get; set; }
         public List<MenageJson> menages { get; set; }
     }
 }

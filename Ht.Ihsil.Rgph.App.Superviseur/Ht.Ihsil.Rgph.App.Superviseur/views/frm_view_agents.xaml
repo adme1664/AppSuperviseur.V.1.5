@@ -59,7 +59,6 @@
                             <Button x:Name="btn_synch" Content="Configurer la tablette"  Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" ToolTip="Synchroniser avec le serveur" Width="136" Height="40"  RenderTransformOrigin="0.5,-5.04" Click="btn_synch_Click" HorizontalAlignment="Left" Margin="6,76,0,24"  />
                             <Button x:Name="btn_save_tab" Content="Enregistrer la tablette" HorizontalAlignment="Left" Margin="5,11,0,0" VerticalAlignment="Top" Width="137" Height="43" ToolTip="Enregsitrer la tablette" Click="btn_save_tab_Click"  />
                         </Grid>
-
                     </GroupBox>
                     <GroupBox Header="Liste des tablettes enregistrées"  Grid.Row="1" Grid.Column="0">
                         <Grid>
@@ -78,5 +77,4 @@
             </dx:DXTabItem>          
         </dx:DXTabControl>
     </Grid>
-
 </UserControl>

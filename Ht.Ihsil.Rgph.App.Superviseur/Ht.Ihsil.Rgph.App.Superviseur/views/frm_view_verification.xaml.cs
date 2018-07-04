@@ -1,10 +1,12 @@
 ﻿using Ht.Ihsi.Rgph.Logging.Logs;
 using Ht.Ihsil.Rgph.App.Superviseur.Models;
+using Ht.Ihsil.Rgph.App.Superviseur.services;
 using Ht.Ihsil.Rgph.App.Superviseur.utils;
 using Ht.Ihsil.Rgph.App.Superviseur.viewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -33,6 +35,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         SdeModel sde;
         ThreadStart ths = null;
         Thread t = null;
+        private static string MAIN_DATABASE_PATH = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\RgphData\Data\Databases\";
+        SqliteDataReaderService service;
+        ISqliteDataWriter sw;
+        ListBox listBox;
         #endregion
 
         #region PROPERTIES
@@ -70,6 +76,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             {
                 decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = true));
                 ListBox ltb = e.OriginalSource as ListBox;
+                listBox = ltb;
                 if (chkDistrict.IsChecked == true)
                 {
                     chkDistrict.IsChecked = false;
@@ -78,9 +85,21 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                 sde = chooseSde;
                 if(sde!=null)
                 txt_title.Dispatcher.BeginInvoke((Action)(() => txt_title.Text = "VERIFICATION-SDE:" + sde.SdeId));
-                frm_verification viewVerification = new frm_verification(sde);
-                Utilities.showControl(viewVerification, grd_details);
-                decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
+                string destFileName = System.IO.Path.Combine(MAIN_DATABASE_PATH, sde.SdeId + ".SQLITE");
+                FileInfo file = new FileInfo(destFileName);
+                log.Info("Length:" + file.Length);
+                if (file.Length == 0)
+                {
+                    MessageBox.Show("Ou poko dechaje done pou SDE", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
+                }
+                else
+                {
+
+                    frm_verification viewVerification = new frm_verification(sde, this);
+                    Utilities.showControl(viewVerification, grd_details);
+                    decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
+                }
              }
             catch (Exception ex)
             {
@@ -99,11 +118,46 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             //Deselectionner un element de la listbox si il etait deja selectionne
             listBox_sde.Dispatcher.BeginInvoke((Action)(() => listBox_sde.UnselectAll()));
             //Creation de la fenetre et ajout dans la grille
-            frm_verification viewVerification = new frm_verification(true);
+            frm_verification viewVerification = new frm_verification(true,this);
             Utilities.showControl(viewVerification, grd_details);
             //
             decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
         }
         #endregion
+
+        private void validate_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void verified_Click(object sender, RoutedEventArgs e)
+        {
+            if (listBox != null)
+            {
+                decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = true));
+                SdeModel chooseSde = listBox.SelectedItems.OfType<SdeModel>().FirstOrDefault();
+                string destFileName = System.IO.Path.Combine(MAIN_DATABASE_PATH, sde.SdeId + ".SQLITE");
+                FileInfo file = new FileInfo(destFileName);
+                log.Info("Length:" + file.Length);
+                if (file.Length == 0)
+                {
+                    MessageBox.Show("Ou poko dechaje done pou SDE", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    decorator.Dispatcher.BeginInvoke((Action)(() => decorator.IsSplashScreenShown = false));
+                }
+                else
+                {
+                    MessageBoxResult confirm = MessageBox.Show("Eske ou vle verifye tout done sa yo?", Constant.WINDOW_TITLE, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (confirm == MessageBoxResult.Yes)
+                    {
+                        frm_pop_verified_validate frm_verified = new frm_pop_verified_validate(chooseSde.SdeId);
+                        frm_verified.ShowDialog();
+                    }                    
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ou dwe chwazi yon sde", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

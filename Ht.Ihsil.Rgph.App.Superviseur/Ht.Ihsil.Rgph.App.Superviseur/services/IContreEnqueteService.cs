@@ -12,7 +12,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
     {
         #region BATIMENT
         List<BatimentModel> getBatimentVideInCE(string sdeId);
-        List<BatimentModel> searchBatimentByCE(int contreEnqueteId, string sdeId);
+        BatimentCEModel searchBatimentByCE(int contreEnqueteId, string sdeId);
         List<BatimentModel> getBatimentInCE(string sdeId);
         BatimentModel getBatimentWithLogementC();
         BatimentCEModel getBatiment(long batimentId, string sdeId);
@@ -74,12 +74,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         #endregion
 
         #region CONTRE-ENQUETE
-        void saveContreEnquete(ContreEnqueteModel ce);
+        ContreEnqueteModel saveContreEnquete(ContreEnqueteModel ce);
         bool updateContreEnquete(ContreEnqueteModel ce);
         List<ContreEnqueteModel> searchContreEnquete(int typeContreEnquete, string sdeId);
         List<ContreEnqueteModel> searchContreEnquete(string sdeId);
         ContreEnqueteModel getContreEnquete(long id, string sdeId);
         List<BatimentJson> getAllBatimentCEInJson(string sdeId);
+        List<BatimentJson> getBatimentCEInJsonByContrEnqueteId(string sdeId, int contreEnqueteId);
 
         #endregion
 

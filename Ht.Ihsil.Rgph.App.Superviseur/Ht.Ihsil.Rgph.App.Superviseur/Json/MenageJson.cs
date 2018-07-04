@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ht.Ihsil.Rgph.App.Superviseur.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,6 +52,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Json
         public bool isFieldAllFilled { get; set; }
         public bool isContreEnqueteMade { get; set; }
         public string codeAgentRecenceur { get; set; }
+        public bool verified { get; set; }
+        public RapportFinalJson rapport { get; set; }
         public List<EmigreJson> emigres { get; set; }
         public List<DecesJson> deces { get; set; }
         public List<IndividuJson> individus { get; set; }

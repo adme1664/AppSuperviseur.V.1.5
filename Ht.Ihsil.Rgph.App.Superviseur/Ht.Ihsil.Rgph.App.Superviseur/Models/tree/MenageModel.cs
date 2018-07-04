@@ -53,11 +53,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Models
         public bool IsFieldAllFilled { get; set; }
         public bool IsContreEnqueteMade { get; set; }
         public string CodeAgentRecenceur { get; set; }
+        public long IsVerified { get; set; }
         //
         public Nullable<byte> UpdateDeces { get; set; }
         public Nullable<byte> UpdateEmigre { get; set; }
         public List<IndividuModel> Individus { get; set; }
-        public List<DecesModel> Desces { get; set; }
+        public List<DecesModel> Deces { get; set; }
         public List<EmigreModel> Emigre { get; set; }
         public string MenageName
         {

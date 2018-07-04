@@ -95,5 +95,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Entities.MobileEntities
         public Nullable<long> dureeSaisie { get; set; }
         public Nullable<long> isContreEnqueteMade { get; set; }
         public string codeAgentRecenceur { get; set; }
+        public Nullable<long> isVerified { get; set; }
     }
 }
