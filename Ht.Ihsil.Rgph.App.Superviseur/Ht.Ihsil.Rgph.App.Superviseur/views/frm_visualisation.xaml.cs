@@ -54,7 +54,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         XmlUtils configuration = null;
         ISqliteReader reader = null;
         ISqliteDataWriter writer = null;
-        string sde;
+        SdeViewModel _sde = null;
+        ThreadStart ths = null;
+        Thread t = null;
         #endregion
 
         #region PROPERTIES
@@ -1552,119 +1554,145 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
 
         private void cm_duplicate_Click(object sender, RoutedEventArgs e)
         {
+            
             try
             {
-                if (this.GetTreeviewItem != null)
+                if (t != null)
                 {
-                    SdeViewModel _sde = GetTreeviewItem.DataContext as SdeViewModel;
-                    reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, _sde.Sde.SdeId));
-                    writer = new SqliteDataWriter(_sde.Sde.SdeId);
-                    List<BatimentModel> batiments = reader.GetAllBatimentModel();
-                    foreach (BatimentModel b in batiments)
+                    if (t.IsAlive)
                     {
-                        List<BatimentModel> batsDuplicate = reader.GetBatimentByRec(b.Qrec);
-                        if (batsDuplicate.Count >= 2)
-                        {
-                            for (int i = 1; i < batsDuplicate.Count; i++)
-                            {
-                                BatimentModel bd = batsDuplicate.ElementAt<BatimentModel>(i);
-                                bool result = writer.deleteBatiment(EntityMapper.mapTo(bd));
-                                if (result == true)
-                                    log.Info(" Batiment "+b.BatimentId+"Duplicate erase");
-                            }
-                        }
-                    }
-                    //Supprimer les logements
-                    List<LogementModel> logements = reader.GetAllLogements();
-                    foreach (LogementModel lg in logements)
-                    {
-                        List<LogementModel> logsDuplicate = reader.GetLogementsByNoOrdre(lg.BatimentId,lg.Qlin1NumeroOrdre);
-                        if (logsDuplicate.Count >= 2)
-                        {
-                            log.Info("Nombre pour batiments " + lg.BatimentId + ":" + logsDuplicate.Count);
-                            for (int i = 1; i < logsDuplicate.Count; i++)
-                            {
-                                LogementModel l = logsDuplicate.ElementAt<LogementModel>(i);
-                                bool result = writer.deleteLogement(EntityMapper.mapTo(l));
-                                if (result == true)
-                                    log.Info(" Batiement/"+l.BatimentId+"Logement/" + l.Qlin1NumeroOrdre + "Duplicate erase");
-                            }
-                        }
-                    }
-                    //Supprimer les menages
-                    List<MenageModel> menages = reader.GetAllMenages();
-                    foreach (MenageModel mn in menages)
-                    {
-                        List<MenageModel> menagesDuplicate = reader.GetMenagebyNumOrdre(mn.BatimentId,mn.LogeId,mn.Qm1NoOrdre);
-                        if (menagesDuplicate.Count >= 2)
-                        {
-                            log.Info("Nombre pour batiments " + mn.BatimentId + ":" + menagesDuplicate.Count);
-                            for (int i = 1; i < menagesDuplicate.Count; i++)
-                            {
-                                MenageModel l = menagesDuplicate.ElementAt<MenageModel>(i);
-                                bool result = writer.deleteMenage(EntityMapper.mapTo(l));
-                                if (result == true)
-                                    log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId +"Menage:"+l.Qm1NoOrdre);
-                            }
-                        }
-                    }
-                    //Supprimer les deces
-                    List<DecesModel> deces = reader.GetAllDeces();
-                    foreach (DecesModel dec in deces)
-                    {
-                        List<DecesModel> decesDuplicate = reader.GetDecesbyNumOrdre(dec.BatimentId,dec.LogeId,dec.MenageId,dec.Qd2NoOrdre);
-                        if (decesDuplicate.Count >= 2)
-                        {
-                            log.Info("Nombre pour batiments " + dec.BatimentId + ":" + decesDuplicate.Count);
-                            for (int i = 1; i < decesDuplicate.Count; i++)
-                            {
-                                DecesModel l = decesDuplicate.ElementAt<DecesModel>(i);
-                                bool result = writer.deleteDeces(EntityMapper.mapTo(l));
-                                if (result == true)
-                                    log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.MenageId+"Deces:"+l.Qd2NoOrdre);
-                            }
-                        }
-                    }
-                    //Supprimer les emigres
-                    List<EmigreModel> emigres = reader.GetAllEmigres();
-                    foreach (EmigreModel em in emigres)
-                    {
-                        List<EmigreModel> emigreDuplicate = reader.GetEmigrebyNumOrdre(em.BatimentId, em.LogeId, em.MenageId, em.Qn1numeroOrdre);
-                        if (emigreDuplicate.Count >= 2)
-                        {
-                            log.Info("Nombre pour batiments " + em.BatimentId + ":" + emigreDuplicate.Count);
-                            for (int i = 1; i < emigreDuplicate.Count; i++)
-                            {
-                                EmigreModel l = emigreDuplicate.ElementAt<EmigreModel>(i);
-                                bool result = writer.deleteEmigre(EntityMapper.mapTo(l));
-                                if (result == true)
-                                    log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.MenageId + "Emigre:" + l.Qn1numeroOrdre);
-                            }
-                        }
-                    }
-                    //Supprimer les individus
-                    List<IndividuModel> individus = reader.GetAllIndividus();
-                    foreach (IndividuModel ind in individus)
-                    {
-                        List<IndividuModel> individuDuplicate = reader.GetIndividuByNumOrdre(ind.BatimentId, ind.LogeId, ind.MenageId, ind.Q1NoOrdre);
-                        if (individuDuplicate.Count >= 2)
-                        {
-                            log.Info("Nombre pour batiments " + ind.BatimentId + ":" + individuDuplicate.Count);
-                            for (int i = 1; i < individuDuplicate.Count; i++)
-                            {
-                                IndividuModel l = individuDuplicate.ElementAt<IndividuModel>(i);
-                                bool result = writer.deleteIndividu(EntityMapper.mapTo(l));
-                                if (result == true)
-                                    log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.MenageId + "Individu:" + l.Q1NoOrdre);
-                            }
-                        }
+                        t.Abort();
                     }
                 }
+                _sde = GetTreeviewItem.DataContext as SdeViewModel;
+                ths = new ThreadStart(() => eraseData(_sde.Sde.SdeId));
+                t = new Thread(ths);
+                t.Start();
+                
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show("Erreur", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        public void eraseData(string sdeId)
+        {
+            if (this.GetTreeviewItem != null)
+            {
+                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = true));
+                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.BusyContent = "N'ap efase batiman ki repete yo."));
+                //waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = true));
+                reader = new SqliteReader(Utilities.getConnectionString(MAIN_DATABASE_PATH, sdeId));
+                writer = new SqliteDataWriter(sdeId);
+                List<BatimentModel> batiments = reader.GetAllBatimentModel();
+                foreach (BatimentModel b in batiments)
+                {
+                    List<BatimentModel> batsDuplicate = reader.GetBatimentByRec(b.Qrec);
+                    if (batsDuplicate.Count >= 2)
+                    {
+                        for (int i = 1; i < batsDuplicate.Count; i++)
+                        {
+                            BatimentModel bd = batsDuplicate.ElementAt<BatimentModel>(i);
+                            bool result = writer.deleteBatiment(EntityMapper.mapTo(bd));
+                            if (result == true)
+                                log.Info(" Batiment " + b.BatimentId + "Duplicate erase");
+                        }
+                    }
+                }
+                //Supprimer les logements
+                List<LogementModel> logements = reader.GetAllLogements();
+                foreach (LogementModel lg in logements)
+                {
+                    List<LogementModel> logsDuplicate = reader.GetLogementsByNoOrdre(lg.BatimentId, lg.Qlin1NumeroOrdre);
+                    if (logsDuplicate.Count >= 2)
+                    {
+                        log.Info("Nombre pour batiments " + lg.BatimentId + ":" + logsDuplicate.Count);
+                        for (int i = 1; i < logsDuplicate.Count; i++)
+                        {
+                            LogementModel l = logsDuplicate.ElementAt<LogementModel>(i);
+                            bool result = writer.deleteLogement(EntityMapper.mapTo(l));
+                            if (result == true)
+                                log.Info(" Batiement/" + l.BatimentId + "Logement/" + l.Qlin1NumeroOrdre + "Duplicate erase");
+                        }
+                    }
+                }
+                //Supprimer les menages
+                List<MenageModel> menages = reader.GetAllMenages();
+                foreach (MenageModel mn in menages)
+                {
+                    List<MenageModel> menagesDuplicate = reader.GetMenagebyNumOrdre(mn.BatimentId, mn.LogeId, mn.Qm1NoOrdre);
+                    if (menagesDuplicate.Count >= 2)
+                    {
+                        log.Info("Nombre pour batiments " + mn.BatimentId + ":" + menagesDuplicate.Count);
+                        for (int i = 1; i < menagesDuplicate.Count; i++)
+                        {
+                            MenageModel l = menagesDuplicate.ElementAt<MenageModel>(i);
+                            bool result = writer.deleteMenage(EntityMapper.mapTo(l));
+                            if (result == true)
+                                log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.Qm1NoOrdre);
+                        }
+                    }
+                }
+                //Supprimer les deces
+                List<DecesModel> deces = reader.GetAllDeces();
+                foreach (DecesModel dec in deces)
+                {
+                    List<DecesModel> decesDuplicate = reader.GetDecesbyNumOrdre(dec.BatimentId, dec.LogeId, dec.MenageId, dec.Qd2NoOrdre);
+                    if (decesDuplicate.Count >= 2)
+                    {
+                        log.Info("Nombre pour batiments " + dec.BatimentId + ":" + decesDuplicate.Count);
+                        for (int i = 1; i < decesDuplicate.Count; i++)
+                        {
+                            DecesModel l = decesDuplicate.ElementAt<DecesModel>(i);
+                            bool result = writer.deleteDeces(EntityMapper.mapTo(l));
+                            if (result == true)
+                                log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.MenageId + "Deces:" + l.Qd2NoOrdre);
+                        }
+                    }
+                }
+                //Supprimer les emigres
+                List<EmigreModel> emigres = reader.GetAllEmigres();
+                foreach (EmigreModel em in emigres)
+                {
+                    List<EmigreModel> emigreDuplicate = reader.GetEmigrebyNumOrdre(em.BatimentId, em.LogeId, em.MenageId, em.Qn1numeroOrdre);
+                    if (emigreDuplicate.Count >= 2)
+                    {
+                        log.Info("Nombre pour batiments " + em.BatimentId + ":" + emigreDuplicate.Count);
+                        for (int i = 1; i < emigreDuplicate.Count; i++)
+                        {
+                            EmigreModel l = emigreDuplicate.ElementAt<EmigreModel>(i);
+                            bool result = writer.deleteEmigre(EntityMapper.mapTo(l));
+                            if (result == true)
+                                log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.MenageId + "Emigre:" + l.Qn1numeroOrdre);
+                        }
+                    }
+                }
+                //Supprimer les individus
+                List<IndividuModel> individus = reader.GetAllIndividus();
+                foreach (IndividuModel ind in individus)
+                {
+                    List<IndividuModel> individuDuplicate = reader.GetIndividuByNumOrdre(ind.BatimentId, ind.LogeId, ind.MenageId, ind.Q1NoOrdre);
+                    if (individuDuplicate.Count >= 2)
+                    {
+                        log.Info("Nombre pour batiments " + ind.BatimentId + ":" + individuDuplicate.Count);
+                        for (int i = 1; i < individuDuplicate.Count; i++)
+                        {
+                            IndividuModel l = individuDuplicate.ElementAt<IndividuModel>(i);
+                            bool result = writer.deleteIndividu(EntityMapper.mapTo(l));
+                            if (result == true)
+                                log.Info(" Batiment/" + l.BatimentId + "Logement/" + l.LogeId + "Menage:" + l.MenageId + "Individu:" + l.Q1NoOrdre);
+                        }
+                    }
+                }
+                MessageBox.Show("Travay la fini!", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                busyIndicator.Dispatcher.BeginInvoke((Action)(() => busyIndicator.IsBusy = false));
+            }
+            else
+            {
+                MessageBox.Show("Ou dwe chwazi yon SDE", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            
         }
 
     }
