@@ -55,6 +55,8 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         List<Tbl_Probleme> searchAllProblemesBySdeId(string sdeID);
         Tbl_Probleme getProbleme(int problemeId);
         #endregion
+
+
         MainRepository getRepository();
     }
 }

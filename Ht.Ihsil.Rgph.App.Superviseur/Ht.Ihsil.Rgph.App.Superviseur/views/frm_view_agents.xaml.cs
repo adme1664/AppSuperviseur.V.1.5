@@ -37,6 +37,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
         AgentModel agentModel = null;
         SdeModel sdeModel = null;
         IConfigurationService service = null;
+        IUtilisateurService utilisateurService = null;
         bool copied = false;
 
         public frm_view_agents()
@@ -45,7 +46,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
             service = new ConfigurationService();
             DataContext = this;
             lbAgents.ItemsSource = service.searchAllAgents();
-            btn_save_tab.IsEnabled = false;           
+            btn_save_tab.IsEnabled = false;
+            utilisateurService = new UtilisateurService();
         }
 
         private void btn_synch_Click(object sender, RoutedEventArgs e)
@@ -386,6 +388,158 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views
                     }
                 }
              }
+        }
+
+        private void btn_add_sup_Click(object sender, RoutedEventArgs e)
+        {
+
+            ThreadStart ths = null;
+            Thread t = null;
+            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = true));
+            ths = new ThreadStart(() => save_sup());
+            t = new Thread(ths);
+            t.Start();
+        }
+        public void save_sup()
+        {
+            try
+            {
+                DeviceManager device = new DeviceManager();
+                Process[] procs = Process.GetProcessesByName("adb");
+                if (device.IsConnected == true)
+                {
+                    DeviceInformation devInfo = device.getDeviceInformation();
+                    if (devInfo != null)
+                    {
+                        IConfigurationService service = new ConfigurationService();
+                        if (service.isMaterielExist(devInfo.Serial))
+                        {
+
+                            if (!service.isMaterielConfigure(devInfo.Serial))
+                            {
+                                MessageBox.Show("Tablet sa a poko konfigire deja pou yon ajan. Ou pa ka ajoute yon sipevize.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                //Arretez le processus ADB
+                                Utilities.killProcess(procs);
+                                //
+                                waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                            }
+                            else
+                            {
+
+                                tbl_personnel person = new tbl_personnel();
+                                UtilisateurModel user = utilisateurService.getSuperviseur(Constant.PROFIL_SUPERVISEUR_SUPERVISION_SG);
+                                if (user.CodeUtilisateur =="")
+                                {
+                                    Utilities.killProcess(procs);
+                                    //
+                                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                                    return;
+                                }
+                                //Verifier si il ya deja un superviseur sur la tablette
+                                if (service.ifSuperviseurExist(Constant.PROFIL_SUPERVISEUR_SUPERVISION_MOBILE) == true)
+                                {
+                                    MessageBox.Show("Gentan gen yon sipevize ki konfigire sou tablet sa a deja.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    //Arretez le processus ADB
+                                    Utilities.killProcess(procs);
+                                    //
+                                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                                    return;
+                                }
+                                person.persId = user.UtilisateurId;
+                                person.sdeId = sdeModel.SdeId;
+                                SdeInformation sde = new SdeInformation();
+                                sde = Utilities.getSdeInformationForTabletConf(sdeModel.SdeId);
+
+                                person.prenom = user.Prenom;
+                                person.nom = user.Nom;
+                                person.nomUtilisateur = user.CodeUtilisateur;
+                                person.motDePasse = user.MotDePasse;
+                                person.ProfileId = Constant.PROFIL_SUPERVISEUR_SUPERVISION_MOBILE;
+                                person.estActif = 1;
+                                //person.sexe = agentModel.Sexe;
+                                //person.email = agentModel.Email;
+                                person.comId = sde.ComId;
+                                person.deptId = sde.DeptId;
+                                person.vqseId = sde.VqseId;
+                                person.zone = sde.Zone;
+                                person.codeDistrict = sde.CodeDistrict;
+                                person.motDePasse = "passpass";
+
+                                service.savePersonne(person);
+                                //Tbl_Materiels mat = service.getMateriels(devInfo.Serial);
+                                //mat.IsConfigured = 1;
+                                //mat.LastSynchronisation = DateTime.Now.ToString();
+                                //service.updateMateriels(mat);
+                                string sourceFileName = "";
+                                if (Directory.Exists(MAIN_DATABASE_PATH))
+                                {
+                                    string[] files = Directory.GetFiles(MAIN_DATABASE_PATH);
+                                    foreach (string f in files)
+                                    {
+                                        if (f.Contains(sdeModel.SdeId))
+                                        {
+                                            sourceFileName = System.IO.Path.GetFileName(f);
+                                            string destFileName = System.IO.Path.Combine(TEMP_DATABASE_PATH, Constant.DB_NAME + ".db");
+                                            if (!System.IO.File.Exists(destFileName))
+                                            {
+                                                System.IO.File.Copy(f, destFileName, true);
+                                            }
+                                            else
+                                            {
+                                                System.IO.File.Copy(f, destFileName, true);
+                                            }
+                                            break;
+                                        }
+                                    }
+
+                                    files = Directory.GetFiles(TEMP_DATABASE_PATH);
+                                    bool pushed = false;
+                                    foreach (string f in files)
+                                    {
+                                        pushed = device.pushFile(f);
+                                        if (pushed == true)
+                                        {
+                                            System.IO.File.Delete(f);
+                                        }
+                                        //Arretez le processus ADB
+                                        Utilities.killProcess(procs);
+                                        //
+                                        break;
+                                    }
+                                    MessageBox.Show(Constant.MSG_TRANSFERT_TERMINE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
+                                MessageBox.Show("Tablet sa a byen konfigire.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Information);
+                                gridTablette.Dispatcher.BeginInvoke((Action)(() => gridTablette.ItemsSource = ModelMapper.MapToList(service.SearchMateriels())));
+                                //Arretez le processus ADB
+                                Utilities.killProcess(procs);
+                                //
+                                waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Ou dwe anrejistre tablet sa a avan ou konfigire li.", Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            //Arretez le processus ADB
+                            Utilities.killProcess(procs);
+                            //
+                            waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(Constant.MSG_TABLET_PAS_CONFIGURE, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    //Arretez le processus ADB
+                    Utilities.killProcess(procs);
+                    //
+                    waitIndicator.Dispatcher.BeginInvoke((Action)(() => waitIndicator.DeferedVisibility = false));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("" + ex.Message, Constant.WINDOW_TITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

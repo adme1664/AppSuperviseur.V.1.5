@@ -296,15 +296,14 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.Mapper
                 batimentJson.deptId = batiment.DeptId;
                 batimentJson.comId = batiment.ComId;
                 batimentJson.vqseId = batiment.VqseId;
-                //batimentJson.sdeId = Utilities.getSdeFormatSent(batiment.SdeId);
-                batimentJson.sdeId = "0112-23090909";
+                batimentJson.sdeId = Utilities.getSdeFormatSent(batiment.SdeId);
                 batimentJson.zone = Convert.ToByte(batiment.Zone);
                 batimentJson.districtId = batiment.District;
                 batimentJson.qhabitation = batiment.Qhabitation;
                 batimentJson.qlocalite = batiment.Qlocalite;
                 batimentJson.qadresse = batiment.Qadresse;
                 batimentJson.qrec = batiment.Qrec;
-                batimentJson.qrgph = "32224234343";
+                batimentJson.qrgph = batimentJson.qrgph;
                 batimentJson.qb1Etat = Convert.ToByte(batiment.Qb1Etat);
                 batimentJson.qb2Type = Convert.ToByte(batiment.Qb2Type);
                 batimentJson.qb3NombreEtage = Convert.ToByte(batiment.Qb3NombreEtage);

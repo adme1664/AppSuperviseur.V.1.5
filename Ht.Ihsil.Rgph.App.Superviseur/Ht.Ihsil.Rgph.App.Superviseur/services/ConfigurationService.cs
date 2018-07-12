@@ -565,6 +565,32 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         }
         #endregion
 
+
+
+        public bool ifSuperviseurExist(int profilId)
+        {
+            try
+            {
+                tbl_personnel person = daoSettings.getRepository().MPersonnelRepository.Find(p => p.ProfileId == profilId && p.estActif == Constant.EST_ACTIF).FirstOrDefault();
+                if (person.persId != 0)
+                    return true;
+            }
+            catch (Exception)
+            {
+
+            }
+            return false;
+        }
+
+        public bool deleteSuperviseur(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Utilisateur getSuperviseur(int profilId)
+        {
+            throw new NotImplementedException();
+        }
     }
    
 }

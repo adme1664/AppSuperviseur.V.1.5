@@ -35,7 +35,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             file = pathDefaultConfigurationFile + "contreenquete.xml";
             configuration = new XmlUtils(file);
             TextModel model = null;
-            if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
+            if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION_SG.ToString())
             {
                 page_configuration.IsEnabled = false;
                 bbi_avances.IsVisible = false;
@@ -92,7 +92,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
         {
             if (main_ribbon.SelectedPage == page_SDE)
             {
-                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION_SG.ToString())
                 {
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     frm_view_verification verification = new frm_view_verification();
@@ -103,7 +103,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             }
             if (main_ribbon.SelectedPage == page_transfret)
             {
-                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION_SG.ToString())
                 {
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     Frm_view_transfert frm_transfert = new Frm_view_transfert(this);
@@ -115,7 +115,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             }
             if (main_ribbon.SelectedPage == page_contreneuqete)
             {
-                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION_SG.ToString())
                 {
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     frm_batiment_vide frm_ce = new frm_batiment_vide((int)Constant.TypeContrEnquete.BatimentVide);
@@ -127,7 +127,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             }
             if (main_ribbon.SelectedPage == page_rapports)
             {
-                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION_SG.ToString())
                 {
                     main_grid_1.Dispatcher.BeginInvoke((Action)(() => main_grid_1.IsSplashScreenShown = true));
                     frm_rapports rapports = new frm_rapports();
@@ -139,7 +139,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
             }
             if (main_ribbon.SelectedPage == page_configuration)
             {
-                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION.ToString())
+                if (Users.users.Profile == Constant.PROFIL_SUPERVISEUR_SUPERVISION_SG.ToString())
                 {
                     main_grid.Dispatcher.BeginInvoke((Action)(() => main_grid.Children.Clear()));
                 }

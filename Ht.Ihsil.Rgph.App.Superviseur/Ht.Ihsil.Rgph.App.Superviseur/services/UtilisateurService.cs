@@ -58,7 +58,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
 
         public bool isSuperviseurAccountExist()
         {
-            if (dao.getRepository().UtilisateurRepository.Find(u => u.ProfileId ==Constant.PROFIL_SUPERVISEUR_SUPERVISION).Count() > 0) return true;
+            if (dao.getRepository().UtilisateurRepository.Find(u => u.ProfileId ==Constant.PROFIL_SUPERVISEUR_SUPERVISION_SG).Count() > 0) return true;
             return false;
        
         }
@@ -139,6 +139,20 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         {
             if (dao.getRepository().UtilisateurRepository.Find(u => u.ProfileId == 6).Count() > 0) return true;
             return false;
+        }
+
+
+        public UtilisateurModel getSuperviseur(int profilId)
+        {
+            try
+            {
+                return ModelMapper.MapEUtilisateurInModel(dao.getRepository().UtilisateurRepository.Find(u => u.ProfileId == Constant.PROFIL_SUPERVISEUR_SUPERVISION_SG).FirstOrDefault());
+            }
+            catch (Exception)
+            {
+
+            }
+            return new UtilisateurModel();
         }
     }
 }

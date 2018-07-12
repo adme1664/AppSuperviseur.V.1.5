@@ -51,6 +51,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels
                 Tip = Constant.GetStringValue(Constant.ToolTipMessage.Fini);
                 ImageSource = Constant.GetStringValue(Constant.ImagePath.Fini);
             }
+            if (batiment.IsValidated == Convert.ToBoolean(Constant.StatutValide.Valide))
+            {
+                Status = true;
+                Tip = Constant.GetStringValue(Constant.ToolTipMessage.Valide_deja);
+                ImageSource = Constant.GetStringValue(Constant.ImagePath.Valide);
+            }
             BatimentCEModel bat = ModelMapper.MapToBatimentCEModel(serviceCe.daoCE.getBatiment(Convert.ToInt32(batiment.BatimentId), batiment.SdeId));
             if (bat.BatimentId != 0)
             {

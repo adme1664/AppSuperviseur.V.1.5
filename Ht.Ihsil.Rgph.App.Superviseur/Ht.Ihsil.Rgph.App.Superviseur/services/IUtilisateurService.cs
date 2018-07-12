@@ -18,7 +18,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
         void updateUser(UtilisateurModel utilisateur);
         UtilisateurModel findUserById(int idUser);
         UtilisateurModel findUserByUsername(string username);
-
+        UtilisateurModel getSuperviseur(int profilId);
         void getAllAgentFromRemote(string supId);
         List<Tbl_Agent> getAllAgentBySuperviseur(string supId);
         void deleteUser(long idUser);

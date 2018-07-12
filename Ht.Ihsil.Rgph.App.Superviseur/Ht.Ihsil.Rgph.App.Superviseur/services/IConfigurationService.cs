@@ -61,5 +61,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
 
         bool savePersonne(tbl_personnel person);
         bool ifPersonExist(tbl_personnel person);
+        bool ifSuperviseurExist(int profilId);
+        bool deleteSuperviseur(string username);
+        Utilisateur getSuperviseur(int profilId);
     }
 }

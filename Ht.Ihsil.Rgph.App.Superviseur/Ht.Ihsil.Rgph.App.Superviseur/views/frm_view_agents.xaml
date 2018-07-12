@@ -56,8 +56,9 @@
                     </GroupBox>
                     <GroupBox Header="Actions" HorizontalAlignment="Left" Margin="745,17,0,0" VerticalAlignment="Top" Height="176" Width="172" Grid.Row="0" Grid.Column="0">
                         <Grid>
-                            <Button x:Name="btn_synch" Content="Configurer la tablette"  Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" ToolTip="Synchroniser avec le serveur" Width="136" Height="40"  RenderTransformOrigin="0.5,-5.04" Click="btn_synch_Click" HorizontalAlignment="Left" Margin="6,76,0,24"  />
-                            <Button x:Name="btn_save_tab" Content="Enregistrer la tablette" HorizontalAlignment="Left" Margin="5,11,0,0" VerticalAlignment="Top" Width="137" Height="43" ToolTip="Enregsitrer la tablette" Click="btn_save_tab_Click"  />
+                            <Button x:Name="btn_synch" Content="Configurer la tablette"  Background="{DynamicResource {x:Static SystemColors.GradientActiveCaptionBrushKey}}" ToolTip="Synchroniser avec le serveur" Width="136"  RenderTransformOrigin="0.5,-5.04" Click="btn_synch_Click" HorizontalAlignment="Left" Margin="6,54,0,53"  />
+                            <Button x:Name="btn_save_tab" Content="Enregistrer la tablette" HorizontalAlignment="Left" Margin="5,8,0,0" VerticalAlignment="Top" Width="137" Height="32" ToolTip="Enregsitrer la tablette" Click="btn_save_tab_Click"  />
+                            <Button Content="Configurer Sup" x:Name="btn_add_sup" HorizontalAlignment="Left" Margin="7,100,0,0" VerticalAlignment="Top" Width="136" Height="30" Click="btn_add_sup_Click"/>
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Liste des tablettes enregistrées"  Grid.Row="1" Grid.Column="0">
@@ -74,7 +75,7 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-            </dx:DXTabItem>          
+            </dx:DXTabItem>
         </dx:DXTabControl>
     </Grid>
 </UserControl>

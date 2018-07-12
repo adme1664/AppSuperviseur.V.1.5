@@ -42,6 +42,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels
                 Tip = Constant.GetStringValue(Constant.ToolTipMessage.PasFini);
                 ImageSource = Constant.GetStringValue(Constant.ImagePath.PasFini);
             }
+            if (model.Valide == Convert.ToBoolean(Constant.StatutValide.Valide))
+            {
+                Status = true;
+                Tip = Constant.GetStringValue(Constant.ToolTipMessage.Valide_deja);
+                ImageSource = Constant.GetStringValue(Constant.ImagePath.Valide);
+            }
         }
         public MenageDetailsViewModel(MenageDetailsModel model, LogementViewModel _parent)
             : base(_parent, true)

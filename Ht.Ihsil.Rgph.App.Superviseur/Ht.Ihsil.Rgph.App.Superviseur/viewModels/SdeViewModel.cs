@@ -186,6 +186,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.viewModels
                 {
                     batiment.IsFinished = true;
                 }
+                if (batiment.IsValidate == Convert.ToBoolean(Constant.StatutValide.Valide))
+                {
+                    batiment.IsValidated = true;
+                }
                 batiment.SdeId = _sde.SdeId;
                 base.Children.Add(new BatimentViewModel(batiment, this));
             }

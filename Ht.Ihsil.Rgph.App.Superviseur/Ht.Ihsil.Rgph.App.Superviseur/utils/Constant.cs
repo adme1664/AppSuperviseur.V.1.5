@@ -489,8 +489,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         #region PROFIL UTILISATEUR
         public static int PROFIL_AGENT_RECENSEUR_MOBILE = 8;
-        public static int PROFIL_SUPERVISEUR_SUPERVISION = 8;
+        public static int PROFIL_SUPERVISEUR_SUPERVISION_SG = 8;
+        public static int PROFIL_SUPERVISEUR_SUPERVISION_MOBILE = 7;
         public static int PROFIL_ASTIC = 6;
+        public static int EST_ACTIF = 1;
+        public static int PAS_ACTIF = 0;
         #endregion
 
         #region RAPPORT PERSONNEL
