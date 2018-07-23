@@ -96,15 +96,6 @@ namespace Ht.Ihsi.Rgph.DataAccess.Dao
         }
 
 
-        //public List<Tbl_Utilisation> getUtilisation(string codeCategorie)
-        //{
-        //    return repository.UtilisationRepository.Find(c => c.CodeCategorie == codeCategorie).ToList();
-        //}
-        //public Tbl_Utilisation getUtilisation(string code)
-        //{
-        //    return repository.UtilisationRepository.Find(u => u.CodeUtilisation == code).FirstOrDefault();
-        //}
-
 
         public List<Tbl_Utilisation> searchtUtilisation(string codeCategorie)
         {

@@ -474,7 +474,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     {
                         int aleatoire = 0;
                         //On prend 3 batiments ayant au moins un logement et un Menage;
-                        for (int i = 0; i <= listOfBatiments.Count; i++)
+                        for (int i = 0; i < listOfBatiments.Count; i++)
                         {
                             BatimentModel bat = listOfBatiments.ElementAt(RandomNumber(0, listOfBatiments.Count));
                             if (Utilities.isBatimentExistInList(listOfBatimentsUnique, bat) == false)
@@ -569,7 +569,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     else
                     {
                         //On prend 3 batiments ayant au moins un logement et un Menage;
-                        for (int i = 0; i <= listOfBatiments.Count; i++)
+                        for (int i = 0; i < listOfBatiments.Count; i++)
                         {
                             BatimentModel bat = listOfBatiments.ElementAt(i);
                             if (Utilities.isBatimentExistInList(listOfBatimentsUnique, bat) == false)
@@ -675,7 +675,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
             {
                 log.Info("SqliteDataReaderService/getAllBatimentWithLogInd" + ex.Message);
             }
-            return null;
+            return new List<BatimentModel>();
         }
         public LogementModel[] getAllLogementCollectif(BatimentModel _batiment)
         {
@@ -1147,7 +1147,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.services
                     foreach (int n in numbers)
                     {
                         if (num != n)
-                            return n;                        
+                            return num;                        
                     }
                 }
                 else

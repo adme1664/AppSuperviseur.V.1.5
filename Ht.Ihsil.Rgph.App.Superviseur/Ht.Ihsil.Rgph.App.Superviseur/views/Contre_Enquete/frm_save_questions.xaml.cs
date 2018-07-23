@@ -1243,7 +1243,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
             {
                 DateTime dateEnd = DateTime.Now;
                 #region SI LA DERNIERE QUESTION EST DE TYPE CHOIX
-                if (questionEnCours.TypeQuestion.GetValueOrDefault() == Convert.ToInt32(Constant.TypeQuestionMobile.Choix))
+                if (questionEnCours.TypeQuestion.GetValueOrDefault() == Convert.ToInt32(Constant.TypeQuestionMobile.Choix) ||
+                    questionEnCours.TypeQuestion.GetValueOrDefault()== Convert.ToInt32(Constant.TypeQuestionMobile.Utilisation ))
                 {
                     ReponseModel reponse = comboBox.SelectedItem as ReponseModel;
                     if (reponse.CodeReponse == "")
@@ -1256,6 +1257,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         {
                             reponseSaisie.NomChamps = questionEnCours.NomChamps;
                             reponseSaisie.CodeReponse = reponse.CodeReponse;
+                            
                             batiment = getBatimentModel(reponseSaisie, batiment);
                             batiment.DureeSaisie = Utilities.getDureeSaisie(dateStart, dateEnd);
                             batiment.IsContreEnqueteMade = true;
@@ -1383,6 +1385,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                         {
                             reponseSaisie.NomChamps = questionEnCours.NomChamps;
                             reponseSaisie.CodeReponse = textbox.Text;
+                            if(batiment.Qb7Utilisation1==0)
                             batiment = getBatimentModel(reponseSaisie, batiment);
                             if (batiment.Qb8NbreLogeIndividuel.GetValueOrDefault() == 0 && batiment.Qb8NbreLogeCollectif.GetValueOrDefault() == 0)
                             {

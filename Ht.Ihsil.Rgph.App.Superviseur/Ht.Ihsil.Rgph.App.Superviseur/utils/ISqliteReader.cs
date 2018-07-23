@@ -170,11 +170,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         tbl_question getQuestionByNomChamps(string nomChamps);
         string getReponse(string codeQuestion, string codeReponse);
         string getLibelleCategorie(string codeCategorie);
-
         List<tbl_question> searchQuestionByCategorie(string codeCategorie);
-
         tbl_categorie_question getCategorie(string codeCategorie);
-
         List<tbl_question_module> listOfQuestionModule(string codeModule);
         #endregion
 
