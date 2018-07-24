@@ -59,6 +59,13 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
                 return entity;
             }
 
+            public virtual int CommandSqlString(string sqlString)
+            {
+                int rowInsert=context.Database.ExecuteSqlCommand(sqlString);
+                return rowInsert;
+            }
+            
+
             /// <summary>
             /// Supprimer une entite dans le context par son identifiant
             /// </summary>

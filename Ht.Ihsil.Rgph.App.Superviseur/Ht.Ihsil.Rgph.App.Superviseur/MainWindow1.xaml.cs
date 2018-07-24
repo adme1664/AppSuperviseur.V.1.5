@@ -368,6 +368,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur
                     }
                 }
             }
+        }
+
+        private void bbi_corrections_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            deselectedBarItem();
+            bbi_corrections.Dispatcher.BeginInvoke((Action)(() => bbi_corrections.IsChecked = true));
+            main_grid_1.IsSplashScreenShown = true;
+            frm_correction corrections = new frm_correction();
+            Utilities.showControl(corrections, main_grid);
+            main_grid_1.IsSplashScreenShown = false;
         }       
     }
 }

@@ -25,16 +25,16 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public static string STATUT_EFFECTUE = "Effectue";
         public static string STATUT_NON_EFFECTUE = "Non Effectue";
-        public enum StatutModule:short
+        public enum StatutModule : short
         {
-            Fini=1,
-            MalRempli=2,
-            PasFini=3
+            Fini = 1,
+            MalRempli = 2,
+            PasFini = 3
         }
         public enum StatutVerifie : short
         {
-            Verifie=1,
-            PasVerifie=0
+            Verifie = 1,
+            PasVerifie = 0
         }
         public enum StatutValide : short
         {
@@ -44,7 +44,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public enum EtatBatiment : int
         {
-            Inobservable=5
+            Inobservable = 5
         }
 
         #region VARIABLES
@@ -129,7 +129,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             Grid = 8,
             Utilisation = 9
         }
-      
+
         public enum TypeContrEnquete : int
         {
             BatimentVide = 1,
@@ -154,32 +154,32 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
 
         public enum StatutOccupation : int
         {
-            Okipe_Toutan=1,
-            Okipe_Moun_Pa_la=2,
-            Okipe_le_konsa=3,
-            Pa_okipe=4
+            Okipe_Toutan = 1,
+            Okipe_Moun_Pa_la = 2,
+            Okipe_le_konsa = 3,
+            Pa_okipe = 4
         }
 
         public enum TypeLogement : int
         {
-            Kolektif=0,
-            Endividyel=1
+            Kolektif = 0,
+            Endividyel = 1
         }
-        public enum ImagePath:int
+        public enum ImagePath : int
         {
             [StringValue("/images/malrempli.png")]
-            MalRempli=1,
+            MalRempli = 1,
             [StringValue("/images/notfinish.png")]
-            PasFini=2,
+            PasFini = 2,
             [StringValue("/images/check.png")]
-            Fini=3,
+            Fini = 3,
             [StringValue("/images/validate_check.png")]
-            Valide=4,
+            Valide = 4,
             [StringValue("/images/ce.png")]
-            ContreEnquete=5
+            ContreEnquete = 5
         }
 
-        public enum ToolTipMessage:int
+        public enum ToolTipMessage : int
         {
             [StringValue("Pa byen ranpli")]
             MalRempli = 1,
@@ -188,23 +188,23 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             [StringValue("Fini")]
             Fini = 3,
             [StringValue("Kont ankèt sa a fèt deja")]
-            Kont_anket_fet=4,
+            Kont_anket_fet = 4,
             [StringValue("Valide deja")]
-            Valide_deja=5,
+            Valide_deja = 5,
             [StringValue("Kont ankèt sa a poko fèt")]
-            Kont_Anket_Not_Made=6,
-             [StringValue("Nan Kont ankèt")]
-            Kont_Anket_IN=7
+            Kont_Anket_Not_Made = 6,
+            [StringValue("Nan Kont ankèt")]
+            Kont_Anket_IN = 7
         }
 
         public enum TypeTreeView : int
         {
-            Contre_enquete=1,
-            Batiment=2,
-            Logement=3,
-            Menage=4,
-            Deces=5,
-            Individu=6
+            Contre_enquete = 1,
+            Batiment = 2,
+            Logement = 3,
+            Menage = 4,
+            Deces = 5,
+            Individu = 6
         }
         #endregion
 
@@ -273,7 +273,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string Qlin7NbreChambreACoucher = "Qlin7NbreChambreACoucher";
         public static string Qlin8NbreIndividuDepense = "Qlin8NbreIndividuDepense";
         public static string Qlin9NbreTotalMenage = "Qlin9NbreTotalMenage";
-        
+
 
         #endregion
 
@@ -285,7 +285,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string Qm5SrcEnergieCuisson2 = "Qm5SrcEnergieCuisson2";
         public static string Qm8EndroitBesoinPhysiologique = "Qm8EndroitBesoinPhysiologique";
         public static string Qm11TotalIndividuVivant = "Qm11TotalIndividuVivant";
-        
+
 
         #endregion
 
@@ -321,7 +321,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string Qe3typeEtablissement = "Qe3typeEtablissement";
         public static string Qe4aNiveauEtude = "Qe4aNiveauEtude";
         public static string Qe4bDerniereClasseOUAneEtude = "Qe4bDerniereClasseOUAneEtude";
-        
+
         public static string Qsm1StatutMatrimonial = "Qsm1StatutMatrimonial";
         public static string Qa1ActEconomiqueDerniereSemaine = "Qa1ActEconomiqueDerniereSemaine";
         public static string Qa2ActAvoirDemele1 = "Qa2ActAvoirDemele1";
@@ -329,7 +329,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static string Qa2ActCultivateur3 = "Qa2ActCultivateur3";
         public static string Qa2ActAiderParent4 = "Qa2ActAiderParent4";
         public static string Qa2ActAutre5 = "Qa2ActAutre5";
-        
+
         public static string Qa8EntreprendreDemarcheTravail = "Qa8EntreprendreDemarcheTravail";
         public static string Qf1aNbreEnfantNeVivantM = "Qf1aNbreEnfantNeVivantM";
         public static string Qf2bNbreEnfantNeVivantF = "Qf2bNbreEnfantNeVivantF";
@@ -608,7 +608,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             //listOf.Add(new SousDomaineProbleme(SousDomaineTerrain2, Prob_TerrainCart2_2));
             //listOf.Add(new SousDomaineProbleme(SousDomaineTerrain2, Prob_TerrainCart2_3));
             //listOf.Add(new SousDomaineProbleme(SousDomaineTerrain2, Prob_TerrainCart2_4));
-            return listOf; 
+            return listOf;
         }
         public static ObservableCollection<DetailsRapportDeroulement> RapportsDeroulementCollecte()
         {
@@ -649,7 +649,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             //rapports.Add(new DetailsRapportDeroulement("Terrain", SousDomaineTerrain1, Prob_TerrainCart1_1, Sol_TerrainCart1_2, "", "", Suivi_TerrainCart1_2, ""));
             //rapports.Add(new DetailsRapportDeroulement("Terrain", SousDomaineTerrain1, Prob_TerrainCart1_1, Sol_TerrainCart1_3, "", "", Suivi_TerrainCart1_3, ""));
             //rapports.Add(new DetailsRapportDeroulement("Terrain", SousDomaineTerrain1, Prob_TerrainCart1_1, Sol_TerrainCart1_4, "", "", Suivi_TerrainCart1_4, ""));
-            
+
             #endregion
 
             #region cartographie 2
@@ -716,9 +716,9 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         #endregion
 
         #region DOMAINE ET SOUS-DOMAINE
-        public static KeyValue SousDomaineTerrain1 =new KeyValue(1,"CARTOGRAPHIE 1 - Reconnaissance des lieux pré-collecte");
-        public static KeyValue SousDomaineTerrain2 = new KeyValue(2,"CARTOGRAPHIE  2 - Couverture collecte");
-        public static KeyValue SousDomaineTerrain3 = new KeyValue(3,"GESTION TERRAIN");
+        public static KeyValue SousDomaineTerrain1 = new KeyValue(1, "CARTOGRAPHIE 1 - Reconnaissance des lieux pré-collecte");
+        public static KeyValue SousDomaineTerrain2 = new KeyValue(2, "CARTOGRAPHIE  2 - Couverture collecte");
+        public static KeyValue SousDomaineTerrain3 = new KeyValue(3, "GESTION TERRAIN");
 
         public static KeyValue Domaine1 = new KeyValue(1, "TERRAIN");
         public static KeyValue Domaine2 = new KeyValue(2, "RÉALISATION ENTREVUES");
@@ -783,13 +783,13 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
         public static List<NameValue> ListOfSections()
         {
             List<NameValue> listOf = new List<NameValue>();
-            listOf.Add(new NameValue("BAT","KARAKTERISTIK KAY LA","Batiment"));
-            listOf.Add(new NameValue("LCOL","KARAKTERISTIK LOJMAN KOLEKTIF","Logement Collectif"));
+            listOf.Add(new NameValue("BAT", "KARAKTERISTIK KAY LA", "Batiment"));
+            listOf.Add(new NameValue("LCOL", "KARAKTERISTIK LOJMAN KOLEKTIF", "Logement Collectif"));
             listOf.Add(new NameValue("LIN", "KARAKTERISTIK LOJMAN ENDIVIDYÈL", "Logement Individuel"));
-            listOf.Add(new NameValue("MEN","MENAGE","Menage"));
-            listOf.Add(new NameValue("MIGRA","MIGRASYON","Menage"));
+            listOf.Add(new NameValue("MEN", "MENAGE", "Menage"));
+            listOf.Add(new NameValue("MIGRA", "MIGRASYON", "Menage"));
             listOf.Add(new NameValue("MOURI", "MOUN KI MOURI NAN MENAJ LA", "Menage"));
-            listOf.Add(new NameValue("KMN","KARAKTERISTIK DEMOGRAFIK","Individu"));
+            listOf.Add(new NameValue("KMN", "KARAKTERISTIK DEMOGRAFIK", "Individu"));
             listOf.Add(new NameValue("KMNEDIK_1", "EDIKASYON", "Individu"));
             listOf.Add(new NameValue("KMNWE_2", "AKTIVITE AK FONKSYÒNMAN MOUN NAN", "Individu"));
             listOf.Add(new NameValue("KMNPHON_8", "POSESYON TELEFON SELILE", "Individu"));
@@ -844,8 +844,125 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             }
             return new KeyValue();
         }
-        #endregion        
+        #endregion
+
+        public static List<string> QuestionsReponsesLogements()
+        {
+            List<string> q = new List<string>();
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LJ', 'LJ-1',0,0 , '', '', 'LIN2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LJ', 'LJ-2',0,0 , '', '', 'LC1');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-1',0,0 , '', '', 'FIN');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-2',0,0 , '', '', 'FIN');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-3',0,0 , '', '', 'FIN');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-4',0,0 , '', '', 'FIN');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-5',0,0 , '', '', 'FIN');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-6',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-7',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-8',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-9',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-10',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-11',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-12',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-13',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-14',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LC1', 'LC1-15',0,0 , '', '', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN2', 'LIN2-1',0,0 , '', '', 'LIN4');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN2', 'LIN2-2',0,0 , '', '', 'FIN');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN2', 'LIN2-3',0,0 , '', '', 'FIN');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN2', 'LIN2-4',0,0 , '', '', 'FIN');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN4', 'LIN4-1',0,0 , '', '', '');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN4', 'LIN4-2',0,0 , '', '', '');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN4', 'LIN4-3',0,0 , '', '', '');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN5', 'LIN5-1',0,0 , '', '', 'LIN6');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN5', 'LIN5-2',0,0 , '', '', 'LIN6');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN5', 'LIN5-3',0,0 , '', '', 'LIN6');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN5', 'LIN5-4',0,0 , '', '', 'LIN6');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN5', 'LIN5-5',0,0 , '', '', 'LIN6');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN5', 'LIN5-6',0,0 , '', '', 'LIN6');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN8', 'LIN8-1',0,0 , '', '', 'LIN9');");
+            q.Add("INSERT INTO Tbl_Questions_Reponses (CodeQuestion, CodeUniqueReponse,EstEnfant,AvoirEnfant , CodeParent, Qprecedent, Qsuivant) VALUES ('LIN8', 'LIN8-2',0,0 , '', '', 'FIN');");
+            return q;
+        }
+        public static List<string> ReponsesLogements()
+        {
+            List<string> r = new List<string>();
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LJ-1', '1', '1-Lojman Endividyèl');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LJ-2', '2', '2-Lojman Kolektif');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-1', '1', '1-Pansyon Fanmi');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-2', '2', '2-Kouvan/ Monastè');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-3', '3', '3-Presbitè');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-4', '4', '4-Òfelina');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-5', '5', '5-Akademi polis');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-6', '6', '6-Lazil oswa kote granmoun rete oswa kay retrèt');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-7', '7', '7-Sant detansyon (Prizon)');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-8', '8', '8-Komisarya');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-9', '9', '9-Lekol-Entèna');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-10', '10', '10-Kanmpis inivèsitè (Kay pou etidian oswa lòt tip ki sanble ak sa)');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-11', '11', '11-Kote yo priye, fè reinyon ak lot.... (tanp, legliz, peristil, moske)');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-12', '12', '12-Lopital');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-13', '13', '13-Lojman pou pèsonèl (pèsonèl medikal, ...)');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-14', '14', '14-Lotèl / Obèj');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LC1-15', '15', '15-Lòt lojman kolektif');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN2-1', '1', '1-Okipe toutan epi moun yo la');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN2-2', '2', '2-Okipe toutan, men moun yo pa la ..……>       ');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN2-3', '3', '3-Vid yon lè konsa  ');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN2-4', '4', '4-Toujou vid');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN4-1', '1', '1-Apatman');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN4-2', '2', '2-Pyès (pyès kay)');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN4-3', '3', '3-Lòt');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN5-1', '1', '1-Tè');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN5-2', '2', '2-Bwa/Planch/Playwoud');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN5-3', '3', '3-Siman');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN5-4', '4', '4-Mozayik');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN5-5', '5', '5-Seramik/Terazo/Mab');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN5-6', '6', '6-Lòt materyo');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN8-1', '1', '1-Wi');");
+            r.Add("INSERT INTO Tbl_Reponses (CodeUniqueReponse,CodeReponse , LibelleReponse) VALUES ('LIN8-2', '2', '2-Non');");
+            return r;
+        }
+        public static List<string> Questions()
+        {
+            List<string> q = new List<string>();
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('QTypeL','Logement', 'LJ. - KI TIP LOJMAN SA A YE?    ', '','2', 'QlCategLogement' , 1, 0,-1,-1, 1, '', 'LC1');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LC1','Logement', 'LC1A.- KI TIP LOJMAN KOLEKTIF', '','2', 'QlcTypeLogement' , 1, 0,-1,-1, 1, 'QTypeL', 'LC2');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LC2','Logement', 'LC2.- KONBYEN GASON?', '','2', 'Qllc2bTotalGarcon' , 2, 1,-1,-1, 0, 'LC1', 'LC3');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LC3','Logement', 'LC3.- KONBYEN FANM?', '','2', 'Qlc2bTotalFille' , 2, 1,-1,-1, 0, 'LC2', 'FIN');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LIN1','Logement', 'LIN1.- NIMEWO DÒD LOJMAN NAN KAY LA', '','2', 'Qlin1NumeroOrdre' , 3, 1,-1,-1, 0, 'QTypeL', 'LIN2');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LIN2','Logement', 'LIN2. - ESKE LOJMAN SA A…?     ', '','2', 'Qlin2StatutOccupation' , 17, 0,-1,-1, 1, 'LIN1', 'LIN4');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LIN4','Logement', 'LIN4. – ESKE LOJMAN SA A SE YON ? ', '','2', 'Qlin4TypeLogement' , 17, 0,-1,-1, 0, 'LIN2', 'LIN5');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LIN5','Logement', 'LIN5.- AK KI MATERYO ATÈ LOJMAN AN PI PLIS FÈT ? ', '','2', 'Qlin5MateriauSol' , 17, 0,-1,-1, 0, 'LIN4', 'LIN6');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LIN6','Logement', 'LIN6.- KONBYEN PYÈS LOJMAN SA A GENYEN(Watè, koulwa ak galeri pa ladann)?', '','2', 'Qlin6NombrePiece' , 2, 1,-1,-1, 0, 'LIN5', 'LIN7');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LIN7','Logement', 'LIN7.- NAN PYES SA YO KONBYEN KI SE CHANM POU DOMI SELMAN ?', '','2', 'Qlin7NbreChambreACoucher' , 2, 1,-1,-1, 0, 'LIN6', 'LIN8');");
+            q.Add("INSERT INTO Tbl_Questions (CodeQuestion, NomObjet,Libelle, DetailsQuestion, CodeCategorie,NomChamps , TypeQuestion, ContrainteQuestion,ValeurMaxParChiffre,NbreCaratereMaximal, EstSautReponse, Qprecedent, Qsuivant  ) VALUES ('LIN8','Logement', 'LIN8.- NAN TOUT MOUN KI TOUJOU AP VIV NAN LOJMAN SA A, ÈSKE GEN YOUN NAN YO OSWA YON GWOUP NAN YO KI METE TET YO ANSANM POU FÈ DEPANS APA POU MANJE YO, POU YO BWÈ EPI POU LÒT BAGAY KI KONSÈNE YO ?  ', '','2', 'Qlin8NbreIndividuDepense' , 2, 0,-1,-1, 1, 'LIN7', 'LIN9');");
+            return q;
+        }
+
+        public static List<string> QuestionsToDelete()
+        {
+            List<string> q = new List<string>();
+            q.Add("LIN4");
+            q.Add("LIN5");
+            q.Add("LIN6");
+            q.Add("LIN7");
+            q.Add("LIN8");
+            q.Add("LIN9");
+            return q;
+        }
+        public static List<string> DeleteQuestions()
+        {
+            List<string> q = new List<string>();
+            q.Add("DELETE FROM Tbl_Questions WHERE CodeQuestion='LIN1';");
+            q.Add("DELETE FROM Tbl_Questions WHERE QTypeL='LIN2';");
+            q.Add("DELETE FROM Tbl_Questions WHERE LC1='LIN4';");
+            q.Add("DELETE FROM Tbl_Questions WHERE LC2='LIN5';");
+            q.Add("DELETE FROM Tbl_Questions WHERE LC3='LIN6';");
+            q.Add("DELETE FROM Tbl_Questions WHERE LIN1='LIN7';");
+            q.Add("DELETE FROM Tbl_Questions WHERE LIN2='LIN8';");
+            q.Add("DELETE FROM Tbl_Questions WHERE LIN4='LIN9';");
+            return q;
+        }
+
+
     }
 
-    
 }

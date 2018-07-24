@@ -36,6 +36,10 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
        bool deleteEmigre(tbl_emigre emigre);
        bool deleteDeces(tbl_deces deces);
        bool deleteIndividu(tbl_individu individu);
+       bool insertQuestion(string question);
+       bool insertQuestionReponse(string questionReponse);
+       bool deleteQuestion(string codeQuestion);
+       bool deleteQuestionReponse(string codeQuestion);
 
     }
 }

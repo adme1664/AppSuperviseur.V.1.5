@@ -613,6 +613,9 @@
     <Compile Include="views\frm_connexion.xaml.cs">
       <DependentUpon>frm_connexion.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\frm_correction.xaml.cs">
+      <DependentUpon>frm_correction.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\frm_details_batiments.xaml.cs">
       <DependentUpon>frm_details_batiments.xaml</DependentUpon>
     </Compile>
@@ -736,6 +739,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\frm_connexion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\frm_correction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

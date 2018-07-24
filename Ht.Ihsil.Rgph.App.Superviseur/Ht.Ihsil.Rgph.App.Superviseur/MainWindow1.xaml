@@ -84,6 +84,8 @@
                         <dxb:BarItemSeparator/>
                         <dxb:BarCheckItem x:Name="bbi_avances" Content="Avancées" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/portable_setting.png" ItemClick="bbi_avances_ItemClick" />
                         <dxb:BarItemSeparator/>
+                        <dxb:BarCheckItem x:Name="bbi_corrections" Content="Correction questionnaire" LargeGlyph="pack://application:,,,/Ht.Ihsil.Rgph.App.Superviseur;component/images/portable_setting.png" ItemClick="bbi_corrections_ItemClick" />
+                        <dxb:BarItemSeparator/>
                     </dxr:RibbonPageGroup>
                 </dxr:RibbonPage>
             </dxr:RibbonPageCategory>

@@ -34,6 +34,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             repository = new MainRepository(Utilities.getConnectionString(path, fileName));
             log = new Logger();
         }
+        public SqliteDataWriter(bool isSuperviseurDatabase)
+        {
+            repository = new MainRepository(Utilities.getConnectionString(Users.users.SupDatabasePath),true);
+            log = new Logger();
+        }
+        
         public bool syncroBatimentToServeur(BatimentModel bat)
         {
             try
@@ -1473,6 +1479,71 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             catch (Exception ex)
             {
                 log.Info("SQLWRITER:" + ex.Message);
+            }
+            return false;
+        }
+
+
+        public bool insertQuestion(string question)
+        {
+            string methodName = "insertQuestion";
+            try
+            {
+                repository.QuestionRepository.CommandSqlString(question);
+                repository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SQLWRITER:/"+methodName + ex.Message);
+            }
+            return false;
+        }
+
+        public bool insertQuestionReponse(string questionReponse)
+        {
+            string methodName = "insertQuestionReponse";
+            try
+            {
+                repository.QuestionReponseRepository.CommandSqlString(questionReponse);
+                repository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SQLWRITER:/" + methodName + ex.Message);
+            }
+            return false;
+        }
+
+        public bool deleteQuestion(string codeQuestion)
+        {
+            string methodName = "deleteQuestion";
+            try
+            {
+                repository.QuestionRepository.CommandSqlString(codeQuestion);
+                repository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SQLWRITER:/" + methodName + ex.Message);
+            }
+            return false;
+        }
+
+        public bool deleteQuestionReponse(string codeQuestion)
+        {
+            string methodName = "deleteQuestionReponse";
+            try
+            {
+                repository.QuestionReponseRepository.CommandSqlString(codeQuestion);
+                repository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SQLWRITER:/" + methodName + ex.Message);
             }
             return false;
         }

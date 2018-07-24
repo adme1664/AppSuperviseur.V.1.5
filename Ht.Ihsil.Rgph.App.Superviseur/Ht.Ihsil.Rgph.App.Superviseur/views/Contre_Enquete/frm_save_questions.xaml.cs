@@ -1673,8 +1673,11 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
         #endregion
 
         #region CONSTRAINTS
+        int num1 = 0;
+        int num2 = 0;
         public void checkConstraint<T>(T objectType)
         {
+            
             #region CONSTRAINT ONLY FOR BATIMENT
             if (objectType.ToString() == Constant.OBJET_MODEL_BATIMENTCE)
             {
@@ -1689,19 +1692,27 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                     }
 
                 }
-                #region CONTRAINTE SUR LES DEUX UTILISATIONS 
+                #region CONTRAINTE SUR LES DEUX UTILISATIONS                 
                 if (this.batiment.Qb7Utilisation1.GetValueOrDefault() != 0)
                 {
                     if (this.batiment.Qb7Utilisation1.GetValueOrDefault() >= 20 && this.batiment.Qb7Utilisation1.GetValueOrDefault() <= 26 || this.batiment.Qb7Utilisation1.GetValueOrDefault() >= 30 && this.batiment.Qb7Utilisation1.GetValueOrDefault() <= 41)
                     {
-                        throw new SautUtilisationException(Constant.MESSAGE12EXCEPTION);
+                        if (num1 == 0)
+                        {
+                            num1 = 1;
+                            throw new SautUtilisationException(Constant.MESSAGE12EXCEPTION);
+                        }                        
                     }
                 }
                 if (this.batiment.Qb7Utilisation2.GetValueOrDefault() != 0)
                 {
                     if (this.batiment.Qb7Utilisation2.GetValueOrDefault() >= 20 && this.batiment.Qb7Utilisation2.GetValueOrDefault() <= 26 || this.batiment.Qb7Utilisation2.GetValueOrDefault() >= 30 && this.batiment.Qb7Utilisation2.GetValueOrDefault() <= 41)
                     {
-                        throw new SautUtilisationException(Constant.MESSAGE12EXCEPTION);
+                        if (num2 == 0)
+                        {
+                            num2 = 1;
+                            throw new SautUtilisationException(Constant.MESSAGE12EXCEPTION);
+                        }
                     }
                 }
                 #endregion
