@@ -1430,7 +1430,8 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.views.Contre_Enquete
                                 logement.IsContreEnqueteMade = 1;
                                 bool result = contreEnqueteService.updateLogement(this.logement);
                                 LogementModel lg = new LogementModel();
-                                lg.LogeId = this.logement.BatimentId;
+                                lg.BatimentId = this.logement.BatimentId;
+                                lg.LogeId = this.logement.LogeId;
                                 lg.SdeId = this.logement.SdeId;
                                 lg.IsContreEnqueteMade = true;
                                 bool save=sw.contreEnqueteMade<LogementModel>(lg, lg.SdeId);

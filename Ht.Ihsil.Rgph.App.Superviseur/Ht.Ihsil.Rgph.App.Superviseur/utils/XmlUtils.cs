@@ -114,7 +114,7 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
                 {
                     if ((int)s.Attribute("id") == id)
                     {
-                        s.SetAttributeValue("value", statut);
+                        s.SetAttributeValue("value", "false");
                     }                    
                 }
                 element.Save(uri);

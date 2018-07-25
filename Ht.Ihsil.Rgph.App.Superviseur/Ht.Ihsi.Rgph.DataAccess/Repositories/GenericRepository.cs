@@ -61,7 +61,11 @@ namespace Ht.Ihsi.Rgph.DataAccess.Repositories
 
             public virtual int CommandSqlString(string sqlString)
             {
-                int rowInsert=context.Database.ExecuteSqlCommand(sqlString);
+                var command = supDatabaseContext.Database.Connection.CreateCommand();
+                command.CommandText=sqlString;
+                supDatabaseContext.Database.Connection.Open();
+                int rowInsert = command.ExecuteNonQuery();
+                supDatabaseContext.Database.Connection.Close();
                 return rowInsert;
             }
             

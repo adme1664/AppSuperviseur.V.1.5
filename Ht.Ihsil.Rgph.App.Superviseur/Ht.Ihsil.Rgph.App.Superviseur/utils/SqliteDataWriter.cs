@@ -1500,12 +1500,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return false;
         }
 
-        public bool insertQuestionReponse(string questionReponse)
+        public bool insertQuestionReponse(string commandSql)
         {
             string methodName = "insertQuestionReponse";
             try
             {
-                repository.QuestionReponseRepository.CommandSqlString(questionReponse);
+                repository.QuestionReponseRepository.CommandSqlString(commandSql);
                 repository.Save();
                 return true;
             }
@@ -1516,12 +1516,12 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return false;
         }
 
-        public bool deleteQuestion(string codeQuestion)
+        public bool deleteQuestion(string commandSql)
         {
             string methodName = "deleteQuestion";
             try
             {
-                repository.QuestionRepository.CommandSqlString(codeQuestion);
+                repository.QuestionRepository.CommandSqlString(commandSql);
                 repository.Save();
                 return true;
             }
@@ -1532,12 +1532,61 @@ namespace Ht.Ihsil.Rgph.App.Superviseur.utils
             return false;
         }
 
-        public bool deleteQuestionReponse(string codeQuestion)
+        public bool deleteQuestionReponse(string commandSql)
         {
             string methodName = "deleteQuestionReponse";
             try
             {
-                repository.QuestionReponseRepository.CommandSqlString(codeQuestion);
+                repository.QuestionReponseRepository.CommandSqlString(commandSql);
+                repository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SQLWRITER:/" + methodName + ex.Message);
+            }
+            return false;
+        }
+
+
+        public bool commandSqlString(string command)
+        {
+            //string methodName = "deleteQuestionReponse";
+            //try
+            //{
+            //    repository.QuestionReponseRepository.CommandSqlString(commandSql);
+            //    repository.Save();
+            //    return true;
+            //}
+            //catch (Exception ex)
+            //{
+            //    log.Info("SQLWRITER:/" + methodName + ex.Message);
+            //}
+            return false;
+        }
+
+        public bool insertReponses(string commandSql)
+        {
+            string methodName = "deleteQuestionReponse";
+            try
+            {
+                repository.ReponseRepository.CommandSqlString(commandSql);
+                repository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                log.Info("SQLWRITER:/" + methodName + ex.Message);
+            }
+            return false;
+        }
+
+        public bool deleteReponses(string commandSql)
+        {
+            string methodName = "deleteQuestionReponse";
+            try
+            {
+                repository.ReponseRepository.CommandSqlString(commandSql);
                 repository.Save();
                 return true;
             }
